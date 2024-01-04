@@ -101,6 +101,8 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
 
     # offset points using z axis and cylinder's offset
     # and convert into a gp_Pnt
+    # rounding is needed otherwise there can be a bug in pipe = BRepAlgoAPI_Fuse(cone, pipe).Shape() below.
+    channel_points = np.round(channel_points,3)
     points = []
     for point in channel_points:
         points.append(gp_Pnt(point[0], point[1], point[2] + offset))
