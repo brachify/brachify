@@ -8,9 +8,9 @@ from windows.views.custom_view import display_action, CustomView
 
 materials = {
     ShapeTypes.CYLINDER: {"rgb": [0.8, 0.8, 0.8], "transparent": True},
-    ShapeTypes.CHANNEL: {"rgb": [0.2, 0.55, 0.55], "transparent": False},
+    ShapeTypes.CHANNEL: {"rgb": [0.2, 0.55, 0.55], "transparent": True},
     ShapeTypes.TANDEM: {"rgb": [0.8, 0.8, 0.8], "transparent": True},
-    ShapeTypes.SELECTED: {"rgb": [0.2, 0.2, 0.7], "transparent": False}
+    ShapeTypes.SELECTED: {"rgb": [0.2, 0.2, 0.7], "transparent": True}
 }
 
 
