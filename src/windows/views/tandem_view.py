@@ -9,7 +9,7 @@ from windows.views.custom_view import display_action, CustomView
 materials = {
     ShapeTypes.CYLINDER: {"rgb": [0.8, 0.8, 0.8], "transparent": True},
     ShapeTypes.CHANNEL: {"rgb": [0.8, 0.8, 0.8], "transparent": True},
-    ShapeTypes.TANDEM: {"rgb": [0.2, 0.55, 0.55], "transparent": True},
+    ShapeTypes.TANDEM: {"rgb": [0.2, 0.55, 0.55], "transparent": False},
     ShapeTypes.SELECTED: {"rgb": [0.2, 0.8, 0.55], "transparent": True}
 }
 
@@ -22,9 +22,10 @@ class TandemView(CustomView):
         self.tandemmodel.clear_tandem()
 
     @display_action
-    def action_generate_tandem(self):
+    def action_set_tandem(self):
         log.debug(f"action: generate a tandem")
-        self.tandemmodel.generate_tandem(
+
+        self.tandemmodel.set_tandem(
             channel_diameter=self.ui.sp_channel_diameter.value(),
             tip_diameter=self.ui.sp_tip_diameter.value(),
             tip_thickness=self.ui.sp_tip_thickness.value(),
@@ -35,14 +36,15 @@ class TandemView(CustomView):
     def action_import_tandem(self):
         log.debug(f"action: import a tandem")
         # file dialog to choose file
-        filename = QFileDialog.getOpenFileName(self, 'Select Tandem Tool Model', "", "Supported files (*.stl *.3mf *.obj *.stp *.step)")[0]
+        filename = QFileDialog.getOpenFileName(
+            self, 'Select Tandem Tool Model', "", "Supported files (*.stl *.3mf *.obj *.stp *.step)")[0]
 
         if not filename:  # no folder selected?
             log.info("no valid filename selected for importing")
             return
 
         log.info(f"file {filename} has been selected")
-        
+
         self.tandemmodel.import_tandem(filename)
         self.update_settings()
 
@@ -87,10 +89,11 @@ class TandemView(CustomView):
         self.tandemmodel = get_app().window.tandemmodel
 
         # signals and slots
-        self.ui.btn_apply.pressed.connect(self.action_generate_tandem)
+        self.ui.btn_apply.pressed.connect(self.action_set_tandem)
         self.ui.btn_clear_generate.pressed.connect(self.action_clear_tandem)
         self.ui.btn_import.pressed.connect(self.action_import_tandem)
         self.ui.btn_clear_import.pressed.connect(self.action_clear_tandem)
-        self.ui.sb_height_offset.valueChanged.connect(self.action_set_import_offset)
+        self.ui.sb_height_offset.valueChanged.connect(
+            self.action_set_import_offset)
 
         self.update_settings()
