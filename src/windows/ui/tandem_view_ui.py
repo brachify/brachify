@@ -128,6 +128,31 @@ class Ui_Tandem_View(object):
 
         self.formLayout.setWidget(10, QFormLayout.SpanningRole, self.btn_clear_generate)
 
+        self.sb_bend_radius = QDoubleSpinBox(self.tab_generate)
+        self.sb_bend_radius.setObjectName(u"sb_bend_radius")
+        self.sb_bend_radius.setMinimum(10.000000000000000)
+        self.sb_bend_radius.setMaximum(1000.000000000000000)
+
+        self.formLayout.setWidget(5, QFormLayout.FieldRole, self.sb_bend_radius)
+
+        self.label_7 = QLabel(self.tab_generate)
+        self.label_7.setObjectName(u"label_7")
+
+        self.formLayout.setWidget(5, QFormLayout.LabelRole, self.label_7)
+
+        self.sb_height_offset_2 = QDoubleSpinBox(self.tab_generate)
+        self.sb_height_offset_2.setObjectName(u"sb_height_offset_2")
+        self.sb_height_offset_2.setMinimum(10.000000000000000)
+        self.sb_height_offset_2.setMaximum(200.000000000000000)
+        self.sb_height_offset_2.setValue(129.000000000000000)
+
+        self.formLayout.setWidget(7, QFormLayout.FieldRole, self.sb_height_offset_2)
+
+        self.label_8 = QLabel(self.tab_generate)
+        self.label_8.setObjectName(u"label_8")
+
+        self.formLayout.setWidget(7, QFormLayout.LabelRole, self.label_8)
+
         self.tabWidget.addTab(self.tab_generate, "")
 
         self.verticalLayout.addWidget(self.tabWidget)
@@ -166,6 +191,10 @@ class Ui_Tandem_View(object):
         self.label_4.setText(QCoreApplication.translate("Tandem_View", u"tip angle", None))
         self.sp_tip_angle.setSuffix(QCoreApplication.translate("Tandem_View", u" deg", None))
         self.btn_clear_generate.setText(QCoreApplication.translate("Tandem_View", u"clear", None))
+        self.sb_bend_radius.setSuffix(QCoreApplication.translate("Tandem_View", u" mm", None))
+        self.label_7.setText(QCoreApplication.translate("Tandem_View", u"bend radius", None))
+        self.sb_height_offset_2.setSuffix(QCoreApplication.translate("Tandem_View", u" mm", None))
+        self.label_8.setText(QCoreApplication.translate("Tandem_View", u"tandem length", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_generate), QCoreApplication.translate("Tandem_View", u"generate", None))
     # retranslateUi
 
