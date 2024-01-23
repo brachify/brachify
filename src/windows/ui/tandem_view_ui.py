@@ -73,15 +73,6 @@ class Ui_Tandem_View(object):
         self.tab_generate.setObjectName(u"tab_generate")
         self.formLayout = QFormLayout(self.tab_generate)
         self.formLayout.setObjectName(u"formLayout")
-        self.btn_apply = QPushButton(self.tab_generate)
-        self.btn_apply.setObjectName(u"btn_apply")
-
-        self.formLayout.setWidget(9, QFormLayout.SpanningRole, self.btn_apply)
-
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.formLayout.setItem(11, QFormLayout.SpanningRole, self.verticalSpacer)
-
         self.label = QLabel(self.tab_generate)
         self.label.setObjectName(u"label")
 
@@ -103,55 +94,54 @@ class Ui_Tandem_View(object):
 
         self.formLayout.setWidget(2, QFormLayout.FieldRole, self.sp_tip_diameter)
 
-        self.label_3 = QLabel(self.tab_generate)
-        self.label_3.setObjectName(u"label_3")
-
-        self.formLayout.setWidget(3, QFormLayout.LabelRole, self.label_3)
-
-        self.sp_tip_thickness = QDoubleSpinBox(self.tab_generate)
-        self.sp_tip_thickness.setObjectName(u"sp_tip_thickness")
-
-        self.formLayout.setWidget(3, QFormLayout.FieldRole, self.sp_tip_thickness)
-
         self.label_4 = QLabel(self.tab_generate)
         self.label_4.setObjectName(u"label_4")
 
-        self.formLayout.setWidget(4, QFormLayout.LabelRole, self.label_4)
+        self.formLayout.setWidget(3, QFormLayout.LabelRole, self.label_4)
 
         self.sp_tip_angle = QDoubleSpinBox(self.tab_generate)
         self.sp_tip_angle.setObjectName(u"sp_tip_angle")
 
-        self.formLayout.setWidget(4, QFormLayout.FieldRole, self.sp_tip_angle)
+        self.formLayout.setWidget(3, QFormLayout.FieldRole, self.sp_tip_angle)
 
-        self.btn_clear_generate = QPushButton(self.tab_generate)
-        self.btn_clear_generate.setObjectName(u"btn_clear_generate")
+        self.label_7 = QLabel(self.tab_generate)
+        self.label_7.setObjectName(u"label_7")
 
-        self.formLayout.setWidget(10, QFormLayout.SpanningRole, self.btn_clear_generate)
+        self.formLayout.setWidget(4, QFormLayout.LabelRole, self.label_7)
 
         self.sb_bend_radius = QDoubleSpinBox(self.tab_generate)
         self.sb_bend_radius.setObjectName(u"sb_bend_radius")
         self.sb_bend_radius.setMinimum(10.000000000000000)
         self.sb_bend_radius.setMaximum(1000.000000000000000)
 
-        self.formLayout.setWidget(5, QFormLayout.FieldRole, self.sb_bend_radius)
-
-        self.label_7 = QLabel(self.tab_generate)
-        self.label_7.setObjectName(u"label_7")
-
-        self.formLayout.setWidget(5, QFormLayout.LabelRole, self.label_7)
-
-        self.sb_height_offset_2 = QDoubleSpinBox(self.tab_generate)
-        self.sb_height_offset_2.setObjectName(u"sb_height_offset_2")
-        self.sb_height_offset_2.setMinimum(10.000000000000000)
-        self.sb_height_offset_2.setMaximum(200.000000000000000)
-        self.sb_height_offset_2.setValue(129.000000000000000)
-
-        self.formLayout.setWidget(7, QFormLayout.FieldRole, self.sb_height_offset_2)
+        self.formLayout.setWidget(4, QFormLayout.FieldRole, self.sb_bend_radius)
 
         self.label_8 = QLabel(self.tab_generate)
         self.label_8.setObjectName(u"label_8")
 
-        self.formLayout.setWidget(7, QFormLayout.LabelRole, self.label_8)
+        self.formLayout.setWidget(5, QFormLayout.LabelRole, self.label_8)
+
+        self.sb_tandem_length = QDoubleSpinBox(self.tab_generate)
+        self.sb_tandem_length.setObjectName(u"sb_tandem_length")
+        self.sb_tandem_length.setMinimum(10.000000000000000)
+        self.sb_tandem_length.setMaximum(500.000000000000000)
+        self.sb_tandem_length.setValue(129.000000000000000)
+
+        self.formLayout.setWidget(5, QFormLayout.FieldRole, self.sb_tandem_length)
+
+        self.btn_apply = QPushButton(self.tab_generate)
+        self.btn_apply.setObjectName(u"btn_apply")
+
+        self.formLayout.setWidget(8, QFormLayout.SpanningRole, self.btn_apply)
+
+        self.btn_clear_generate = QPushButton(self.tab_generate)
+        self.btn_clear_generate.setObjectName(u"btn_clear_generate")
+
+        self.formLayout.setWidget(9, QFormLayout.SpanningRole, self.btn_clear_generate)
+
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.formLayout.setItem(10, QFormLayout.SpanningRole, self.verticalSpacer)
 
         self.tabWidget.addTab(self.tab_generate, "")
 
@@ -160,8 +150,9 @@ class Ui_Tandem_View(object):
 #if QT_CONFIG(shortcut)
         self.label.setBuddy(self.sp_channel_diameter)
         self.label_2.setBuddy(self.sp_tip_diameter)
-        self.label_3.setBuddy(self.sp_tip_thickness)
         self.label_4.setBuddy(self.sp_tip_angle)
+        self.label_7.setBuddy(self.sb_bend_radius)
+        self.label_8.setBuddy(self.sb_tandem_length)
 #endif // QT_CONFIG(shortcut)
 
         self.retranslateUi(Tandem_View)
@@ -181,20 +172,18 @@ class Ui_Tandem_View(object):
         self.btn_clear_import.setText(QCoreApplication.translate("Tandem_View", u"clear", None))
         self.label_5.setText(QCoreApplication.translate("Tandem_View", u"Model Details", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_import), QCoreApplication.translate("Tandem_View", u"import", None))
-        self.btn_apply.setText(QCoreApplication.translate("Tandem_View", u"apply", None))
-        self.label.setText(QCoreApplication.translate("Tandem_View", u"channel diameter", None))
+        self.label.setText(QCoreApplication.translate("Tandem_View", u"Channel Diameter", None))
         self.sp_channel_diameter.setSuffix(QCoreApplication.translate("Tandem_View", u" mm", None))
-        self.label_2.setText(QCoreApplication.translate("Tandem_View", u"tip diameter", None))
+        self.label_2.setText(QCoreApplication.translate("Tandem_View", u"Tip Diameter", None))
         self.sp_tip_diameter.setSuffix(QCoreApplication.translate("Tandem_View", u" mm", None))
-        self.label_3.setText(QCoreApplication.translate("Tandem_View", u"tip thickness", None))
-        self.sp_tip_thickness.setSuffix(QCoreApplication.translate("Tandem_View", u" mm", None))
-        self.label_4.setText(QCoreApplication.translate("Tandem_View", u"tip angle", None))
+        self.label_4.setText(QCoreApplication.translate("Tandem_View", u"Tip Angle", None))
         self.sp_tip_angle.setSuffix(QCoreApplication.translate("Tandem_View", u" deg", None))
-        self.btn_clear_generate.setText(QCoreApplication.translate("Tandem_View", u"clear", None))
+        self.label_7.setText(QCoreApplication.translate("Tandem_View", u"Bend Radius", None))
         self.sb_bend_radius.setSuffix(QCoreApplication.translate("Tandem_View", u" mm", None))
-        self.label_7.setText(QCoreApplication.translate("Tandem_View", u"bend radius", None))
-        self.sb_height_offset_2.setSuffix(QCoreApplication.translate("Tandem_View", u" mm", None))
-        self.label_8.setText(QCoreApplication.translate("Tandem_View", u"tandem length", None))
+        self.label_8.setText(QCoreApplication.translate("Tandem_View", u"Tandem Height", None))
+        self.sb_tandem_length.setSuffix(QCoreApplication.translate("Tandem_View", u" mm", None))
+        self.btn_apply.setText(QCoreApplication.translate("Tandem_View", u"apply", None))
+        self.btn_clear_generate.setText(QCoreApplication.translate("Tandem_View", u"clear", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_generate), QCoreApplication.translate("Tandem_View", u"generate", None))
     # retranslateUi
 

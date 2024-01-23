@@ -87,30 +87,10 @@
        <string>generate</string>
       </attribute>
       <layout class="QFormLayout" name="formLayout">
-       <item row="9" column="0" colspan="2">
-        <widget class="QPushButton" name="btn_apply">
-         <property name="text">
-          <string>apply</string>
-         </property>
-        </widget>
-       </item>
-       <item row="11" column="0" colspan="2">
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
        <item row="0" column="0">
         <widget class="QLabel" name="label">
          <property name="text">
-          <string>channel diameter</string>
+          <string>Channel Diameter</string>
          </property>
          <property name="buddy">
           <cstring>sp_channel_diameter</cstring>
@@ -133,7 +113,7 @@
        <item row="2" column="0">
         <widget class="QLabel" name="label_2">
          <property name="text">
-          <string>tip diameter</string>
+          <string>Tip Diameter</string>
          </property>
          <property name="buddy">
           <cstring>sp_tip_diameter</cstring>
@@ -148,47 +128,33 @@
         </widget>
        </item>
        <item row="3" column="0">
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string>tip thickness</string>
-         </property>
-         <property name="buddy">
-          <cstring>sp_tip_thickness</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QDoubleSpinBox" name="sp_tip_thickness">
-         <property name="suffix">
-          <string> mm</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
         <widget class="QLabel" name="label_4">
          <property name="text">
-          <string>tip angle</string>
+          <string>Tip Angle</string>
          </property>
          <property name="buddy">
           <cstring>sp_tip_angle</cstring>
          </property>
         </widget>
        </item>
-       <item row="4" column="1">
+       <item row="3" column="1">
         <widget class="QDoubleSpinBox" name="sp_tip_angle">
          <property name="suffix">
           <string> deg</string>
          </property>
         </widget>
        </item>
-       <item row="10" column="0" colspan="2">
-        <widget class="QPushButton" name="btn_clear_generate">
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_7">
          <property name="text">
-          <string>clear</string>
+          <string>Bend Radius</string>
+         </property>
+         <property name="buddy">
+          <cstring>sb_bend_radius</cstring>
          </property>
         </widget>
        </item>
-       <item row="5" column="1">
+       <item row="4" column="1">
         <widget class="QDoubleSpinBox" name="sb_bend_radius">
          <property name="suffix">
           <string> mm</string>
@@ -202,14 +168,17 @@
         </widget>
        </item>
        <item row="5" column="0">
-        <widget class="QLabel" name="label_7">
+        <widget class="QLabel" name="label_8">
          <property name="text">
-          <string>bend radius</string>
+          <string>Tandem Height</string>
+         </property>
+         <property name="buddy">
+          <cstring>sb_tandem_length</cstring>
          </property>
         </widget>
        </item>
-       <item row="7" column="1">
-        <widget class="QDoubleSpinBox" name="sb_height_offset_2">
+       <item row="5" column="1">
+        <widget class="QDoubleSpinBox" name="sb_tandem_length">
          <property name="suffix">
           <string> mm</string>
          </property>
@@ -217,19 +186,39 @@
           <double>10.000000000000000</double>
          </property>
          <property name="maximum">
-          <double>200.000000000000000</double>
+          <double>500.000000000000000</double>
          </property>
          <property name="value">
           <double>129.000000000000000</double>
          </property>
         </widget>
        </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="label_8">
+       <item row="8" column="0" colspan="2">
+        <widget class="QPushButton" name="btn_apply">
          <property name="text">
-          <string>tandem length</string>
+          <string>apply</string>
          </property>
         </widget>
+       </item>
+       <item row="9" column="0" colspan="2">
+        <widget class="QPushButton" name="btn_clear_generate">
+         <property name="text">
+          <string>clear</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="0" colspan="2">
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
