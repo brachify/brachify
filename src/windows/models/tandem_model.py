@@ -19,6 +19,7 @@ TANDEM_TIP_DIAMETER_DEFAULT = 8.0
 TANDEM_TIP_THICKNESS_DEFAULT = 12.0
 TANDEM_TIP_ANGLE_DEFAULT = 30.0
 TANDEM_TIP_HEIGHT_DEFAULT = 129.0
+TANDEM_BEND_RADIUS = 35.0
 
 
 class TandemModel(QObject):
@@ -48,8 +49,12 @@ class TandemModel(QObject):
         self.update()
 
     def set_tandem(self,
-                   channel_diameter: float, tip_diameter: float,
-                   tip_thickness: float, tip_angle: float):
+                   channel_diameter: float, 
+                   tip_diameter: float,
+                   tip_thickness: float, 
+                   tip_angle: float,
+                   bend_radius: float,
+                   tandem_length: float):
 
         log.debug(f"setting tandem")
         self.filepath = ""
@@ -59,6 +64,8 @@ class TandemModel(QObject):
         self.tip_diameter = tip_diameter
         self.tip_thickness = tip_thickness
         self.tip_angle = tip_angle
+        self.bend_radius = bend_radius
+        self.tandem_length = tandem_length
 
         self._generate_tandem()
 
@@ -142,6 +149,8 @@ class TandemModel(QObject):
         tandem.stopper_diameter = self.tip_diameter
         tandem.stopper_length = self.tip_thickness
         tandem.tandem_angle = self.tip_angle
+        tandem.bend_radius = self.bend_radius
+        tandem.tandem_height = self.tandem_length
 
         tandem.cylinder_height = self.cylinder_length
         tandem.cylinder_diameter = self.cylinder_diameter
@@ -166,6 +175,8 @@ class TandemModel(QObject):
         self.stopper_diameter = TANDEM_TIP_DIAMETER_DEFAULT
         self.stopper_length = TANDEM_TIP_THICKNESS_DEFAULT
         self.tandem_angle = TANDEM_TIP_ANGLE_DEFAULT
+        self.bend_radius = TANDEM_BEND_RADIUS
+        self.tandem_length = TANDEM_TIP_HEIGHT_DEFAULT
 
         # generated tandem settings
         self.channel_diameter = TANDEM_CHANNEL_DIAMETER_DEFAULT

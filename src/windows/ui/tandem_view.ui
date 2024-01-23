@@ -209,7 +209,7 @@
         </widget>
        </item>
        <item row="7" column="1">
-        <widget class="QDoubleSpinBox" name="sb_height_offset_2">
+        <widget class="QDoubleSpinBox" name="sb_tandem_length">
          <property name="suffix">
           <string> mm</string>
          </property>
@@ -217,7 +217,7 @@
           <double>10.000000000000000</double>
          </property>
          <property name="maximum">
-          <double>200.000000000000000</double>
+          <double>500.000000000000000</double>
          </property>
          <property name="value">
           <double>129.000000000000000</double>

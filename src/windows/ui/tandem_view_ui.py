@@ -140,13 +140,13 @@ class Ui_Tandem_View(object):
 
         self.formLayout.setWidget(5, QFormLayout.LabelRole, self.label_7)
 
-        self.sb_height_offset_2 = QDoubleSpinBox(self.tab_generate)
-        self.sb_height_offset_2.setObjectName(u"sb_height_offset_2")
-        self.sb_height_offset_2.setMinimum(10.000000000000000)
-        self.sb_height_offset_2.setMaximum(200.000000000000000)
-        self.sb_height_offset_2.setValue(129.000000000000000)
+        self.sb_tandem_length = QDoubleSpinBox(self.tab_generate)
+        self.sb_tandem_length.setObjectName(u"sb_tandem_length")
+        self.sb_tandem_length.setMinimum(10.000000000000000)
+        self.sb_tandem_length.setMaximum(500.000000000000000)
+        self.sb_tandem_length.setValue(129.000000000000000)
 
-        self.formLayout.setWidget(7, QFormLayout.FieldRole, self.sb_height_offset_2)
+        self.formLayout.setWidget(7, QFormLayout.FieldRole, self.sb_tandem_length)
 
         self.label_8 = QLabel(self.tab_generate)
         self.label_8.setObjectName(u"label_8")
@@ -193,7 +193,7 @@ class Ui_Tandem_View(object):
         self.btn_clear_generate.setText(QCoreApplication.translate("Tandem_View", u"clear", None))
         self.sb_bend_radius.setSuffix(QCoreApplication.translate("Tandem_View", u" mm", None))
         self.label_7.setText(QCoreApplication.translate("Tandem_View", u"bend radius", None))
-        self.sb_height_offset_2.setSuffix(QCoreApplication.translate("Tandem_View", u" mm", None))
+        self.sb_tandem_length.setSuffix(QCoreApplication.translate("Tandem_View", u" mm", None))
         self.label_8.setText(QCoreApplication.translate("Tandem_View", u"tandem length", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_generate), QCoreApplication.translate("Tandem_View", u"generate", None))
     # retranslateUi

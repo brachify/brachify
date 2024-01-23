@@ -29,7 +29,9 @@ class TandemView(CustomView):
             channel_diameter=self.ui.sp_channel_diameter.value(),
             tip_diameter=self.ui.sp_tip_diameter.value(),
             tip_thickness=self.ui.sp_tip_thickness.value(),
-            tip_angle=self.ui.sp_tip_angle.value()
+            tip_angle=self.ui.sp_tip_angle.value(),
+            bend_radius= self.ui.sb_bend_radius.value(),
+            tandem_length= self.ui.sb_tandem_length.value()
         )
 
     @display_action
@@ -79,6 +81,12 @@ class TandemView(CustomView):
         tip_angle = self.tandemmodel.tip_angle
         self.ui.sp_tip_angle.setValue(tip_angle)
 
+        bend_radius = self.tandemmodel.bend_radius
+        self.ui.sb_bend_radius.setValue(bend_radius)
+
+        tandem_length = self.tandemmodel.tandem_length
+        self.ui.sb_height_offset.setValue(tandem_length)
+
         filepath = self.tandemmodel.filepath
         self.ui.label_5.setText(f"Model filepath:\n{filepath}")
 
@@ -93,7 +101,6 @@ class TandemView(CustomView):
         self.ui.btn_clear_generate.pressed.connect(self.action_clear_tandem)
         self.ui.btn_import.pressed.connect(self.action_import_tandem)
         self.ui.btn_clear_import.pressed.connect(self.action_clear_tandem)
-        self.ui.sb_height_offset.valueChanged.connect(
-            self.action_set_import_offset)
+        self.ui.sb_height_offset.valueChanged.connect(self.action_set_import_offset)
 
         self.update_settings()
