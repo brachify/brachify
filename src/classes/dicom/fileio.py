@@ -309,6 +309,7 @@ def load_nucletron_dicom_data(rp_file: str, rs_file: str) -> DicomData:
                 if rp_dataset[0x300f,0x1000][0][0x3006,0x0020][i][0x3006,0x0026]._value in ['Center Ref Channel', "Central Axis"]:
                     # centralaxisrefROINumber = i
                     center_index = i
+                    data.central_channel_roi = i
             except:
                 pass
             if center_index is not None: 

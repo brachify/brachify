@@ -22,7 +22,7 @@ class Tandem():
     tandem_angle: float = 60.0
     bend_radius: float = 35.0
     tandem_length: float = 8.0
-    height_offset = 0
+    height_offset = 10.0
 
     stopper_enabled = True
     stopper_length = 8.0
