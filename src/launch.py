@@ -35,8 +35,8 @@ def main():
 
         # close the splash screen if any
         try:
-            import pyi_splash
-            pyi_splash.close()
+            # import pyi_splash
+            # pyi_splash.close()
             app.window.activateWindow()
         except:
             pass
