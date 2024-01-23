@@ -85,6 +85,7 @@ def load_central_axis_varian(data: DicomData, rs_dataset):
     data.cylinder_diameter = DEFAULT_CYLINDER_DIAMETER  # hardcoded default. user needs to be flagged...
     data.cylinder_direction = data.cylinder_tip - data.cylinder_base   
 
+
 def load_central_axis_nucletron(data: DicomData, rs_dataset):
 
     for sequence in rs_dataset.ROIContourSequence:
@@ -140,6 +141,7 @@ def load_channels_varian(data: DicomData, rs_dataset):
         channel_paths.append(list(list(points) for points in new_points))
     data.channel_paths = channel_paths
 
+
 def load_channels_nucletron(data: DicomData, rs_dataset):
     channel_contours = list(filter(lambda sequence: (sequence.ReferencedROINumber in data.channels_rois),
                                     rs_dataset.ROIContourSequence))
@@ -177,6 +179,7 @@ def load_channels_nucletron(data: DicomData, rs_dataset):
         new_points = new_points + offset_vector
         channel_paths.append(list(list(points) for points in new_points))
     data.channel_paths = channel_paths
+
 
 def load_cylinder_contour(data: DicomData, rs_dataset):
     data.cylinder_roi = list(filter(lambda s: ("surface" in s.ROIObservationLabel.lower()),
@@ -269,6 +272,7 @@ def load_varian_dicom_data(rp_file: str, rs_file: str) -> DicomData:
     log.debug(f"{data.toString()}")
     return data
 
+
 def load_nucletron_dicom_data(rp_file: str, rs_file: str) -> DicomData:
     data = DicomData()
     # oncentraflag = False
@@ -344,7 +348,6 @@ def load_nucletron_dicom_data(rp_file: str, rs_file: str) -> DicomData:
 
     log.debug(f"{data.toString()}")
     return data
-
 
 
 def read_dicom_folder(folder_path: str):
