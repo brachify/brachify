@@ -70,6 +70,25 @@ def is_rs_file(filepath: str) -> bool:
 
 
 def load_central_axis_varian(data: DicomData, rs_dataset):
+<<<<<<< HEAD
+=======
+
+    for sequence in rs_dataset.ROIContourSequence:
+        if sequence.ReferencedROINumber == data.central_channel_roi:
+            central_channel = sequence
+            break
+
+    channel_contour_raw = central_channel.ContourSequence[0].ContourData
+    points = [channel_contour_raw[i:i + 3] for i in range(0, len(channel_contour_raw), 3)]
+    data.central_channel = points
+
+    data.cylinder_tip = np.asarray(data.central_channel[0])
+    data.cylinder_base = np.asarray(data.central_channel[-1])
+    data.cylinder_diameter = DEFAULT_CYLINDER_DIAMETER  # hardcoded default. user needs to be flagged...
+    data.cylinder_direction = data.cylinder_tip - data.cylinder_base   
+
+def load_central_axis_nucletron(data: DicomData, rs_dataset):
+>>>>>>> 5505d6b (first commit - halfway there)
 
     for sequence in rs_dataset.ROIContourSequence:
         if sequence.ReferencedROINumber == data.central_channel_roi:
@@ -86,6 +105,7 @@ def load_central_axis_varian(data: DicomData, rs_dataset):
     data.cylinder_direction = data.cylinder_tip - data.cylinder_base   
 
 
+<<<<<<< HEAD
 def load_central_axis_nucletron(data: DicomData, rs_dataset):
 
     for sequence in rs_dataset.ROIContourSequence:
@@ -143,6 +163,9 @@ def load_channels_varian(data: DicomData, rs_dataset):
 
 
 def load_channels_nucletron(data: DicomData, rs_dataset):
+=======
+def load_channels_varian(data: DicomData, rs_dataset):
+>>>>>>> 5505d6b (first commit - halfway there)
     channel_contours = list(filter(lambda sequence: (sequence.ReferencedROINumber in data.channels_rois),
                                     rs_dataset.ROIContourSequence))
 
@@ -180,6 +203,43 @@ def load_channels_nucletron(data: DicomData, rs_dataset):
         channel_paths.append(list(list(points) for points in new_points))
     data.channel_paths = channel_paths
 
+def load_channels_nucletron(data: DicomData, rs_dataset):
+    channel_contours = list(filter(lambda sequence: (sequence.ReferencedROINumber in data.channels_rois),
+                                    rs_dataset.ROIContourSequence))
+
+    # channel points are a single array dividable by 3
+    # so for each channel, take those three points and put them into a small 3 list
+    channel_contour_points = []
+    for channel in channel_contours:
+        points = [[
+            channel.ContourSequence[0].ContourData[i],
+            channel.ContourSequence[0].ContourData[i + 1],
+            channel.ContourSequence[0].ContourData[i + 2]]
+            for i in range(0, len(channel.ContourSequence[0].ContourData), 3)
+        ]
+        channel_contour_points.append(points)
+    data.channel_contours = channel_contour_points
+
+    channel_paths = []
+    # use the brachy cylinder to offset the points
+    # z axis reference, the direction we want the cylinder and needles to go
+    z_up = np.array([0, 0, 1])
+    base = data.cylinder_base  # transform offset
+    cyl_vec = data.cylinder_direction  # rotation offset
+    cyl_length = np.linalg.norm(cyl_vec)
+    
+    # normalized direction from tip to base
+    from classes.mesh.cylinder import DEFAULT_LENGTH
+    offset_vector = np.array([0, 0, - cyl_length + DEFAULT_LENGTH])
+
+    updated_base = helper.rotate_points(base, cyl_vec, z_up)
+    for i, c in enumerate(channel_contour_points):
+        new_points = np.array(c)
+        new_points = helper.rotate_points(new_points, cyl_vec, z_up)
+        new_points = np.array(new_points) - updated_base
+        new_points = new_points + offset_vector
+        channel_paths.append(list(list(points) for points in new_points))
+    data.channel_paths = channel_paths
 
 def load_cylinder_contour(data: DicomData, rs_dataset):
     data.cylinder_roi = list(filter(lambda s: ("surface" in s.ROIObservationLabel.lower()),
@@ -266,6 +326,7 @@ def load_varian_dicom_data(rp_file: str, rs_file: str) -> DicomData:
         # channels info
         if data.channels_rois:
             load_channels_varian(data, rs_dataset)
+<<<<<<< HEAD
     except Exception as error_message:
         log.error(f"Loading RS Dicom file failed! {rs_file}\n{error_message}")
 
@@ -343,11 +404,90 @@ def load_nucletron_dicom_data(rp_file: str, rs_file: str) -> DicomData:
         # channels info
         if data.channels_rois:
             load_channels_nucletron(data, rs_dataset)
+=======
+>>>>>>> 5505d6b (first commit - halfway there)
     except Exception as error_message:
         log.error(f"Loading RS Dicom file failed! {rs_file}\n{error_message}")
 
     log.debug(f"{data.toString()}")
     return data
+
+def load_nucletron_dicom_data(rp_file: str, rs_file: str) -> DicomData:
+    data = DicomData()
+    # oncentraflag = False
+    # if rp_dataset.Manufacturer == "Nucletron":
+        # oncentraflag = True
+    # Channel ROI Numbers
+    try:
+        # we use the Planning file to get the channel ROI numbers
+        rp_dataset = pydicom.read_file(rp_file)
+        # data.channels_rois = [
+        #     roi.ReferencedROINumber for roi in rp_dataset.ApplicationSetupSequence[0].ChannelSequence]
+        data.channels_labels = [
+            roi.SourceApplicatorID for roi in rp_dataset.ApplicationSetupSequence[0].ChannelSequence]
+        data.patient_name = rp_dataset.PatientName.family_name
+        data.patient_id = rp_dataset.PatientID
+        data.plan_label = rp_dataset.RTPlanLabel
+    except Exception as error_message:
+        log.error(f"Reading RP Dicom file failed! {rp_file}\n{error_message}")
+
+    # Central Axis data
+    try:
+        # CHECK IF A CENTRAL AXIS NEEDLE IS LABELED/USED
+        # centralaxisrefROINumber = None
+        center_index = None
+        for i, label in enumerate(data.channels_labels):
+            # for mylabel in ["Central Axis", "centralaxis"]:
+                # if mylabel.lower() in label.lower():
+                #     centralaxisrefROINumber = data.channels_rois[i]
+                #     center_index = i
+                #     break
+                # Oncentra hack...not ideal...but works for now.
+                # if not centralaxisrefROINumber:
+            try:
+                if rp_dataset[0x300f,0x1000][0][0x3006,0x0020][i][0x3006,0x0026]._value in ['Center Ref Channel', "Central Axis"]:
+                    # centralaxisrefROINumber = i
+                    center_index = i
+            except:
+                pass
+            if center_index is not None: 
+                log.debug(f"Found central axis at channel {center_index}")
+                break
+
+
+    except Exception as error_message:
+        log.error(f"Error locating central axis: {error_message}")    
+
+    # IF THERE'S A CENTRAL AXIS, ADD IT TO DATA AND REMOVE IT FROM THE LIST
+    if center_index is not None:
+        # data.central_channel_roi = data.channels_rois[center_index]
+        data.channels_labels.pop(center_index)
+        # data.channels_rois.pop(center_index)
+
+    # Contour Data
+    try:
+        # We use the RS file to get the Applicator's ROI and contour data
+        # We also use it to get the channel ROI data if we have their ROIS
+        rs_dataset = pydicom.read_file(rs_file)
+
+        # cylinder from contour
+        try:
+            if center_index is not None:  # if a central axis channel was found
+                load_central_axis_nucletron(data, rs_dataset)
+            else:  # use a surface contour for the cylinder
+                load_cylinder_contour(data, rs_dataset)
+        except Exception as error_message:
+            log.error(f"Loading RS Dicom surface struct or no central axis identified! {rs_file}\n{error_message}")
+        
+        # channels info
+        if data.channels_rois:
+            load_channels_nucletron(data, rs_dataset)
+    except Exception as error_message:
+        log.error(f"Loading RS Dicom file failed! {rs_file}\n{error_message}")
+
+    log.debug(f"{data.toString()}")
+    return data
+
 
 
 def read_dicom_folder(folder_path: str):
