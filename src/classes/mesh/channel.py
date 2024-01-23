@@ -13,7 +13,7 @@ from OCC.Core.TopoDS import TopoDS_Shape
 import classes.mesh.helper as helper
 from classes.logger import log
 
-NEEDLE_LENGTH = 2.50
+TIP_LENGTH = 2.5
 DEFAULT_DIAMETER = 3.0
 
 
@@ -101,11 +101,22 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
 
     # offset points using z axis and cylinder's offset
     # and convert into a gp_Pnt
-    # rounding is needed otherwise there can be a bug in pipe = BRepAlgoAPI_Fuse(cone, pipe).Shape() below.
-    channel_points = np.round(channel_points,3)
+    # rounding/truncation is needed otherwise there can be a bug in pipe = BRepAlgoAPI_Fuse(cone, pipe).Shape() below.
+
+    channel_points = np.array(channel_points)
+    
+    # apply the offset for the cylinder length
+    channel_points[:,2] += offset
+
+    # Number of decimal places to keep
+    decimals = 5 
+
+    # Truncate without rounding
+    channel_points = np.floor(channel_points * 10**decimals) / 10**decimals
+
     points = []
     for point in channel_points:
-        points.append(gp_Pnt(point[0], point[1], point[2] + offset))
+        points.append(gp_Pnt(point[0], point[1], point[2]))
 
     radius = diameter / 2
 
@@ -113,10 +124,10 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
     p1 = points[0]
     p2 = points[1]
     length = helper.get_magnitude(p1, p2)
-    if length < NEEDLE_LENGTH:
+    if length < TIP_LENGTH:
         pipe = _cone_pipe(p1, p2, radius)
     else:
-        vector = helper.get_vector(p1, p2, length=NEEDLE_LENGTH)
+        vector = helper.get_vector(p1, p2, length=TIP_LENGTH)
         p_mid = gp_Pnt(p1.X() + vector.X(), p1.Y() +
                        vector.Y(), p1.Z() + vector.Z())
         cone = _cone_pipe(p1, p_mid, radius)
