@@ -1,8 +1,6 @@
 import numpy as np
 from pathlib import Path
-
 import pydicom
-
 from classes.logger import log
 from classes.dicom.data import DicomData
 from classes.mesh.cylinder import BrachyCylinder
@@ -85,6 +83,7 @@ def load_central_axis_varian(data: DicomData, rs_dataset):
     data.cylinder_diameter = DEFAULT_CYLINDER_DIAMETER  # hardcoded default. user needs to be flagged...
     data.cylinder_direction = data.cylinder_tip - data.cylinder_base   
 
+
 def remove_collinear_points(points):
     def is_collinear(p1, p2, p3):
         """Check if three points are collinear"""
@@ -106,6 +105,7 @@ def remove_collinear_points(points):
     filtered_points.append(points[-1])
 
     return filtered_points
+
 
 def load_central_axis_nucletron(data: DicomData, rp_dataset):
 
@@ -270,6 +270,52 @@ def load_varian_dicom_data(rp_file: str, rs_file: str) -> DicomData:
         # We also use it to get the channel ROI data if we have their ROIS
         rs_dataset = pydicom.read_file(rs_file)
 
+        # Test
+        contours = []
+        for contour in rs_dataset.ROIContourSequence[0].ContourSequence:
+            contours.append(contour.ContourData)
+        channel_contour_points_strings = []
+        for channel in contours:
+            points = [[
+                channel[i],
+                channel[i + 1],
+                channel[i + 2]]
+                for i in range(0, len(channel), 3)
+            ]
+            channel_contour_points_strings.append(points)
+
+        import matplotlib.pyplot as plt
+        import numpy as np
+        from mpl_toolkits.mplot3d import Axes3D
+
+        list_of_lists_of_string_points = channel_contour_points_strings
+
+        # Convert string lists to numpy arrays of floats
+        list_of_numeric_arrays = []
+        for sublist in list_of_lists_of_string_points:
+            numeric_sublist = [np.array(point, dtype=float) for point in sublist]
+            list_of_numeric_arrays.append(np.array(numeric_sublist))
+
+        # Create a 3D plot
+        fig = plt.figure()
+        ax = fig.add_subplot(111, projection='3d')
+
+        # Colors and markers for each array
+        colors = ['r', 'g', 'b', 'r', 'g', 'b', 'r', 'g', 'b', 'r', 'g', 'b']  # red, green, blue
+        markers = ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.']  # circle, triangle, square
+
+        # Plot each array
+        for arr, color, marker in zip(list_of_numeric_arrays, colors, markers):
+            for point in arr:
+                ax.scatter(point[0], point[1], point[2], c=color, marker=marker)
+
+        # Labeling axes
+        ax.set_xlabel('X axis')
+        ax.set_ylabel('Y axis')
+        ax.set_zlabel('Z axis')
+
+        plt.show()
+
         # cylinder from contour
         try:
             if data.central_channel_roi:  # if a central axis channel was found
@@ -338,7 +384,7 @@ def load_nucletron_dicom_data(rp_file: str, rs_file: str) -> DicomData:
     try:
         # We use the RS file to get the Applicator's ROI and contour data
         # We also use it to get the channel ROI data if we have their ROIS
-        rs_dataset = pydicom.read_file(rs_file) #not using, since elekta stores their channels in the rp file
+        rs_dataset = pydicom.read_file(rs_file) #not using, since elekta stores their channels in the rp file. or do they?
 
         # cylinder from contour
         try:
