@@ -66,6 +66,8 @@ class TandemModel(QObject):
 
         self._generate_tandem()
 
+        self._display_shape = self.raw_shape()
+
         self.update()
 
     def set_tandem_channel(self, channel: NeedleChannel):
@@ -98,6 +100,24 @@ class TandemModel(QObject):
             shape = extend_bottom_face(shape)
 
         return shape
+
+    def raw_shape(self):
+        log.debug(f"display shape being generated")
+        tandem = Tandem()
+
+        tandem.tandem_diameter = self.tandem_diameter
+        tandem.stopper_diameter = self.tip_diameter
+        tandem.tandem_angle = self.tip_angle
+        tandem.bend_radius = self.bend_radius
+        tandem.tandem_height = self.tandem_length
+
+        tandem.cylinder_height = self.cylinder_length
+        tandem.cylinder_diameter = self.cylinder_diameter
+
+        rotation = self.rotation
+
+        self._display_shape = rotate_shape(shape=tandem.tandem_shape(), axis=gp.OZ(), angle=rotation)
+        return self._display_shape
 
     def update(self):
         log.debug(f"updating")
@@ -156,6 +176,7 @@ class TandemModel(QObject):
     def __init__(self) -> None:
         super().__init__()
         self._base_shape = None  # base shape before extending due to height offset
+        self._display_shape = None  # used to show tandem in export view
         self.height_offset = 0.0
         self.rotation = 0.0
         self.filepath = None

@@ -55,7 +55,7 @@ class Tandem():
 
     def generate_shape(self) -> TopoDS_Shape:
         # create tandem
-        tandem = self.tandem_shape()
+        tandem = self.tandem_tool_shape()
         # create stopper, if needed
         stopper = self.stopper_shape()
         # combine stopper to tandem
@@ -123,9 +123,9 @@ class Tandem():
 
         return fuse_shapes([channel_shape, tandem_shape, infil_shape])
 
-    def tandem_shape(self) -> TopoDS_Shape:
+    def tandem_tool_shape(self) -> TopoDS_Shape:
         """
-        Generate the points, edges, wires and then shapes for the tandem and outputs a shape
+        Generate the points, edges, wires and then shapes for the tandem and outputs a shape to subtract from the cylinder
         """
 
         # if angle = 0, it's a straight line
@@ -290,6 +290,74 @@ class Tandem():
         self.bend_end = bend_end_3d
 
         return fuse_shapes([shape_channel, shape_interior, shape_bend])
+
+    def tandem_shape(self) -> TopoDS_Shape:
+            # if angle = 0, it's a straight line
+        if self.tandem_angle < 0.1:
+            pass  # TODO
+
+        # variables used
+        tandem_radius = self.tandem_diameter / 2
+        tandem_height = self.tandem_height
+        bend_radius = self.bend_radius
+
+        origin = gp_Pnt2d(0, 0)
+        bend_start = gp_Pnt2d(0, tandem_height)
+        bend_origin = gp_Pnt2d(bend_radius, tandem_height)
+
+        bend_rads = math.radians(180-self.tandem_angle)
+        x = math.cos(bend_rads)
+        y = math.sin(bend_rads)
+        bend_direction = gp_Dir2d(x, y)
+        bend_circle = gp_Circ2d(
+            gp_Ax22d(bend_origin, bend_direction), bend_radius)
+        bend_line = gp_Lin2d(bend_origin, bend_direction)
+
+        line_curve = Geom2d_Line(bend_line)
+        bend_curve = Geom2d_Circle(bend_circle)
+        bend_end = intersection2d(line_curve, bend_curve)
+
+        new_line = bend_line.Rotated(bend_end, math.radians(-90))
+        vector = gp_Vec2d(new_line.Direction()) * 50.0  # placeholder
+
+        # to 3D points
+        def to_3d(point: gp_Pnt2d):
+            return gp_Pnt(point.X(), 0, point.Y())
+
+        origin_3d = to_3d(origin)
+        bend_origin_3d = to_3d(bend_origin)
+        bend_start_3d = to_3d(bend_start)
+        bend_end_3d = to_3d(bend_end)
+        tandem_end_3d = to_3d(gp_Pnt2d(bend_end.X() + vector.X(), bend_end.Y() + vector.Y()))        
+        
+        # edges
+        edge1 = make_edge(origin_3d, bend_start_3d)
+
+        axis = gp_Ax2(bend_origin_3d, gp_Dir(0, 1, 0))
+        circle = gp_Circ(axis, bend_radius)
+        arc = GC_MakeArcOfCircle(
+            circle, bend_start_3d, bend_end_3d, True).Value()
+        edge_bend = BRepBuilderAPI_MakeEdge(arc).Edge()
+
+        edge2 = make_edge(bend_end_3d, tandem_end_3d)
+
+        # wire
+        wire = BRepBuilderAPI_MakeWire(edge1, edge_bend, edge2).Wire()
+
+        # shape
+        bend_profile = BRepBuilderAPI_MakeWire(
+            BRepBuilderAPI_MakeEdge(
+                gp_Circ(
+                    gp_Ax2(bend_start_3d, gp_Dir(0, 0, 1)),
+                    tandem_radius)
+            ).Edge()
+        ).Wire()
+
+        pipe = BRepFill_PipeShell(wire)
+        pipe.Add(bend_profile)
+        pipe.Build()
+        pipe.MakeSolid()
+        return pipe.Shape()
 
     def __init__(self, *args, **kwargs):
         pass
