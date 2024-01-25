@@ -114,9 +114,7 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
     # Truncate without rounding
     channel_points = np.floor(channel_points * 10**decimals) / 10**decimals
 
-    points = []
-    for point in channel_points:
-        points.append(gp_Pnt(point[0], point[1], point[2]))
+    points = [gp_Pnt(point[0], point[1], point[2]) for point in channel_points]
 
     radius = diameter / 2
 
