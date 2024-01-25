@@ -27,10 +27,10 @@ class TandemView(CustomView):
 
         self.tandemmodel.set_tandem(
             channel_diameter=self.ui.sp_channel_diameter.value(),
-            tip_diameter=self.ui.sp_tip_diameter.value(),
-            tip_angle=self.ui.sp_tip_angle.value(),
+            stopper_diameter=self.ui.sp_stopper_diameter.value(),
+            tip_angle=self.ui.sp_bend_angle.value(),
             bend_radius= self.ui.sb_bend_radius.value(),
-            tandem_length= self.ui.sb_tandem_length.value()
+            tandem_length= self.ui.sb_tandem_height.value()
         )
 
     @display_action
@@ -71,11 +71,11 @@ class TandemView(CustomView):
         channel_diameter = self.tandemmodel.channel_diameter
         self.ui.sp_channel_diameter.setValue(channel_diameter)
 
-        tip_diameter = self.tandemmodel.tip_diameter
-        self.ui.sp_tip_diameter.setValue(tip_diameter)
+        stopper_diameter = self.tandemmodel.stopper_diameter
+        self.ui.sp_stopper_diameter.setValue(stopper_diameter)
 
         tip_angle = self.tandemmodel.tip_angle
-        self.ui.sp_tip_angle.setValue(tip_angle)
+        self.ui.sp_bend_angle.setValue(tip_angle)
 
         bend_radius = self.tandemmodel.bend_radius
         self.ui.sb_bend_radius.setValue(bend_radius)
