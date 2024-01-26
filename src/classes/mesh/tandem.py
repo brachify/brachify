@@ -297,7 +297,7 @@ class Tandem():
             pass  # TODO
 
         # variables used
-        tandem_radius = self.tandem_diameter / 2
+        tandem_radius = self.tandem_diameter / 2 - 0.1
         tandem_height = self.tandem_height
         bend_radius = self.bend_radius
 
@@ -357,7 +357,15 @@ class Tandem():
         pipe.Add(bend_profile)
         pipe.Build()
         pipe.MakeSolid()
-        return pipe.Shape()
+
+        # stopper
+        stopper_radius = self.stopper_diameter / 2 - 0.1
+        dir = new_line.Direction()
+        stopper_direction = gp_Dir(dir.X(), 0, dir.Y())
+        stopper_axis = gp_Ax2(bend_end_3d, stopper_direction)
+        cylinder = BRepPrimAPI_MakeCylinder(stopper_axis, stopper_radius, 5.0).Shape()
+
+        return fuse_shapes([pipe.Shape(), cylinder])
 
     def __init__(self, *args, **kwargs):
         pass
