@@ -15,7 +15,7 @@ TANDEM_LABEL = "tandem_shape"
 
 # Defaults
 TANDEM_CHANNEL_DIAMETER_DEFAULT = 4.0
-TANDEM_TIP_DIAMETER_DEFAULT = 8.0
+TANDEM_STOPPER_DIAMETER_DEFAULT = 8.0
 TANDEM_TIP_ANGLE_DEFAULT = 30.0
 TANDEM_TIP_HEIGHT_DEFAULT = 129.0
 TANDEM_BEND_RADIUS = 35.0
@@ -49,7 +49,7 @@ class TandemModel(QObject):
 
     def set_tandem(self,
                    channel_diameter: float, 
-                   tip_diameter: float,
+                   stopper_diameter: float,
                    tip_angle: float,
                    bend_radius: float,
                    tandem_length: float):
@@ -59,12 +59,14 @@ class TandemModel(QObject):
         self.is_shape_imported = False  # used to flag height offsets
 
         self.tandem_diameter = channel_diameter
-        self.tip_diameter = tip_diameter
+        self.stopper_diameter = stopper_diameter
         self.tip_angle = tip_angle
         self.bend_radius = bend_radius
         self.tandem_length = tandem_length
 
         self._generate_tandem()
+
+        self._display_shape = self.raw_shape()
 
         self.update()
 
@@ -98,6 +100,24 @@ class TandemModel(QObject):
             shape = extend_bottom_face(shape)
 
         return shape
+
+    def raw_shape(self):
+        log.debug(f"display shape being generated")
+        tandem = Tandem()
+
+        tandem.tandem_diameter = self.tandem_diameter
+        tandem.stopper_diameter = self.stopper_diameter
+        tandem.tandem_angle = self.tip_angle
+        tandem.bend_radius = self.bend_radius
+        tandem.tandem_height = self.tandem_length
+
+        tandem.cylinder_height = self.cylinder_length
+        tandem.cylinder_diameter = self.cylinder_diameter
+
+        rotation = self.rotation
+
+        self._display_shape = rotate_shape(shape=tandem.tandem_shape(), axis=gp.OZ(), angle=rotation)
+        return self._display_shape
 
     def update(self):
         log.debug(f"updating")
@@ -143,7 +163,7 @@ class TandemModel(QObject):
         tandem = Tandem()
 
         tandem.tandem_diameter = self.tandem_diameter
-        tandem.stopper_diameter = self.tip_diameter
+        tandem.stopper_diameter = self.stopper_diameter
         tandem.tandem_angle = self.tip_angle
         tandem.bend_radius = self.bend_radius
         tandem.tandem_height = self.tandem_length
@@ -156,6 +176,7 @@ class TandemModel(QObject):
     def __init__(self) -> None:
         super().__init__()
         self._base_shape = None  # base shape before extending due to height offset
+        self._display_shape = None  # used to show tandem in export view
         self.height_offset = 0.0
         self.rotation = 0.0
         self.filepath = None
@@ -168,14 +189,13 @@ class TandemModel(QObject):
 
         # tandem settings
         self.tandem_diameter = TANDEM_CHANNEL_DIAMETER_DEFAULT
-        self.stopper_diameter = TANDEM_TIP_DIAMETER_DEFAULT
+        self.stopper_diameter = TANDEM_STOPPER_DIAMETER_DEFAULT
         self.tandem_angle = TANDEM_TIP_ANGLE_DEFAULT
         self.bend_radius = TANDEM_BEND_RADIUS
         self.tandem_length = TANDEM_TIP_HEIGHT_DEFAULT
 
         # generated tandem settings
         self.channel_diameter = TANDEM_CHANNEL_DIAMETER_DEFAULT
-        self.tip_diameter = TANDEM_TIP_DIAMETER_DEFAULT
         self.tip_angle = TANDEM_TIP_ANGLE_DEFAULT
 
         # signals and slots

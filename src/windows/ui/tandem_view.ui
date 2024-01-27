@@ -39,7 +39,7 @@
        <item row="0" column="0">
         <widget class="QLabel" name="label_6">
          <property name="text">
-          <string>height offset</string>
+          <string>Height Offse</string>
          </property>
         </widget>
        </item>
@@ -87,7 +87,7 @@
        <string>generate</string>
       </attribute>
       <layout class="QFormLayout" name="formLayout">
-       <item row="0" column="0">
+       <item row="1" column="0">
         <widget class="QLabel" name="label">
          <property name="text">
           <string>Channel Diameter</string>
@@ -97,7 +97,7 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
+       <item row="1" column="1">
         <widget class="QDoubleSpinBox" name="sp_channel_diameter">
          <property name="maximumSize">
           <size>
@@ -110,47 +110,44 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_2">
+       <item row="9" column="0" colspan="2">
+        <widget class="QPushButton" name="btn_apply">
          <property name="text">
-          <string>Tip Diameter</string>
-         </property>
-         <property name="buddy">
-          <cstring>sp_tip_diameter</cstring>
+          <string>apply</string>
          </property>
         </widget>
        </item>
+       <item row="10" column="0" colspan="2">
+        <widget class="QPushButton" name="btn_clear_generate">
+         <property name="text">
+          <string>clear</string>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="0" colspan="2">
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
        <item row="2" column="1">
-        <widget class="QDoubleSpinBox" name="sp_tip_diameter">
+        <widget class="QDoubleSpinBox" name="sp_stopper_diameter">
          <property name="suffix">
           <string> mm</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_4">
-         <property name="text">
-          <string>Tip Angle</string>
-         </property>
-         <property name="buddy">
-          <cstring>sp_tip_angle</cstring>
-         </property>
-        </widget>
-       </item>
        <item row="3" column="1">
-        <widget class="QDoubleSpinBox" name="sp_tip_angle">
+        <widget class="QDoubleSpinBox" name="sp_bend_angle">
          <property name="suffix">
           <string> deg</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_7">
-         <property name="text">
-          <string>Bend Radius</string>
-         </property>
-         <property name="buddy">
-          <cstring>sb_bend_radius</cstring>
          </property>
         </widget>
        </item>
@@ -167,18 +164,38 @@
          </property>
         </widget>
        </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="label_8">
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_2">
          <property name="text">
-          <string>Tandem Height</string>
+          <string>Stopper Diameter</string>
          </property>
          <property name="buddy">
-          <cstring>sb_tandem_length</cstring>
+          <cstring>sp_stopper_diameter</cstring>
          </property>
         </widget>
        </item>
-       <item row="5" column="1">
-        <widget class="QDoubleSpinBox" name="sb_tandem_length">
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>Bend Angle</string>
+         </property>
+         <property name="buddy">
+          <cstring>sp_bend_angle</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_7">
+         <property name="text">
+          <string>Bend Radius</string>
+         </property>
+         <property name="buddy">
+          <cstring>sb_bend_radius</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QDoubleSpinBox" name="sb_tandem_height">
          <property name="suffix">
           <string> mm</string>
          </property>
@@ -193,32 +210,15 @@
          </property>
         </widget>
        </item>
-       <item row="8" column="0" colspan="2">
-        <widget class="QPushButton" name="btn_apply">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_8">
          <property name="text">
-          <string>apply</string>
+          <string>Tandem Height</string>
+         </property>
+         <property name="buddy">
+          <cstring>sb_tandem_height</cstring>
          </property>
         </widget>
-       </item>
-       <item row="9" column="0" colspan="2">
-        <widget class="QPushButton" name="btn_clear_generate">
-         <property name="text">
-          <string>clear</string>
-         </property>
-        </widget>
-       </item>
-       <item row="10" column="0" colspan="2">
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
      </widget>

@@ -21,7 +21,7 @@ DEFAULT_NEEDLE_LENGTH = 160.0
 materials = {
     ShapeTypes.CYLINDER: {"rgb": [0.2, 0.55, 0.55], "transparent": True},
     ShapeTypes.CHANNEL: {"rgb": [0.2, 0.55, 0.55], "transparent": True},
-    ShapeTypes.TANDEM: {"rgb": [0.2, 0.55, 0], "transparent": True},
+    ShapeTypes.TANDEM: {"rgb": [0.45, 0.45, 0.45], "transparent": True},
     ShapeTypes.SELECTED: {"rgb": [0.2, 0.55, 0.55], "transparent": True},
     ShapeTypes.EXPORT: {"rgb": [0.2, 0.55, 0.55], "transparent": True}
 }
@@ -111,7 +111,7 @@ class Export_View(CustomView):
         # tandem shape
         if self.ui.cb_tandem_shown.isChecked():
             tandemmodel = self.window.tandemmodel
-            tandem = tandemmodel.shape()
+            tandem = tandemmodel.raw_shape()
             if tandem:
                 tandem_shape = ShapeModel(
                     label=tandemmodel.get_label(),
