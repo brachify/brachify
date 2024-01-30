@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>887</width>
-    <height>696</height>
+    <width>901</width>
+    <height>655</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -183,14 +183,14 @@
              </size>
             </property>
             <property name="text">
-             <string>import</string>
+             <string>Import</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="btn_cylinder_view">
             <property name="text">
-             <string>cylinder</string>
+             <string>Cylinder</string>
             </property>
            </widget>
           </item>
@@ -209,21 +209,21 @@
              </size>
             </property>
             <property name="text">
-             <string>channels</string>
+             <string>Channels</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="btn_tandem_view">
             <property name="text">
-             <string>tandem</string>
+             <string>Tandem</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="btn_export_view">
             <property name="text">
-             <string>export</string>
+             <string>Export</string>
             </property>
            </widget>
           </item>
