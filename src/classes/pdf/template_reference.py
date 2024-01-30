@@ -48,7 +48,17 @@ def extract_points_from_channels(channels: list):
     Returns:
         [ [x, y, z], [x, y, z], ...]
     """
-    return [ channel.get_points() for channel in channels]
+    channels_list = []
+    for channel in channels:
+        channel_list = channel.get_points()
+
+        # Append last point at x,y,0 because channel.get_points doesn't include the point at the base for some reason.
+        final_point = channel_list[-1][:]
+        final_point[2] = 0.0
+        channel_list.append(final_point)
+        channels_list.append(channel_list)
+    # channels_list = [ channel.get_points() for channel in channels]
+    return channels_list
 
 
 def get_all_interstitial_lengths(cylinder: BrachyCylinder, needles: list, spacing: float = 0.1) -> list[float]:
