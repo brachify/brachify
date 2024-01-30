@@ -52,6 +52,9 @@ def extract_points_from_channels(channels: list):
     for channel in channels:
         channel_list = channel.get_points()
 
+        # Filter out points where the z value is less than 0, error check.
+        filtered_channel_list = [point for point in channel_list if point[2] > 0]
+
         # Append last point at x,y,0 because channel.get_points doesn't include the point at the base for some reason.
         final_point = channel_list[-1][:]
         final_point[2] = 0.0
