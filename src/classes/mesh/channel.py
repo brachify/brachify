@@ -139,6 +139,10 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
         cylinder = _rounded_pipe(p1, p2, radius)
         pipe = BRepAlgoAPI_Fuse(pipe, cylinder).Shape()
 
+    # if the points extend past z zero, don't extend
+    if points[-1].Z() < 0:
+        return pipe
+
     # curve downwards
     curve = _curved_end(points, radius)
     pipe = BRepAlgoAPI_Fuse(pipe, curve).Shape()
