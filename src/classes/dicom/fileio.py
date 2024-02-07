@@ -189,14 +189,33 @@ def load_channels_nucletron(data: DicomData, rp_dataset):
     # Get the xyz values for each needle that isn't the central needle.
     rp_channels = rp_dataset.ApplicationSetupSequence[0].ChannelSequence
     channel_contours = []
+        
+    try: 
+        raw_rois = list(data.channels_rois)
+        raw_labels = list(data.channels_labels)
+        for i, roi_number in enumerate(raw_rois):
+            channel = rp_channels[roi_number]
+            xyz_positions = []
+            skipping_needle = 0
+            for point in channel.BrachyControlPointSequence:
+                try:
+                    xyz_positions.append(point.ControlPoint3DPosition)
 
-    for index in data.channels_rois:
-        xyz_positions = [point.ControlPoint3DPosition for point in rp_channels[index].BrachyControlPointSequence]
-        points = xyz_positions[::2]
-        points = remove_collinear_points(points)
-        channel_contours.append(points)
-
-    data.channel_contours = channel_contours
+                except:
+                    skipping_needle = 1
+                    data.channels_rois.remove(raw_rois[i])
+                    data.channels_labels.remove(raw_labels[i])
+                    log.warning(f"ControlPoint3DPosition not found for channel {roi_number}, skipping this channel.")
+                    log.warning(f"Removing channel {roi_number}, from the import list.")
+                    break  # Skip the entire channel if ControlPoint3DPosition is missing for any point
+                
+            if not skipping_needle:
+                points = xyz_positions[::2]
+                points = remove_collinear_points(points)
+                channel_contours.append(points)
+        data.channel_contours = channel_contours
+    except:
+        log.info(f"Error reading channel contours in load_channels_nucletron: {filepath} \n{error_message}")
 
     channel_paths = []
     # use the brachy cylinder to offset the points
