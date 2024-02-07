@@ -197,8 +197,9 @@ def load_channels_nucletron(data: DicomData, rp_dataset):
             channel = rp_channels[roi_number]
             xyz_positions = []
             skipping_needle = 0
+
             for point in channel.BrachyControlPointSequence:
-                try:
+                try: # Sometimes these are empty in oncentra/nucletron imports. This causes import failures. These needles are skipped.
                     xyz_positions.append(point.ControlPoint3DPosition)
 
                 except:
