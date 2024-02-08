@@ -84,7 +84,7 @@ def load_central_axis_varian(data: DicomData, rs_dataset):
     data.cylinder_direction = data.cylinder_tip - data.cylinder_base   
 
 
-def remove_collinear_points(points):
+def remove_collinear_points(points): #unused, left in case it's needed later.
 
     def is_collinear(p1, p2, p3):
         """Check if three points are collinear"""
@@ -131,13 +131,18 @@ def remove_collinear_points(points):
 
 
 def load_central_axis_nucletron(data: DicomData, rp_dataset):
+    central_channel = None
+    # central_channel = rp_dataset.ApplicationSetupSequence[0].ChannelSequence[data.central_channel_roi].BrachyControlPointSequence
+    for contoursequence in rp_dataset[0x300f, 0x1000][0].ROIContourSequence:
+        if data.central_channel_roi == contoursequence.ReferencedROINumber:
+            central_channel = contoursequence.ContourSequence[0].ContourData
+            break
+    if central_channel is None:
+        log.info(f"No central channel contour sequence found corresponding to central channel label: {filepath} \n{error_message}")
 
-    central_channel = rp_dataset.ApplicationSetupSequence[0].ChannelSequence[data.central_channel_roi].BrachyControlPointSequence
-
-    points = [central_channel[i].ControlPoint3DPosition for i in range(len(central_channel))]
-    points = points[::2]
-    points = remove_collinear_points(points)
-    data.central_channel = points
+    
+    central_channel_points = [central_channel[i:i+3] for i in range(0, len(central_channel), 3)] 
+    data.central_channel = central_channel_points
 
     data.cylinder_tip = np.asarray(data.central_channel[0])
     data.cylinder_base = np.asarray(data.central_channel[-1])
@@ -187,37 +192,35 @@ def load_channels_varian(data: DicomData, rs_dataset):
 def load_channels_nucletron(data: DicomData, rp_dataset):
 
     # Get the xyz values for each needle that isn't the central needle.
-    rp_channels = rp_dataset.ApplicationSetupSequence[0].ChannelSequence
+    rp_channels = rp_dataset[0x300f, 0x1000][0].ROIContourSequence
+    
+    # Initialize a list to store the extracted ContourData
     channel_contours = []
+
+    # Iterate over each item in rp_channels
+    for channel in rp_channels:
+        # Get the ContourNumber for the current channel
+        contour_number = channel.ReferencedROINumber
         
-    try: 
-        raw_rois = list(data.channels_rois)
-        raw_labels = list(data.channels_labels)
-        for i, roi_number in enumerate(raw_rois):
-            channel = rp_channels[roi_number]
-            xyz_positions = []
-            skipping_needle = 0
+        # Check if the contour_number exists in data.channels_rois
+        if contour_number in data.channels_rois:
+            # Find the index of the contour_number in data.channels_rois
+            index = data.channels_rois.index(contour_number)
+            
+            # Extract ContourData using the found index
+            contour_data = rp_channels[index].ContourSequence[0].ContourData
+            contour_data_float = [float(value_str) for value_str in contour_data]
 
-            for point in channel.BrachyControlPointSequence:
-                try: # Sometimes these are empty in oncentra/nucletron imports. This causes import failures. These needles are skipped.
-                    xyz_positions.append(point.ControlPoint3DPosition)
+            # Reshape the contour_data into lists of lists with shape (n, 3)
+            reshaped_contour_data = [contour_data[i:i+3] for i in range(0, len(contour_data), 3)]
 
-                except:
-                    skipping_needle = 1
-                    data.channels_rois.remove(raw_rois[i])
-                    data.channels_labels.remove(raw_labels[i])
-                    log.warning(f"ControlPoint3DPosition not found for channel {roi_number}, skipping this channel.")
-                    log.warning(f"Removing channel {roi_number}, from the import list.")
-                    break  # Skip the entire channel if ControlPoint3DPosition is missing for any point
-                
-            if not skipping_needle:
-                points = xyz_positions[::2]
-                points = remove_collinear_points(points)
-                channel_contours.append(points)
-        data.channel_contours = channel_contours
-    except:
-        log.info(f"Error reading channel contours in load_channels_nucletron: {filepath} \n{error_message}")
+            # Append the extracted ContourData to the list
+            channel_contours.append(reshaped_contour_data)
+        else:
+            # If the contour_number doesn't exist in data.channels_labels, handle it accordingly
+            print(f"ContourNumber {contour_number} not found in data.channels_labels")
 
+    
     channel_paths = []
     # use the brachy cylinder to offset the points
     # z axis reference, the direction we want the cylinder and needles to go
@@ -408,11 +411,8 @@ def load_nucletron_dicom_data(rp_file: str, rs_file: str) -> DicomData:
         # center_index = None
         for i, label in enumerate(data.channels_labels):
             try:
-                if rp_dataset[0x300f,0x1000][0][0x3006,0x0020][i][0x3006,0x0026]._value in ['Center Ref Channel', "Central Axis"]:
-                    # centralaxisrefROINumber = i
-                    # center_index = i
-                    # data.central_channel_roi = i
-                    data.central_channel_roi = int(rp_dataset[0x300f,0x1000][0][0x3006,0x0020][i].ROINumber)
+                if rp_dataset[0x300f,0x1000][0].StructureSetROISequence[i].ROIName in ["Central Axis"]:
+                    data.central_channel_roi = int(rp_dataset[0x300f,0x1000][0].StructureSetROISequence[i].ROINumber)
             except:
                 pass
             if data.central_channel_roi is not None: 
@@ -425,6 +425,7 @@ def load_nucletron_dicom_data(rp_file: str, rs_file: str) -> DicomData:
 
     # IF THERE'S A CENTRAL AXIS, ADD IT TO DATA AND REMOVE IT FROM THE LIST
     if data.central_channel_roi is not None:
+        data.central_channel_label = data.channels_labels[data.central_channel_roi]
         data.channels_labels.pop(data.central_channel_roi)
         data.channels_rois.pop(data.central_channel_roi)
 
