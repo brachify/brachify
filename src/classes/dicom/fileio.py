@@ -413,6 +413,7 @@ def load_nucletron_dicom_data(rp_file: str, rs_file: str) -> DicomData:
             try:
                 if rp_dataset[0x300f,0x1000][0].StructureSetROISequence[i].ROIName in ["Central Axis"]:
                     data.central_channel_roi = int(rp_dataset[0x300f,0x1000][0].StructureSetROISequence[i].ROINumber)
+                    center_index = i
             except:
                 pass
             if data.central_channel_roi is not None: 
@@ -425,9 +426,9 @@ def load_nucletron_dicom_data(rp_file: str, rs_file: str) -> DicomData:
 
     # IF THERE'S A CENTRAL AXIS, ADD IT TO DATA AND REMOVE IT FROM THE LIST
     if data.central_channel_roi is not None:
-        data.central_channel_label = data.channels_labels[data.central_channel_roi]
-        data.channels_labels.pop(data.central_channel_roi)
-        data.channels_rois.pop(data.central_channel_roi)
+        data.channels_labels.pop(center_index)
+        data.channels_rois.pop(center_index)
+
 
     # Contour Data
     try:
