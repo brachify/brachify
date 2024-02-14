@@ -134,7 +134,7 @@ def load_central_axis_nucletron(data: DicomData, rp_dataset):
     central_channel = None
     # central_channel = rp_dataset.ApplicationSetupSequence[0].ChannelSequence[data.central_channel_roi].BrachyControlPointSequence
     for contoursequence in rp_dataset[0x300f, 0x1000][0].ROIContourSequence:
-        if data.central_channel_roi == contoursequence.ReferencedROINumber:
+        if data.central_channel_roi == int(contoursequence.ReferencedROINumber):
             central_channel = contoursequence.ContourSequence[0].ContourData
             break
     if central_channel is None:
@@ -200,12 +200,12 @@ def load_channels_nucletron(data: DicomData, rp_dataset):
     # Iterate over each item in rp_channels
     for channel in rp_channels:
         # Get the ContourNumber for the current channel
-        contour_number = channel.ReferencedROINumber
+        contour_number = int(channel.ReferencedROINumber)
         
         # Check if the contour_number exists in data.channels_rois
         if contour_number in data.channels_rois:
-            # Find the index of the contour_number in data.channels_rois
-            index = data.channels_rois.index(contour_number)
+            # Set the Contour Data index to the contour number: this may cause future problems, there may be a more robust method of doing this.
+            index = contour_number
             
             # Extract ContourData using the found index
             contour_data = rp_channels[index].ContourSequence[0].ContourData
@@ -395,7 +395,7 @@ def load_nucletron_dicom_data(rp_file: str, rs_file: str) -> DicomData:
     try:
         # we use the Planning file to get the channel ROI numbers
         rp_dataset = pydicom.read_file(rp_file)
-        data.channels_rois = [int(channel_label.ROINumber) for channel_label in rp_dataset[0x300f,0x1000][0][0x3006,0x0020]] 
+        data.channels_rois = [int(channel_label.ROINumber) for channel_label in rp_dataset[0x300f,0x1000][0].StructureSetROISequence] 
         data.channels_labels = [
             roi.SourceApplicatorID for roi in rp_dataset.ApplicationSetupSequence[0].ChannelSequence] #not needed?
         data.patient_name = rp_dataset.PatientName.family_name
