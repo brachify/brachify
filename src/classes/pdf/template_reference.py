@@ -14,8 +14,9 @@ from classes.dicom.data import DicomData
 from classes.logger import log
 from classes.mesh.channel import NeedleChannel
 from classes.mesh.cylinder import BrachyCylinder
+from classes.mesh.tandem import Tandem
 
-BASEMAP = "basemap.png"
+# BASEMAP = "basemap.png"
 
 
 def calculate_protrusion_lengths(needles: list, needle_length: float):
@@ -254,12 +255,12 @@ def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False
 
     # Plot each point as a circle with a number inside
     for i, (x, y) in enumerate(points, start=1):
-        ax.add_artist(plt.Circle((x, y), 1.25, color='black', fill=False))
-        if (i == 1 and has_tandem):
-            ax.text(x, y, 'T', color='black', ha='center', va='center')
-        else:
-            ax.text(x, y, str(i), color='black', ha='center', va='center')
+        ax.add_artist(plt.Circle((x, -y), 1.25, color='black', fill=False))
+        ax.text(x, -y, str(i), color='black', ha='center', va='center')
 
+    if has_tandem: 
+        ax.add_artist(plt.Circle((0.0, 0.0), 1.25, color='black', fill=False))
+        ax.text(0.0, 0.0, 'T', color='black', ha='center', va='center')
     # Add a filled black rectangle at the top center of the big circle
     tick_width = 0.2
     tick_height = 1.0
@@ -279,9 +280,12 @@ def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False
     # Set axis aspect ratio to be equal
     ax.set_aspect('equal', adjustable='box')
 
+    # Set the Basemap Filepath
+    png_path = output_filepath.joinpath('basemap.png')
     # Save the plot as a PNG file
-    plt.savefig(output_filepath, format='png', bbox_inches='tight')
+    plt.savefig(png_path, format='png', bbox_inches='tight')
     plt.close()
+    return png_path
 
 
 #######################################################
@@ -292,7 +296,8 @@ def generate_pdf(
         cylinder: BrachyCylinder,
         channels: list[NeedleChannel],
         filepath: Path,
-        needle_length: float):
+        needle_length: float,
+        tandemmodel=None):
 
     # Get today's date in the format "Month Day, Year"
     today_date = datetime.today().strftime('%B %d, %Y')
@@ -365,7 +370,11 @@ def generate_pdf(
     # Add the image to the PDF
     # Adjust width and height as needed
     pdf_output_dir = filepath.parent
-    png_path = pdf_output_dir.joinpath(BASEMAP)
+    circle_radius = cylinder.diameter / 2
+    last_xy_points = get_last_xy_points(needles) 
+    
+    png_path = save_points_diagram(last_xy_points, circle_radius, pdf_output_dir, has_tandem=False)
+
     img = Image(str(png_path), width=300, height=300)
     content.append(img)
 

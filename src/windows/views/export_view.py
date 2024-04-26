@@ -77,6 +77,8 @@ class Export_View(CustomView):
             channels=window.channelsmodel.get_visible_channels(),
             filepath=Path(filename[0]),
             needle_length=needle_length)
+        # ,
+        #     tandem=window.tandemmodel)
 
     def action_show_tandem(self, tandem_visible: bool):
         self.update_display()
