@@ -223,17 +223,17 @@ def get_last_xy_points(needles):
     return last_xy_points
 
 
-def process_lengths_and_create_data(is_lengths, protrusion_lengths):
+def process_lengths_and_create_data(is_lengths, protrusion_lengths, label_list):
     needle_data = []
 
-    for idx, (length_mm, protrusion_length) in enumerate(zip(is_lengths, protrusion_lengths), start=1):
+    for idx, (length_mm, protrusion_length) in enumerate(zip(is_lengths, protrusion_lengths), start=0):
         # Convert lengths from mm to cm and round to one decimal place
         length_cm = round(length_mm / 10, 1)
         protrusion_length_cm = round(protrusion_length / 10, 1)
 
         # Create a tuple for needle_data with protrusion length in the third column
         needle_info = (
-            f"Needle {idx}", f"{length_cm} cm", f"{protrusion_length_cm} cm")
+            f"{label_list[idx]}", f"{length_cm} cm", f"{protrusion_length_cm} cm")
         needle_data.append(needle_info)
 
     return needle_data
@@ -297,7 +297,7 @@ def generate_pdf(
         channels: list[NeedleChannel],
         filepath: Path,
         needle_length: float,
-        tandemmodel=None):
+        has_tandem: bool):
 
     # Get today's date in the format "Month Day, Year"
     today_date = datetime.today().strftime('%B %d, %Y')
@@ -347,12 +347,13 @@ def generate_pdf(
         needles=needles)
     
     protrusion_lengths = calculate_protrusion_lengths(needles, needle_length)
-
     # TODO: Add needle label and channel number instead of "Needle 1" etc.
     length_label = "Protruding Length for " + str(needle_length) + "mm needle"
-    data = [["Needle Number", "Interstitial Length", length_label]]
+    data = [["Channel", "Interstitial Length", length_label]]
+
+    label_list = [channel.label for channel in channels]
     for needle_number, interstitial_length, protruding_length \
-    in process_lengths_and_create_data(interstitial_lengths, protrusion_lengths):
+    in process_lengths_and_create_data(interstitial_lengths, protrusion_lengths, label_list):
         data.append([needle_number, interstitial_length, protruding_length])
 
     table = Table(data)
@@ -373,7 +374,7 @@ def generate_pdf(
     circle_radius = cylinder.diameter / 2
     last_xy_points = get_last_xy_points(needles) 
     
-    png_path = save_points_diagram(last_xy_points, circle_radius, pdf_output_dir, has_tandem=False)
+    png_path = save_points_diagram(last_xy_points, circle_radius, pdf_output_dir, has_tandem=has_tandem)
 
     img = Image(str(png_path), width=300, height=300)
     content.append(img)
