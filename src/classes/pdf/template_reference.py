@@ -41,6 +41,14 @@ def calculate_protrusion_lengths(needles: list, needle_length: float):
     return protrusion_lengths
 
 
+def index_before_negative_point(channel_list):
+    last_index = len(channel_list) - 1
+    for i, point in enumerate(channel_list):
+        if point[2] < 0:
+            return max(0, i - 1)
+    return last_index
+
+
 def extract_points_from_channels(channels: list):
     """
     Retreives the points from NeedleChannels
@@ -48,7 +56,24 @@ def extract_points_from_channels(channels: list):
     Returns:
         [ [x, y, z], [x, y, z], ...]
     """
-    return [ channel.get_points() for channel in channels]
+    channels_list = []
+    for channel in channels:
+        channel_list = channel.get_points()
+
+        # Filter out points where the z value is less than 0.
+        filtered_channel_list = [point for point in channel_list if point[2] > 0]
+
+        # Error Checks: We ignore all points below zero (below the bottom of the cylinder)
+        # Find the index of the element just before the first instance in channel_list where the third element of the tuple is less than 0
+        last_pos_index = index_before_negative_point(channel_list)
+
+        # Append last point at x,y,0 because channel.get_points doesn't include the point at the base for some reason.
+        final_point = channel_list[last_pos_index][:]
+        final_point[2] = 0.0
+        channel_list.append(final_point)
+        channels_list.append(channel_list)
+
+    return channels_list
 
 
 def get_all_interstitial_lengths(cylinder: BrachyCylinder, needles: list, spacing: float = 0.1) -> list[float]:

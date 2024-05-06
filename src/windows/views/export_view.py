@@ -16,7 +16,7 @@ from windows.views.custom_view import display_action, CustomView
 
 EXPORT_LABEL = "export"
 BASEMAP = "basemap.png"
-DEFAULT_NEEDLE_LENGTH = 160.0
+DEFAULT_NEEDLE_LENGTH = 200
 
 materials = {
     ShapeTypes.CYLINDER: {"rgb": [0.2, 0.55, 0.55], "transparent": True},
