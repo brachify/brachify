@@ -14,8 +14,9 @@ from classes.dicom.data import DicomData
 from classes.logger import log
 from classes.mesh.channel import NeedleChannel
 from classes.mesh.cylinder import BrachyCylinder
+from classes.mesh.tandem import Tandem
 
-BASEMAP = "basemap.png"
+# BASEMAP = "basemap.png"
 
 
 def calculate_protrusion_lengths(needles: list, needle_length: float):
@@ -247,17 +248,17 @@ def get_last_xy_points(needles):
     return last_xy_points
 
 
-def process_lengths_and_create_data(is_lengths, protrusion_lengths):
+def process_lengths_and_create_data(is_lengths, protrusion_lengths, label_list):
     needle_data = []
 
-    for idx, (length_mm, protrusion_length) in enumerate(zip(is_lengths, protrusion_lengths), start=1):
+    for idx, (length_mm, protrusion_length) in enumerate(zip(is_lengths, protrusion_lengths), start=0):
         # Convert lengths from mm to cm and round to one decimal place
         length_cm = round(length_mm / 10, 1)
         protrusion_length_cm = round(protrusion_length / 10, 1)
 
         # Create a tuple for needle_data with protrusion length in the third column
         needle_info = (
-            f"Needle {idx}", f"{length_cm} cm", f"{protrusion_length_cm} cm")
+            f"{label_list[idx]}", f"{length_cm} cm", f"{protrusion_length_cm} cm")
         needle_data.append(needle_info)
 
     return needle_data
@@ -279,12 +280,12 @@ def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False
 
     # Plot each point as a circle with a number inside
     for i, (x, y) in enumerate(points, start=1):
-        ax.add_artist(plt.Circle((x, y), 1.25, color='black', fill=False))
-        if (i == 1 and has_tandem):
-            ax.text(x, y, 'T', color='black', ha='center', va='center')
-        else:
-            ax.text(x, y, str(i), color='black', ha='center', va='center')
+        ax.add_artist(plt.Circle((x, -y), 1.25, color='black', fill=False))
+        ax.text(x, -y, str(i), color='black', ha='center', va='center')
 
+    if has_tandem: 
+        ax.add_artist(plt.Circle((0.0, 0.0), 1.25, color='black', fill=False))
+        ax.text(0.0, 0.0, 'T', color='black', ha='center', va='center')
     # Add a filled black rectangle at the top center of the big circle
     tick_width = 0.2
     tick_height = 1.0
@@ -304,9 +305,12 @@ def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False
     # Set axis aspect ratio to be equal
     ax.set_aspect('equal', adjustable='box')
 
+    # Set the Basemap Filepath
+    png_path = output_filepath.joinpath('basemap.png')
     # Save the plot as a PNG file
-    plt.savefig(output_filepath, format='png', bbox_inches='tight')
+    plt.savefig(png_path, format='png', bbox_inches='tight')
     plt.close()
+    return png_path
 
 
 #######################################################
@@ -317,7 +321,8 @@ def generate_pdf(
         cylinder: BrachyCylinder,
         channels: list[NeedleChannel],
         filepath: Path,
-        needle_length: float):
+        needle_length: float,
+        has_tandem: bool):
 
     # Get today's date in the format "Month Day, Year"
     today_date = datetime.today().strftime('%B %d, %Y')
@@ -367,12 +372,13 @@ def generate_pdf(
         needles=needles)
     
     protrusion_lengths = calculate_protrusion_lengths(needles, needle_length)
-
     # TODO: Add needle label and channel number instead of "Needle 1" etc.
     length_label = "Protruding Length for " + str(needle_length) + "mm needle"
-    data = [["Needle Number", "Interstitial Length", length_label]]
+    data = [["Channel", "Interstitial Length", length_label]]
+
+    label_list = [channel.label for channel in channels]
     for needle_number, interstitial_length, protruding_length \
-    in process_lengths_and_create_data(interstitial_lengths, protrusion_lengths):
+    in process_lengths_and_create_data(interstitial_lengths, protrusion_lengths, label_list):
         data.append([needle_number, interstitial_length, protruding_length])
 
     table = Table(data)
@@ -390,7 +396,11 @@ def generate_pdf(
     # Add the image to the PDF
     # Adjust width and height as needed
     pdf_output_dir = filepath.parent
-    png_path = pdf_output_dir.joinpath(BASEMAP)
+    circle_radius = cylinder.diameter / 2
+    last_xy_points = get_last_xy_points(needles) 
+    
+    png_path = save_points_diagram(last_xy_points, circle_radius, pdf_output_dir, has_tandem=has_tandem)
+
     img = Image(str(png_path), width=300, height=300)
     content.append(img)
 
