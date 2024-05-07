@@ -71,7 +71,7 @@ class Export_View(CustomView):
         needle_length = self.ui.sb_needle_length.value()
 
         # generate pdf
-        tandembool = 'tandem_shape' in window.displaymodel.shapes
+        tandembool = window.tandemmodel.shape() != None
         template_reference.generate_pdf(
             dicom=window.dicommodel.data,
             cylinder=window.cylindermodel.cylinder,
