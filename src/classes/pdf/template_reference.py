@@ -63,12 +63,12 @@ def extract_points_from_channels(channels: list):
 
         # Filter out points where the z value is less than 0.
         filtered_channel_list = [point for point in channel_list if point[2] > 0]
-        #testesttest
+        
         # Error Checks: We ignore all points below zero (below the bottom of the cylinder)
         # Find the index of the element just before the first instance in channel_list where the third element of the tuple is less than 0
         last_pos_index = index_before_negative_point(channel_list)
 
-        # Append last point at x,y,0 because channel.get_points doesn't include the point at the base for some reason.
+        # Append last point at x,y,0 because channel.get_points() doesn't include the point at the base for some reason.
         final_point = channel_list[last_pos_index][:]
         final_point[2] = 0.0
         channel_list.append(final_point)
