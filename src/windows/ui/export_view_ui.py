@@ -18,6 +18,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QCheckBox, QDoubleSpinBox, QFormLayout,
     QGroupBox, QLabel, QPushButton, QSizePolicy,
     QSpacerItem, QVBoxLayout, QWidget)
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_Export_View(object):
     def setupUi(self, Export_View):
@@ -118,5 +119,13 @@ class Ui_Export_View(object):
         self.label.setText(QCoreApplication.translate("Export_View", u"needle length", None))
         self.sb_needle_length.setSuffix(QCoreApplication.translate("Export_View", u" mm", None))
         self.btn_export_template_reference.setText(QCoreApplication.translate("Export_View", u"export template reference sheet", None))
+
+        _translate = QtCore.QCoreApplication.translate
+        self.btn_export_template_reference.setText(_translate("Export_View", "export template reference sheet"))
+        self.btn_export_template_reference.setShortcut(_translate("Export_View", "Ctrl+R"))
+        self.btn_export_shapes.setText(_translate("Export_View", "export shape(s)"))
+        self.btn_export_shapes.setShortcut(_translate("Export_View", "Ctrl+S"))
+        self.btn_export_mesh.setText(_translate("Export_View", "export mesh"))
+        self.btn_export_mesh.setShortcut(_translate("Export_View", "Ctrl+M"))
     # retranslateUi
 

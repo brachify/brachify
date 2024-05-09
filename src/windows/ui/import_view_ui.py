@@ -17,6 +17,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QLabel, QPushButton, QSizePolicy,
     QSpacerItem, QVBoxLayout, QWidget)
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_Import_View(object):
     def setupUi(self, Import_View):
@@ -55,9 +56,11 @@ class Ui_Import_View(object):
     # setupUi
 
     def retranslateUi(self, Import_View):
+        _translate = QtCore.QCoreApplication.translate
         Import_View.setWindowTitle(QCoreApplication.translate("Import_View", u"Form", None))
         self.label_title.setText(QCoreApplication.translate("Import_View", u"import files", None))
         self.btn_import_folder.setText(QCoreApplication.translate("Import_View", u"import dicom folder", None))
         self.label_file_info.setText(QCoreApplication.translate("Import_View", u"No model(s) loaded", None))
+        self.btn_import_folder.setShortcut(_translate("Import_View", "Ctrl+D"))
     # retranslateUi
 

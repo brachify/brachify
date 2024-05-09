@@ -78,12 +78,18 @@
         <property name="text">
          <string>export mesh</string>
         </property>
+        <property name="shortcut">
+         <string>Ctrl+M</string>
+        </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="btn_export_shapes">
         <property name="text">
          <string>export shape(s)</string>
+        </property>
+        <property name="shortcut">
+         <string>Ctrl+S</string>
         </property>
        </widget>
       </item>
@@ -120,6 +126,9 @@
        <widget class="QPushButton" name="btn_export_template_reference">
         <property name="text">
          <string>export template reference sheet</string>
+        </property>
+        <property name="shortcut">
+         <string>Ctrl+R</string>
         </property>
        </widget>
       </item>

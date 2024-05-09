@@ -18,6 +18,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QGridLayout, QHBoxLayout, QMainWindow,
     QPushButton, QSizePolicy, QSpacerItem, QStackedWidget,
     QVBoxLayout, QWidget)
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -151,5 +152,11 @@ class Ui_MainWindow(object):
         self.btn_channels_view.setText(QCoreApplication.translate("MainWindow", u"Channels", None))
         self.btn_tandem_view.setText(QCoreApplication.translate("MainWindow", u"Tandem", None))
         self.btn_export_view.setText(QCoreApplication.translate("MainWindow", u"Export", None))
+
+        _translate = QtCore.QCoreApplication.translate
+        self.btn_import_view.setText(_translate("MainWindow", "Import"))
+        self.btn_import_view.setShortcut(_translate("MainWindow", "Ctrl+I"))
+        self.btn_export_view.setText(_translate("MainWindow", "Export"))
+        self.btn_export_view.setShortcut(_translate("MainWindow", "Ctrl+E"))
     # retranslateUi
 
