@@ -1,3 +1,0 @@
-this is a test text file 
-file path:
-brachify\src\windows\ui\test.txt
