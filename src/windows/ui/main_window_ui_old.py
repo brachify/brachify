@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_window2.ui'
+## Form generated from reading UI file 'main_windowMHJWiC.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.7.0
+## Created by: Qt User Interface Compiler version 6.6.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -32,8 +32,6 @@ class Ui_MainWindow(object):
         self.left_menu_bar.setObjectName(u"left_menu_bar")
         self.left_menu_bar.setMinimumSize(QSize(250, 0))
         self.left_menu_bar.setMaximumSize(QSize(260, 16777215))
-        self.left_menu_bar.setStyleSheet(u"\n"
-"background-color: rgb(85, 170, 255);") #  newline making background color blue
         self.verticalLayout_2 = QVBoxLayout(self.left_menu_bar)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
@@ -117,7 +115,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout.addWidget(self.btn_export_view)
 
-        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.horizontalLayout.addItem(self.horizontalSpacer_2)
 
@@ -140,7 +138,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.viewswidget.setCurrentIndex(3)
+        self.viewswidget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
