@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'export_view.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.5.2
+## Created by: Qt User Interface Compiler version 6.7.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -17,26 +17,19 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QCheckBox, QDoubleSpinBox, QFormLayout,
     QGroupBox, QLabel, QPushButton, QSizePolicy,
-    QSpacerItem, QVBoxLayout, QWidget)
+    QVBoxLayout, QWidget)
 
 class Ui_Export_View(object):
     def setupUi(self, Export_View):
         if not Export_View.objectName():
             Export_View.setObjectName(u"Export_View")
-        Export_View.resize(240, 400)
-        self.verticalLayout = QVBoxLayout(Export_View)
-        self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.label_title = QLabel(Export_View)
-        self.label_title.setObjectName(u"label_title")
-        font = QFont()
-        font.setPointSize(32)
-        self.label_title.setFont(font)
-
-        self.verticalLayout.addWidget(self.label_title)
-
+        Export_View.resize(270, 400)
+        Export_View.setStyleSheet(u"background-color: rgb(250,250,250);")
         self.groupBox_3 = QGroupBox(Export_View)
         self.groupBox_3.setObjectName(u"groupBox_3")
+        self.groupBox_3.setGeometry(QRect(10, 3, 250, 46))
+        self.groupBox_3.setMinimumSize(QSize(250, 0))
+        self.groupBox_3.setMaximumSize(QSize(250, 16777215))
         self.formLayout_2 = QFormLayout(self.groupBox_3)
         self.formLayout_2.setObjectName(u"formLayout_2")
         self.label_2 = QLabel(self.groupBox_3)
@@ -51,28 +44,56 @@ class Ui_Export_View(object):
 
         self.formLayout_2.setWidget(0, QFormLayout.FieldRole, self.cb_tandem_shown)
 
-
-        self.verticalLayout.addWidget(self.groupBox_3)
-
         self.groupBox = QGroupBox(Export_View)
         self.groupBox.setObjectName(u"groupBox")
+        self.groupBox.setGeometry(QRect(10, 55, 250, 89))
+        self.groupBox.setMinimumSize(QSize(250, 0))
+        self.groupBox.setMaximumSize(QSize(250, 16777215))
         self.verticalLayout_2 = QVBoxLayout(self.groupBox)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.btn_export_mesh = QPushButton(self.groupBox)
         self.btn_export_mesh.setObjectName(u"btn_export_mesh")
+        self.btn_export_mesh.setMinimumSize(QSize(220, 25))
+        self.btn_export_mesh.setStyleSheet(u"QPushButton {\n"
+"	color: rgb(0, 0, 0);\n"
+"	background-color: rgb(199, 219, 237);\n"
+"	border: 0px solid;\n"
+"}\n"
+"QPushButton:hover {\n"
+"	color: rgb(250,250,250);\n"
+"	background-color: rgb(48, 88, 162);\n"
+"}\n"
+"QPushButton:pressed {\n"
+"	color: rgb(250,250,250);\n"
+"	background-color: rgb(28, 44, 81);\n"
+"}")
 
         self.verticalLayout_2.addWidget(self.btn_export_mesh)
 
         self.btn_export_shapes = QPushButton(self.groupBox)
         self.btn_export_shapes.setObjectName(u"btn_export_shapes")
+        self.btn_export_shapes.setMinimumSize(QSize(220, 25))
+        self.btn_export_shapes.setStyleSheet(u"QPushButton {\n"
+"	color: rgb(0, 0, 0);\n"
+"	background-color: rgb(199, 219, 237);\n"
+"	border: 0px solid;\n"
+"}\n"
+"QPushButton:hover {\n"
+"	color: rgb(250,250,250);\n"
+"	background-color: rgb(48, 88, 162);\n"
+"}\n"
+"QPushButton:pressed {\n"
+"	color: rgb(250,250,250);\n"
+"	background-color: rgb(28, 44, 81);\n"
+"}")
 
         self.verticalLayout_2.addWidget(self.btn_export_shapes)
 
-
-        self.verticalLayout.addWidget(self.groupBox)
-
         self.groupBox_2 = QGroupBox(Export_View)
         self.groupBox_2.setObjectName(u"groupBox_2")
+        self.groupBox_2.setGeometry(QRect(10, 150, 250, 82))
+        self.groupBox_2.setMinimumSize(QSize(250, 0))
+        self.groupBox_2.setMaximumSize(QSize(250, 16777215))
         self.formLayout = QFormLayout(self.groupBox_2)
         self.formLayout.setObjectName(u"formLayout")
         self.label = QLabel(self.groupBox_2)
@@ -89,16 +110,30 @@ class Ui_Export_View(object):
 
         self.btn_export_template_reference = QPushButton(self.groupBox_2)
         self.btn_export_template_reference.setObjectName(u"btn_export_template_reference")
+        self.btn_export_template_reference.setMinimumSize(QSize(220, 25))
+        self.btn_export_template_reference.setStyleSheet(u"QPushButton {\n"
+"	color: rgb(0, 0, 0);\n"
+"	background-color: rgb(199, 219, 237);\n"
+"	border: 0px solid;\n"
+"}\n"
+"QPushButton:hover {\n"
+"	color: rgb(250,250,250);\n"
+"	background-color: rgb(48, 88, 162);\n"
+"}\n"
+"QPushButton:pressed {\n"
+"	color: rgb(250,250,250);\n"
+"	background-color: rgb(28, 44, 81);\n"
+"}")
 
         self.formLayout.setWidget(1, QFormLayout.SpanningRole, self.btn_export_template_reference)
 
-
-        self.verticalLayout.addWidget(self.groupBox_2)
-
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.verticalLayout.addItem(self.verticalSpacer)
-
+        self.label_3 = QLabel(Export_View)
+        self.label_3.setObjectName(u"label_3")
+        self.label_3.setGeometry(QRect(0, 0, 271, 401))
+        self.label_3.raise_()
+        self.groupBox_3.raise_()
+        self.groupBox.raise_()
+        self.groupBox_2.raise_()
 
         self.retranslateUi(Export_View)
 
@@ -107,7 +142,7 @@ class Ui_Export_View(object):
 
     def retranslateUi(self, Export_View):
         Export_View.setWindowTitle(QCoreApplication.translate("Export_View", u"Form", None))
-        self.label_title.setText(QCoreApplication.translate("Export_View", u"export", None))
+        Export_View.setWindowFilePath("")
         self.groupBox_3.setTitle(QCoreApplication.translate("Export_View", u"Options", None))
         self.label_2.setText(QCoreApplication.translate("Export_View", u"Show Tandem", None))
         self.cb_tandem_shown.setText("")
@@ -118,5 +153,6 @@ class Ui_Export_View(object):
         self.label.setText(QCoreApplication.translate("Export_View", u"needle length", None))
         self.sb_needle_length.setSuffix(QCoreApplication.translate("Export_View", u" mm", None))
         self.btn_export_template_reference.setText(QCoreApplication.translate("Export_View", u"export template reference sheet", None))
+        self.label_3.setText("")
     # retranslateUi
 
