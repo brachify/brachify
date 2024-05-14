@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>270</width>
-    <height>400</height>
+    <height>411</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -46,9 +46,12 @@
    </property>
    <property name="maximumSize">
     <size>
-     <width>250</width>
+     <width>271</width>
      <height>16777215</height>
     </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(230, 235, 240);</string>
    </property>
    <property name="title">
     <string/>
@@ -99,8 +102,14 @@
      <widget class="QPushButton" name="btn_apply_settings">
       <property name="minimumSize">
        <size>
-        <width>220</width>
-        <height>25</height>
+        <width>240</width>
+        <height>33</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>240</width>
+        <height>16777215</height>
        </size>
       </property>
       <property name="styleSheet">
@@ -125,6 +134,9 @@ QPushButton:pressed {
     </item>
     <item row="2" column="0">
      <widget class="QLabel" name="label_5">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(230, 235, 240);</string>
+      </property>
       <property name="text">
        <string>add base</string>
       </property>
@@ -135,6 +147,9 @@ QPushButton:pressed {
     </item>
     <item row="1" column="0">
      <widget class="QLabel" name="label_3">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(230, 235, 240);</string>
+      </property>
       <property name="text">
        <string>cylinder length</string>
       </property>
@@ -145,6 +160,9 @@ QPushButton:pressed {
     </item>
     <item row="0" column="0">
      <widget class="QLabel" name="label">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(230, 235, 240);</string>
+      </property>
       <property name="text">
        <string>cylinder diameter</string>
       </property>

@@ -23,7 +23,7 @@ class Ui_Cylinder_View(object):
     def setupUi(self, Cylinder_View):
         if not Cylinder_View.objectName():
             Cylinder_View.setObjectName(u"Cylinder_View")
-        Cylinder_View.resize(270, 400)
+        Cylinder_View.resize(270, 411)
         Cylinder_View.setStyleSheet(u"background-color: rgb(250,250,250);")
         self.label_4 = QLabel(Cylinder_View)
         self.label_4.setObjectName(u"label_4")
@@ -32,7 +32,8 @@ class Ui_Cylinder_View(object):
         self.groupBox_3.setObjectName(u"groupBox_3")
         self.groupBox_3.setGeometry(QRect(0, 0, 271, 411))
         self.groupBox_3.setMinimumSize(QSize(271, 411))
-        self.groupBox_3.setMaximumSize(QSize(250, 16777215))
+        self.groupBox_3.setMaximumSize(QSize(271, 16777215))
+        self.groupBox_3.setStyleSheet(u"background-color: rgb(230, 235, 240);")
         self.gridLayout = QGridLayout(self.groupBox_3)
         self.gridLayout.setObjectName(u"gridLayout")
         self.spinbox_length = QSpinBox(self.groupBox_3)
@@ -53,7 +54,8 @@ class Ui_Cylinder_View(object):
 
         self.btn_apply_settings = QPushButton(self.groupBox_3)
         self.btn_apply_settings.setObjectName(u"btn_apply_settings")
-        self.btn_apply_settings.setMinimumSize(QSize(220, 25))
+        self.btn_apply_settings.setMinimumSize(QSize(240, 33))
+        self.btn_apply_settings.setMaximumSize(QSize(240, 16777215))
         self.btn_apply_settings.setStyleSheet(u"QPushButton {\n"
 "	color: rgb(0, 0, 0);\n"
 "	background-color: rgb(199, 219, 237);\n"
@@ -72,16 +74,19 @@ class Ui_Cylinder_View(object):
 
         self.label_5 = QLabel(self.groupBox_3)
         self.label_5.setObjectName(u"label_5")
+        self.label_5.setStyleSheet(u"background-color: rgb(230, 235, 240);")
 
         self.gridLayout.addWidget(self.label_5, 2, 0, 1, 1)
 
         self.label_3 = QLabel(self.groupBox_3)
         self.label_3.setObjectName(u"label_3")
+        self.label_3.setStyleSheet(u"background-color: rgb(230, 235, 240);")
 
         self.gridLayout.addWidget(self.label_3, 1, 0, 1, 1)
 
         self.label = QLabel(self.groupBox_3)
         self.label.setObjectName(u"label")
+        self.label.setStyleSheet(u"background-color: rgb(230, 235, 240);")
 
         self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
 
