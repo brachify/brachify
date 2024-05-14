@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>270</width>
-    <height>400</height>
+    <width>271</width>
+    <height>411</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,19 +16,6 @@
   <property name="styleSheet">
    <string notr="true">background-color: rgb(250,250,250);</string>
   </property>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>271</width>
-     <height>401</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
   <widget class="QGroupBox" name="groupBox_3">
    <property name="geometry">
     <rect>
@@ -46,25 +33,28 @@
    </property>
    <property name="maximumSize">
     <size>
-     <width>16777215</width>
-     <height>16777215</height>
+     <width>271</width>
+     <height>411</height>
     </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(230, 235, 240);</string>
    </property>
    <property name="title">
     <string/>
    </property>
    <layout class="QFormLayout" name="formLayout_2">
-    <item row="0" column="0">
-     <widget class="QPushButton" name="btn_import_folder">
+    <item row="1" column="0" colspan="2">
+     <widget class="QPushButton" name="btn_import_folder_2">
       <property name="minimumSize">
        <size>
-        <width>220</width>
-        <height>25</height>
+        <width>240</width>
+        <height>33</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>16777215</width>
+        <width>240</width>
         <height>16777215</height>
        </size>
       </property>
@@ -84,26 +74,48 @@ QPushButton:pressed {
 }</string>
       </property>
       <property name="text">
-       <string>import dicom folder</string>
+       <string>Import Config File</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="0">
+    <item row="2" column="0">
      <widget class="QLabel" name="label_file_info">
+      <property name="text">
+       <string>No model(s) loaded</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0" colspan="2">
+     <widget class="QPushButton" name="btn_import_folder">
       <property name="minimumSize">
        <size>
-        <width>220</width>
-        <height>0</height>
+        <width>240</width>
+        <height>33</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>16777215</width>
+        <width>240</width>
         <height>16777215</height>
        </size>
       </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	color: rgb(0, 0, 0);
+	background-color: rgb(199, 219, 237);
+	border: 0px solid;
+}
+QPushButton:hover {
+	color: rgb(250,250,250);
+	background-color: rgb(48, 88, 162);
+}
+QPushButton:pressed {
+	color: rgb(250,250,250);
+	background-color: rgb(28, 44, 81);
+}</string>
+      </property>
       <property name="text">
-       <string>No model(s) loaded</string>
+       <string>Import Dicom</string>
       </property>
      </widget>
     </item>
