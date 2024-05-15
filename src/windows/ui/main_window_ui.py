@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_windowMHJWiC.ui'
+## Form generated from reading UI file 'main_window.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.6.1
+## Created by: Qt User Interface Compiler version 6.7.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -15,130 +15,202 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QGridLayout, QHBoxLayout, QMainWindow,
-    QPushButton, QSizePolicy, QSpacerItem, QStackedWidget,
-    QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QGridLayout, QMainWindow, QPushButton,
+    QSizePolicy, QStackedWidget, QVBoxLayout, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(901, 655)
+        MainWindow.resize(884, 610)
+        icon = QIcon()
+        icon.addFile(u":/Icon/Icon/brachify_splash-ico.png", QSize(), QIcon.Normal, QIcon.Off)
+        MainWindow.setWindowIcon(icon)
+        MainWindow.setStyleSheet(u"background-color: rgb(155,189,220);")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
-        self.horizontalLayout_2 = QHBoxLayout(self.centralwidget)
-        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.left_menu_bar = QWidget(self.centralwidget)
-        self.left_menu_bar.setObjectName(u"left_menu_bar")
-        self.left_menu_bar.setMinimumSize(QSize(250, 0))
-        self.left_menu_bar.setMaximumSize(QSize(260, 16777215))
-        self.verticalLayout_2 = QVBoxLayout(self.left_menu_bar)
+        self.gridLayout_2 = QGridLayout(self.centralwidget)
+        self.gridLayout_2.setSpacing(0)
+        self.gridLayout_2.setObjectName(u"gridLayout_2")
+        self.gridLayout_2.setContentsMargins(0, 10, 10, 5)
+        self.verticalLayout_2 = QVBoxLayout()
+        self.verticalLayout_2.setSpacing(0)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.viewswidget = QStackedWidget(self.left_menu_bar)
-        self.viewswidget.setObjectName(u"viewswidget")
-        self.page_import = QWidget()
-        self.page_import.setObjectName(u"page_import")
-        self.verticalLayout_7 = QVBoxLayout(self.page_import)
-        self.verticalLayout_7.setSpacing(0)
-        self.verticalLayout_7.setObjectName(u"verticalLayout_7")
-        self.verticalLayout_7.setContentsMargins(4, 4, 4, 4)
-        self.viewswidget.addWidget(self.page_import)
-        self.page_cylinder = QWidget()
-        self.page_cylinder.setObjectName(u"page_cylinder")
-        self.verticalLayout = QVBoxLayout(self.page_cylinder)
+        self.verticalLayout_2.setContentsMargins(0, -1, -1, 5)
+        self.display_view_widget = QWidget(self.centralwidget)
+        self.display_view_widget.setObjectName(u"display_view_widget")
+        self.display_view_widget.setMinimumSize(QSize(600, 585))
+        self.display_view_widget.setMaximumSize(QSize(16777215, 16777215))
+        self.gridLayout_3 = QGridLayout(self.display_view_widget)
+        self.gridLayout_3.setObjectName(u"gridLayout_3")
+        self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
+
+        self.verticalLayout_2.addWidget(self.display_view_widget)
+
+
+        self.gridLayout_2.addLayout(self.verticalLayout_2, 0, 1, 1, 1)
+
+        self.verticalLayout = QVBoxLayout()
+        self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalLayout.setContentsMargins(4, 4, 4, 4)
-        self.viewswidget.addWidget(self.page_cylinder)
-        self.page_channels = QWidget()
-        self.page_channels.setObjectName(u"page_channels")
-        self.verticalLayout_3 = QVBoxLayout(self.page_channels)
-        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
-        self.viewswidget.addWidget(self.page_channels)
-        self.page_tandem = QWidget()
-        self.page_tandem.setObjectName(u"page_tandem")
-        self.verticalLayout_4 = QVBoxLayout(self.page_tandem)
-        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
-        self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
-        self.viewswidget.addWidget(self.page_tandem)
-        self.page_export = QWidget()
-        self.page_export.setObjectName(u"page_export")
-        self.verticalLayout_8 = QVBoxLayout(self.page_export)
-        self.verticalLayout_8.setObjectName(u"verticalLayout_8")
-        self.verticalLayout_8.setContentsMargins(0, 0, 0, 0)
-        self.viewswidget.addWidget(self.page_export)
-
-        self.verticalLayout_2.addWidget(self.viewswidget)
-
-
-        self.horizontalLayout_2.addWidget(self.left_menu_bar)
-
-        self.bodywidget = QWidget(self.centralwidget)
-        self.bodywidget.setObjectName(u"bodywidget")
-        self.verticalLayout_5 = QVBoxLayout(self.bodywidget)
-        self.verticalLayout_5.setObjectName(u"verticalLayout_5")
-        self.top_menu_bar = QWidget(self.bodywidget)
+        self.verticalLayout.setContentsMargins(0, 0, -1, 5)
+        self.top_menu_bar = QWidget(self.centralwidget)
         self.top_menu_bar.setObjectName(u"top_menu_bar")
-        self.top_menu_bar.setMinimumSize(QSize(0, 64))
-        self.top_menu_bar.setMaximumSize(QSize(16777215, 64))
-        self.horizontalLayout = QHBoxLayout(self.top_menu_bar)
-        self.horizontalLayout.setSpacing(1)
-        self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
+        self.top_menu_bar.setMinimumSize(QSize(270, 180))
+        self.top_menu_bar.setMaximumSize(QSize(271, 180))
+        self.verticalLayout_31 = QVBoxLayout(self.top_menu_bar)
+        self.verticalLayout_31.setSpacing(0)
+        self.verticalLayout_31.setObjectName(u"verticalLayout_31")
+        self.verticalLayout_31.setContentsMargins(0, 0, 0, 20)
         self.btn_import_view = QPushButton(self.top_menu_bar)
         self.btn_import_view.setObjectName(u"btn_import_view")
-        self.btn_import_view.setMinimumSize(QSize(80, 0))
-        self.btn_import_view.setMaximumSize(QSize(80, 16777215))
+        self.btn_import_view.setMinimumSize(QSize(270, 33))
+        self.btn_import_view.setMaximumSize(QSize(270, 33))
+        self.btn_import_view.setStyleSheet(u"QPushButton {\n"
+"	color: rgb(0, 0, 0);\n"
+"	background-color: rgb(199, 219, 237);\n"
+"	border: 0px solid;\n"
+"}\n"
+"QPushButton:hover {\n"
+"	color: rgb(250,250,250);\n"
+"	background-color: rgb(48, 88, 162);\n"
+"}\n"
+"QPushButton:pressed {\n"
+"	color: rgb(250,250,250);\n"
+"	background-color: rgb(28, 44, 81);\n"
+"}")
 
-        self.horizontalLayout.addWidget(self.btn_import_view)
+        self.verticalLayout_31.addWidget(self.btn_import_view)
 
         self.btn_cylinder_view = QPushButton(self.top_menu_bar)
         self.btn_cylinder_view.setObjectName(u"btn_cylinder_view")
+        self.btn_cylinder_view.setMinimumSize(QSize(270, 33))
+        self.btn_cylinder_view.setMaximumSize(QSize(270, 33))
+        self.btn_cylinder_view.setStyleSheet(u"QPushButton {\n"
+"	color: rgb(0, 0, 0);\n"
+"	background-color: rgb(199, 219, 237);\n"
+"	border: 0px solid;\n"
+"}\n"
+"QPushButton:hover {\n"
+"	color: rgb(250,250,250);\n"
+"	background-color: rgb(48, 88, 162);\n"
+"}\n"
+"QPushButton:pressed {\n"
+"	color: rgb(250,250,250);\n"
+"	background-color: rgb(28, 44, 81);\n"
+"}")
 
-        self.horizontalLayout.addWidget(self.btn_cylinder_view)
+        self.verticalLayout_31.addWidget(self.btn_cylinder_view)
 
         self.btn_channels_view = QPushButton(self.top_menu_bar)
         self.btn_channels_view.setObjectName(u"btn_channels_view")
-        self.btn_channels_view.setMinimumSize(QSize(80, 0))
-        self.btn_channels_view.setMaximumSize(QSize(80, 16777215))
+        self.btn_channels_view.setMinimumSize(QSize(270, 33))
+        self.btn_channels_view.setMaximumSize(QSize(270, 33))
+        self.btn_channels_view.setStyleSheet(u"QPushButton {\n"
+"	color: rgb(0, 0, 0);\n"
+"	background-color: rgb(199, 219, 237);\n"
+"	border: 0px solid;\n"
+"}\n"
+"QPushButton:hover {\n"
+"	color: rgb(250,250,250);\n"
+"	background-color: rgb(48, 88, 162);\n"
+"}\n"
+"QPushButton:pressed {\n"
+"	color: rgb(250,250,250);\n"
+"	background-color: rgb(28, 44, 81);\n"
+"}")
 
-        self.horizontalLayout.addWidget(self.btn_channels_view)
+        self.verticalLayout_31.addWidget(self.btn_channels_view)
 
         self.btn_tandem_view = QPushButton(self.top_menu_bar)
         self.btn_tandem_view.setObjectName(u"btn_tandem_view")
+        self.btn_tandem_view.setMinimumSize(QSize(270, 33))
+        self.btn_tandem_view.setMaximumSize(QSize(270, 33))
+        self.btn_tandem_view.setStyleSheet(u"QPushButton {\n"
+"	color: rgb(0, 0, 0);\n"
+"	background-color: rgb(199, 219, 237);\n"
+"	border: 0px solid;\n"
+"}\n"
+"QPushButton:hover {\n"
+"	color: rgb(250,250,250);\n"
+"	background-color: rgb(48, 88, 162);\n"
+"}\n"
+"QPushButton:pressed {\n"
+"	color: rgb(250,250,250);\n"
+"	background-color: rgb(28, 44, 81);\n"
+"}")
 
-        self.horizontalLayout.addWidget(self.btn_tandem_view)
+        self.verticalLayout_31.addWidget(self.btn_tandem_view)
 
         self.btn_export_view = QPushButton(self.top_menu_bar)
         self.btn_export_view.setObjectName(u"btn_export_view")
+        self.btn_export_view.setMinimumSize(QSize(270, 33))
+        self.btn_export_view.setMaximumSize(QSize(270, 33))
+        self.btn_export_view.setStyleSheet(u"QPushButton {\n"
+"	color: rgb(0, 0, 0);\n"
+"	background-color: rgb(199, 219, 237);\n"
+"	border: 0px solid;\n"
+"}\n"
+"QPushButton:hover {\n"
+"	color: rgb(250,250,250);\n"
+"	background-color: rgb(48, 88, 162);\n"
+"}\n"
+"QPushButton:pressed {\n"
+"	color: rgb(250,250,250);\n"
+"	background-color: rgb(28, 44, 81);\n"
+"}")
 
-        self.horizontalLayout.addWidget(self.btn_export_view)
-
-        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.horizontalLayout.addItem(self.horizontalSpacer_2)
+        self.verticalLayout_31.addWidget(self.btn_export_view)
 
 
-        self.verticalLayout_5.addWidget(self.top_menu_bar)
+        self.verticalLayout.addWidget(self.top_menu_bar)
 
-        self.display_view_widget = QWidget(self.bodywidget)
-        self.display_view_widget.setObjectName(u"display_view_widget")
-        self.display_view_widget.setMinimumSize(QSize(600, 540))
-        self.gridLayout = QGridLayout(self.display_view_widget)
-        self.gridLayout.setObjectName(u"gridLayout")
-        self.gridLayout.setContentsMargins(0, 0, 0, 0)
+        self.viewswidget = QStackedWidget(self.centralwidget)
+        self.viewswidget.setObjectName(u"viewswidget")
+        self.viewswidget.setMinimumSize(QSize(100, 100))
+        self.viewswidget.setMaximumSize(QSize(270, 16777215))
+        self.page_import = QWidget()
+        self.page_import.setObjectName(u"page_import")
+        self.verticalLayout_32 = QVBoxLayout(self.page_import)
+        self.verticalLayout_32.setSpacing(0)
+        self.verticalLayout_32.setObjectName(u"verticalLayout_32")
+        self.verticalLayout_32.setContentsMargins(0, 0, 0, 0)
+        self.viewswidget.addWidget(self.page_import)
+        self.page_cylinder = QWidget()
+        self.page_cylinder.setObjectName(u"page_cylinder")
+        self.verticalLayout_33 = QVBoxLayout(self.page_cylinder)
+        self.verticalLayout_33.setObjectName(u"verticalLayout_33")
+        self.verticalLayout_33.setContentsMargins(0, 0, 0, 0)
+        self.viewswidget.addWidget(self.page_cylinder)
+        self.page_channels = QWidget()
+        self.page_channels.setObjectName(u"page_channels")
+        self.verticalLayout_35 = QVBoxLayout(self.page_channels)
+        self.verticalLayout_35.setObjectName(u"verticalLayout_35")
+        self.verticalLayout_35.setContentsMargins(0, 0, 0, 0)
+        self.viewswidget.addWidget(self.page_channels)
+        self.page_tandem = QWidget()
+        self.page_tandem.setObjectName(u"page_tandem")
+        self.verticalLayout_36 = QVBoxLayout(self.page_tandem)
+        self.verticalLayout_36.setObjectName(u"verticalLayout_36")
+        self.verticalLayout_36.setContentsMargins(0, 0, 0, 0)
+        self.viewswidget.addWidget(self.page_tandem)
+        self.page_export = QWidget()
+        self.page_export.setObjectName(u"page_export")
+        self.verticalLayout_37 = QVBoxLayout(self.page_export)
+        self.verticalLayout_37.setObjectName(u"verticalLayout_37")
+        self.verticalLayout_37.setContentsMargins(0, 0, 0, 0)
+        self.viewswidget.addWidget(self.page_export)
 
-        self.verticalLayout_5.addWidget(self.display_view_widget)
+        self.verticalLayout.addWidget(self.viewswidget)
 
 
-        self.horizontalLayout_2.addWidget(self.bodywidget)
+        self.gridLayout_2.addLayout(self.verticalLayout, 0, 0, 1, 1)
 
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
 
-        self.viewswidget.setCurrentIndex(0)
+        self.viewswidget.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
