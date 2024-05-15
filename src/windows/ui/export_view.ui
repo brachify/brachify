@@ -231,7 +231,7 @@ QPushButton:pressed {
 }</string>
          </property>
          <property name="text">
-          <string>Export Template Reference Sheet</string>
+          <string>Export Reference Sheet</string>
          </property>
         </widget>
        </item>
@@ -299,7 +299,7 @@ QPushButton:pressed {
 }</string>
          </property>
          <property name="text">
-          <string>Export Current Config File</string>
+          <string>Export Current Settings as Config</string>
          </property>
         </widget>
        </item>

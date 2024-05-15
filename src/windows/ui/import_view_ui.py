@@ -22,11 +22,11 @@ class Ui_Import_View(object):
     def setupUi(self, Import_View):
         if not Import_View.objectName():
             Import_View.setObjectName(u"Import_View")
-        Import_View.resize(271, 411)
+        Import_View.resize(271, 1077)
         Import_View.setStyleSheet(u"background-color: rgb(240, 245, 250);")
         self.verticalLayoutWidget = QWidget(Import_View)
         self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
-        self.verticalLayoutWidget.setGeometry(QRect(0, 0, 271, 411))
+        self.verticalLayoutWidget.setGeometry(QRect(0, 0, 271, 1081))
         self.verticalLayout = QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setSpacing(10)
         self.verticalLayout.setObjectName(u"verticalLayout")
