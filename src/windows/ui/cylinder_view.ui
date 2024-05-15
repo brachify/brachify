@@ -154,7 +154,7 @@
        <widget class="QCheckBox" name="cb_add_base">
         <property name="maximumSize">
          <size>
-          <width>20</width>
+          <width>1000</width>
           <height>16777215</height>
          </size>
         </property>
@@ -197,7 +197,7 @@
       </property>
       <property name="maximumSize">
        <size>
-        <width>240</width>
+        <width>1000</width>
         <height>16777215</height>
        </size>
       </property>
