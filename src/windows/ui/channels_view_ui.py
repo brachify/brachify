@@ -151,7 +151,7 @@ class Ui_Channels_View(object):
         Channels_View.setWindowTitle(QCoreApplication.translate("Channels_View", u"Form", None))
         self.label_5.setText("")
         self.groupBox_3.setTitle("")
-        self.label_9.setText(QCoreApplication.translate("Channels_View", u"channels diameter", None))
+        self.label_9.setText(QCoreApplication.translate("Channels_View", u"Channels Diameter", None))
         self.btn_apply_diameter.setText(QCoreApplication.translate("Channels_View", u"Apply", None))
         self.label_10.setText(QCoreApplication.translate("Channels_View", u"Channels", None))
         self.btn_enable.setText(QCoreApplication.translate("Channels_View", u"Disable", None))

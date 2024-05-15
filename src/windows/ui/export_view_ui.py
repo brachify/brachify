@@ -101,26 +101,6 @@ class Ui_Export_View(object):
 
         self.verticalLayout_2.addWidget(self.btn_export_mesh)
 
-        self.btn_export_shapes = QPushButton(self.top_menu_bar)
-        self.btn_export_shapes.setObjectName(u"btn_export_shapes")
-        self.btn_export_shapes.setMinimumSize(QSize(240, 33))
-        self.btn_export_shapes.setMaximumSize(QSize(16777215, 33))
-        self.btn_export_shapes.setStyleSheet(u"QPushButton {\n"
-"	color: rgb(0, 0, 0);\n"
-"	background-color: rgb(199, 219, 237);\n"
-"	border: 0px solid;\n"
-"}\n"
-"QPushButton:hover {\n"
-"	color: rgb(250,250,250);\n"
-"	background-color: rgb(48, 88, 162);\n"
-"}\n"
-"QPushButton:pressed {\n"
-"	color: rgb(250,250,250);\n"
-"	background-color: rgb(28, 44, 81);\n"
-"}")
-
-        self.verticalLayout_2.addWidget(self.btn_export_shapes)
-
         self.btn_export_template_reference = QPushButton(self.top_menu_bar)
         self.btn_export_template_reference.setObjectName(u"btn_export_template_reference")
         self.btn_export_template_reference.setMinimumSize(QSize(240, 33))
@@ -140,6 +120,26 @@ class Ui_Export_View(object):
 "}")
 
         self.verticalLayout_2.addWidget(self.btn_export_template_reference)
+
+        self.btn_export_shapes = QPushButton(self.top_menu_bar)
+        self.btn_export_shapes.setObjectName(u"btn_export_shapes")
+        self.btn_export_shapes.setMinimumSize(QSize(240, 33))
+        self.btn_export_shapes.setMaximumSize(QSize(16777215, 33))
+        self.btn_export_shapes.setStyleSheet(u"QPushButton {\n"
+"	color: rgb(0, 0, 0);\n"
+"	background-color: rgb(199, 219, 237);\n"
+"	border: 0px solid;\n"
+"}\n"
+"QPushButton:hover {\n"
+"	color: rgb(250,250,250);\n"
+"	background-color: rgb(48, 88, 162);\n"
+"}\n"
+"QPushButton:pressed {\n"
+"	color: rgb(250,250,250);\n"
+"	background-color: rgb(28, 44, 81);\n"
+"}")
+
+        self.verticalLayout_2.addWidget(self.btn_export_shapes)
 
         self.btn_export_current_config = QPushButton(self.top_menu_bar)
         self.btn_export_current_config.setObjectName(u"btn_export_current_config")
@@ -184,8 +184,8 @@ class Ui_Export_View(object):
         self.label_2.setText(QCoreApplication.translate("Export_View", u"Show Tandem", None))
         self.cb_tandem_shown.setText("")
         self.btn_export_mesh.setText(QCoreApplication.translate("Export_View", u"Export Mesh", None))
-        self.btn_export_shapes.setText(QCoreApplication.translate("Export_View", u"Export Shape(s)", None))
         self.btn_export_template_reference.setText(QCoreApplication.translate("Export_View", u"Export Template Reference Sheet", None))
+        self.btn_export_shapes.setText(QCoreApplication.translate("Export_View", u"Export Shape(s)", None))
         self.btn_export_current_config.setText(QCoreApplication.translate("Export_View", u"Export Current Config File", None))
     # retranslateUi
 

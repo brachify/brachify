@@ -202,40 +202,6 @@ QPushButton:pressed {
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="btn_export_shapes">
-         <property name="minimumSize">
-          <size>
-           <width>240</width>
-           <height>33</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>33</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-	color: rgb(0, 0, 0);
-	background-color: rgb(199, 219, 237);
-	border: 0px solid;
-}
-QPushButton:hover {
-	color: rgb(250,250,250);
-	background-color: rgb(48, 88, 162);
-}
-QPushButton:pressed {
-	color: rgb(250,250,250);
-	background-color: rgb(28, 44, 81);
-}</string>
-         </property>
-         <property name="text">
-          <string>Export Shape(s)</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QPushButton" name="btn_export_template_reference">
          <property name="minimumSize">
           <size>
@@ -266,6 +232,40 @@ QPushButton:pressed {
          </property>
          <property name="text">
           <string>Export Template Reference Sheet</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btn_export_shapes">
+         <property name="minimumSize">
+          <size>
+           <width>240</width>
+           <height>33</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>33</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	color: rgb(0, 0, 0);
+	background-color: rgb(199, 219, 237);
+	border: 0px solid;
+}
+QPushButton:hover {
+	color: rgb(250,250,250);
+	background-color: rgb(48, 88, 162);
+}
+QPushButton:pressed {
+	color: rgb(250,250,250);
+	background-color: rgb(28, 44, 81);
+}</string>
+         </property>
+         <property name="text">
+          <string>Export Shape(s)</string>
          </property>
         </widget>
        </item>
