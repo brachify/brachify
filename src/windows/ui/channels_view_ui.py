@@ -35,7 +35,7 @@ class Ui_Channels_View(object):
         self.groupBox_3.setGeometry(QRect(0, 0, 271, 411))
         self.groupBox_3.setMinimumSize(QSize(271, 411))
         self.groupBox_3.setMaximumSize(QSize(271, 16777215))
-        self.groupBox_3.setStyleSheet(u"background-color: rgb(230, 235, 240);")
+        self.groupBox_3.setStyleSheet(u"background-color: rgb(240, 245, 250);")
         self.gridLayout = QGridLayout(self.groupBox_3)
         self.gridLayout.setObjectName(u"gridLayout")
         self.frame = QFrame(self.groupBox_3)
@@ -49,13 +49,13 @@ class Ui_Channels_View(object):
         self.label_9.setObjectName(u"label_9")
         self.label_9.setMinimumSize(QSize(100, 0))
         self.label_9.setMaximumSize(QSize(16777215, 16777215))
-        self.label_9.setStyleSheet(u"background-color: rgb(230, 235, 240);")
+        self.label_9.setStyleSheet(u"background-color: rgb(240, 245, 250);")
 
         self.horizontalLayout.addWidget(self.label_9)
 
         self.spinbox_diameter = QDoubleSpinBox(self.frame)
         self.spinbox_diameter.setObjectName(u"spinbox_diameter")
-        self.spinbox_diameter.setStyleSheet(u"background-color: rgb(230, 235, 240);")
+        self.spinbox_diameter.setStyleSheet(u"background-color: rgb(255, 255, 255);")
 
         self.horizontalLayout.addWidget(self.spinbox_diameter)
 
@@ -90,7 +90,7 @@ class Ui_Channels_View(object):
         self.listwidget_channels.setObjectName(u"listwidget_channels")
         self.listwidget_channels.setMinimumSize(QSize(251, 200))
         self.listwidget_channels.setMaximumSize(QSize(251, 200))
-        self.listwidget_channels.setStyleSheet(u"background-color: rgb(230, 235, 240);")
+        self.listwidget_channels.setStyleSheet(u"background-color: rgb(240, 245, 250);")
 
         self.gridLayout.addWidget(self.listwidget_channels, 2, 0, 1, 1)
 
@@ -103,9 +103,7 @@ class Ui_Channels_View(object):
         self.top_menu_bar.setObjectName(u"top_menu_bar")
         self.top_menu_bar.setMinimumSize(QSize(270, 70))
         self.top_menu_bar.setMaximumSize(QSize(16777215, 70))
-        self.top_menu_bar.setStyleSheet(u"QWidget {\n"
-"	background-color: rgb(230, 235, 240);\n"
-"}")
+        self.top_menu_bar.setStyleSheet(u"background-color: rgb(240, 245, 250);")
         self.btn_enable = QPushButton(self.top_menu_bar)
         self.btn_enable.setObjectName(u"btn_enable")
         self.btn_enable.setGeometry(QRect(0, 0, 251, 33))

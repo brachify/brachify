@@ -15,44 +15,82 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QCheckBox, QDoubleSpinBox, QGridLayout,
-    QGroupBox, QLabel, QPushButton, QSizePolicy,
-    QSpacerItem, QSpinBox, QWidget)
+from PySide6.QtWidgets import (QApplication, QCheckBox, QDoubleSpinBox, QFormLayout,
+    QGridLayout, QGroupBox, QLabel, QLayout,
+    QPushButton, QSizePolicy, QSpacerItem, QSpinBox,
+    QWidget)
 
 class Ui_Cylinder_View(object):
     def setupUi(self, Cylinder_View):
         if not Cylinder_View.objectName():
             Cylinder_View.setObjectName(u"Cylinder_View")
-        Cylinder_View.resize(270, 411)
+        Cylinder_View.resize(271, 411)
         Cylinder_View.setStyleSheet(u"background-color: rgb(250,250,250);")
-        self.label_4 = QLabel(Cylinder_View)
-        self.label_4.setObjectName(u"label_4")
-        self.label_4.setGeometry(QRect(0, 0, 271, 401))
-        self.groupBox_3 = QGroupBox(Cylinder_View)
-        self.groupBox_3.setObjectName(u"groupBox_3")
-        self.groupBox_3.setGeometry(QRect(0, 0, 271, 411))
-        self.groupBox_3.setMinimumSize(QSize(271, 411))
-        self.groupBox_3.setMaximumSize(QSize(271, 16777215))
-        self.groupBox_3.setStyleSheet(u"background-color: rgb(230, 235, 240);")
-        self.gridLayout = QGridLayout(self.groupBox_3)
-        self.gridLayout.setObjectName(u"gridLayout")
-        self.spinbox_length = QSpinBox(self.groupBox_3)
-        self.spinbox_length.setObjectName(u"spinbox_length")
-        self.spinbox_length.setMinimumSize(QSize(135, 0))
-        self.spinbox_length.setMaximumSize(QSize(16777215, 16777215))
-        self.spinbox_length.setMinimum(60)
-        self.spinbox_length.setMaximum(300)
+        self.groupBox = QGroupBox(Cylinder_View)
+        self.groupBox.setObjectName(u"groupBox")
+        self.groupBox.setGeometry(QRect(0, 0, 271, 411))
+        self.groupBox.setMinimumSize(QSize(271, 411))
+        self.groupBox.setMaximumSize(QSize(271, 16777215))
+        self.groupBox.setStyleSheet(u"background-color: rgb(240, 245, 250);")
+        self.gridLayout_2 = QGridLayout(self.groupBox)
+        self.gridLayout_2.setSpacing(10)
+        self.gridLayout_2.setObjectName(u"gridLayout_2")
+        self.gridLayout_2.setSizeConstraint(QLayout.SetDefaultConstraint)
+        self.gridLayout_2.setContentsMargins(10, 10, 10, 10)
+        self.formLayout = QFormLayout()
+        self.formLayout.setObjectName(u"formLayout")
+        self.label = QLabel(self.groupBox)
+        self.label.setObjectName(u"label")
+        self.label.setStyleSheet(u"background-color: rgb(240, 245, 250);")
 
-        self.gridLayout.addWidget(self.spinbox_length, 1, 1, 1, 1)
+        self.formLayout.setWidget(0, QFormLayout.LabelRole, self.label)
 
-        self.spinbox_diameter = QDoubleSpinBox(self.groupBox_3)
+        self.spinbox_diameter = QDoubleSpinBox(self.groupBox)
         self.spinbox_diameter.setObjectName(u"spinbox_diameter")
         self.spinbox_diameter.setMinimumSize(QSize(135, 0))
         self.spinbox_diameter.setMaximumSize(QSize(16777215, 16777215))
+        self.spinbox_diameter.setStyleSheet(u"background-color: rgb(255, 255, 255);")
 
-        self.gridLayout.addWidget(self.spinbox_diameter, 0, 1, 1, 1)
+        self.formLayout.setWidget(0, QFormLayout.FieldRole, self.spinbox_diameter)
 
-        self.btn_apply_settings = QPushButton(self.groupBox_3)
+        self.label_2 = QLabel(self.groupBox)
+        self.label_2.setObjectName(u"label_2")
+        self.label_2.setStyleSheet(u"background-color: rgb(240, 245, 250);")
+
+        self.formLayout.setWidget(1, QFormLayout.LabelRole, self.label_2)
+
+        self.spinbox_length = QSpinBox(self.groupBox)
+        self.spinbox_length.setObjectName(u"spinbox_length")
+        self.spinbox_length.setMinimumSize(QSize(135, 0))
+        self.spinbox_length.setMaximumSize(QSize(16777215, 16777215))
+        self.spinbox_length.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+        self.spinbox_length.setMinimum(60)
+        self.spinbox_length.setMaximum(300)
+
+        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.spinbox_length)
+
+        self.label_3 = QLabel(self.groupBox)
+        self.label_3.setObjectName(u"label_3")
+        self.label_3.setStyleSheet(u"background-color: rgb(240, 245, 250);")
+
+        self.formLayout.setWidget(2, QFormLayout.LabelRole, self.label_3)
+
+        self.cb_add_base = QCheckBox(self.groupBox)
+        self.cb_add_base.setObjectName(u"cb_add_base")
+        self.cb_add_base.setMaximumSize(QSize(20, 16777215))
+        self.cb_add_base.setLayoutDirection(Qt.RightToLeft)
+        self.cb_add_base.setIconSize(QSize(16, 16))
+
+        self.formLayout.setWidget(2, QFormLayout.FieldRole, self.cb_add_base)
+
+
+        self.gridLayout_2.addLayout(self.formLayout, 0, 0, 1, 1)
+
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.gridLayout_2.addItem(self.verticalSpacer, 2, 0, 1, 1)
+
+        self.btn_apply_settings = QPushButton(self.groupBox)
         self.btn_apply_settings.setObjectName(u"btn_apply_settings")
         self.btn_apply_settings.setMinimumSize(QSize(240, 33))
         self.btn_apply_settings.setMaximumSize(QSize(240, 16777215))
@@ -70,42 +108,12 @@ class Ui_Cylinder_View(object):
 "	background-color: rgb(28, 44, 81);\n"
 "}")
 
-        self.gridLayout.addWidget(self.btn_apply_settings, 3, 0, 1, 3)
-
-        self.label_5 = QLabel(self.groupBox_3)
-        self.label_5.setObjectName(u"label_5")
-        self.label_5.setStyleSheet(u"background-color: rgb(230, 235, 240);")
-
-        self.gridLayout.addWidget(self.label_5, 2, 0, 1, 1)
-
-        self.label_3 = QLabel(self.groupBox_3)
-        self.label_3.setObjectName(u"label_3")
-        self.label_3.setStyleSheet(u"background-color: rgb(230, 235, 240);")
-
-        self.gridLayout.addWidget(self.label_3, 1, 0, 1, 1)
-
-        self.label = QLabel(self.groupBox_3)
-        self.label.setObjectName(u"label")
-        self.label.setStyleSheet(u"background-color: rgb(230, 235, 240);")
-
-        self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
-
-        self.cb_add_base = QCheckBox(self.groupBox_3)
-        self.cb_add_base.setObjectName(u"cb_add_base")
-        self.cb_add_base.setMaximumSize(QSize(20, 16777215))
-        self.cb_add_base.setLayoutDirection(Qt.RightToLeft)
-        self.cb_add_base.setIconSize(QSize(16, 16))
-
-        self.gridLayout.addWidget(self.cb_add_base, 2, 1, 1, 1)
-
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.gridLayout.addItem(self.verticalSpacer, 4, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.btn_apply_settings, 1, 0, 1, 1)
 
 #if QT_CONFIG(shortcut)
-        self.label_5.setBuddy(self.cb_add_base)
-        self.label_3.setBuddy(self.spinbox_length)
         self.label.setBuddy(self.spinbox_diameter)
+        self.label_2.setBuddy(self.spinbox_length)
+        self.label_3.setBuddy(self.cb_add_base)
 #endif // QT_CONFIG(shortcut)
 
         self.retranslateUi(Cylinder_View)
@@ -115,13 +123,12 @@ class Ui_Cylinder_View(object):
 
     def retranslateUi(self, Cylinder_View):
         Cylinder_View.setWindowTitle(QCoreApplication.translate("Cylinder_View", u"Form", None))
-        self.label_4.setText("")
-        self.groupBox_3.setTitle("")
-        self.spinbox_length.setSuffix(QCoreApplication.translate("Cylinder_View", u" mm", None))
-        self.btn_apply_settings.setText(QCoreApplication.translate("Cylinder_View", u"apply settings", None))
-        self.label_5.setText(QCoreApplication.translate("Cylinder_View", u"add base", None))
-        self.label_3.setText(QCoreApplication.translate("Cylinder_View", u"cylinder length", None))
+        self.groupBox.setTitle("")
         self.label.setText(QCoreApplication.translate("Cylinder_View", u"cylinder diameter", None))
+        self.label_2.setText(QCoreApplication.translate("Cylinder_View", u"cylinder length", None))
+        self.spinbox_length.setSuffix(QCoreApplication.translate("Cylinder_View", u" mm", None))
+        self.label_3.setText(QCoreApplication.translate("Cylinder_View", u"add base", None))
         self.cb_add_base.setText("")
+        self.btn_apply_settings.setText(QCoreApplication.translate("Cylinder_View", u"apply settings", None))
     # retranslateUi
 

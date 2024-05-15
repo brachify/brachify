@@ -54,7 +54,7 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(230, 235, 240);</string>
+    <string notr="true">background-color: rgb(240, 245, 250);</string>
    </property>
    <property name="title">
     <string/>
@@ -96,7 +96,7 @@
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(230, 235, 240);</string>
+          <string notr="true">background-color: rgb(240, 245, 250);</string>
          </property>
          <property name="text">
           <string>channels diameter</string>
@@ -106,7 +106,7 @@
        <item>
         <widget class="QDoubleSpinBox" name="spinbox_diameter">
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(230, 235, 240);</string>
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
         </widget>
        </item>
@@ -175,7 +175,7 @@ QPushButton:pressed {
        </size>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(230, 235, 240);</string>
+       <string notr="true">background-color: rgb(240, 245, 250);</string>
       </property>
      </widget>
     </item>
@@ -201,9 +201,7 @@ QPushButton:pressed {
        </size>
       </property>
       <property name="styleSheet">
-       <string notr="true">QWidget {
-	background-color: rgb(230, 235, 240);
-}</string>
+       <string notr="true">background-color: rgb(240, 245, 250);</string>
       </property>
       <widget class="QPushButton" name="btn_enable">
        <property name="geometry">
