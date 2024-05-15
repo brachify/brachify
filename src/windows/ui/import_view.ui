@@ -143,6 +143,9 @@ QPushButton:pressed {
         <property name="text">
          <string>No Model(s) Loaded</string>
         </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
       <item>
