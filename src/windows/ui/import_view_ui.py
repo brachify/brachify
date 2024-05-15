@@ -80,6 +80,7 @@ class Ui_Import_View(object):
         self.label_file_info.setObjectName(u"label_file_info")
         self.label_file_info.setMaximumSize(QSize(271, 16777215))
         self.label_file_info.setStyleSheet(u"background-color: rgb(240, 245, 250);")
+        self.label_file_info.setWordWrap(True)
 
         self.verticalLayout_2.addWidget(self.label_file_info)
 
