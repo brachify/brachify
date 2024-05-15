@@ -184,8 +184,8 @@ class Ui_Export_View(object):
         self.label_2.setText(QCoreApplication.translate("Export_View", u"Show Tandem", None))
         self.cb_tandem_shown.setText("")
         self.btn_export_mesh.setText(QCoreApplication.translate("Export_View", u"Export Mesh", None))
-        self.btn_export_template_reference.setText(QCoreApplication.translate("Export_View", u"Export Template Reference Sheet", None))
+        self.btn_export_template_reference.setText(QCoreApplication.translate("Export_View", u"Export Reference Sheet", None))
         self.btn_export_shapes.setText(QCoreApplication.translate("Export_View", u"Export Shape(s)", None))
-        self.btn_export_current_config.setText(QCoreApplication.translate("Export_View", u"Export Current Config File", None))
+        self.btn_export_current_config.setText(QCoreApplication.translate("Export_View", u"Export Current Settings as Config", None))
     # retranslateUi
 
