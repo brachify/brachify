@@ -77,7 +77,7 @@ class Ui_Cylinder_View(object):
 
         self.cb_add_base = QCheckBox(self.groupBox)
         self.cb_add_base.setObjectName(u"cb_add_base")
-        self.cb_add_base.setMaximumSize(QSize(20, 16777215))
+        self.cb_add_base.setMaximumSize(QSize(1000, 16777215))
         self.cb_add_base.setLayoutDirection(Qt.RightToLeft)
         self.cb_add_base.setIconSize(QSize(16, 16))
 
@@ -93,7 +93,7 @@ class Ui_Cylinder_View(object):
         self.btn_apply_settings = QPushButton(self.groupBox)
         self.btn_apply_settings.setObjectName(u"btn_apply_settings")
         self.btn_apply_settings.setMinimumSize(QSize(240, 33))
-        self.btn_apply_settings.setMaximumSize(QSize(240, 16777215))
+        self.btn_apply_settings.setMaximumSize(QSize(1000, 16777215))
         self.btn_apply_settings.setStyleSheet(u"QPushButton {\n"
 "	color: rgb(0, 0, 0);\n"
 "	background-color: rgb(199, 219, 237);\n"
