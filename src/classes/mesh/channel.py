@@ -13,8 +13,10 @@ from OCC.Core.TopoDS import TopoDS_Shape
 import classes.mesh.helper as helper
 from classes.logger import log
 
+from settings.load import default_settings
+
 TIP_LENGTH = 2.5
-DEFAULT_DIAMETER = 3.0
+DEFAULT_DIAMETER = default_settings.get("DEFAULT_DIAMETER", 5.0) # later change default to 3.0
 
 
 class NeedleChannel:

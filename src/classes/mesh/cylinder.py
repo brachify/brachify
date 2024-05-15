@@ -19,7 +19,9 @@ from classes.logger import log
 from classes.mesh.helper import face_is_plane, geom_plane_from_face
 from classes.mesh.notch import CylinderNotch
 
-DEFAULT_LENGTH = 160.0
+from settings.load import default_settings
+
+DEFAULT_LENGTH = default_settings.get("DEFAULT_LENGTH", 180.0) # later change default to 160.0
 
 
 class BrachyCylinder:

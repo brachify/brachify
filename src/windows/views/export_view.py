@@ -14,9 +14,11 @@ from windows.models.shape_model import ShapeTypes, ShapeModel
 from windows.ui.export_view_ui import Ui_Export_View
 from windows.views.custom_view import display_action, CustomView
 
+from settings.load import default_settings
+
 EXPORT_LABEL = "export"
 BASEMAP = "basemap.png"
-DEFAULT_NEEDLE_LENGTH = 200
+DEFAULT_NEEDLE_LENGTH = default_settings.get("DEFAULT_NEEDLE_LENGTH", 400) # later change default to 200
 
 materials = {
     ShapeTypes.CYLINDER: {"rgb": [0.2, 0.55, 0.55], "transparent": True},
