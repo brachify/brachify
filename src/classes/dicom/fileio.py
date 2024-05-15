@@ -27,7 +27,7 @@ def get_channels_from_dicom(data: DicomData) -> list[NeedleChannel]:
     return channels
      
 
-def get_cylinder_from_dicom(data: DicomData) -> BrachyCylinder:
+def get_cylinder_from_dicom(data: DicomData) -> BrachyCylinder: # this function is never used (?)
     diameter = data.cylinder_diameter
     tip = data.cylinder_tip
     base = data.cylinder_base

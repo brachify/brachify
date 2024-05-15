@@ -22,7 +22,7 @@ from classes.mesh.notch import CylinderNotch
 from settings.load import default_settings
 
 DEFAULT_LENGTH = default_settings.get("DEFAULT_LENGTH", 180.0) # later change default to 160.0
-
+DEFAULT_CYLINDER_DIAMETER = default_settings.get("DEFAULT_CYLINDER_DIAMETER", 50.0) # later change default to 30.0
 
 class BrachyCylinder:
     
@@ -86,7 +86,7 @@ class BrachyCylinder:
         self._shape = None
         self._shape = self.shape()
 
-    def __init__(self, diameter: float = 30.0, expand_base: bool = False):
+    def __init__(self, diameter: float = DEFAULT_CYLINDER_DIAMETER, expand_base: bool = False): 
         self.length = DEFAULT_LENGTH
         self.diameter = diameter
         self.expand_base = expand_base
@@ -95,7 +95,8 @@ class BrachyCylinder:
 
 
 def get_brachy_cylinder(data: DicomData) -> BrachyCylinder:
-    try:
+    # if cylinder contour is provided in dicom file, then read diameter from it
+    try: 
         point1 = np.asarray(data.cylinder_contour[0])
         point2 = np.asarray(data.cylinder_contour[-1])
         difference = point2 - point1
@@ -104,9 +105,10 @@ def get_brachy_cylinder(data: DicomData) -> BrachyCylinder:
         diameter = round(diameter, 1)
 
         log.debug(f"Cylinder results: \n Diameter: {diameter}")
-    except Exception as error_message:
-        log.debug(f"No Cylinder surface contour, or error reading:\nDiameter set to 30mm.")
-        diameter = 30 #mm
+    # if cylinder contour is not provided, then set to default value
+    except Exception as error_message: 
+        log.debug(f"No Cylinder surface contour, or error reading:\nDiameter set to default.")
+        diameter = DEFAULT_CYLINDER_DIAMETER
 
     return BrachyCylinder(diameter=diameter)
 

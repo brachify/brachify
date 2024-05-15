@@ -3,7 +3,7 @@ For loading default settings
 """
 
 default_settings = {
-    "DEFAULT_CYLINDER_DIAMETER": 40.0, # # had been 30.0. Doesn't seem to work. XX
+    "DEFAULT_CYLINDER_DIAMETER": 45.0, # # had been 30.0.
     "DEFAULT_LENGTH": 170.0, # # cylinder length.  had been 160.0.
     "DEFAULT_DIAMETER": 4.0, # # channels diameter.  had been 3.0
     "TANDEM_CHANNEL_DIAMETER_DEFAULT": 5.0, # # had been 4.0
