@@ -6,252 +6,311 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>901</width>
-    <height>655</height>
+    <width>884</width>
+    <height>610</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>brachify</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>:/Icon/Icon/brachify_splash-ico.png</normaloff>:/Icon/Icon/brachify_splash-ico.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(155,189,220);</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout_2">
-    <item>
-     <widget class="QWidget" name="left_menu_bar" native="true">
-      <property name="minimumSize">
-       <size>
-        <width>250</width>
-        <height>0</height>
-       </size>
+   <layout class="QGridLayout" name="gridLayout_2">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>10</number>
+    </property>
+    <property name="rightMargin">
+     <number>10</number>
+    </property>
+    <property name="bottomMargin">
+     <number>5</number>
+    </property>
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <item row="0" column="1">
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <property name="spacing">
+       <number>0</number>
       </property>
-      <property name="maximumSize">
-       <size>
-        <width>260</width>
-        <height>16777215</height>
-       </size>
+      <property name="leftMargin">
+       <number>0</number>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="QStackedWidget" name="viewswidget">
-         <property name="currentIndex">
+      <property name="bottomMargin">
+       <number>5</number>
+      </property>
+      <item>
+       <widget class="QWidget" name="display_view_widget" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>600</width>
+          <height>585</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_3">
+         <property name="leftMargin">
           <number>0</number>
          </property>
-         <widget class="QWidget" name="page_import">
-          <layout class="QVBoxLayout" name="verticalLayout_7">
-           <property name="spacing">
-            <number>0</number>
-           </property>
-           <property name="leftMargin">
-            <number>4</number>
-           </property>
-           <property name="topMargin">
-            <number>4</number>
-           </property>
-           <property name="rightMargin">
-            <number>4</number>
-           </property>
-           <property name="bottomMargin">
-            <number>4</number>
-           </property>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="page_cylinder">
-          <layout class="QVBoxLayout" name="verticalLayout">
-           <property name="leftMargin">
-            <number>4</number>
-           </property>
-           <property name="topMargin">
-            <number>4</number>
-           </property>
-           <property name="rightMargin">
-            <number>4</number>
-           </property>
-           <property name="bottomMargin">
-            <number>4</number>
-           </property>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="page_channels">
-          <layout class="QVBoxLayout" name="verticalLayout_3">
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <property name="topMargin">
-            <number>0</number>
-           </property>
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="page_tandem">
-          <layout class="QVBoxLayout" name="verticalLayout_4">
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <property name="topMargin">
-            <number>0</number>
-           </property>
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="page_export">
-          <layout class="QVBoxLayout" name="verticalLayout_8">
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <property name="topMargin">
-            <number>0</number>
-           </property>
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
-          </layout>
-         </widget>
-        </widget>
-       </item>
-      </layout>
-     </widget>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+        </layout>
+       </widget>
+      </item>
+     </layout>
     </item>
-    <item>
-     <widget class="QWidget" name="bodywidget" native="true">
-      <layout class="QVBoxLayout" name="verticalLayout_5">
-       <item>
-        <widget class="QWidget" name="top_menu_bar" native="true">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>64</height>
-          </size>
+    <item row="0" column="0">
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>5</number>
+      </property>
+      <item>
+       <widget class="QWidget" name="top_menu_bar" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>270</width>
+          <height>180</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>271</width>
+          <height>180</height>
+         </size>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_31">
+         <property name="spacing">
+          <number>0</number>
          </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>64</height>
-          </size>
+         <property name="leftMargin">
+          <number>0</number>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout">
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>20</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="btn_import_view">
+           <property name="minimumSize">
+            <size>
+             <width>270</width>
+             <height>33</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>270</width>
+             <height>33</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+	color: rgb(250,250,250);
+	background-color: rgb(28, 44, 81);
+	border: 0px solid;
+}</string>
+           </property>
+           <property name="text">
+            <string>Import</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btn_cylinder_view">
+           <property name="minimumSize">
+            <size>
+             <width>270</width>
+             <height>33</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>270</width>
+             <height>33</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+	color: rgb(0, 0, 0);
+	background-color: rgb(199, 219, 237);
+	border: 0px solid;
+}
+QPushButton:hover {
+	color: rgb(250,250,250);
+	background-color: rgb(48, 88, 162);
+}
+QPushButton:pressed {
+	color: rgb(250,250,250);
+	background-color: rgb(28, 44, 81);
+}</string>
+           </property>
+           <property name="text">
+            <string>Cylinder</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btn_channels_view">
+           <property name="minimumSize">
+            <size>
+             <width>270</width>
+             <height>33</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>270</width>
+             <height>33</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+	color: rgb(0, 0, 0);
+	background-color: rgb(199, 219, 237);
+	border: 0px solid;
+}
+QPushButton:hover {
+	color: rgb(250,250,250);
+	background-color: rgb(48, 88, 162);
+}
+QPushButton:pressed {
+	color: rgb(250,250,250);
+	background-color: rgb(28, 44, 81);
+}</string>
+           </property>
+           <property name="text">
+            <string>Channels</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btn_tandem_view">
+           <property name="minimumSize">
+            <size>
+             <width>270</width>
+             <height>33</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>270</width>
+             <height>33</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+	color: rgb(0, 0, 0);
+	background-color: rgb(199, 219, 237);
+	border: 0px solid;
+}
+QPushButton:hover {
+	color: rgb(250,250,250);
+	background-color: rgb(48, 88, 162);
+}
+QPushButton:pressed {
+	color: rgb(250,250,250);
+	background-color: rgb(28, 44, 81);
+}</string>
+           </property>
+           <property name="text">
+            <string>Tandem</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btn_export_view">
+           <property name="minimumSize">
+            <size>
+             <width>270</width>
+             <height>33</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>270</width>
+             <height>33</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+	color: rgb(0, 0, 0);
+	background-color: rgb(199, 219, 237);
+	border: 0px solid;
+}
+QPushButton:hover {
+	color: rgb(250,250,250);
+	background-color: rgb(48, 88, 162);
+}
+QPushButton:pressed {
+	color: rgb(250,250,250);
+	background-color: rgb(28, 44, 81);
+}</string>
+           </property>
+           <property name="text">
+            <string>Export</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QStackedWidget" name="viewswidget">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>100</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>270</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="currentIndex">
+         <number>1</number>
+        </property>
+        <widget class="QWidget" name="page_import">
+         <layout class="QVBoxLayout" name="verticalLayout_32">
           <property name="spacing">
-           <number>1</number>
-          </property>
-          <property name="leftMargin">
            <number>0</number>
           </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-          <item>
-           <widget class="QPushButton" name="btn_import_view">
-            <property name="minimumSize">
-             <size>
-              <width>80</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>80</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Import</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="btn_cylinder_view">
-            <property name="text">
-             <string>Cylinder</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="btn_channels_view">
-            <property name="minimumSize">
-             <size>
-              <width>80</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>80</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Channels</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="btn_tandem_view">
-            <property name="text">
-             <string>Tandem</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="btn_export_view">
-            <property name="text">
-             <string>Export</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QWidget" name="display_view_widget" native="true">
-         <property name="minimumSize">
-          <size>
-           <width>600</width>
-           <height>540</height>
-          </size>
-         </property>
-         <layout class="QGridLayout" name="gridLayout">
           <property name="leftMargin">
            <number>0</number>
           </property>
@@ -266,9 +325,73 @@
           </property>
          </layout>
         </widget>
-       </item>
-      </layout>
-     </widget>
+        <widget class="QWidget" name="page_cylinder">
+         <layout class="QVBoxLayout" name="verticalLayout_33">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="page_channels">
+         <layout class="QVBoxLayout" name="verticalLayout_35">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="page_tandem">
+         <layout class="QVBoxLayout" name="verticalLayout_36">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="page_export">
+         <layout class="QVBoxLayout" name="verticalLayout_37">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>
