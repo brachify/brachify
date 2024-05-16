@@ -7,6 +7,9 @@ from classes.dicom.data import DicomData
 from windows.models.shape_model import ShapeTypes
 from windows.ui.import_view_ui import Ui_Import_View
 from windows.views.custom_view import display_action, CustomView
+from windows.views.export_view import Export_View
+from windows.models.shape_model import ShapeModel
+
 
 materials = {
     ShapeTypes.CYLINDER: {"rgb": [0.2, 0.55, 0.55], "transparent": True},
@@ -35,9 +38,13 @@ class ImportView(CustomView):
         app = get_app()
         window = app.window
 
+
+        #there is probably a more efficient way of doing this
         window.dicommodel.update(data)
         window.displaymodel.set_transparent(True)
         app.signals.viewChanged.emit(4)
+        expoself=Export_View.__init__()
+        Export_View.update_display(expoself, "")
 
     def action_update_import_label(self, data:DicomData):
         self.ui.label_file_info.setText(data.toString())
