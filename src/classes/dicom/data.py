@@ -55,7 +55,7 @@ class DicomData:
         if self.cylinder_roi:
             text += f"Cylinder ROI Number {self.cylinder_roi}\n"
         else:
-            text += "No Cylinder Data!\n"
+            text += ""
 
         if self.channels_rois:
             text += f"\nChannels ({len(self.channels_rois)} loaded)\n"
