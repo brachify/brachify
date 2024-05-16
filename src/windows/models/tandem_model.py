@@ -16,11 +16,12 @@ from settings.load import default_settings
 TANDEM_LABEL = "tandem_shape"
 
 # Defaults
-TANDEM_CHANNEL_DIAMETER_DEFAULT = default_settings.get("TANDEM_CHANNEL_DIAMETER_DEFAULT", 6.0) # later change default to 4.0
-TANDEM_STOPPER_DIAMETER_DEFAULT = default_settings.get("TANDEM_STOPPER_DIAMETER_DEFAULT", 10.0) # later change default to 8.0
-TANDEM_TIP_ANGLE_DEFAULT = default_settings.get("TANDEM_TIP_ANGLE_DEFAULT", 50.0) # later change default to 30.0
-TANDEM_TIP_HEIGHT_DEFAULT = default_settings.get("TANDEM_TIP_HEIGHT_DEFAULT", 149.0) # later change default to 129.0
-TANDEM_BEND_RADIUS = default_settings.get("TANDEM_BEND_RADIUS", 55.0) # later change default to 35.0
+# get defaults from config file.  If can't read from dictionary, set to 4.0, 8.0, ...
+TANDEM_CHANNEL_DIAMETER_DEFAULT = default_settings.get("TANDEM_CHANNEL_DIAMETER_DEFAULT", 4.0) 
+TANDEM_STOPPER_DIAMETER_DEFAULT = default_settings.get("TANDEM_STOPPER_DIAMETER_DEFAULT", 8.0) 
+TANDEM_TIP_ANGLE_DEFAULT = default_settings.get("TANDEM_TIP_ANGLE_DEFAULT", 30.0) 
+TANDEM_TIP_HEIGHT_DEFAULT = default_settings.get("TANDEM_TIP_HEIGHT_DEFAULT", 129.0) 
+TANDEM_BEND_RADIUS = default_settings.get("TANDEM_BEND_RADIUS", 35.0) 
 
 
 class TandemModel(QObject):

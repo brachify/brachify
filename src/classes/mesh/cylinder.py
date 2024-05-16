@@ -21,8 +21,9 @@ from classes.mesh.notch import CylinderNotch
 
 from settings.load import default_settings
 
-DEFAULT_LENGTH = default_settings.get("DEFAULT_LENGTH", 180.0) # later change default to 160.0
-DEFAULT_CYLINDER_DIAMETER = default_settings.get("DEFAULT_CYLINDER_DIAMETER", 50.0) # later change default to 30.0
+# get default cylinder diameter and length from config file.  If can't read from dictionary, set to 160.0, 30.0.
+DEFAULT_LENGTH = default_settings.get("DEFAULT_LENGTH", 160.0) 
+DEFAULT_CYLINDER_DIAMETER = default_settings.get("DEFAULT_CYLINDER_DIAMETER", 30.0) 
 
 class BrachyCylinder:
     

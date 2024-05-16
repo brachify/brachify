@@ -16,7 +16,8 @@ from classes.logger import log
 from settings.load import default_settings
 
 TIP_LENGTH = 2.5
-DEFAULT_DIAMETER = default_settings.get("DEFAULT_DIAMETER", 5.0) # later change default to 3.0
+# get default channel diameter from config file.  If can't read from dictionary, set to 3.0.
+DEFAULT_DIAMETER = default_settings.get("DEFAULT_DIAMETER", 3.0)
 
 
 class NeedleChannel:

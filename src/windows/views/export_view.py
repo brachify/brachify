@@ -18,7 +18,8 @@ from settings.load import default_settings
 
 EXPORT_LABEL = "export"
 BASEMAP = "basemap.png"
-DEFAULT_NEEDLE_LENGTH = default_settings.get("DEFAULT_NEEDLE_LENGTH", 400) # later change default to 200
+# get default needle length from config file.  If can't read from dictionary, set to 200.0.
+DEFAULT_NEEDLE_LENGTH = default_settings.get("DEFAULT_NEEDLE_LENGTH", 200)
 
 materials = {
     ShapeTypes.CYLINDER: {"rgb": [0.2, 0.55, 0.55], "transparent": True},
