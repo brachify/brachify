@@ -37,7 +37,7 @@ class ImportView(CustomView):
 
         window.dicommodel.update(data)
         window.displaymodel.set_transparent(True)
-        get_app().window.ui.viewswidget.setCurrentIndex(4)
+        app.signals.viewChanged.emit(4)
 
     def action_update_import_label(self, data:DicomData):
         self.ui.label_file_info.setText(data.toString())
