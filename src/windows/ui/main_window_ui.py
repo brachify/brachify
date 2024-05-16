@@ -70,6 +70,14 @@ class Ui_MainWindow(object):
 "	color: rgb(250,250,250);\n"
 "	background-color: rgb(28, 44, 81);\n"
 "	border: 0px solid;\n"
+"}\n"
+"QPushButton:hover {\n"
+"	color: rgb(250,250,250);\n"
+"	background-color: rgb(48, 88, 162);\n"
+"}\n"
+"QPushButton:pressed {\n"
+"	color: rgb(250,250,250);\n"
+"	background-color: rgb(28, 44, 81);\n"
 "}")
 
         self.verticalLayout_31.addWidget(self.btn_import_view)
