@@ -5,6 +5,7 @@ from classes.logger import log
 from windows.models.shape_model import ShapeTypes
 from windows.ui.channels_view_ui import Ui_Channels_View
 from windows.views.custom_view import display_action, CustomView
+DEFAULT_NEEDLE_LENGTH = 200
 
 materials = {
     ShapeTypes.CYLINDER: {"rgb": [0.8, 0.8, 0.8], "transparent": True},
@@ -30,11 +31,15 @@ class ChannelsView(CustomView):
             log.critical(f"failed selecting channel from list view: \n{error_message}")
 
     @display_action
-    def action_set_diameter(self):
-        log.debug(f"action: set channel diameter")
+    def action_apply_settings(self):
+        log.debug(f"action: apply settings")
         diameter = self.ui.spinbox_diameter.value()
         log.debug(f"setting channel diameters to: {diameter}")
         self.channelsmodel.set_diameter(diameter)
+        needle_len = self.ui.sb_needle_length.value()
+        global DEFAULT_NEEDLE_LENGTH 
+        DEFAULT_NEEDLE_LENGTH = needle_len
+        log.debug("recording needle length as:" + str(needle_len))
 
     @display_action
     def action_set_selected_shapes(self, *args, **kwargs):
@@ -125,8 +130,11 @@ class ChannelsView(CustomView):
         self.ui.setupUi(self)
         self.is_active = False
 
+        #sets default needle length
+        self.ui.sb_needle_length.setValue(DEFAULT_NEEDLE_LENGTH)
+
         # signals and slots
-        self.ui.btn_apply_diameter.pressed.connect(self.action_set_diameter)
+        self.ui.btn_apply_settings.pressed.connect(self.action_apply_settings)
         self.ui.listwidget_channels.currentItemChanged.connect(self.action_select_channel)
         self.ui.btn_enable.pressed.connect(self.action_toggle_channel_disable)
         self.ui.btn_set_tandem.pressed.connect(self.action_set_tandem)
@@ -135,3 +143,7 @@ class ChannelsView(CustomView):
         self.channelsmodel.values_changed.connect(self.action_update_settings)
 
         self.action_update_settings()
+
+    #for retrieving needle length in other classes (mainly export)
+    def get_needle_len(self):
+        return self.ui.sb_needle_length.value()
