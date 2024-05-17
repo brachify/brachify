@@ -66,16 +66,16 @@ class Export_View(CustomView):
             "DEFAULT_CYLINDER_DIAMETER": default_cylinder_diameter,
             "DEFAULT_LENGTH": default_length,
             "DEFAULT_DIAMETER": default_diameter,
+            "TANDEM_TIP_HEIGHT_DEFAULT": tandem_length, # tandem_length may not actually be Tandem_Tip_Height_Default
             "TANDEM_CHANNEL_DIAMETER_DEFAULT": tandem_channel_diameter_default, 
             "TANDEM_STOPPER_DIAMETER_DEFAULT": tandem_stopper_diameter_default,
             "TANDEM_TIP_ANGLE_DEFAULT": tandem_tip_angle_default,
-            "TANDEM_TIP_HEIGHT_DEFAULT": tandem_length, # tandem_length may not actually be Tandem_Tip_Height_Default
             "TANDEM_BEND_RADIUS": tandem_bend_radius,
             "DEFAULT_NEEDLE_LENGTH": default_needle_length
         }
         # Save dictionary as .json file
         with open(filename[0], "w") as outfile:
-            json.dump(default_settings, outfile)
+            json.dump(default_settings, outfile, indent=0)
 
     def action_export_mesh(self):
         """
@@ -181,9 +181,9 @@ class Export_View(CustomView):
         self.shape = None  # the model to export
 
         # signals and slots
-        self.ui.btn_export_mesh.pressed.connect(self.action_export_mesh)
+        self.ui.btn_export_mesh.pressed.connect(self.action_export_mesh) # when "export mesh" button pressed, then call action_export_mesh function
         self.ui.btn_export_shapes.pressed.connect(self.action_export_shapes)
-        self.ui.btn_export_current_config.pressed.connect(self.action_export_config) # connects button to action
+        self.ui.btn_export_current_config.pressed.connect(self.action_export_config)
 
         self.ui.sb_needle_length.setValue(DEFAULT_NEEDLE_LENGTH)
         self.ui.btn_export_template_reference.pressed.connect(self.action_export_template_reference)
