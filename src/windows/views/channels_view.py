@@ -143,7 +143,3 @@ class ChannelsView(CustomView):
         self.channelsmodel.values_changed.connect(self.action_update_settings)
 
         self.action_update_settings()
-
-    #for retrieving needle length in other classes (mainly export)
-    def get_needle_len(self):
-        return self.ui.sb_needle_length.value()

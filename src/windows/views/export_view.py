@@ -68,8 +68,8 @@ class Export_View(CustomView):
             return
         
         window = get_app().window
-        a = ChannelsView()
-        needle_length = ChannelsView.get_needle_len(a)
+
+        needle_length = window.navigationmodel.views[2].ui.sb_needle_length.value()
 
         # generate pdf
         tandembool = window.tandemmodel.shape() != None
