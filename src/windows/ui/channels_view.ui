@@ -211,7 +211,7 @@ QPushButton:pressed {
         <widget class="QLabel" name="label_9">
          <property name="minimumSize">
           <size>
-           <width>100</width>
+           <width>108</width>
            <height>0</height>
           </size>
          </property>
@@ -233,12 +233,46 @@ QPushButton:pressed {
         <widget class="QDoubleSpinBox" name="spinbox_diameter">
          <property name="minimumSize">
           <size>
-           <width>135</width>
+           <width>20</width>
            <height>0</height>
           </size>
          </property>
          <property name="styleSheet">
           <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btn_apply_settings">
+         <property name="minimumSize">
+          <size>
+           <width>45</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>45</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	color: rgb(0, 0, 0);
+	background-color: rgb(199, 219, 237);
+	border: 0px solid;
+}
+QPushButton:hover {
+	color: rgb(250,250,250);
+	background-color: rgb(48, 88, 162);
+}
+QPushButton:pressed {
+	color: rgb(250,250,250);
+	background-color: rgb(28, 44, 81);
+}</string>
+         </property>
+         <property name="text">
+          <string>Apply</string>
          </property>
         </widget>
        </item>
@@ -289,40 +323,6 @@ QPushButton:pressed {
        </widget>
       </item>
      </layout>
-    </item>
-    <item row="2" column="0">
-     <widget class="QPushButton" name="btn_apply_settings">
-      <property name="minimumSize">
-       <size>
-        <width>240</width>
-        <height>33</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton {
-	color: rgb(0, 0, 0);
-	background-color: rgb(199, 219, 237);
-	border: 0px solid;
-}
-QPushButton:hover {
-	color: rgb(250,250,250);
-	background-color: rgb(48, 88, 162);
-}
-QPushButton:pressed {
-	color: rgb(250,250,250);
-	background-color: rgb(28, 44, 81);
-}</string>
-      </property>
-      <property name="text">
-       <string>Apply Settings</string>
-      </property>
-     </widget>
     </item>
    </layout>
   </widget>

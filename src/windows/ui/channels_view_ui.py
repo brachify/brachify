@@ -106,7 +106,7 @@ class Ui_Channels_View(object):
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.label_9 = QLabel(self.frame)
         self.label_9.setObjectName(u"label_9")
-        self.label_9.setMinimumSize(QSize(100, 0))
+        self.label_9.setMinimumSize(QSize(108, 0))
         self.label_9.setMaximumSize(QSize(16777215, 16777215))
         self.label_9.setStyleSheet(u"background-color: rgb(240, 245, 250);")
 
@@ -114,10 +114,30 @@ class Ui_Channels_View(object):
 
         self.spinbox_diameter = QDoubleSpinBox(self.frame)
         self.spinbox_diameter.setObjectName(u"spinbox_diameter")
-        self.spinbox_diameter.setMinimumSize(QSize(135, 0))
+        self.spinbox_diameter.setMinimumSize(QSize(20, 0))
         self.spinbox_diameter.setStyleSheet(u"background-color: rgb(255, 255, 255);")
 
         self.horizontalLayout.addWidget(self.spinbox_diameter)
+
+        self.btn_apply_settings = QPushButton(self.frame)
+        self.btn_apply_settings.setObjectName(u"btn_apply_settings")
+        self.btn_apply_settings.setMinimumSize(QSize(45, 20))
+        self.btn_apply_settings.setMaximumSize(QSize(45, 16777215))
+        self.btn_apply_settings.setStyleSheet(u"QPushButton {\n"
+"	color: rgb(0, 0, 0);\n"
+"	background-color: rgb(199, 219, 237);\n"
+"	border: 0px solid;\n"
+"}\n"
+"QPushButton:hover {\n"
+"	color: rgb(250,250,250);\n"
+"	background-color: rgb(48, 88, 162);\n"
+"}\n"
+"QPushButton:pressed {\n"
+"	color: rgb(250,250,250);\n"
+"	background-color: rgb(28, 44, 81);\n"
+"}")
+
+        self.horizontalLayout.addWidget(self.btn_apply_settings)
 
 
         self.gridLayout.addWidget(self.frame, 0, 0, 1, 1)
@@ -143,26 +163,6 @@ class Ui_Channels_View(object):
 
         self.gridLayout.addLayout(self.horizontalLayout_3, 1, 0, 1, 1)
 
-        self.btn_apply_settings = QPushButton(self.groupBox_3)
-        self.btn_apply_settings.setObjectName(u"btn_apply_settings")
-        self.btn_apply_settings.setMinimumSize(QSize(240, 33))
-        self.btn_apply_settings.setMaximumSize(QSize(16777215, 16777215))
-        self.btn_apply_settings.setStyleSheet(u"QPushButton {\n"
-"	color: rgb(0, 0, 0);\n"
-"	background-color: rgb(199, 219, 237);\n"
-"	border: 0px solid;\n"
-"}\n"
-"QPushButton:hover {\n"
-"	color: rgb(250,250,250);\n"
-"	background-color: rgb(48, 88, 162);\n"
-"}\n"
-"QPushButton:pressed {\n"
-"	color: rgb(250,250,250);\n"
-"	background-color: rgb(28, 44, 81);\n"
-"}")
-
-        self.gridLayout.addWidget(self.btn_apply_settings, 2, 0, 1, 1)
-
 
         self.retranslateUi(Channels_View)
 
@@ -177,8 +177,8 @@ class Ui_Channels_View(object):
         self.btn_enable.setText(QCoreApplication.translate("Channels_View", u"Disable", None))
         self.btn_set_tandem.setText(QCoreApplication.translate("Channels_View", u"Set as Tandem", None))
         self.label_9.setText(QCoreApplication.translate("Channels_View", u"Channels Diameter", None))
+        self.btn_apply_settings.setText(QCoreApplication.translate("Channels_View", u"Apply", None))
         self.label.setText(QCoreApplication.translate("Channels_View", u"Needle Length", None))
         self.sb_needle_length.setSuffix(QCoreApplication.translate("Channels_View", u" mm", None))
-        self.btn_apply_settings.setText(QCoreApplication.translate("Channels_View", u"Apply Settings", None))
     # retranslateUi
 
