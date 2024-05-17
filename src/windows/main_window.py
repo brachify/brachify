@@ -10,6 +10,7 @@ from windows.models.channels_model import ChannelsModel
 from windows.models.cylinder_model import CylinderModel
 from windows.models.tandem_model import TandemModel
 from windows.models.navigation_model import NavigationModel
+from windows.views.import_view import dicom_file_opened
 
 class MainWindow(QMainWindow):
 
@@ -141,28 +142,29 @@ class MainWindow(QMainWindow):
                 "	border: 0px solid;\n"
                 "}")
     def change_color_export(self):
-        views = [self.ui.btn_import_view, self.ui.btn_cylinder_view, self.ui.btn_channels_view, self.ui.btn_tandem_view, self.ui.btn_export_view]
-        for v in views:
-            if(v != self.ui.btn_export_view):
-                v.setStyleSheet(u"QPushButton {\n"
-                "	color: rgb(0, 0, 0);\n"
-                "	background-color: rgb(199, 219, 237);\n"
-                "	border: 0px solid;\n"
-                "}\n"
-                "QPushButton:hover {\n"
-                "	color: rgb(250,250,250);\n"
-                "	background-color: rgb(48, 88, 162);\n"
-                "}\n"
-                "QPushButton:pressed {\n"
-                "	color: rgb(250,250,250);\n"
-                "	background-color: rgb(28, 44, 81);\n"
-                "}")
-            else:
-                v.setStyleSheet(u"QPushButton {\n"
-                "	color: rgb(250, 250, 250);\n"
-                "	background-color: rgb(28, 44, 81);\n"
-                "	border: 0px solid;\n"
-                "}")
+        if(dicom_file_opened):
+            views = [self.ui.btn_import_view, self.ui.btn_cylinder_view, self.ui.btn_channels_view, self.ui.btn_tandem_view, self.ui.btn_export_view]
+            for v in views:
+                if(v != self.ui.btn_export_view):
+                    v.setStyleSheet(u"QPushButton {\n"
+                    "	color: rgb(0, 0, 0);\n"
+                    "	background-color: rgb(199, 219, 237);\n"
+                    "	border: 0px solid;\n"
+                    "}\n"
+                    "QPushButton:hover {\n"
+                    "	color: rgb(250,250,250);\n"
+                    "	background-color: rgb(48, 88, 162);\n"
+                    "}\n"
+                    "QPushButton:pressed {\n"
+                    "	color: rgb(250,250,250);\n"
+                    "	background-color: rgb(28, 44, 81);\n"
+                    "}")
+                else:
+                    v.setStyleSheet(u"QPushButton {\n"
+                    "	color: rgb(250, 250, 250);\n"
+                    "	background-color: rgb(28, 44, 81);\n"
+                    "	border: 0px solid;\n"
+                    "}")
         
         
     def initModels(self):

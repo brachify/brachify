@@ -8,6 +8,8 @@ from windows.models.shape_model import ShapeTypes
 from windows.ui.import_view_ui import Ui_Import_View
 from windows.views.custom_view import display_action, CustomView
 
+dicom_file_opened = False
+
 materials = {
     ShapeTypes.CYLINDER: {"rgb": [0.2, 0.55, 0.55], "transparent": True},
     ShapeTypes.CHANNEL: {"rgb": [0.2, 0.55, 0.55], "transparent": True},
@@ -37,6 +39,8 @@ class ImportView(CustomView):
 
         window.dicommodel.update(data)
         window.displaymodel.set_transparent(True)
+        
+        dicom_file_opened=True
 
     def action_update_import_label(self, data:DicomData):
         self.ui.label_file_info.setText(data.toString())
