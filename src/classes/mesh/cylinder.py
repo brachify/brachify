@@ -108,8 +108,8 @@ def get_brachy_cylinder(data: DicomData) -> BrachyCylinder:
         log.debug(f"Cylinder results: \n Diameter: {diameter}")
     # if cylinder contour is not provided, then set to default value
     except Exception as error_message: 
-        log.debug(f"No Cylinder surface contour, or error reading:\nDiameter set to default.")
         diameter = DEFAULT_CYLINDER_DIAMETER
+        log.debug(f"No Cylinder surface contour, or error reading:\nDiameter set to default:"+str(DEFAULT_CYLINDER_DIAMETER))
 
     return BrachyCylinder(diameter=diameter)
 
