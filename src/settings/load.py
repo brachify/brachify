@@ -21,15 +21,15 @@ except:
     log.debug("Couldn't load settings from config.json file.  Using hard-coded default settings instead.")
     
     default_settings = {
-        "DEFAULT_CYLINDER_DIAMETER": 30.1, 
-        "DEFAULT_LENGTH": 161.0, # cylinder length
-        "DEFAULT_DIAMETER": 3.1, # channels diameter
-        "TANDEM_CHANNEL_DIAMETER_DEFAULT": 4.1, 
-        "TANDEM_STOPPER_DIAMETER_DEFAULT": 8.1, 
-        "TANDEM_TIP_ANGLE_DEFAULT": 30.1, 
-        "TANDEM_TIP_HEIGHT_DEFAULT": 129.1, # Doesn't seem to work. XX
-        "TANDEM_BEND_RADIUS": 35.1, 
-        "DEFAULT_NEEDLE_LENGTH": 201
+        "DEFAULT_CYLINDER_DIAMETER": 30.0, 
+        "DEFAULT_LENGTH": 160.0, # cylinder length
+        "DEFAULT_DIAMETER": 3.0, # channels diameter
+        "TANDEM_CHANNEL_DIAMETER_DEFAULT": 4.0, 
+        "TANDEM_STOPPER_DIAMETER_DEFAULT": 8.0, 
+        "TANDEM_TIP_ANGLE_DEFAULT": 30.0, 
+        "TANDEM_TIP_HEIGHT_DEFAULT": 129.0, 
+        "TANDEM_BEND_RADIUS": 35.0, 
+        "DEFAULT_NEEDLE_LENGTH": 20
     }
 
 
