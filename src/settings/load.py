@@ -6,12 +6,7 @@ from classes.info import DIR_PATH, HOME_PATH, USER_PATH, RESOURCES_PATH
 import json
 from classes.logger import log
 
-print("DIR_PATH: ", DIR_PATH) # DIR_PATH:  c:\Users\stephanie.merkl\Documents\Python\brachify\src\classes
-print("HOME_PATH: ", HOME_PATH) # HOME_PATH:  C:\Users\stephanie.merkl
-print("USER_PATH: ", USER_PATH) # USER_PATH:  C:\Users\stephanie.merkl\brachify
-print("RESOURCES_PATH: ", RESOURCES_PATH) # RESOURCES_PATH:  c:\Users\stephanie.merkl\Documents\Python\brachify\src\classes\resources
-
-# For now I will use "USER_PATH" for the location of the config file, as that is where the log is stored
+# Search in the location where the log is stored to find a config file named "config.json".
 file_name = USER_PATH.joinpath("config.json")
 try:
     # open, read, parse as dictionary, and close the config.json file
