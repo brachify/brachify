@@ -11,12 +11,11 @@ from classes.mesh.helper import extend_bottom_face
 from classes.mesh.tandem import Tandem
 from windows.models.shape_model import ShapeModel, ShapeTypes
 
-from settings.load import default_settings
-
 TANDEM_LABEL = "tandem_shape"
 
 # Defaults
 # get defaults from config file.  If can't read from dictionary, set to 4.0, 8.0, ...
+default_settings = get_app().default_settings
 TANDEM_CHANNEL_DIAMETER_DEFAULT = default_settings.get("TANDEM_CHANNEL_DIAMETER_DEFAULT", 4.0) 
 TANDEM_STOPPER_DIAMETER_DEFAULT = default_settings.get("TANDEM_STOPPER_DIAMETER_DEFAULT", 8.0) 
 TANDEM_TIP_ANGLE_DEFAULT = default_settings.get("TANDEM_TIP_ANGLE_DEFAULT", 30.0) 

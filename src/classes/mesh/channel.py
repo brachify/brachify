@@ -13,10 +13,11 @@ from OCC.Core.TopoDS import TopoDS_Shape
 import classes.mesh.helper as helper
 from classes.logger import log
 
-from settings.load import default_settings
+from classes.app import get_app
 
 TIP_LENGTH = 2.5
 # get default channel diameter from config file.  If can't read from dictionary, set to 3.0.
+default_settings = get_app().default_settings
 DEFAULT_DIAMETER = default_settings.get("DEFAULT_DIAMETER", 3.0)
 
 

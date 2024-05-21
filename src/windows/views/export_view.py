@@ -14,11 +14,10 @@ from windows.models.shape_model import ShapeTypes, ShapeModel
 from windows.ui.export_view_ui import Ui_Export_View
 from windows.views.custom_view import display_action, CustomView
 
-from settings.load import default_settings
-
 EXPORT_LABEL = "export"
 BASEMAP = "basemap.png"
 # get default needle length from config file.  If can't read from dictionary, set to 200.0.
+default_settings = get_app().default_settings
 DEFAULT_NEEDLE_LENGTH = default_settings.get("DEFAULT_NEEDLE_LENGTH", 200)
 
 materials = {

@@ -19,9 +19,10 @@ from classes.logger import log
 from classes.mesh.helper import face_is_plane, geom_plane_from_face
 from classes.mesh.notch import CylinderNotch
 
-from settings.load import default_settings
+from classes.app import get_app
 
 # get default cylinder diameter and length from config file.  If can't read from dictionary, set to 160.0, 30.0.
+default_settings = get_app().default_settings
 DEFAULT_LENGTH = default_settings.get("DEFAULT_LENGTH", 160.0) 
 DEFAULT_CYLINDER_DIAMETER = default_settings.get("DEFAULT_CYLINDER_DIAMETER", 30.0) 
 
