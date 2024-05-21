@@ -1,0 +1,13 @@
+PR Procedure:
+- [ ] coder merges main into feature branch
+- [ ] coder creates PR
+- [ ] coder assigns reviewer
+- [ ] reviewer merges main into feature branch
+- [ ] reviewer sends back review
+- [ ] coder fixes any issues
+- [ ] reviewer approves
+- [ ] reviewer assigns Michael
+- [ ] Michael reviews and sends back review
+- [ ] coder fixes any issues
+- [ ] Michael approves
+- [ ] Michael merges

@@ -20,4 +20,4 @@ brachify uses the pythonocc library. Easiest setup is to use [Anaconda3](https:/
 - install pythonocc using ```conda install -c conda-forge pythonocc-core```
 - install the GUI library using ```pip install pyqt5-tools```
 - install the dicom and other libraries using ```pip install pydicom``` etc.
-- run main.py to use the application
+- run launch.py to use the application
