@@ -6,8 +6,11 @@ from classes.dicom.data import DicomData
 from classes.mesh.cylinder import BrachyCylinder
 from classes.mesh.channel import NeedleChannel
 import classes.mesh.helper as helper
+from classes.app import get_app
 
-DEFAULT_CYLINDER_DIAMETER = 30.0
+# get default cylinder diameter from config file.  If can't read from dictionary, set to 30.0.
+default_settings = get_app().default_settings
+DEFAULT_CYLINDER_DIAMETER = default_settings.get("DEFAULT_CYLINDER_DIAMETER", 30.0) 
 
 
 def get_channels_from_dicom(data: DicomData) -> list[NeedleChannel]:
@@ -25,7 +28,7 @@ def get_channels_from_dicom(data: DicomData) -> list[NeedleChannel]:
     return channels
      
 
-def get_cylinder_from_dicom(data: DicomData) -> BrachyCylinder:
+def get_cylinder_from_dicom(data: DicomData) -> BrachyCylinder: 
     diameter = data.cylinder_diameter
     tip = data.cylinder_tip
     base = data.cylinder_base
