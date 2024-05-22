@@ -39,8 +39,135 @@ class MainWindow(QMainWindow):
         self.ui.btn_tandem_view.pressed.connect(lambda: app.signals.viewChanged.emit(3))
         self.ui.btn_export_view.pressed.connect(lambda: app.signals.viewChanged.emit(4))
 
+        
+        self.ui.btn_import_view.pressed.connect(self.change_color_import)
+        self.ui.btn_cylinder_view.pressed.connect(self.change_color_cylinder)
+        self.ui.btn_channels_view.pressed.connect(self.change_color_channels)
+        self.ui.btn_tandem_view.pressed.connect(self.change_color_tandem)
+        self.ui.btn_export_view.pressed.connect(self.change_color_export)
+
         #app.signals.viewChanged.connect(self.ui.viewswidget.setCurrentIndex)
 
+    def change_color_import(self):
+        views = [self.ui.btn_import_view, self.ui.btn_cylinder_view, self.ui.btn_channels_view, self.ui.btn_tandem_view, self.ui.btn_export_view]
+        for v in views:
+            if(v != self.ui.btn_import_view):
+                v.setStyleSheet(u"QPushButton {\n"
+                "	color: rgb(0, 0, 0);\n"
+                "	background-color: rgb(199, 219, 237);\n"
+                "	border: 0px solid;\n"
+                "}\n"
+                "QPushButton:hover {\n"
+                "	color: rgb(250,250,250);\n"
+                "	background-color: rgb(48, 88, 162);\n"
+                "}\n"
+                "QPushButton:pressed {\n"
+                "	color: rgb(250,250,250);\n"
+                "	background-color: rgb(28, 44, 81);\n"
+                "}")
+            else:
+                v.setStyleSheet(u"QPushButton {\n"
+                "	color: rgb(250, 250, 250);\n"
+                "	background-color: rgb(28, 44, 81);\n"
+                "	border: 0px solid;\n"
+                "}")
+    def change_color_cylinder(self):
+        views = [self.ui.btn_import_view, self.ui.btn_cylinder_view, self.ui.btn_channels_view, self.ui.btn_tandem_view, self.ui.btn_export_view]
+        for v in views:
+            if(v != self.ui.btn_cylinder_view):
+                v.setStyleSheet(u"QPushButton {\n"
+                "	color: rgb(0, 0, 0);\n"
+                "	background-color: rgb(199, 219, 237);\n"
+                "	border: 0px solid;\n"
+                "}\n"
+                "QPushButton:hover {\n"
+                "	color: rgb(250,250,250);\n"
+                "	background-color: rgb(48, 88, 162);\n"
+                "}\n"
+                "QPushButton:pressed {\n"
+                "	color: rgb(250,250,250);\n"
+                "	background-color: rgb(28, 44, 81);\n"
+                "}")
+            else:
+                v.setStyleSheet(u"QPushButton {\n"
+                "	color: rgb(250, 250, 250);\n"
+                "	background-color: rgb(28, 44, 81);\n"
+                "	border: 0px solid;\n"
+                "}")
+    def change_color_channels(self):
+        views = [self.ui.btn_import_view, self.ui.btn_cylinder_view, self.ui.btn_channels_view, self.ui.btn_tandem_view, self.ui.btn_export_view]
+        for v in views:
+            if(v != self.ui.btn_channels_view):
+                v.setStyleSheet(u"QPushButton {\n"
+                "	color: rgb(0, 0, 0);\n"
+                "	background-color: rgb(199, 219, 237);\n"
+                "	border: 0px solid;\n"
+                "}\n"
+                "QPushButton:hover {\n"
+                "	color: rgb(250,250,250);\n"
+                "	background-color: rgb(48, 88, 162);\n"
+                "}\n"
+                "QPushButton:pressed {\n"
+                "	color: rgb(250,250,250);\n"
+                "	background-color: rgb(28, 44, 81);\n"
+                "}")
+            else:
+                v.setStyleSheet(u"QPushButton {\n"
+                "	color: rgb(250, 250, 250);\n"
+                "	background-color: rgb(28, 44, 81);\n"
+                "	border: 0px solid;\n"
+                "}")
+    def change_color_tandem(self):
+        views = [self.ui.btn_import_view, self.ui.btn_cylinder_view, self.ui.btn_channels_view, self.ui.btn_tandem_view, self.ui.btn_export_view]
+        for v in views:
+            if(v != self.ui.btn_tandem_view):
+                v.setStyleSheet(u"QPushButton {\n"
+                "	color: rgb(0, 0, 0);\n"
+                "	background-color: rgb(199, 219, 237);\n"
+                "	border: 0px solid;\n"
+                "}\n"
+                "QPushButton:hover {\n"
+                "	color: rgb(250,250,250);\n"
+                "	background-color: rgb(48, 88, 162);\n"
+                "}\n"
+                "QPushButton:pressed {\n"
+                "	color: rgb(250,250,250);\n"
+                "	background-color: rgb(28, 44, 81);\n"
+                "}")
+            else:
+                v.setStyleSheet(u"QPushButton {\n"
+                "	color: rgb(250, 250, 250);\n"
+                "	background-color: rgb(28, 44, 81);\n"
+                "	border: 0px solid;\n"
+                "}")
+    def change_color_export(self):
+        app = get_app()
+        dicom_file_opened = app.window.navigationmodel.views[0].dicom_file_opened
+        if(dicom_file_opened):
+            views = [self.ui.btn_import_view, self.ui.btn_cylinder_view, self.ui.btn_channels_view, self.ui.btn_tandem_view, self.ui.btn_export_view]
+            for v in views:
+                if(v != self.ui.btn_export_view):
+                    v.setStyleSheet(u"QPushButton {\n"
+                    "	color: rgb(0, 0, 0);\n"
+                    "	background-color: rgb(199, 219, 237);\n"
+                    "	border: 0px solid;\n"
+                    "}\n"
+                    "QPushButton:hover {\n"
+                    "	color: rgb(250,250,250);\n"
+                    "	background-color: rgb(48, 88, 162);\n"
+                    "}\n"
+                    "QPushButton:pressed {\n"
+                    "	color: rgb(250,250,250);\n"
+                    "	background-color: rgb(28, 44, 81);\n"
+                    "}")
+                else:
+                    v.setStyleSheet(u"QPushButton {\n"
+                    "	color: rgb(250, 250, 250);\n"
+                    "	background-color: rgb(28, 44, 81);\n"
+                    "	border: 0px solid;\n"
+                    "}")
+        
+        
     def initModels(self):
         # TODO initialize models
         self.displaymodel = DisplayModel()
