@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>270</width>
-    <height>411</height>
+    <height>5000</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,7 +26,7 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(230, 235, 240);</string>
+    <string notr="true">background-color: rgb(240, 245, 250);</string>
    </property>
    <property name="text">
     <string/>
@@ -38,7 +38,7 @@
      <x>0</x>
      <y>0</y>
      <width>271</width>
-     <height>411</height>
+     <height>5000</height>
     </rect>
    </property>
    <property name="minimumSize">
