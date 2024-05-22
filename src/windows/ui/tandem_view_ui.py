@@ -43,7 +43,7 @@ class Ui_Tandem_View(object):
         self.Import_2.setObjectName(u"Import_2")
         self.verticalLayoutWidget_3 = QWidget(self.Import_2)
         self.verticalLayoutWidget_3.setObjectName(u"verticalLayoutWidget_3")
-        self.verticalLayoutWidget_3.setGeometry(QRect(0, 0, 271, 4071))
+        self.verticalLayoutWidget_3.setGeometry(QRect(0, 0, 271, 5000))
         self.verticalLayout_4 = QVBoxLayout(self.verticalLayoutWidget_3)
         self.verticalLayout_4.setSpacing(10)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
