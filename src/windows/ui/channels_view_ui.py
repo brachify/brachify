@@ -29,7 +29,7 @@ class Ui_Channels_View(object):
         self.label_5 = QLabel(Channels_View)
         self.label_5.setObjectName(u"label_5")
         self.label_5.setGeometry(QRect(0, -10, 261, 411))
-        self.label_5.setStyleSheet(u"background-color: rgb(230, 235, 240);")
+        self.label_5.setStyleSheet(u"background-color: rgb(240, 245, 250);")
         self.groupBox_3 = QGroupBox(Channels_View)
         self.groupBox_3.setObjectName(u"groupBox_3")
         self.groupBox_3.setGeometry(QRect(0, 0, 271, 4101))

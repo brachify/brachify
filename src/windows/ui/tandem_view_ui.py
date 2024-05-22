@@ -38,6 +38,7 @@ class Ui_Tandem_View(object):
         self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
         self.ab_1 = QTabWidget(self.verticalLayoutWidget_2)
         self.ab_1.setObjectName(u"ab_1")
+        self.ab_1.setStyleSheet(u"background-color: rgb(240, 245, 250);")
         self.Import_2 = QWidget()
         self.Import_2.setObjectName(u"Import_2")
         self.verticalLayoutWidget_3 = QWidget(self.Import_2)
