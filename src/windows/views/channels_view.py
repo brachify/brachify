@@ -6,6 +6,10 @@ from windows.models.shape_model import ShapeTypes
 from windows.ui.channels_view_ui import Ui_Channels_View
 from windows.views.custom_view import display_action, CustomView
 
+# get default needle length from config file.  If can't read from dictionary, set to 200.0.
+default_settings = get_app().default_settings
+DEFAULT_NEEDLE_LENGTH = default_settings.get("DEFAULT_NEEDLE_LENGTH", 200)
+
 materials = {
     ShapeTypes.CYLINDER: {"rgb": [0.8, 0.8, 0.8], "transparent": True},
     ShapeTypes.CHANNEL: {"rgb": [0.2, 0.55, 0.55], "transparent": True},
@@ -30,12 +34,12 @@ class ChannelsView(CustomView):
             log.critical(f"failed selecting channel from list view: \n{error_message}")
 
     @display_action
-    def action_set_diameter(self):
-        log.debug(f"action: set channel diameter")
+    def action_apply_settings(self):
+        log.debug(f"action: apply settings")
         diameter = self.ui.spinbox_diameter.value()
         log.debug(f"setting channel diameters to: {diameter}")
         self.channelsmodel.set_diameter(diameter)
-
+        
     @display_action
     def action_set_selected_shapes(self, *args, **kwargs):
         self.channelsmodel.set_selected_shapes(*args)
@@ -125,8 +129,11 @@ class ChannelsView(CustomView):
         self.ui.setupUi(self)
         self.is_active = False
 
+        #sets default needle length
+        self.ui.sb_needle_length.setValue(DEFAULT_NEEDLE_LENGTH)
+
         # signals and slots
-        self.ui.btn_apply_diameter.pressed.connect(self.action_set_diameter)
+        self.ui.btn_apply_settings.pressed.connect(self.action_apply_settings)
         self.ui.listwidget_channels.currentItemChanged.connect(self.action_select_channel)
         self.ui.btn_enable.pressed.connect(self.action_toggle_channel_disable)
         self.ui.btn_set_tandem.pressed.connect(self.action_set_tandem)

@@ -15,9 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QCheckBox, QDoubleSpinBox, QFormLayout,
-    QLabel, QLayout, QPushButton, QSizePolicy,
-    QSpacerItem, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QCheckBox, QFormLayout, QLabel,
+    QLayout, QPushButton, QSizePolicy, QSpacerItem,
+    QVBoxLayout, QWidget)
 
 class Ui_Export_View(object):
     def setupUi(self, Export_View):
@@ -41,25 +41,11 @@ class Ui_Export_View(object):
         self.verticalLayout.setContentsMargins(10, 10, 10, 10)
         self.formLayout = QFormLayout()
         self.formLayout.setObjectName(u"formLayout")
-        self.label = QLabel(self.verticalLayoutWidget)
-        self.label.setObjectName(u"label")
-        self.label.setStyleSheet(u"background-color: rgb(240, 245, 250);")
-
-        self.formLayout.setWidget(0, QFormLayout.LabelRole, self.label)
-
-        self.sb_needle_length = QDoubleSpinBox(self.verticalLayoutWidget)
-        self.sb_needle_length.setObjectName(u"sb_needle_length")
-        self.sb_needle_length.setStyleSheet(u"background-color: rgb(255, 255, 255);")
-        self.sb_needle_length.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-        self.sb_needle_length.setMaximum(350.000000000000000)
-
-        self.formLayout.setWidget(0, QFormLayout.FieldRole, self.sb_needle_length)
-
         self.label_2 = QLabel(self.verticalLayoutWidget)
         self.label_2.setObjectName(u"label_2")
         self.label_2.setStyleSheet(u"background-color: rgb(240, 245, 250);")
 
-        self.formLayout.setWidget(1, QFormLayout.LabelRole, self.label_2)
+        self.formLayout.setWidget(0, QFormLayout.LabelRole, self.label_2)
 
         self.cb_tandem_shown = QCheckBox(self.verticalLayoutWidget)
         self.cb_tandem_shown.setObjectName(u"cb_tandem_shown")
@@ -67,7 +53,7 @@ class Ui_Export_View(object):
         self.cb_tandem_shown.setStyleSheet(u"background-color: rgb(240, 245, 250);")
         self.cb_tandem_shown.setChecked(False)
 
-        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.cb_tandem_shown)
+        self.formLayout.setWidget(0, QFormLayout.FieldRole, self.cb_tandem_shown)
 
 
         self.verticalLayout.addLayout(self.formLayout)
@@ -179,8 +165,6 @@ class Ui_Export_View(object):
         Export_View.setWindowFilePath("")
         self.label_3.setText("")
         self.verticalLayoutWidget.setStyleSheet(QCoreApplication.translate("Export_View", u"background-color: rgb(240, 245, 250);", None))
-        self.label.setText(QCoreApplication.translate("Export_View", u"Needle Length", None))
-        self.sb_needle_length.setSuffix(QCoreApplication.translate("Export_View", u" mm", None))
         self.label_2.setText(QCoreApplication.translate("Export_View", u"Show Tandem", None))
         self.cb_tandem_shown.setText("")
         self.btn_export_mesh.setText(QCoreApplication.translate("Export_View", u"Export Mesh", None))
