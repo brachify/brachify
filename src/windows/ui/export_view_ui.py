@@ -27,7 +27,7 @@ class Ui_Export_View(object):
         Export_View.setStyleSheet(u"background-color: rgb(230, 235, 240);")
         self.label_3 = QLabel(Export_View)
         self.label_3.setObjectName(u"label_3")
-        self.label_3.setGeometry(QRect(0, 0, 271, 4091))
+        self.label_3.setGeometry(QRect(0, 0, 271, 5000))
         self.label_3.setMinimumSize(QSize(0, 0))
         self.label_3.setMaximumSize(QSize(271, 16777215))
         self.label_3.setStyleSheet(u"background-color: rgb(240, 245, 250)")
