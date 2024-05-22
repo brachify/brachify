@@ -29,7 +29,7 @@ class Ui_Export_View(object):
         self.label_3.setObjectName(u"label_3")
         self.label_3.setGeometry(QRect(0, 0, 271, 5000))
         self.label_3.setMinimumSize(QSize(0, 0))
-        self.label_3.setMaximumSize(QSize(271, 16777215))
+        self.label_3.setMaximumSize(QSize(271, 5000))
         self.label_3.setStyleSheet(u"background-color: rgb(240, 245, 250)")
         self.verticalLayoutWidget = QWidget(Export_View)
         self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
