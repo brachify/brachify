@@ -5,7 +5,10 @@ from classes.logger import log
 from windows.models.shape_model import ShapeTypes
 from windows.ui.channels_view_ui import Ui_Channels_View
 from windows.views.custom_view import display_action, CustomView
-DEFAULT_NEEDLE_LENGTH = 200
+
+# get default needle length from config file.  If can't read from dictionary, set to 200.0.
+default_settings = get_app().default_settings
+DEFAULT_NEEDLE_LENGTH = default_settings.get("DEFAULT_NEEDLE_LENGTH", 200)
 
 materials = {
     ShapeTypes.CYLINDER: {"rgb": [0.8, 0.8, 0.8], "transparent": True},
