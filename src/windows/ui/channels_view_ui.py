@@ -24,7 +24,7 @@ class Ui_Channels_View(object):
     def setupUi(self, Channels_View):
         if not Channels_View.objectName():
             Channels_View.setObjectName(u"Channels_View")
-        Channels_View.resize(270, 4091)
+        Channels_View.resize(270, 5000)
         Channels_View.setStyleSheet(u"background-color: rgb(250,250,250);")
         self.label_5 = QLabel(Channels_View)
         self.label_5.setObjectName(u"label_5")
