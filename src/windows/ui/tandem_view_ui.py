@@ -23,7 +23,7 @@ class Ui_Tandem_View(object):
     def setupUi(self, Tandem_View):
         if not Tandem_View.objectName():
             Tandem_View.setObjectName(u"Tandem_View")
-        Tandem_View.resize(271, 411)
+        Tandem_View.resize(271, 2174)
         Tandem_View.setStyleSheet(u"background-color: rgb(230, 235, 240)")
         self.label_3 = QLabel(Tandem_View)
         self.label_3.setObjectName(u"label_3")
@@ -31,7 +31,7 @@ class Ui_Tandem_View(object):
         self.label_3.setStyleSheet(u"background-color: rgb(240, 245, 250)")
         self.verticalLayoutWidget_2 = QWidget(Tandem_View)
         self.verticalLayoutWidget_2.setObjectName(u"verticalLayoutWidget_2")
-        self.verticalLayoutWidget_2.setGeometry(QRect(0, 0, 271, 411))
+        self.verticalLayoutWidget_2.setGeometry(QRect(0, 0, 271, 2181))
         self.verticalLayout_3 = QVBoxLayout(self.verticalLayoutWidget_2)
         self.verticalLayout_3.setSpacing(0)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
@@ -42,7 +42,7 @@ class Ui_Tandem_View(object):
         self.Import_2.setObjectName(u"Import_2")
         self.verticalLayoutWidget_3 = QWidget(self.Import_2)
         self.verticalLayoutWidget_3.setObjectName(u"verticalLayoutWidget_3")
-        self.verticalLayoutWidget_3.setGeometry(QRect(0, 0, 261, 381))
+        self.verticalLayoutWidget_3.setGeometry(QRect(0, 0, 271, 391))
         self.verticalLayout_4 = QVBoxLayout(self.verticalLayoutWidget_3)
         self.verticalLayout_4.setSpacing(10)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
@@ -128,7 +128,7 @@ class Ui_Tandem_View(object):
         self.tab_2.setObjectName(u"tab_2")
         self.verticalLayoutWidget_4 = QWidget(self.tab_2)
         self.verticalLayoutWidget_4.setObjectName(u"verticalLayoutWidget_4")
-        self.verticalLayoutWidget_4.setGeometry(QRect(0, -1, 261, 381))
+        self.verticalLayoutWidget_4.setGeometry(QRect(0, -1, 271, 2171))
         self.verticalLayout_5 = QVBoxLayout(self.verticalLayoutWidget_4)
         self.verticalLayout_5.setSpacing(10)
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
@@ -252,7 +252,7 @@ class Ui_Tandem_View(object):
 
         self.retranslateUi(Tandem_View)
 
-        self.ab_1.setCurrentIndex(0)
+        self.ab_1.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(Tandem_View)

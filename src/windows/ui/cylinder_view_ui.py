@@ -24,11 +24,11 @@ class Ui_Cylinder_View(object):
     def setupUi(self, Cylinder_View):
         if not Cylinder_View.objectName():
             Cylinder_View.setObjectName(u"Cylinder_View")
-        Cylinder_View.resize(271, 411)
+        Cylinder_View.resize(271, 2174)
         Cylinder_View.setStyleSheet(u"background-color: rgb(250,250,250);")
         self.groupBox = QGroupBox(Cylinder_View)
         self.groupBox.setObjectName(u"groupBox")
-        self.groupBox.setGeometry(QRect(0, 0, 271, 411))
+        self.groupBox.setGeometry(QRect(0, 0, 271, 2181))
         self.groupBox.setMinimumSize(QSize(271, 411))
         self.groupBox.setMaximumSize(QSize(271, 16777215))
         self.groupBox.setStyleSheet(u"background-color: rgb(240, 245, 250);")
