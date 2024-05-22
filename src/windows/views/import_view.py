@@ -18,6 +18,14 @@ materials = {
 
 class ImportView(CustomView):
 
+    def action_import_config_file(self):
+        foldername = QFileDialog.getOpenFileName(
+            self, "Open config file", "C:/Users/stephanie.merkl/Documents/Other", "(*.json)")
+        
+        
+
+
+
     def action_import_dicom_folder(self):
         foldername = QFileDialog.getExistingDirectoryUrl(
             self, "Open patient folder").toLocalFile()
@@ -55,7 +63,8 @@ class ImportView(CustomView):
 
         # signals and slots
         self.ui.btn_import_folder.pressed.connect(self.action_import_dicom_folder)
-        
+        self.ui.btn_config_file.pressed.connect(self.action_import_config_file)
+
         window = get_app().window
         window.dicommodel.values_changed.connect(self.action_update_import_label)
 
