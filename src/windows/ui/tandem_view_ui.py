@@ -23,7 +23,7 @@ class Ui_Tandem_View(object):
     def setupUi(self, Tandem_View):
         if not Tandem_View.objectName():
             Tandem_View.setObjectName(u"Tandem_View")
-        Tandem_View.resize(271, 4091)
+        Tandem_View.resize(271, 5000)
         Tandem_View.setStyleSheet(u"background-color: rgb(230, 235, 240)")
         self.label_3 = QLabel(Tandem_View)
         self.label_3.setObjectName(u"label_3")
