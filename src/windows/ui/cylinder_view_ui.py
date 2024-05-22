@@ -28,7 +28,7 @@ class Ui_Cylinder_View(object):
         Cylinder_View.setStyleSheet(u"background-color: rgb(250,250,250);")
         self.groupBox = QGroupBox(Cylinder_View)
         self.groupBox.setObjectName(u"groupBox")
-        self.groupBox.setGeometry(QRect(0, 0, 271, 4091))
+        self.groupBox.setGeometry(QRect(0, 0, 271, 5000))
         self.groupBox.setMinimumSize(QSize(271, 411))
         self.groupBox.setMaximumSize(QSize(271, 16777215))
         self.groupBox.setStyleSheet(u"background-color: rgb(240, 245, 250);")
