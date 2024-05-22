@@ -18,7 +18,6 @@ materials = {
 
 class ImportView(CustomView):
 
-    @display_action
     def action_import_dicom_folder(self):
         foldername = QFileDialog.getExistingDirectoryUrl(
             self, "Open patient folder").toLocalFile()
@@ -37,6 +36,8 @@ class ImportView(CustomView):
 
         window.dicommodel.update(data)
         window.displaymodel.set_transparent(True)
+
+        app.signals.viewChanged.emit(4)
 
     def action_update_import_label(self, data:DicomData):
         self.ui.label_file_info.setText(data.toString())
