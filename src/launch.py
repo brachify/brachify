@@ -4,6 +4,7 @@ import sys
 
 from classes import info
 from classes.logger import log
+from settings.load import load_config_file
 
 app = None
 
@@ -29,6 +30,10 @@ def main():
 
     app.setApplicationName(info.APP_NAME)
     app.setApplicationVersion(info.APP_VERSION)
+
+    # read the default settings from the config.json file, 
+    # and store it in an attribtue called default_settings so it can be accessed later.
+    app.default_settings = load_config_file()
 
     # launch GUI
     if app.gui():
