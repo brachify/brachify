@@ -32,7 +32,7 @@ class Ui_Channels_View(object):
         self.label_5.setStyleSheet(u"background-color: rgb(240, 245, 250);")
         self.groupBox_3 = QGroupBox(Channels_View)
         self.groupBox_3.setObjectName(u"groupBox_3")
-        self.groupBox_3.setGeometry(QRect(0, 0, 271, 4101))
+        self.groupBox_3.setGeometry(QRect(0, 0, 271, 5000))
         self.groupBox_3.setMinimumSize(QSize(271, 411))
         self.groupBox_3.setMaximumSize(QSize(271, 16777215))
         self.groupBox_3.setStyleSheet(u"background-color: rgb(240, 245, 250);")
