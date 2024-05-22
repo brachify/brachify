@@ -36,11 +36,7 @@ class ChannelsView(CustomView):
         diameter = self.ui.spinbox_diameter.value()
         log.debug(f"setting channel diameters to: {diameter}")
         self.channelsmodel.set_diameter(diameter)
-        needle_len = self.ui.sb_needle_length.value()
-        global DEFAULT_NEEDLE_LENGTH 
-        DEFAULT_NEEDLE_LENGTH = needle_len
-        log.debug("recording needle length as:" + str(needle_len))
-
+        
     @display_action
     def action_set_selected_shapes(self, *args, **kwargs):
         self.channelsmodel.set_selected_shapes(*args)
