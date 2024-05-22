@@ -13,12 +13,10 @@ import classes.pdf.template_reference as template_reference
 from windows.models.shape_model import ShapeTypes, ShapeModel
 from windows.ui.export_view_ui import Ui_Export_View
 from windows.views.custom_view import display_action, CustomView
+from windows.views.channels_view import ChannelsView
 
 EXPORT_LABEL = "export"
 BASEMAP = "basemap.png"
-# get default needle length from config file.  If can't read from dictionary, set to 200.0.
-default_settings = get_app().default_settings
-DEFAULT_NEEDLE_LENGTH = default_settings.get("DEFAULT_NEEDLE_LENGTH", 200)
 
 materials = {
     ShapeTypes.CYLINDER: {"rgb": [0.2, 0.55, 0.55], "transparent": True},
@@ -70,7 +68,8 @@ class Export_View(CustomView):
             return
         
         window = get_app().window
-        needle_length = self.ui.sb_needle_length.value()
+
+        needle_length = window.navigationmodel.views[2].ui.sb_needle_length.value()
 
         # generate pdf
         tandembool = window.tandemmodel.shape() != None
@@ -90,6 +89,7 @@ class Export_View(CustomView):
 
     # don't use @display_action because we want a unique view
     def on_open(self):
+
         log.debug(f"on open")
 
         # if tandem exists
@@ -138,7 +138,6 @@ class Export_View(CustomView):
         self.ui.btn_export_mesh.pressed.connect(self.action_export_mesh)
         self.ui.btn_export_shapes.pressed.connect(self.action_export_shapes)
 
-        self.ui.sb_needle_length.setValue(DEFAULT_NEEDLE_LENGTH)
         self.ui.btn_export_template_reference.pressed.connect(self.action_export_template_reference)
         
         self.ui.cb_tandem_shown.stateChanged.connect(self.action_show_tandem)
