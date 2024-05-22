@@ -26,7 +26,7 @@ class Ui_Import_View(object):
         Import_View.setStyleSheet(u"background-color: rgb(240, 245, 250);")
         self.verticalLayoutWidget = QWidget(Import_View)
         self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
-        self.verticalLayoutWidget.setGeometry(QRect(0, 0, 271, 4091))
+        self.verticalLayoutWidget.setGeometry(QRect(0, 0, 271, 5000))
         self.verticalLayout = QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setSpacing(10)
         self.verticalLayout.setObjectName(u"verticalLayout")
