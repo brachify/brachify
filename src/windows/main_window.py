@@ -10,7 +10,6 @@ from windows.models.channels_model import ChannelsModel
 from windows.models.cylinder_model import CylinderModel
 from windows.models.tandem_model import TandemModel
 from windows.models.navigation_model import NavigationModel
-from windows.views.import_view import dicom_file_opened
 
 class MainWindow(QMainWindow):
 
@@ -142,6 +141,8 @@ class MainWindow(QMainWindow):
                 "	border: 0px solid;\n"
                 "}")
     def change_color_export(self):
+        app = get_app()
+        dicom_file_opened = app.window.navigationmodel.views[0].dicom_file_opened
         if(dicom_file_opened):
             views = [self.ui.btn_import_view, self.ui.btn_cylinder_view, self.ui.btn_channels_view, self.ui.btn_tandem_view, self.ui.btn_export_view]
             for v in views:

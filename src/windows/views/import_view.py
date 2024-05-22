@@ -8,8 +8,6 @@ from windows.models.shape_model import ShapeTypes
 from windows.ui.import_view_ui import Ui_Import_View
 from windows.views.custom_view import display_action, CustomView
 
-dicom_file_opened = False
-
 materials = {
     ShapeTypes.CYLINDER: {"rgb": [0.2, 0.55, 0.55], "transparent": True},
     ShapeTypes.CHANNEL: {"rgb": [0.2, 0.55, 0.55], "transparent": True},
@@ -19,7 +17,6 @@ materials = {
 
 
 class ImportView(CustomView):
-
     @display_action
     def action_import_dicom_folder(self):
         foldername = QFileDialog.getExistingDirectoryUrl(
@@ -36,11 +33,16 @@ class ImportView(CustomView):
         # Add patient and plan info to window
         app = get_app()
         window = app.window
+        
+        #if dicom file has been opened then the export tap can open and the button will change color
+        #else the button will not change color, see main (not related to not being able to go to the
+        #export tab before importing a file, only for button color)
+        self.dicom_file_opened = True
 
         window.dicommodel.update(data)
         window.displaymodel.set_transparent(True)
         
-        dicom_file_opened=True
+        
 
     def action_update_import_label(self, data:DicomData):
         self.ui.label_file_info.setText(data.toString())
@@ -52,6 +54,7 @@ class ImportView(CustomView):
         displaymodel.set_materials(materials)
 
     def __init__(self):
+        self.dicom_file_opened = False
         super().__init__()
         self.ui = Ui_Import_View()
         self.ui.setupUi(self)
