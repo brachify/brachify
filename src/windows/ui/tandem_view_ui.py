@@ -31,7 +31,7 @@ class Ui_Tandem_View(object):
         self.label_3.setStyleSheet(u"background-color: rgb(240, 245, 250)")
         self.verticalLayoutWidget_2 = QWidget(Tandem_View)
         self.verticalLayoutWidget_2.setObjectName(u"verticalLayoutWidget_2")
-        self.verticalLayoutWidget_2.setGeometry(QRect(0, 0, 271, 4091))
+        self.verticalLayoutWidget_2.setGeometry(QRect(0, 0, 271, 5000))
         self.verticalLayout_3 = QVBoxLayout(self.verticalLayoutWidget_2)
         self.verticalLayout_3.setSpacing(0)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
