@@ -23,7 +23,7 @@ class Ui_Export_View(object):
     def setupUi(self, Export_View):
         if not Export_View.objectName():
             Export_View.setObjectName(u"Export_View")
-        Export_View.resize(271, 4090)
+        Export_View.resize(271, 5000)
         Export_View.setStyleSheet(u"background-color: rgb(230, 235, 240);")
         self.label_3 = QLabel(Export_View)
         self.label_3.setObjectName(u"label_3")
