@@ -52,13 +52,13 @@ class ImportView(CustomView):
         c = "{:<30}".format("Plan ID: ")                  + "\t"+str(data.plan_label)+ "\n"
         d = "{:<30}".format("Approval Status: ")          + "\t"+str(data.approvale_status) + "\n"
         e = "{:<30}".format("Operator: ")                 + "\t"+str(data.operator) + "\n\n"
-        f = "{:<30}".format("Channels ID")                  + "\n"
+        f = "{:<30}".format("Channels Info")                  + "\n"
         for i in range(len(data.channels_labels)):
-            f = f+"{:<30}".format("Label: "+str(data.channels_labels[i]))+"\t Channel Number: "+str(data.channel_numbers[i])+"\n"
+            f = f+"{:<30}".format("Label: "+str(data.channels_labels[i]))+"\t Channel: "+str(data.channel_numbers[i])+"\n"
         
         #line below has not yet been tested, remove is there is an issue
         tandem = get_app().window.channelsmodel.tandem_channel
-        g = "{:<30}".format("Tandom Label:")+"\t"+str(tandem)
+        g = "{:<30}".format("Tandem Label:")+"\t "+str(tandem)
         
         
         alldata = alldata+a+b+c+d+e+f+g
