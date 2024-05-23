@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>270</width>
+    <width>290</width>
     <height>411</height>
    </rect>
   </property>
@@ -37,19 +37,19 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>271</width>
+     <width>290</width>
      <height>411</height>
     </rect>
    </property>
    <property name="minimumSize">
     <size>
-     <width>271</width>
+     <width>290</width>
      <height>411</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
-     <width>271</width>
+     <width>290</width>
      <height>16777215</height>
     </size>
    </property>
@@ -65,13 +65,13 @@
       <property name="minimumSize">
        <size>
         <width>251</width>
-        <height>200</height>
+        <height>230</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>251</width>
-        <height>200</height>
+        <width>16777215</width>
+        <height>16777215</height>
        </size>
       </property>
       <property name="styleSheet">
@@ -108,7 +108,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>251</width>
+         <width>271</width>
          <height>33</height>
         </rect>
        </property>
@@ -142,7 +142,7 @@ QPushButton:pressed {
         <rect>
          <x>0</x>
          <y>30</y>
-         <width>251</width>
+         <width>271</width>
          <height>33</height>
         </rect>
        </property>

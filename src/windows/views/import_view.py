@@ -40,7 +40,24 @@ class ImportView(CustomView):
         app.signals.viewChanged.emit(4)
 
     def action_update_import_label(self, data:DicomData):
-        self.ui.label_file_info.setText(data.toString())
+        alldata="Patient and Plan Info:\n"
+        a = "{:<30}".format("Patient ID: ")               + "\t"+str(data.patient_id)+ "\n"
+        b = "{:<30}".format("Patient Name: ")             + "\t"+str(data.patient_name)+ "\n"
+        c = "{:<30}".format("Plan ID: ")                  + "\t"+str(data.plan_label)+ "\n"
+        d = "{:<30}".format("Approval Status: ")          + "\t"+str(data.approvale_status) + "\n"
+        e = "{:<30}".format("Operator: ")                 + "\t"+str(data.operator) + "\n\n"
+        f = "{:<30}".format("Channels ID")                  + "\n"
+        for i in range(len(data.channels_labels)):
+            f = f+"{:<30}".format("Label: "+str(data.channels_labels[i]))+"\t Channel Number: "+str(data.channel_numbers[i])+"\n"
+        
+        #line below has not yet been tested, remove is there is an issue
+        tandem = get_app().window.channelsmodel.tandem_channel
+        g = "{:<30}".format("Tandom Label:")+"\t"+str(tandem)
+        
+        
+        alldata = alldata+a+b+c+d+e+f+g
+        #last = data.toString()
+        self.ui.label_file_info.setText(alldata)
 
     @display_action
     def on_open(self):

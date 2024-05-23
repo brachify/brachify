@@ -15,14 +15,15 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QGridLayout, QMainWindow, QPushButton,
-    QSizePolicy, QStackedWidget, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QGridLayout, QLayout, QMainWindow,
+    QPushButton, QSizePolicy, QStackedWidget, QVBoxLayout,
+    QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(884, 610)
+        MainWindow.resize(947, 631)
         icon = QIcon()
         icon.addFile(u":/Icon/Icon/brachify_splash-ico.png", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
@@ -36,13 +37,15 @@ class Ui_MainWindow(object):
         self.verticalLayout_2 = QVBoxLayout()
         self.verticalLayout_2.setSpacing(0)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.verticalLayout_2.setSizeConstraint(QLayout.SetDefaultConstraint)
         self.verticalLayout_2.setContentsMargins(0, -1, -1, 5)
         self.display_view_widget = QWidget(self.centralwidget)
         self.display_view_widget.setObjectName(u"display_view_widget")
-        self.display_view_widget.setMinimumSize(QSize(600, 585))
+        self.display_view_widget.setMinimumSize(QSize(642, 585))
         self.display_view_widget.setMaximumSize(QSize(16777215, 16777215))
         self.gridLayout_3 = QGridLayout(self.display_view_widget)
         self.gridLayout_3.setObjectName(u"gridLayout_3")
+        self.gridLayout_3.setSizeConstraint(QLayout.SetMaximumSize)
         self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
 
         self.verticalLayout_2.addWidget(self.display_view_widget)
@@ -53,19 +56,20 @@ class Ui_MainWindow(object):
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout.setSizeConstraint(QLayout.SetDefaultConstraint)
         self.verticalLayout.setContentsMargins(0, 0, -1, 5)
         self.top_menu_bar = QWidget(self.centralwidget)
         self.top_menu_bar.setObjectName(u"top_menu_bar")
-        self.top_menu_bar.setMinimumSize(QSize(270, 180))
-        self.top_menu_bar.setMaximumSize(QSize(271, 180))
+        self.top_menu_bar.setMinimumSize(QSize(290, 180))
+        self.top_menu_bar.setMaximumSize(QSize(290, 180))
         self.verticalLayout_31 = QVBoxLayout(self.top_menu_bar)
         self.verticalLayout_31.setSpacing(0)
         self.verticalLayout_31.setObjectName(u"verticalLayout_31")
         self.verticalLayout_31.setContentsMargins(0, 0, 0, 20)
         self.btn_import_view = QPushButton(self.top_menu_bar)
         self.btn_import_view.setObjectName(u"btn_import_view")
-        self.btn_import_view.setMinimumSize(QSize(270, 33))
-        self.btn_import_view.setMaximumSize(QSize(270, 33))
+        self.btn_import_view.setMinimumSize(QSize(290, 33))
+        self.btn_import_view.setMaximumSize(QSize(290, 33))
         self.btn_import_view.setStyleSheet(u"QPushButton {\n"
 "	color: rgb(0, 0, 0);\n"
 "	background-color: rgb(199, 219, 237);\n"
@@ -84,8 +88,8 @@ class Ui_MainWindow(object):
 
         self.btn_cylinder_view = QPushButton(self.top_menu_bar)
         self.btn_cylinder_view.setObjectName(u"btn_cylinder_view")
-        self.btn_cylinder_view.setMinimumSize(QSize(270, 33))
-        self.btn_cylinder_view.setMaximumSize(QSize(270, 33))
+        self.btn_cylinder_view.setMinimumSize(QSize(290, 33))
+        self.btn_cylinder_view.setMaximumSize(QSize(290, 33))
         self.btn_cylinder_view.setStyleSheet(u"QPushButton {\n"
 "	color: rgb(0, 0, 0);\n"
 "	background-color: rgb(199, 219, 237);\n"
@@ -104,8 +108,8 @@ class Ui_MainWindow(object):
 
         self.btn_channels_view = QPushButton(self.top_menu_bar)
         self.btn_channels_view.setObjectName(u"btn_channels_view")
-        self.btn_channels_view.setMinimumSize(QSize(270, 33))
-        self.btn_channels_view.setMaximumSize(QSize(270, 33))
+        self.btn_channels_view.setMinimumSize(QSize(290, 33))
+        self.btn_channels_view.setMaximumSize(QSize(290, 33))
         self.btn_channels_view.setStyleSheet(u"QPushButton {\n"
 "	color: rgb(0, 0, 0);\n"
 "	background-color: rgb(199, 219, 237);\n"
@@ -124,8 +128,8 @@ class Ui_MainWindow(object):
 
         self.btn_tandem_view = QPushButton(self.top_menu_bar)
         self.btn_tandem_view.setObjectName(u"btn_tandem_view")
-        self.btn_tandem_view.setMinimumSize(QSize(270, 33))
-        self.btn_tandem_view.setMaximumSize(QSize(270, 33))
+        self.btn_tandem_view.setMinimumSize(QSize(290, 33))
+        self.btn_tandem_view.setMaximumSize(QSize(290, 33))
         self.btn_tandem_view.setStyleSheet(u"QPushButton {\n"
 "	color: rgb(0, 0, 0);\n"
 "	background-color: rgb(199, 219, 237);\n"
@@ -144,8 +148,8 @@ class Ui_MainWindow(object):
 
         self.btn_export_view = QPushButton(self.top_menu_bar)
         self.btn_export_view.setObjectName(u"btn_export_view")
-        self.btn_export_view.setMinimumSize(QSize(270, 33))
-        self.btn_export_view.setMaximumSize(QSize(270, 33))
+        self.btn_export_view.setMinimumSize(QSize(290, 33))
+        self.btn_export_view.setMaximumSize(QSize(290, 33))
         self.btn_export_view.setStyleSheet(u"QPushButton {\n"
 "	color: rgb(0, 0, 0);\n"
 "	background-color: rgb(199, 219, 237);\n"
@@ -167,8 +171,8 @@ class Ui_MainWindow(object):
 
         self.viewswidget = QStackedWidget(self.centralwidget)
         self.viewswidget.setObjectName(u"viewswidget")
-        self.viewswidget.setMinimumSize(QSize(100, 100))
-        self.viewswidget.setMaximumSize(QSize(270, 16777215))
+        self.viewswidget.setMinimumSize(QSize(290, 100))
+        self.viewswidget.setMaximumSize(QSize(290, 16777215))
         self.page_import = QWidget()
         self.page_import.setObjectName(u"page_import")
         self.verticalLayout_32 = QVBoxLayout(self.page_import)

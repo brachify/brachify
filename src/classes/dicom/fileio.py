@@ -12,22 +12,6 @@ from classes.app import get_app
 default_settings = get_app().default_settings
 DEFAULT_CYLINDER_DIAMETER = default_settings.get("DEFAULT_CYLINDER_DIAMETER", 30.0) 
 
-
-def get_channels_from_dicom(data: DicomData) -> list[NeedleChannel]:
-    channels = []
-    log.debug("### Importing RP Data ###")
-    for i in range(len(data.channels_rois)):
-        channel_number = f"{data.channels_rois[i]}"
-        channel_id = f"Channel {data.channels_labels[i]}"
-        points = data.channel_contours[i]
-
-        log.debug(f" Raw Points: \n{points}\n\n")
-        needle = NeedleChannel(number=channel_number,
-                               id=channel_id, points=points)
-        channels.append(needle)
-    return channels
-     
-
 def get_cylinder_from_dicom(data: DicomData) -> BrachyCylinder: 
     diameter = data.cylinder_diameter
     tip = data.cylinder_tip
@@ -335,11 +319,23 @@ def load_varian_dicom_data(rp_file: str, rs_file: str) -> DicomData:
             roi.ReferencedROINumber for roi in rp_dataset.ApplicationSetupSequence[0].ChannelSequence]
         data.channels_labels = [
             roi.SourceApplicatorID for roi in rp_dataset.ApplicationSetupSequence[0].ChannelSequence]
+        data.channel_numbers = [
+            number.ChannelNumber for number in  rp_dataset.ApplicationSetupSequence[0].ChannelSequence
+        ]
         data.patient_name = rp_dataset.PatientName.family_name
         data.patient_id = rp_dataset.PatientID
         data.plan_label = rp_dataset.RTPlanLabel
     except Exception as error_message:
         log.error(f"Reading RP Dicom file failed! {rp_file}\n{error_message}")
+
+    #additional info
+    try:
+        data.approvale_status = rp_dataset.ApprovalStatus
+        data.operator = rp_dataset.OperatorsName
+        #Need to add data. something to get channel names
+    except Exception as error_message:
+        log.error("did not find Operators Name and or Approval Status")
+    
 
     # Central Axis data
     try:
@@ -401,11 +397,25 @@ def load_nucletron_dicom_data(rp_file: str, rs_file: str) -> DicomData:
         data.channels_rois = [int(channel_label.ROINumber) for channel_label in rp_dataset[0x300f,0x1000][0].StructureSetROISequence] 
         data.channels_labels = [
             roi.SourceApplicatorID for roi in rp_dataset.ApplicationSetupSequence[0].ChannelSequence] #not needed?
+        try:
+            data.channel_numbers = [
+                number.ChannelNumber for number in  rp_dataset.ApplicationSetupSequence[0].ChannelSequence
+            ]
+        except:
+            print("Channel Numbers not loaded -- Nucletron")
+
         data.patient_name = rp_dataset.PatientName.family_name
         data.patient_id = rp_dataset.PatientID
         data.plan_label = rp_dataset.RTPlanLabel
     except Exception as error_message:
         log.error(f"Reading RP Dicom file failed! {rp_file}\n{error_message}")
+    
+    #additional info
+    try:
+        data.approvale_status = rp_dataset.ApprovalStatus
+        data.operator = rp_dataset.OperatorsName
+    except Exception as error_message:
+        log.error("did not find Operators Name and or Approval Status---Nucletron--Untested")
 
     # Central Axis data
     try:

@@ -24,7 +24,7 @@ class Ui_Channels_View(object):
     def setupUi(self, Channels_View):
         if not Channels_View.objectName():
             Channels_View.setObjectName(u"Channels_View")
-        Channels_View.resize(270, 411)
+        Channels_View.resize(290, 411)
         Channels_View.setStyleSheet(u"background-color: rgb(250,250,250);")
         self.label_5 = QLabel(Channels_View)
         self.label_5.setObjectName(u"label_5")
@@ -32,16 +32,16 @@ class Ui_Channels_View(object):
         self.label_5.setStyleSheet(u"background-color: rgb(230, 235, 240);")
         self.groupBox_3 = QGroupBox(Channels_View)
         self.groupBox_3.setObjectName(u"groupBox_3")
-        self.groupBox_3.setGeometry(QRect(0, 0, 271, 411))
-        self.groupBox_3.setMinimumSize(QSize(271, 411))
-        self.groupBox_3.setMaximumSize(QSize(271, 16777215))
+        self.groupBox_3.setGeometry(QRect(0, 0, 290, 411))
+        self.groupBox_3.setMinimumSize(QSize(290, 411))
+        self.groupBox_3.setMaximumSize(QSize(290, 16777215))
         self.groupBox_3.setStyleSheet(u"background-color: rgb(240, 245, 250);")
         self.gridLayout = QGridLayout(self.groupBox_3)
         self.gridLayout.setObjectName(u"gridLayout")
         self.listwidget_channels = QListWidget(self.groupBox_3)
         self.listwidget_channels.setObjectName(u"listwidget_channels")
-        self.listwidget_channels.setMinimumSize(QSize(251, 200))
-        self.listwidget_channels.setMaximumSize(QSize(251, 200))
+        self.listwidget_channels.setMinimumSize(QSize(251, 230))
+        self.listwidget_channels.setMaximumSize(QSize(16777215, 16777215))
         self.listwidget_channels.setStyleSheet(u"background-color: rgb(240, 245, 250);")
 
         self.gridLayout.addWidget(self.listwidget_channels, 4, 0, 1, 1)
@@ -58,7 +58,7 @@ class Ui_Channels_View(object):
         self.top_menu_bar.setStyleSheet(u"background-color: rgb(240, 245, 250);")
         self.btn_enable = QPushButton(self.top_menu_bar)
         self.btn_enable.setObjectName(u"btn_enable")
-        self.btn_enable.setGeometry(QRect(0, 0, 251, 33))
+        self.btn_enable.setGeometry(QRect(0, 0, 271, 33))
         self.btn_enable.setMinimumSize(QSize(240, 33))
         self.btn_enable.setStyleSheet(u"QPushButton {\n"
 "	color: rgb(0, 0, 0);\n"
@@ -75,7 +75,7 @@ class Ui_Channels_View(object):
 "}")
         self.btn_set_tandem = QPushButton(self.top_menu_bar)
         self.btn_set_tandem.setObjectName(u"btn_set_tandem")
-        self.btn_set_tandem.setGeometry(QRect(0, 30, 251, 33))
+        self.btn_set_tandem.setGeometry(QRect(0, 30, 271, 33))
         self.btn_set_tandem.setMinimumSize(QSize(240, 33))
         self.btn_set_tandem.setStyleSheet(u"QPushButton {\n"
 "	color: rgb(0, 0, 0);\n"
