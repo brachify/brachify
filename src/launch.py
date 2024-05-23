@@ -32,8 +32,8 @@ def main():
     app.setApplicationVersion(info.APP_VERSION)
 
     # read the default settings from the config.json file, 
-    # and store it in an attribtue called default_settings so it can be accessed later.
-    app.default_settings = load_config_file()
+    # and store it in an attribtue called config_values so it can be accessed later.
+    app.config_values = load_config_file()
 
     # launch GUI
     if app.gui():

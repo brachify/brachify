@@ -7,8 +7,8 @@ from windows.ui.channels_view_ui import Ui_Channels_View
 from windows.views.custom_view import display_action, CustomView
 
 # get default needle length from config file.  If can't read from dictionary, set to 200.0.
-default_settings = get_app().default_settings
-DEFAULT_NEEDLE_LENGTH = default_settings.get("DEFAULT_NEEDLE_LENGTH", 200)
+config_values = get_app().config_values
+CONFIG_NEEDLE_LENGTH = config_values.get("CONFIG_NEEDLE_LENGTH", 200)
 
 materials = {
     ShapeTypes.CYLINDER: {"rgb": [0.8, 0.8, 0.8], "transparent": True},
@@ -130,7 +130,7 @@ class ChannelsView(CustomView):
         self.is_active = False
 
         #sets default needle length
-        self.ui.sb_needle_length.setValue(DEFAULT_NEEDLE_LENGTH)
+        self.ui.sb_needle_length.setValue(CONFIG_NEEDLE_LENGTH)
 
         # signals and slots
         self.ui.btn_apply_settings.pressed.connect(self.action_apply_settings)

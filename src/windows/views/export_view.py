@@ -63,20 +63,20 @@ class Export_View(CustomView):
         default_needle_length = app.window.navigationmodel.views[2].ui.sb_needle_length.value() 
 
         # Create a dictionary containing the data.
-        default_settings = {
-            "DEFAULT_CYLINDER_DIAMETER": default_cylinder_diameter,
-            "DEFAULT_LENGTH": default_length,
-            "DEFAULT_DIAMETER": default_diameter,
-            "TANDEM_TIP_HEIGHT_DEFAULT": tandem_length, # tandem_length may not actually be Tandem_Tip_Height_Default
-            "TANDEM_CHANNEL_DIAMETER_DEFAULT": tandem_channel_diameter_default, 
-            "TANDEM_STOPPER_DIAMETER_DEFAULT": tandem_stopper_diameter_default,
-            "TANDEM_TIP_ANGLE_DEFAULT": tandem_tip_angle_default,
+        config_values = {
+            "CONFIG_CYLINDER_DIAMETER": default_cylinder_diameter,
+            "CONFIG_LENGTH": default_length,
+            "CONFIG_DIAMETER": default_diameter,
+            "TANDEM_TIP_HEIGHT_CONFIG": tandem_length, # tandem_length may not actually be Tandem_Tip_Height_Default
+            "TANDEM_CHANNEL_DIAMETER_CONFIG": tandem_channel_diameter_default, 
+            "TANDEM_STOPPER_DIAMETER_CONFIG": tandem_stopper_diameter_default,
+            "TANDEM_TIP_ANGLE_CONFIG": tandem_tip_angle_default,
             "TANDEM_BEND_RADIUS": tandem_bend_radius,
-            "DEFAULT_NEEDLE_LENGTH": default_needle_length
+            "CONFIG_NEEDLE_LENGTH": default_needle_length
         }
         # Save dictionary as .json file
         with open(filename[0], "w") as outfile:
-            json.dump(default_settings, outfile, indent=0)
+            json.dump(config_values, outfile, indent=0)
 
     def action_export_mesh(self):
         """
