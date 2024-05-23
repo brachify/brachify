@@ -19,12 +19,26 @@ materials = {
 class ImportView(CustomView):
 
     def action_import_config_file(self):
+        # consider changing this to [0] at the end to only grab the filename, not a tuple, example:
+        # 'C:/Users/stephanie.merkl/brachify/test-config-1.json', '(*.json)') == ('file path', 'extension')
         foldername = QFileDialog.getOpenFileName(
             self, "Open config file", "C:/Users/stephanie.merkl/Documents/Other", "(*.json)")
         
-        app = get_app()
-        app.window.navigationmodel.views[3].ui.sp_channel_diameter.setValue(7.0)
+        # if no .json file is selected, then return (cancel the import)
+        if foldername == ("", ""): # NOTE: may have to update the other action_import_* methods below
+            """
+              NOTE: the other action_import_* methods below return '' if user presses cancel, since they are 
+              expecting a string.  This is why if not foldername: works for those, but it doesn't for here.
+            """
+            log.info("no valid filename selected for importing")
+            return
 
+        # if a .json file has been selected
+        log.info(f"file {foldername} has been selected")
+
+        app = get_app()
+        app.window.navigationmodel.views[3].ui.sp_channel_diameter.setValue(4.3)
+        print("reached this line") # remove this line when finished debugging
 
 
     def action_import_dicom_folder(self):
