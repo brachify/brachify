@@ -16,11 +16,11 @@ TANDEM_LABEL = "tandem_shape"
 # Defaults
 # get defaults from config file.  If can't read from dictionary, set to 4.0, 8.0, ...
 config_values = get_app().config_values
-TANDEM_CHANNEL_DIAMETER_CONFIG = config_values.get("TANDEM_CHANNEL_DIAMETER_CONFIG", 4.0) 
-TANDEM_STOPPER_DIAMETER_CONFIG = config_values.get("TANDEM_STOPPER_DIAMETER_CONFIG", 8.0) 
-TANDEM_TIP_ANGLE_CONFIG = config_values.get("TANDEM_TIP_ANGLE_CONFIG", 30.0) 
-TANDEM_TIP_HEIGHT_CONFIG = config_values.get("TANDEM_TIP_HEIGHT_CONFIG", 129.0) 
-TANDEM_BEND_RADIUS = config_values.get("TANDEM_BEND_RADIUS", 35.0) 
+CONFIG_TANDEM_CHANNEL_DIAMETER = config_values.get("CONFIG_TANDEM_CHANNEL_DIAMETER", 4.0) 
+CONFIG_TANDEM_STOPPER_DIAMETER = config_values.get("CONFIG_TANDEM_STOPPER_DIAMETER", 8.0) 
+CONFIG_TANDEM_TIP_ANGLE = config_values.get("CONFIG_TANDEM_TIP_ANGLE", 30.0) 
+CONFIG_TANDEM_TIP_HEIGHT = config_values.get("CONFIG_TANDEM_TIP_HEIGHT", 129.0) 
+CONFIG_TANDEM_BEND_RADIUS = config_values.get("CONFIG_TANDEM_BEND_RADIUS", 35.0) 
 
 
 class TandemModel(QObject):
@@ -46,7 +46,7 @@ class TandemModel(QObject):
             return
 
         self.mesh_offset = height_offset
-        self.tandem.tandem_height = TANDEM_TIP_HEIGHT_CONFIG + height_offset
+        self.tandem.tandem_height = CONFIG_TANDEM_TIP_HEIGHT + height_offset
         self.update()
 
     def set_tandem(self,
@@ -190,15 +190,15 @@ class TandemModel(QObject):
         self.cylinder_radius = 0
 
         # tandem settings
-        self.tandem_diameter = TANDEM_CHANNEL_DIAMETER_CONFIG
-        self.stopper_diameter = TANDEM_STOPPER_DIAMETER_CONFIG
-        self.tandem_angle = TANDEM_TIP_ANGLE_CONFIG
-        self.bend_radius = TANDEM_BEND_RADIUS
-        self.tandem_length = TANDEM_TIP_HEIGHT_CONFIG
+        self.tandem_diameter = CONFIG_TANDEM_CHANNEL_DIAMETER
+        self.stopper_diameter = CONFIG_TANDEM_STOPPER_DIAMETER
+        self.tandem_angle = CONFIG_TANDEM_TIP_ANGLE
+        self.bend_radius = CONFIG_TANDEM_BEND_RADIUS
+        self.tandem_length = CONFIG_TANDEM_TIP_HEIGHT
 
         # generated tandem settings
-        self.channel_diameter = TANDEM_CHANNEL_DIAMETER_CONFIG
-        self.tip_angle = TANDEM_TIP_ANGLE_CONFIG
+        self.channel_diameter = CONFIG_TANDEM_CHANNEL_DIAMETER
+        self.tip_angle = CONFIG_TANDEM_TIP_ANGLE
 
         # signals and slots
         window = get_app().window
