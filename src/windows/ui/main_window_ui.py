@@ -71,8 +71,8 @@ class Ui_MainWindow(object):
         self.btn_import_view.setMinimumSize(QSize(290, 33))
         self.btn_import_view.setMaximumSize(QSize(290, 33))
         self.btn_import_view.setStyleSheet(u"QPushButton {\n"
-"	color: rgb(0, 0, 0);\n"
-"	background-color: rgb(199, 219, 237);\n"
+"	color: rgb(250,250,250);\n"
+"	background-color: rgb(28, 44, 81);\n"
 "	border: 0px solid;\n"
 "}\n"
 "QPushButton:hover {\n"
