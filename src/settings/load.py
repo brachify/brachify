@@ -26,8 +26,8 @@ def load_config_file():
     
         config_values = {
             "CONFIG_CYLINDER_DIAMETER": 30.0, 
-            "CONFIG_LENGTH": 160.0, # cylinder length
-            "CONFIG_DIAMETER": 3.0, # channels diameter
+            "CONFIG_CYLINDER_LENGTH": 160.0, # cylinder length
+            "CONFIG_CHANNELS_DIAMETER": 3.0, # channels diameter
             "CONFIG_TANDEM_CHANNEL_DIAMETER": 4.0, 
             "CONFIG_TANDEM_STOPPER_DIAMETER": 8.0, 
             "CONFIG_TANDEM_TIP_ANGLE": 30.0, 

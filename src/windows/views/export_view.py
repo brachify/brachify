@@ -65,8 +65,8 @@ class Export_View(CustomView):
         # Create a dictionary containing the data.
         config_values = {
             "CONFIG_CYLINDER_DIAMETER": default_cylinder_diameter,
-            "CONFIG_LENGTH": default_length,
-            "CONFIG_DIAMETER": default_diameter,
+            "CONFIG_CYLINDER_LENGTH": default_length,
+            "CONFIG_CHANNELS_DIAMETER": default_diameter,
             "CONFIG_TANDEM_TIP_HEIGHT": tandem_length, # tandem_length may not actually be Tandem_Tip_Height_Default
             "CONFIG_TANDEM_CHANNEL_DIAMETER": tandem_channel_diameter_default, 
             "CONFIG_TANDEM_STOPPER_DIAMETER": tandem_stopper_diameter_default,

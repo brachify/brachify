@@ -18,13 +18,13 @@ from classes.app import get_app
 TIP_LENGTH = 2.5
 # get default channel diameter from config file.  If can't read from dictionary, set to 3.0.
 config_values = get_app().config_values
-CONFIG_DIAMETER = config_values.get("CONFIG_DIAMETER", 3.0)
+CONFIG_CHANNELS_DIAMETER = config_values.get("CONFIG_CHANNELS_DIAMETER", 3.0)
 
 
 class NeedleChannel:
 
     @staticmethod
-    def default_diameter() -> float: return CONFIG_DIAMETER
+    def default_diameter() -> float: return CONFIG_CHANNELS_DIAMETER
 
     def setChannel(self, height: float = 0.0, diameter: float = 3.0) -> None:
         self._offset = height
@@ -93,7 +93,7 @@ class NeedleChannel:
         self._shape = None
 
         self._offset = 0.0
-        self._diameter = CONFIG_DIAMETER
+        self._diameter = CONFIG_CHANNELS_DIAMETER
 
 def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) -> TopoDS_Shape:
     """

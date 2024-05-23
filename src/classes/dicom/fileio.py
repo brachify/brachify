@@ -179,8 +179,8 @@ def load_channels_varian(data: DicomData, rs_dataset):
     cyl_length = np.linalg.norm(cyl_vec)
     
     # normalized direction from tip to base
-    from classes.mesh.cylinder import CONFIG_LENGTH
-    offset_vector = np.array([0, 0, - cyl_length + CONFIG_LENGTH])
+    from classes.mesh.cylinder import CONFIG_CYLINDER_LENGTH
+    offset_vector = np.array([0, 0, - cyl_length + CONFIG_CYLINDER_LENGTH])
 
     updated_base = helper.rotate_points(base, cyl_vec, z_up)
     for i, c in enumerate(channel_contour_points):
@@ -233,8 +233,8 @@ def load_channels_nucletron(data: DicomData, rp_dataset):
     cyl_length = np.linalg.norm(cyl_vec)
     
     # normalized direction from tip to base
-    from classes.mesh.cylinder import CONFIG_LENGTH
-    offset_vector = np.array([0, 0, - cyl_length + CONFIG_LENGTH])
+    from classes.mesh.cylinder import CONFIG_CYLINDER_LENGTH
+    offset_vector = np.array([0, 0, - cyl_length + CONFIG_CYLINDER_LENGTH])
 
     updated_base = helper.rotate_points(base, cyl_vec, z_up)
     for i, c in enumerate(channel_contours):

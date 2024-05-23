@@ -23,13 +23,13 @@ from classes.app import get_app
 
 # get default cylinder diameter and length from config file.  If can't read from dictionary, set to 160.0, 30.0.
 config_values = get_app().config_values
-CONFIG_LENGTH = config_values.get("CONFIG_LENGTH", 160.0) 
+CONFIG_CYLINDER_LENGTH = config_values.get("CONFIG_CYLINDER_LENGTH", 160.0) 
 CONFIG_CYLINDER_DIAMETER = config_values.get("CONFIG_CYLINDER_DIAMETER", 30.0) 
 
 class BrachyCylinder:
     
     @staticmethod
-    def default_length() -> float: return CONFIG_LENGTH
+    def default_length() -> float: return CONFIG_CYLINDER_LENGTH
 
     def shape(self) -> TopoDS_Shape:
         if self._shape:
@@ -89,7 +89,7 @@ class BrachyCylinder:
         self._shape = self.shape()
 
     def __init__(self, diameter: float = CONFIG_CYLINDER_DIAMETER, expand_base: bool = False): 
-        self.length = CONFIG_LENGTH
+        self.length = CONFIG_CYLINDER_LENGTH
         self.diameter = diameter
         self.expand_base = expand_base
         self._shape = None
