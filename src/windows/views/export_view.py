@@ -15,6 +15,8 @@ from windows.ui.export_view_ui import Ui_Export_View
 from windows.views.custom_view import display_action, CustomView
 from windows.views.channels_view import ChannelsView
 
+import json
+
 EXPORT_LABEL = "export"
 BASEMAP = "basemap.png"
 
@@ -28,6 +30,52 @@ materials = {
 
 
 class Export_View(CustomView):
+
+    def action_export_config(self):
+        """
+        Create a config.json file to save the current settings as defaults.
+        """
+        # User chooses location of config file and file name.
+        # returns a tuple containing (filepath, filetype)
+        filename = QFileDialog.getSaveFileName(
+            self, "Save config", "", "JSON File (*.json)", "")
+        
+        if not filename:   # no file selected?
+            log.info("no valid filename selected for config file.")
+        
+        log.info(f"file {filename} has been selected for exporting config.")
+
+        # Collect the data to be stored in the config file.
+        # 1. cylinder data
+        default_cylinder_diameter = get_app().window.cylindermodel.cylinder.diameter
+        default_length = get_app().window.cylindermodel.cylinder.length
+        # 2. channels data
+        default_diameter = get_app().window.channelsmodel.diameter
+        # 3. tandem data
+        tandem_channel_diameter_default = get_app().window.tandemmodel.tandem_diameter
+        tandem_stopper_diameter_default = get_app().window.tandemmodel.stopper_diameter
+        tandem_tip_angle_default = get_app().window.tandemmodel.tip_angle
+        tandem_bend_radius = get_app().window.tandemmodel.bend_radius
+        tandem_length = get_app().window.tandemmodel.tandem_length # this appears to coincide with Tandem Height in the GUI
+
+        # 4. needle data
+        default_needle_length = self.ui.sb_needle_length.value() # this may need to change when Needle Length input box is moved from Export Tab
+
+        # Create a dictionary containing the data.
+        default_settings = {
+            "DEFAULT_CYLINDER_DIAMETER": default_cylinder_diameter,
+            "DEFAULT_LENGTH": default_length,
+            "DEFAULT_DIAMETER": default_diameter,
+            "TANDEM_TIP_HEIGHT_DEFAULT": tandem_length, # tandem_length may not actually be Tandem_Tip_Height_Default
+            "TANDEM_CHANNEL_DIAMETER_DEFAULT": tandem_channel_diameter_default, 
+            "TANDEM_STOPPER_DIAMETER_DEFAULT": tandem_stopper_diameter_default,
+            "TANDEM_TIP_ANGLE_DEFAULT": tandem_tip_angle_default,
+            "TANDEM_BEND_RADIUS": tandem_bend_radius,
+            "DEFAULT_NEEDLE_LENGTH": default_needle_length
+        }
+        # Save dictionary as .json file
+        with open(filename[0], "w") as outfile:
+            json.dump(default_settings, outfile, indent=0)
 
     def action_export_mesh(self):
         """
@@ -135,8 +183,9 @@ class Export_View(CustomView):
         self.shape = None  # the model to export
 
         # signals and slots
-        self.ui.btn_export_mesh.pressed.connect(self.action_export_mesh)
+        self.ui.btn_export_mesh.pressed.connect(self.action_export_mesh) # when "export mesh" button pressed, then call action_export_mesh function
         self.ui.btn_export_shapes.pressed.connect(self.action_export_shapes)
+        self.ui.btn_export_current_config.pressed.connect(self.action_export_config)
 
         self.ui.btn_export_template_reference.pressed.connect(self.action_export_template_reference)
         

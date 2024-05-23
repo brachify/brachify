@@ -24,15 +24,15 @@ class Ui_Channels_View(object):
     def setupUi(self, Channels_View):
         if not Channels_View.objectName():
             Channels_View.setObjectName(u"Channels_View")
-        Channels_View.resize(270, 411)
+        Channels_View.resize(270, 5000)
         Channels_View.setStyleSheet(u"background-color: rgb(250,250,250);")
         self.label_5 = QLabel(Channels_View)
         self.label_5.setObjectName(u"label_5")
         self.label_5.setGeometry(QRect(0, -10, 261, 411))
-        self.label_5.setStyleSheet(u"background-color: rgb(230, 235, 240);")
+        self.label_5.setStyleSheet(u"background-color: rgb(240, 245, 250);")
         self.groupBox_3 = QGroupBox(Channels_View)
         self.groupBox_3.setObjectName(u"groupBox_3")
-        self.groupBox_3.setGeometry(QRect(0, 0, 271, 411))
+        self.groupBox_3.setGeometry(QRect(0, 0, 271, 5000))
         self.groupBox_3.setMinimumSize(QSize(271, 411))
         self.groupBox_3.setMaximumSize(QSize(271, 16777215))
         self.groupBox_3.setStyleSheet(u"background-color: rgb(240, 245, 250);")
