@@ -22,7 +22,8 @@ class ImportView(CustomView):
         foldername = QFileDialog.getOpenFileName(
             self, "Open config file", "C:/Users/stephanie.merkl/Documents/Other", "(*.json)")
         
-        
+        app = get_app()
+        app.window.navigationmodel.views[3].ui.sp_channel_diameter.setValue(7.0)
 
 
 
