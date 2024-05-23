@@ -46,20 +46,21 @@ class Export_View(CustomView):
         log.info(f"file {filename} has been selected for exporting config.")
 
         # Collect the data to be stored in the config file.
+        app = get_app()
         # 1. cylinder data
-        default_cylinder_diameter = get_app().window.cylindermodel.cylinder.diameter
-        default_length = get_app().window.cylindermodel.cylinder.length
+        default_cylinder_diameter = app.window.cylindermodel.cylinder.diameter
+        default_length = app.window.cylindermodel.cylinder.length
         # 2. channels data
-        default_diameter = get_app().window.channelsmodel.diameter
+        default_diameter = app.window.channelsmodel.diameter
         # 3. tandem data
-        tandem_channel_diameter_default = get_app().window.tandemmodel.tandem_diameter
-        tandem_stopper_diameter_default = get_app().window.tandemmodel.stopper_diameter
-        tandem_tip_angle_default = get_app().window.tandemmodel.tip_angle
-        tandem_bend_radius = get_app().window.tandemmodel.bend_radius
-        tandem_length = get_app().window.tandemmodel.tandem_length # this appears to coincide with Tandem Height in the GUI
+        tandem_channel_diameter_default = app.window.tandemmodel.tandem_diameter
+        tandem_stopper_diameter_default = app.window.tandemmodel.stopper_diameter
+        tandem_tip_angle_default = app.window.tandemmodel.tip_angle
+        tandem_bend_radius = app.window.tandemmodel.bend_radius
+        tandem_length = app.window.tandemmodel.tandem_length # this appears to coincide with Tandem Height in the GUI
 
-        # 4. needle data
-        default_needle_length = self.ui.sb_needle_length.value() # this may need to change when Needle Length input box is moved from Export Tab
+        # 4. needle data - pulls the current value in the spin box
+        default_needle_length = app.window.navigationmodel.views[2].ui.sb_needle_length.value() 
 
         # Create a dictionary containing the data.
         default_settings = {
