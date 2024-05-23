@@ -18,21 +18,20 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QDoubleSpinBox, QFrame, QGridLayout,
     QGroupBox, QHBoxLayout, QLabel, QListWidget,
     QListWidgetItem, QPushButton, QSizePolicy, QSpacerItem,
-    QWidget)
+    QVBoxLayout, QWidget)
 
 class Ui_Channels_View(object):
     def setupUi(self, Channels_View):
         if not Channels_View.objectName():
             Channels_View.setObjectName(u"Channels_View")
-        Channels_View.resize(290, 411)
-        Channels_View.setStyleSheet(u"background-color: rgb(250,250,250);")
-        self.label_5 = QLabel(Channels_View)
-        self.label_5.setObjectName(u"label_5")
-        self.label_5.setGeometry(QRect(0, -10, 261, 411))
-        self.label_5.setStyleSheet(u"background-color: rgb(230, 235, 240);")
+        Channels_View.resize(290, 4092)
+        Channels_View.setStyleSheet(u"background-color: rgb(240, 245, 250);")
+        self.verticalLayout = QVBoxLayout(Channels_View)
+        self.verticalLayout.setSpacing(0)
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.groupBox_3 = QGroupBox(Channels_View)
         self.groupBox_3.setObjectName(u"groupBox_3")
-        self.groupBox_3.setGeometry(QRect(0, 0, 290, 411))
         self.groupBox_3.setMinimumSize(QSize(290, 411))
         self.groupBox_3.setMaximumSize(QSize(290, 16777215))
         self.groupBox_3.setStyleSheet(u"background-color: rgb(240, 245, 250);")
@@ -93,7 +92,7 @@ class Ui_Channels_View(object):
 
         self.gridLayout.addWidget(self.top_menu_bar, 5, 0, 1, 1)
 
-        self.verticalSpacer = QSpacerItem(228, 35, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        self.verticalSpacer = QSpacerItem(228, 400000000, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Preferred)
 
         self.gridLayout.addItem(self.verticalSpacer, 6, 0, 1, 1)
 
@@ -164,6 +163,9 @@ class Ui_Channels_View(object):
         self.gridLayout.addLayout(self.horizontalLayout_3, 1, 0, 1, 1)
 
 
+        self.verticalLayout.addWidget(self.groupBox_3)
+
+
         self.retranslateUi(Channels_View)
 
         QMetaObject.connectSlotsByName(Channels_View)
@@ -171,7 +173,6 @@ class Ui_Channels_View(object):
 
     def retranslateUi(self, Channels_View):
         Channels_View.setWindowTitle(QCoreApplication.translate("Channels_View", u"Form", None))
-        self.label_5.setText("")
         self.groupBox_3.setTitle("")
         self.label_10.setText(QCoreApplication.translate("Channels_View", u"Channels", None))
         self.btn_enable.setText(QCoreApplication.translate("Channels_View", u"Disable", None))
