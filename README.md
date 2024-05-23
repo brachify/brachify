@@ -30,6 +30,6 @@ brachify uses the pythonocc library. Easiest setup is to use [Anaconda3](https:/
 To build .exe make sure your working directory is the brachify directory then run the following command in the command line
 ```pyinstaller --noconfirm --icon "./resources/brachify_splash-ico.ico" --name "brachify" --splash ".\src\windows\splashscreen\brachify_splash.png" --hidden-import "pydicom.encoders.gdcm" --hidden-import "OCC" --hidden-import "pydicom.encoders.pylibjpeg" --paths=src "./src/launch.py"```
 
-This command may take a couple or a few minutes to compile depending on your machine after it has compiled it will make a dist and a build folder. The full application will be stored in the dist folder, go inside it and double click on the brachify.exe file in order to use the application as an exicutible file
+This command may take a few minutes to compile depending on your machine after it has compiled it will make a dist and a build folder. The full application will be stored in the dist folder, go inside it and double click on the brachify.exe file in order to use the application as an executable file
 
 
