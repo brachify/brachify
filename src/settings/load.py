@@ -33,7 +33,7 @@ def load_config_file():
             "CONFIG_TANDEM_TIP_ANGLE": 30.0, 
             "CONFIG_TANDEM_TIP_HEIGHT": 129.0, 
             "CONFIG_TANDEM_BEND_RADIUS": 35.0, 
-            "CONFIG_NEEDLE_LENGTH": 20
+            "CONFIG_NEEDLE_LENGTH": 200.0
         }
     
     return config_values
