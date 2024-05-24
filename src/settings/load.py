@@ -19,6 +19,14 @@ def load_config_file():
         # set the default settings to the json dictionary
         config_values = json_contents
         log.debug("successfully loaded default settings from config.json file.")
+
+        key_not_found_message = ""
+
+        # check if any keys are missing and alert the user that defaults will be used instead for that specific value.
+        if "CONFIG_CYLINDER_DIAMETER" not in config_values:
+            key_not_found_message += "\nCONFIG_CYLINDER_DIAMETER not in config_values"
+            log.debug("CONFIG_CYLINDER_DIAMETER not in config_values")
+
     
     except:
         # if can't read default settings from config.json file, then use these defaults
