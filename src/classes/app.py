@@ -26,9 +26,14 @@ class RadiotherapyApp(QApplication):
             self.window.initViews()
 
             # TODO process args like autoloading a file or project
-            print('\n'.join(self.config_load_message))
-            #self.window.configLoadMessageBox("hi")
-            self.window.configLoadMessageBox(text='\n'.join(self.config_load_message))
+           
+            self.window.configLoadMessageBox(text=
+                                             "The following values were successfully loaded from config.json:" + 
+                                             '\n'.join(self.config_load_message[0]) + 
+                                             '\n' +
+                                             "\nThe following values were not found in config.json.  Default values used instead." +
+                                             '\n'.join(self.config_load_message[1]))
+
             #self.window.configLoadMessageBox(self.config_load_message)
 
             return True

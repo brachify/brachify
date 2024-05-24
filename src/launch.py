@@ -33,8 +33,10 @@ def main():
 
     # read the default settings from the config.json file, 
     # and store it in an attribtue called config_values so it can be accessed later.
-    app.config_values = load_config_file()[0]
-    app.config_load_message = load_config_file()[1]
+    load_config_file_tuple = load_config_file()
+    app.config_values = load_config_file_tuple[0]
+    # store the list of which config values were successfully loaded or not.
+    app.config_load_message = load_config_file_tuple[1]
 
     # launch GUI
     if app.gui():
