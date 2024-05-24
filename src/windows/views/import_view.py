@@ -50,7 +50,7 @@ class ImportView(CustomView):
         a = "{:<30}".format("Patient ID: ")               + "\t"+str(data.patient_id)+ "\n"
         b = "{:<30}".format("Patient Name: ")             + "\t"+str(data.patient_name)+ "\n"
         c = "{:<30}".format("Plan ID: ")                  + "\t"+str(data.plan_label)+ "\n"
-        d = "{:<30}".format("Approval Status: ")          + "\t"+str(data.approvale_status) + "\n"
+        d = "{:<30}".format("Approval Status: ")          + "\t"+str(data.approval_status) + "\n"
         e = "{:<30}".format("Operator: ")                 + "\t"+str(data.operator) + "\n\n"
         f = "{:<30}".format("Channels Info")                  + "\n"
         for i in range(len(data.channels_labels)):

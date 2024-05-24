@@ -330,11 +330,13 @@ def load_varian_dicom_data(rp_file: str, rs_file: str) -> DicomData:
 
     #additional info
     try:
-        data.approvale_status = rp_dataset.ApprovalStatus
-        data.operator = rp_dataset.OperatorsName
-        #Need to add data. something to get channel names
+        data.approval_status = rp_dataset.ApprovalStatus
     except Exception as error_message:
-        log.error("did not find Operators Name and or Approval Status")
+        log.error("did not find Approval Status")
+    try:
+        data.operator = rp_dataset.OperatorsName
+    except Exception as error_message:
+        log.error("did not find Operators Name")
     
 
     # Central Axis data
@@ -412,10 +414,13 @@ def load_nucletron_dicom_data(rp_file: str, rs_file: str) -> DicomData:
     
     #additional info
     try:
-        data.approvale_status = rp_dataset.ApprovalStatus
+        data.approval_status = rp_dataset.ApprovalStatus
+    except Exception as error_message:
+        log.error("did not find Approval Status")
+    try:
         data.operator = rp_dataset.OperatorsName
     except Exception as error_message:
-        log.error("did not find Operators Name and or Approval Status---Nucletron--Untested")
+        log.error("did not find Operators Name")
 
     # Central Axis data
     try:

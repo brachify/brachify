@@ -27,7 +27,7 @@ class DicomData:
         self.central_axis_flag = None
         self.central_channel = None
 
-        self.approvale_status = None
+        self.approval_status = None
         self.operator = None
         self.plan_ID = None
 
