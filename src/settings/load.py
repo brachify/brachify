@@ -6,6 +6,7 @@ from classes.info import DIR_PATH, HOME_PATH, USER_PATH, RESOURCES_PATH
 import json
 from classes.logger import log
 
+
 config_values = None
 
 # import the config.json file
@@ -20,12 +21,27 @@ def load_config_file():
         config_values = json_contents
         log.debug("successfully loaded default settings from config.json file.")
 
-        key_not_found_message = ""
+        config_load_message = []
 
-        # check if any keys are missing and alert the user that defaults will be used instead for that specific value.
-        if "CONFIG_CYLINDER_DIAMETER" not in config_values:
-            key_not_found_message += "\nCONFIG_CYLINDER_DIAMETER not in config_values"
+
+        # record which keys exist in the config file and which don't
+        if "CONFIG_CYLINDER_DIAMETER" in config_values:
+            config_load_message.append("\nCONFIG_CYLINDER_DIAMETER is in config_values")
+            log.debug("CONFIG_CYLINDER_DIAMETER is in config_values")
+        else:
+            config_load_message.append("\nCONFIG_CYLINDER_DIAMETER not in config_values")
             log.debug("CONFIG_CYLINDER_DIAMETER not in config_values")
+
+
+        # creates an attribute to store the message which will be displayed when the main window starts up
+        #app.config_load_message = config_load_message
+        
+        return (config_values, config_load_message)
+        
+        # create the pop up message
+        #app.window.configLoadMessageBox(key_not_found_message)
+
+
 
     
     except:

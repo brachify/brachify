@@ -26,6 +26,10 @@ class RadiotherapyApp(QApplication):
             self.window.initViews()
 
             # TODO process args like autoloading a file or project
+            print('\n'.join(self.config_load_message))
+            #self.window.configLoadMessageBox("hi")
+            self.window.configLoadMessageBox(text='\n'.join(self.config_load_message))
+            #self.window.configLoadMessageBox(self.config_load_message)
 
             return True
         

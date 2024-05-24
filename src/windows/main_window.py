@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QMainWindow
+from PySide6.QtWidgets import QMainWindow, QMessageBox
 
 from classes.logger import log
 from classes.app import get_app
@@ -213,7 +213,14 @@ class MainWindow(QMainWindow):
         self.show()
         self.resize(size[0], size[1])
         
+    # Show a message pop up to show which config values have been loaded, and if any default values were uesed
+    def configLoadMessageBox(self, text: str):
+        dialog = QMessageBox()
+        dialog.setWindowTitle("Notification")
+        dialog.setText(text) 
+        dialog.setIcon(QMessageBox.Icon.Information)
         
+        dialog.exec()
 
 
 
