@@ -184,11 +184,14 @@ def load_channels_varian(data: DicomData, rs_dataset):
 
     updated_base = helper.rotate_points(base, cyl_vec, z_up)
     for i, c in enumerate(channel_contour_points):
-        new_points = np.array(c)
-        new_points = helper.rotate_points(new_points, cyl_vec, z_up)
-        new_points = np.array(new_points) - updated_base
-        new_points = new_points + offset_vector
-        channel_paths.append(list(list(points) for points in new_points))
+        if(len(c)>1):
+            new_points = np.array(c)
+            new_points = helper.rotate_points(new_points, cyl_vec, z_up)
+            new_points = np.array(new_points) - updated_base
+            new_points = new_points + offset_vector
+            channel_paths.append(list(list(points) for points in new_points))
+    else:
+        del data.channels_rois[i]
     data.channel_paths = channel_paths
 
 
@@ -238,11 +241,15 @@ def load_channels_nucletron(data: DicomData, rp_dataset):
 
     updated_base = helper.rotate_points(base, cyl_vec, z_up)
     for i, c in enumerate(channel_contours):
-        new_points = np.array(c)
-        new_points = helper.rotate_points(new_points, cyl_vec, z_up)
-        new_points = np.array(new_points) - updated_base
-        new_points = new_points + offset_vector
-        channel_paths.append(list(list(points) for points in new_points))
+        if(len(c)>1):
+            new_points = np.array(c)
+            new_points = helper.rotate_points(new_points, cyl_vec, z_up)
+            new_points = np.array(new_points) - updated_base
+            new_points = new_points + offset_vector
+            channel_paths.append(list(list(points) for points in new_points))
+        else:
+            del data.channels_rois[i]
+            #Need to delete the channel number associated with a point if it exists
     data.channel_paths = channel_paths
 
 
@@ -427,11 +434,11 @@ def load_nucletron_dicom_data(rp_file: str, rs_file: str) -> DicomData:
     except Exception as error_message:
         log.error(f"Error locating central axis: {error_message}")    
 
-    # IF THERE'S A CENTRAL AXIS, ADD IT TO DATA AND REMOVE IT FROM THE LIST
+    # IF THERE'S A CENTRAL AXIS, ADD IT TO DATA AND REMOVE IT FROM THE LIST (it is added above this removes it from list)
     if data.central_channel_roi is not None:
         data.channels_labels.pop(center_index)
         data.channels_rois.pop(center_index)
-
+        #Will have to pop Channel Numbers when they are added
 
     # Contour Data
     try:

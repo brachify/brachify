@@ -26,11 +26,7 @@ class NeedleChannel:
     @staticmethod
     def default_diameter() -> float: return CONFIG_CHANNELS_DIAMETER
 
-    def setChannel(self, height: float = 0.0, diameter: float = 3.0) -> None:
-        self._offset = height
-        self._diameter = diameter
-        self._shape = None
-        self.shape()
+    #setChannel function is never referenced nor is it in any comment in any of the other files
 
     def get_diameter(self):
         return self._diameter
@@ -99,6 +95,9 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
     """
     If a needle channel has a long distance between the first and second point, this helps stub it
     """
+    ################################################
+    # possibly remove this if statment later, there should never be a channel points that gets to this point with <2 points
+    ################################################
     if len(channel_points) < 2:
         log.error(F"Needle Channel Generation error! needs 2 or more points!")
         return None
@@ -110,10 +109,12 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
     channel_points = np.array(channel_points)
     
     # apply the offset for the cylinder length
+    # [:, 2] in numpy arrays https://jakevdp.github.io/PythonDataScienceHandbook/02.02-the-basics-of-numpy-arrays.html
+    # all rows column 3
     channel_points[:,2] += offset
 
     # Number of decimal places to keep
-    decimals = 5 
+    decimals = 3
 
     # Truncate without rounding
     channel_points = np.floor(channel_points * 10**decimals) / 10**decimals
