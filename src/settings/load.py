@@ -38,27 +38,18 @@ def load_config_file():
         config_values = json_contents
         log.debug("Successfully loaded a config.json file.")
 
-        # check which keys exist in the loaded file, and compile a list of which exist and which don't
-        checkValuesExist(config_values, config_keys_loaded)
+        try:
+            # check which keys exist in the loaded file, and compile a list of which exist and which don't.
+            checkValuesExist(config_values, config_keys_loaded)
+        except:
+            print("error") # ** **********************************************************************************FIX
 
         return (config_values, config_keys_loaded)
             
     except:
-        # if can't read default settings from config.json file, then use these defaults
+        # if can't read default settings from config.json file, then use the defaults.
         log.debug("Couldn't load settings from config.json file.  Using hard-coded default settings instead.")
-    
-        config_values = {
-            "CONFIG_CYLINDER_DIAMETER": 30.0, 
-            "CONFIG_CYLINDER_LENGTH": 160.0, # cylinder length
-            "CONFIG_CHANNELS_DIAMETER": 3.0, # channels diameter
-            "CONFIG_TANDEM_CHANNEL_DIAMETER": 4.0, 
-            "CONFIG_TANDEM_STOPPER_DIAMETER": 8.0, 
-            "CONFIG_TANDEM_TIP_ANGLE": 30.0, 
-            "CONFIG_TANDEM_TIP_HEIGHT": 129.0, 
-            "CONFIG_TANDEM_BEND_RADIUS": 35.0, 
-            "CONFIG_NEEDLE_LENGTH": 200.0
-        }
-
+        config_values = DEFAULT_CONFIG_VALUES
         config_keys_loaded[1] = [key for key in config_values]
 
         return (config_values, config_keys_loaded)
@@ -66,30 +57,19 @@ def load_config_file():
 
 
 def checkValuesExist(config_values: dict, config_keys_loaded: list):
-    # record which keys exist in the config file and which don't
-
-    desiredAttributes = [
-        "CONFIG_CYLINDER_DIAMETER",
-        "CONFIG_CYLINDER_LENGTH",
-        "CONFIG_CHANNELS_DIAMETER",
-        "CONFIG_TANDEM_CHANNEL_DIAMETER",
-        "CONFIG_TANDEM_STOPPER_DIAMETER", 
-        "CONFIG_TANDEM_TIP_ANGLE",
-        "CONFIG_TANDEM_TIP_HEIGHT",
-        "CONFIG_TANDEM_BEND_RADIUS",
-        "CONFIG_NEEDLE_LENGTH"
-    ]
-
+    # record which keys exist in the config file and which don't.
     for key in DEFAULT_CONFIG_VALUES:
         if key in config_values:
-            # if the desired key is found in the pre-existing dict, then save that key name in a list
+            # if the desired key is found in the pre-existing dict, then save that key name in a list.
             config_keys_loaded[0].append(key)
             log.debug(f"{key} is in config_values")
         else:
-            # if the desired key is not found, then save that key name to a different list, and create a key-value for it
+            # if the desired key is not found, then save that key name to a different list, and create a key-value for it.
             config_keys_loaded[1].append(key)
             log.debug(f"{key} not in config_values")
             config_values[key] = DEFAULT_CONFIG_VALUES.get(key)
+            # Note: the keys in config_values that are not used (ie, they are misnamed), are NOT deleted.
+            # they remain, but are simply not used.
 
 
 

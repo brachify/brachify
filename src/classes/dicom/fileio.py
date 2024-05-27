@@ -9,7 +9,7 @@ import classes.mesh.helper as helper
 from classes.app import get_app
 
 # get default cylinder diameter from config file.  If can't read from dictionary, set to 30.0.
-config_values = get_app().config_values
+config_values = get_app().values.config_values
 CONFIG_CYLINDER_DIAMETER = config_values.get("CONFIG_CYLINDER_DIAMETER") 
 if CONFIG_CYLINDER_DIAMETER == None:
     log.debug(

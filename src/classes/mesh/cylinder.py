@@ -22,7 +22,7 @@ from classes.mesh.notch import CylinderNotch
 from classes.app import get_app
 
 # get config cylinder length from config file.  If can't read from dictionary, set to 160.0 and print a message to log.
-config_values = get_app().config_values
+config_values = get_app().values.config_values
 CONFIG_CYLINDER_LENGTH = config_values.get("CONFIG_CYLINDER_LENGTH") 
 if CONFIG_CYLINDER_LENGTH == None:
     log.debug(

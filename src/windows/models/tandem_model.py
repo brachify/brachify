@@ -15,7 +15,7 @@ TANDEM_LABEL = "tandem_shape"
 
 # Defaults
 # get defaults from config file.  If can't read from dictionary, set to 4.0, 8.0, ...
-config_values = get_app().config_values
+config_values = get_app().values.config_values
 CONFIG_TANDEM_CHANNEL_DIAMETER = config_values.get("CONFIG_TANDEM_CHANNEL_DIAMETER") 
 if CONFIG_TANDEM_CHANNEL_DIAMETER == None:
     log.debug(

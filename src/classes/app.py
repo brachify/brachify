@@ -3,6 +3,8 @@ from PySide6.QtWidgets import QApplication
 
 from classes.signals import AppSignals
 
+from settings.values import Values
+
 
 def get_app():
     """ Returns the current QApplication instance """
@@ -26,29 +28,10 @@ class RadiotherapyApp(QApplication):
             self.window.initViews()
 
             # TODO process args like autoloading a file or project
+            
+            # create the text that is printed to the pop-up window
+            text = self.values.createConfigMessageText()
 
-            # create the text for the pop-up window label
-            text = "The following values were successfully loaded from config.json:\n"
-            if len(self.config_keys_loaded[0]) < 1:
-                text += "None\n\n"
-            else:
-                for name in self.config_keys_loaded[0]:
-                    text += (
-                        "{0:40}{1:10}".format(name, str(self.config_values.get(name)))
-                    )
-                    text += '\n'
-
-            text += "\nThe following values were not found in config.json.  Default values used instead.\n"
-            if len(self.config_keys_loaded[1]) < 1:
-                text += "None\n\n"
-            else:
-                for name in self.config_keys_loaded[1]:
-                    text += (
-                        "{0:40}{1:10}".format(name, str(self.config_values.get(name)))
-                    )
-                    text += '\n'
-
-                    
             # call the pop-up window
             self.window.configLoadMessageBox(text=text)
 
@@ -83,3 +66,6 @@ class RadiotherapyApp(QApplication):
             raise
 
         self.path = DIR_PATH
+
+        # attribute that contains config and default values
+        self.values = Values()
