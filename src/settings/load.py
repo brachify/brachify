@@ -6,6 +6,17 @@ from classes.info import USER_PATH
 import json
 from classes.logger import log
 
+DEFAULT_CONFIG_VALUES = {
+    "CONFIG_CYLINDER_DIAMETER": 30.0, 
+    "CONFIG_CYLINDER_LENGTH": 160.0, # cylinder length
+    "CONFIG_CHANNELS_DIAMETER": 3.0, # channels diameter
+    "CONFIG_TANDEM_CHANNEL_DIAMETER": 4.0, 
+    "CONFIG_TANDEM_STOPPER_DIAMETER": 8.0, 
+    "CONFIG_TANDEM_TIP_ANGLE": 30.0, 
+    "CONFIG_TANDEM_TIP_HEIGHT": 129.0, 
+    "CONFIG_TANDEM_BEND_RADIUS": 35.0, 
+    "CONFIG_NEEDLE_LENGTH": 200.0
+}
 
 config_values = None
 
@@ -17,7 +28,7 @@ def load_config_file():
     # a list containing 2 lists:
     # [0] contains a list of all the keys/values that were successfully loaded from the config file
     # [1] contains a list of all the keys that did not exist in the config file
-    config_load_message = [[],[]]
+    config_keys_loaded = [[],[]]
 
     try:
         # open, read, parse as dictionary, and close the config.json file
@@ -28,9 +39,9 @@ def load_config_file():
         log.debug("Successfully loaded a config.json file.")
 
         # check which keys exist in the loaded file, and compile a list of which exist and which don't
-        checkValuesExist(config_values, config_load_message)
+        checkValuesExist(config_values, config_keys_loaded)
 
-        return (config_values, config_load_message)
+        return (config_values, config_keys_loaded)
             
     except:
         # if can't read default settings from config.json file, then use these defaults
@@ -48,13 +59,13 @@ def load_config_file():
             "CONFIG_NEEDLE_LENGTH": 200.0
         }
 
-        config_load_message[1] = [key for key in config_values]
+        config_keys_loaded[1] = [key for key in config_values]
 
-        return (config_values, config_load_message)
+        return (config_values, config_keys_loaded)
     
 
 
-def checkValuesExist(config_values: dict, config_load_message: list):
+def checkValuesExist(config_values: dict, config_keys_loaded: list):
     # record which keys exist in the config file and which don't
 
     desiredAttributes = [
@@ -69,12 +80,16 @@ def checkValuesExist(config_values: dict, config_load_message: list):
         "CONFIG_NEEDLE_LENGTH"
     ]
 
-    for elem in desiredAttributes:
-        if elem in config_values:
-            config_load_message[0].append(f"\n{elem}")
-            log.debug(f"{elem} is in config_values")
+    for key in DEFAULT_CONFIG_VALUES:
+        if key in config_values:
+            # if the desired key is found in the pre-existing dict, then save that key name in a list
+            config_keys_loaded[0].append(key)
+            log.debug(f"{key} is in config_values")
         else:
-            config_load_message[1].append(f"\n{elem}")
-            log.debug(f"{elem} not in config_values")
+            # if the desired key is not found, then save that key name to a different list, and create a key-value for it
+            config_keys_loaded[1].append(key)
+            log.debug(f"{key} not in config_values")
+            config_values[key] = DEFAULT_CONFIG_VALUES.get(key)
+
 
 

@@ -217,6 +217,7 @@ class MainWindow(QMainWindow):
     def configLoadMessageBox(self, text: str):
         dialog = QMessageBox()
         dialog.setWindowTitle("Notification")
+        dialog.setFont("Courier")
         dialog.setText(text) 
         dialog.setIcon(QMessageBox.Icon.Information)
         
