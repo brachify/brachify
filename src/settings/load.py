@@ -2,7 +2,7 @@
 For loading default settings.
 """
 
-from classes.info import DIR_PATH, HOME_PATH, USER_PATH, RESOURCES_PATH
+from classes.info import USER_PATH
 import json
 from classes.logger import log
 
@@ -25,21 +25,13 @@ def load_config_file():
             json_contents = json.load(json_file)
         # set the default settings to the json dictionary
         config_values = json_contents
-        log.debug("successfully loaded default settings from config.json file.")
+        log.debug("Successfully loaded a config.json file.")
 
-        # record which keys exist in the config file and which don't
-        if "CONFIG_CYLINDER_DIAMETER" in config_values:
-            config_load_message[0].append("\nCONFIG_CYLINDER_DIAMETER is in config_values")
-            log.debug("CONFIG_CYLINDER_DIAMETER is in config_values")
-        else:
-            config_load_message[1].append("\nCONFIG_CYLINDER_DIAMETER not in config_values")
-            log.debug("CONFIG_CYLINDER_DIAMETER not in config_values")
-        
+        # check which keys exist in the loaded file, and compile a list of which exist and which don't
+        checkValuesExist(config_values, config_load_message)
+
         return (config_values, config_load_message)
-        
-
-
-    
+            
     except:
         # if can't read default settings from config.json file, then use these defaults
         log.debug("Couldn't load settings from config.json file.  Using hard-coded default settings instead.")
@@ -62,6 +54,27 @@ def load_config_file():
     
 
 
+def checkValuesExist(config_values: dict, config_load_message: list):
+    # record which keys exist in the config file and which don't
 
+    desiredAttributes = [
+        "CONFIG_CYLINDER_DIAMETER",
+        "CONFIG_CYLINDER_LENGTH",
+        "CONFIG_CHANNELS_DIAMETER",
+        "CONFIG_TANDEM_CHANNEL_DIAMETER",
+        "CONFIG_TANDEM_STOPPER_DIAMETER", 
+        "CONFIG_TANDEM_TIP_ANGLE",
+        "CONFIG_TANDEM_TIP_HEIGHT",
+        "CONFIG_TANDEM_BEND_RADIUS",
+        "CONFIG_NEEDLE_LENGTH"
+    ]
+
+    for elem in desiredAttributes:
+        if elem in config_values:
+            config_load_message[0].append(f"\n{elem}")
+            log.debug(f"{elem} is in config_values")
+        else:
+            config_load_message[1].append(f"\n{elem}")
+            log.debug(f"{elem} not in config_values")
 
 
