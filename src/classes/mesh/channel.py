@@ -186,16 +186,16 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
     if points[-1].Z() < 0:
         return pipe
 
-'''
-#origional code
- # curve downwards
+    '''
+    #origional code
+    # curve downwards
     curve = _curved_end(points, radius)
     pipe = BRepAlgoAPI_Fuse(pipe, curve).Shape()
 
     # extend out of cylinder
     face = helper.get_lowest_face(pipe)
     extended_pipe = _extended_pipe(pipe)
-'''
+    '''
     # extend out of cylinder
     extension_for_pipe = down_to_end(points[-1], radius)
     extended_pipe = BRepAlgoAPI_Fuse(pipe, extension_for_pipe).Shape()
@@ -243,7 +243,7 @@ def _rounded_pipe(p1: gp_Pnt, p2: gp_Pnt, radius: float) -> TopoDS_Shape:
     return pipe_cylinder#tempfusedpipe.Shape() # adds cylinder an sphere together
     
     
-    '''
+'''
     Original methods
     def _extended_pipe(shape: TopoDS_Shape) -> TopoDS_Shape:
     location = None
@@ -299,4 +299,4 @@ def _rounded_pipe(p1: gp_Pnt, p2: gp_Pnt, radius: float) -> TopoDS_Shape:
 
     cylinder = BRepOffsetAPI_MakePipe(guide_wire, profile).Shape()
     sphere = BRepPrimAPI_MakeSphere(p2, radius).Shape()
-    '''
+'''
