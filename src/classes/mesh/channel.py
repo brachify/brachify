@@ -179,7 +179,21 @@ def _cone_pipe(p1, p2, radius: float) -> TopoDS_Shape:
     direction = helper.get_direction(p1, p2) #gives normalised p2-p1 vector 
     axis = gp_Ax2(p1, direction) # creates coordinate system with an origin at p1, and z- axis pointed in "direction" (referes to z-axis as main direction I believe)
     return BRepPrimAPI_MakeCone(axis, 0.0, radius, length).Shape() # Cone made with height = length, bottom radius = 0, top radius =radius, on the axis as defined in the previous line
+'''
+def _cone_pipe(p1, p2, radius: float) -> TopoDS_Shape:
+    length = helper.get_magnitude(p1, p2)
+    direction = helper.get_direction(p1, p2)
+    axis = gp_Ax2(p1, direction)
+    return BRepPrimAPI_MakeCone(axis, 0.0, radius, length).Shape()
 
+
+def _straight_pipe(p1, p2, face) -> TopoDS_Shape:
+    edge = BRepBuilderAPI_MakeEdge(p1, p2).Edge()
+    make_wire = BRepBuilderAPI_MakeWire(edge)
+    make_wire.Build()
+    wire = make_wire.Wire()
+    return BRepOffsetAPI_MakePipe(wire, face).Shape()
+'''
 
 def down_to_end(p1: gp_Pnt, radius: float) -> TopoDS_Shape:
     p2 = gp_Pnt(p1.X(), p1.Y(), -1)
