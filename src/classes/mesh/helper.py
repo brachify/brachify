@@ -162,13 +162,6 @@ def rotate_points(points, v_1, v_2):
     return pts_rotated
 
 
-def circle_profile(origin: gp_Pnt, direction: gp_Vec, radius: float) -> TopoDS_Face:
-    circle = gp_Circ(gp_Ax2(origin, direction), radius) #makes circle in 3D space oriented upwards with radius = radius
-    edge = BRepBuilderAPI_MakeEdge(circle).Edge()       #I believe this returns the edge of the circle
-    wire = BRepBuilderAPI_MakeWire(edge).Wire()         #Makes wire from edge where a wire is just a line that will be used later
-    return BRepBuilderAPI_MakeFace(wire).Face()         #Makes circle face from wire
-
-
 def add_point_and_vector(p1: gp_Pnt, v1: gp_Vec) -> gp_Pnt:
     return gp_Pnt(
         p1.X() + v1.X(),
