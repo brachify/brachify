@@ -9,11 +9,16 @@ from OCC.Core.BRepPrimAPI import BRepPrimAPI_MakeCone, BRepPrimAPI_MakeSphere
 from OCC.Core.BRepOffsetAPI import BRepOffsetAPI_MakePipe
 from OCC.Core.BRepAlgoAPI import BRepAlgoAPI_Fuse
 from OCC.Core.TopoDS import TopoDS_Shape
+from OCC.Display.SimpleGui import init_display
 
 import classes.mesh.helper as helper
 from classes.logger import log
 
 from classes.app import get_app
+
+#test code so that I can figure out which channel is currently being run through
+global channel_on
+channel_on = 0
 
 TIP_LENGTH = 2.5
 # get default channel diameter from config file.  If can't read from dictionary, set to 3.0.
@@ -41,8 +46,10 @@ class NeedleChannel:
         self._shape = None
         self.shape()
 
+    ''' Quite sure this is never uesed either
     def getOffset(self) -> float:
         return self._offset
+    '''
     
     def get_points(self) -> list:
         return [ [
@@ -92,6 +99,9 @@ class NeedleChannel:
         self._diameter = CONFIG_CHANNELS_DIAMETER
 
 def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) -> TopoDS_Shape:
+    global channel_on
+    channel_on = channel_on + 1
+    
     """
     If a needle channel has a long distance between the first and second point, this helps stub it
     """
@@ -101,7 +111,6 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
     if len(channel_points) < 2:
         log.error(F"Needle Channel Generation error! needs 2 or more points!")
         return None
-
     # offset points using z axis and cylinder's offset
     # and convert into a gp_Pnt
     # rounding/truncation is needed otherwise there can be a bug in pipe = BRepAlgoAPI_Fuse(cone, pipe).Shape() below.
@@ -114,7 +123,7 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
     channel_points[:,2] += offset
 
     # Number of decimal places to keep
-    decimals = 3
+    decimals = 2
 
     # Truncate without rounding
     channel_points = np.floor(channel_points * 10**decimals) / 10**decimals
@@ -130,19 +139,40 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
     if length < TIP_LENGTH:
         pipe = _cone_pipe(p1, p2, radius)
     else:
-        vector = helper.get_vector(p1, p2, length=TIP_LENGTH)
+        vector = helper.get_vector(p1, p2, length=TIP_LENGTH) #gives normalized vector if p2-p1 *TIP_LENGTH
         p_mid = gp_Pnt(p1.X() + vector.X(), p1.Y() +
                        vector.Y(), p1.Z() + vector.Z())
-        cone = _cone_pipe(p1, p_mid, radius)
+        cone = _cone_pipe(p1, p_mid, radius) #makes cone at end of needle
         pipe = _rounded_pipe(p_mid, p2, radius)
+        if pipe:
+            print("Channel")
         pipe = BRepAlgoAPI_Fuse(cone, pipe).Shape()
+        
 
     # rest of the points
     for i in range(1, len(points) - 1):
         p1 = points[i]
         p2 = points[i + 1]
+        #print("("+str(p1.X())+","+str(p1.Y())+","+str(p1.Z())+")")
         cylinder = _rounded_pipe(p1, p2, radius)
-        pipe = BRepAlgoAPI_Fuse(pipe, cylinder).Shape()
+        try:
+            tempfuse = BRepAlgoAPI_Fuse(pipe, cylinder)
+            # print(tempfuse.HasErrors())
+            if tempfuse.HasWarnings():
+                print(i,"Grr")
+                # tempfuse = BRepAlgoAPI_Fuse(pipe, cylinder).SetFuzzyValue(0.00005)
+                # print(tempfuse.HasWarnings())
+                
+            # print(tempfuse.HasWarnings())
+            pipe = tempfuse.Shape()
+        except:
+            print("Grrr")
+        #app = get_app()
+        #app.window.displaymodel.add_shapes(pipe)
+        #display, start_display, add_menu, add_function_to_menu = init_display()
+        #app = get_app()
+        #display.DisplayShape(pipe.Shape(), update=True)
+        #start_display()
 
     # if the points extend past z zero, don't extend
     if points[-1].Z() < 0:
@@ -160,10 +190,10 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
 
 
 def _cone_pipe(p1, p2, radius: float) -> TopoDS_Shape:
-    length = helper.get_magnitude(p1, p2)
-    direction = helper.get_direction(p1, p2)
-    axis = gp_Ax2(p1, direction)
-    return BRepPrimAPI_MakeCone(axis, 0.0, radius, length).Shape()
+    length = helper.get_magnitude(p1, p2) #gives vector p2 - p1 and then get the norm
+    direction = helper.get_direction(p1, p2) #gives normalised p2-p1 vector
+    axis = gp_Ax2(p1, direction) # creates coordinate system with an origin at p1, and z- axis pointed in "direction" (referes to z-axis as main direction I believe)
+    return BRepPrimAPI_MakeCone(axis, 0.0, radius, length).Shape() # Cone made with height = length, bottom radius = 0, top radius =radius, on the axis as defined in the previous line
 
 
 def _straight_pipe(p1, p2, face) -> TopoDS_Shape:
@@ -220,12 +250,15 @@ def _curved_end(points: list[gp_Pnt], radius: float) -> TopoDS_Shape:
 
 
 def _rounded_pipe(p1: gp_Pnt, p2: gp_Pnt, radius: float) -> TopoDS_Shape:
-    direction = helper.get_direction(p1, p2)
-    profile = helper.circle_profile(p1, direction, radius)
-
+    direction = helper.get_direction(p1, p2) #gives normalised p2-p1 vector
+    profile = helper.circle_profile(p1, direction, radius) # cirlce centered at p1, orientated with up as direction and having a raius of radius. The face of the circle is given here
     guide_edge = BRepBuilderAPI_MakeEdge(p1, p2).Edge()
     guide_wire = BRepBuilderAPI_MakeWire(guide_edge).Wire()
 
-    cylinder = BRepOffsetAPI_MakePipe(guide_wire, profile).Shape()
-    sphere = BRepPrimAPI_MakeSphere(p2, radius).Shape()
-    return BRepAlgoAPI_Fuse(cylinder, sphere).Shape()
+
+    cylinder = BRepOffsetAPI_MakePipe(guide_wire, profile).Shape() #I believe this makes the cylinder the around the "guild_wire" (which is just a line from p1 to p2) using the circle shape (profile) as the radius
+    sphere = BRepPrimAPI_MakeSphere(p2, radius).Shape()# makes a sphere centered at p2 and then makes it radius = radius
+    #sphere1 = BRepPrimAPI_MakeSphere(p1, radius).Shape()
+    tempfusedpipe = BRepAlgoAPI_Fuse(cylinder, sphere)
+    # tempfusedpipe2 = BRepAlgoAPI_Fuse(tempfusedpipe, sphere1)
+    return tempfusedpipe.Shape() # adds cylinder an sphere together
