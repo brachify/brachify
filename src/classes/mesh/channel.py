@@ -1,6 +1,10 @@
 import numpy as np
 import math
-
+'''
+Not in current use, but were used for the Bezier method
+from OCC.Core.Geom import Geom_BezierCurve
+from OCC.Core.TColgp import TColgp_Array1OfPnt
+'''
 from OCC.Core.gp import gp_Pnt, gp_Ax2
 from OCC.Core.BRepPrimAPI import BRepPrimAPI_MakeCone, BRepPrimAPI_MakeSphere, BRepPrimAPI_MakeCylinder
 from OCC.Core.BRepAlgoAPI import BRepAlgoAPI_Fuse
