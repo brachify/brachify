@@ -7,6 +7,13 @@ from OCC.Core.TColgp import TColgp_Array1OfPnt
 '''
 from OCC.Core.gp import gp_Pnt, gp_Ax2
 from OCC.Core.BRepPrimAPI import BRepPrimAPI_MakeCone, BRepPrimAPI_MakeSphere, BRepPrimAPI_MakeCylinder
+
+'''
+also for Bezier method
+from OCC.Core.BRepBuilderAPI import BRepBuilderAPI_MakeEdge, BRepBuilderAPI_MakeWire
+from OCC.Core.BRepPrimAPI import BRepPrimAPI_MakeCone, BRepPrimAPI_MakeSphere
+from OCC.Core.BRepOffsetAPI import BRepOffsetAPI_MakePipe
+'''
 from OCC.Core.BRepAlgoAPI import BRepAlgoAPI_Fuse
 from OCC.Core.TopoDS import TopoDS_Shape
 
