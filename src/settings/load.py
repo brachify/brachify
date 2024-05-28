@@ -42,7 +42,7 @@ def load_config_file():
             # check which keys exist in the loaded file, and compile a list of which exist and which don't.
             checkValuesExist(config_values, config_keys_loaded)
         except:
-            print("error") # ** **********************************************************************************FIX
+            log.debug("Error in checkValuesExist.")
 
         return (config_values, config_keys_loaded)
             
@@ -59,8 +59,10 @@ def load_config_file():
 def checkValuesExist(config_values: dict, config_keys_loaded: list):
     # record which keys exist in the config file and which don't.
     for key in DEFAULT_CONFIG_VALUES:
-        if key in config_values:
+        if (key in config_values) and \
+              (isinstance(config_values.get(key), int) or isinstance(config_values.get(key), float)):
             # if the desired key is found in the pre-existing dict, then save that key name in a list.
+            # also checks that the value is an int or float (ie a valid format).
             config_keys_loaded[0].append(key)
             log.debug(f"{key} is in config_values")
         else:
