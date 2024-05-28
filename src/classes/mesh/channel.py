@@ -118,7 +118,7 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
     channel_points[:,2] += offset
 
     # Number of decimal places to keep
-    decimals = 5
+    decimals = 3
 
     # Truncate without rounding
     channel_points = np.floor(channel_points * 10**decimals) / 10**decimals
@@ -154,6 +154,7 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
             tempfuse = BRepAlgoAPI_Fuse(pipe, cylinder)
             # print(tempfuse.HasErrors())
             if tempfuse.HasWarnings():
+                
                 print(i,"Grr")
                 # tempfuse = BRepAlgoAPI_Fuse(pipe, cylinder).SetFuzzyValue(0.00005)
                 # print(tempfuse.HasWarnings())
