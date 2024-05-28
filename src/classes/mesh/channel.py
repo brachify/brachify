@@ -178,48 +178,45 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
     if points[-1].Z() < 0:
         return pipe
 
-    # curve downwards
-    curve = _curved_end(points, radius)
-    pipe = BRepAlgoAPI_Fuse(pipe, curve).Shape()
-
     # extend out of cylinder
-    face = helper.get_lowest_face(pipe)
-    extended_pipe = _extended_pipe(pipe)
+    extension_for_pipe = down_to_end(points[-1], radius)
+    extended_pipe = BRepAlgoAPI_Fuse(pipe, extension_for_pipe).Shape()
 
     return extended_pipe
 
-
 def _cone_pipe(p1, p2, radius: float) -> TopoDS_Shape:
     length = helper.get_magnitude(p1, p2) #gives vector p2 - p1 and then get the norm
-    direction = helper.get_direction(p1, p2) #gives normalised p2-p1 vector
+    direction = helper.get_direction(p1, p2) #gives normalised p2-p1 vector 
     axis = gp_Ax2(p1, direction) # creates coordinate system with an origin at p1, and z- axis pointed in "direction" (referes to z-axis as main direction I believe)
     return BRepPrimAPI_MakeCone(axis, 0.0, radius, length).Shape() # Cone made with height = length, bottom radius = 0, top radius =radius, on the axis as defined in the previous line
 
 
-def _straight_pipe(p1, p2, face) -> TopoDS_Shape:
-    edge = BRepBuilderAPI_MakeEdge(p1, p2).Edge()
-    make_wire = BRepBuilderAPI_MakeWire(edge)
-    make_wire.Build()
-    wire = make_wire.Wire()
-    return BRepOffsetAPI_MakePipe(wire, face).Shape()
+def down_to_end(p1: gp_Pnt, radius: float) -> TopoDS_Shape:
+    p2 = gp_Pnt(p1.X(), p1.Y(), -1)
+    direction = helper.get_direction(p1, p2)
+    profile = helper.circle_profile(p1, direction, radius)
+
+    guide_edge = BRepBuilderAPI_MakeEdge(p1, p2).Edge()
+    guide_wire = BRepBuilderAPI_MakeWire(guide_edge).Wire() 
+
+    cylinder = BRepOffsetAPI_MakePipe(guide_wire, profile).Shape()
+    return cylinder
+
+def _rounded_pipe(p1: gp_Pnt, p2: gp_Pnt, radius: float) -> TopoDS_Shape:
+    direction = helper.get_direction(p1, p2) #gives normalised p2-p1 vector
+    profile = helper.circle_profile(p1, direction, radius) # cirlce centered at p1, orientated with up as direction and having a raius of radius. The face of the circle is given here
+    guide_edge = BRepBuilderAPI_MakeEdge(p1, p2).Edge()
+    guide_wire = BRepBuilderAPI_MakeWire(guide_edge).Wire()
 
 
-def _extended_pipe(shape: TopoDS_Shape) -> TopoDS_Shape:
-    location = None
+    cylinder = BRepOffsetAPI_MakePipe(guide_wire, profile).Shape() #I believe this makes the cylinder the around the "guild_wire" (which is just a line from p1 to p2) using the circle shape (profile) as the radius
+    sphere = BRepPrimAPI_MakeSphere(p2, radius).Shape()# makes a sphere centered at p2 and then makes it radius = radius
+    #sphere1 = BRepPrimAPI_MakeSphere(p1, radius).Shape()
+    tempfusedpipe = BRepAlgoAPI_Fuse(cylinder, sphere)
+    # tempfusedpipe2 = BRepAlgoAPI_Fuse(tempfusedpipe, sphere1)
+    return tempfusedpipe.Shape() # adds cylinder an sphere together
 
-    lowest_face = helper.get_lowest_face(shape)
-    if helper.face_is_plane(lowest_face):
-        a_plane = helper.geom_plane_from_face(lowest_face)
-        location = a_plane.Location()
-
-    if location is None or location.Z() < 0:
-        return shape
-
-    extension = _straight_pipe(location, gp_Pnt(
-        location.X(), location.Y(), -0.1), lowest_face)
-    return BRepAlgoAPI_Fuse(shape, extension).Shape()
-
-
+'''
 def _curved_end(points: list[gp_Pnt], radius: float) -> TopoDS_Shape:
     # add a curved pipe downwards using offset length and direction of last two points
     length = helper.get_magnitude(points[-2], points[-1])
@@ -249,16 +246,28 @@ def _curved_end(points: list[gp_Pnt], radius: float) -> TopoDS_Shape:
     return BRepOffsetAPI_MakePipe(wire, profile).Shape()
 
 
-def _rounded_pipe(p1: gp_Pnt, p2: gp_Pnt, radius: float) -> TopoDS_Shape:
-    direction = helper.get_direction(p1, p2) #gives normalised p2-p1 vector
-    profile = helper.circle_profile(p1, direction, radius) # cirlce centered at p1, orientated with up as direction and having a raius of radius. The face of the circle is given here
-    guide_edge = BRepBuilderAPI_MakeEdge(p1, p2).Edge()
-    guide_wire = BRepBuilderAPI_MakeWire(guide_edge).Wire()
+def _extended_pipe(shape: TopoDS_Shape) -> TopoDS_Shape:
+    location = None
+
+    lowest_face = helper.get_lowest_face(shape)
+    if helper.face_is_plane(lowest_face):
+        a_plane = helper.geom_plane_from_face(lowest_face)
+        location = a_plane.Location()
+
+    if location is None or location.Z() < 0:
+        return shape
+
+    extension = _straight_pipe(location, gp_Pnt(
+        location.X(), location.Y(), -0.1), lowest_face)
+    return BRepAlgoAPI_Fuse(shape, extension).Shape()
+
+def get_highest_face(shape: TopoDS_Shape) -> TopoDS_Face:
+    faces = get_faces(shape)
+    return faces[-1][0]
 
 
-    cylinder = BRepOffsetAPI_MakePipe(guide_wire, profile).Shape() #I believe this makes the cylinder the around the "guild_wire" (which is just a line from p1 to p2) using the circle shape (profile) as the radius
-    sphere = BRepPrimAPI_MakeSphere(p2, radius).Shape()# makes a sphere centered at p2 and then makes it radius = radius
-    #sphere1 = BRepPrimAPI_MakeSphere(p1, radius).Shape()
-    tempfusedpipe = BRepAlgoAPI_Fuse(cylinder, sphere)
-    # tempfusedpipe2 = BRepAlgoAPI_Fuse(tempfusedpipe, sphere1)
-    return tempfusedpipe.Shape() # adds cylinder an sphere together
+def get_lowest_face(shape: TopoDS_Shape) -> TopoDS_Face:
+    faces = get_faces(shape)
+    return faces[0][0]
+
+'''

@@ -77,17 +77,6 @@ def lowest_face_by_normal(shape: TopoDS_Shape) -> TopoDS_Face:
     faces.sort(key=sortByZ)
     return faces[0]
 
-
-def get_highest_face(shape: TopoDS_Shape) -> TopoDS_Face:
-    faces = get_faces(shape)
-    return faces[-1][0]
-
-
-def get_lowest_face(shape: TopoDS_Shape) -> TopoDS_Face:
-    faces = get_faces(shape)
-    return faces[0][0]
-
-
 def get_vector(p1: gp_Pnt, p2: gp_Pnt, length: float = 1.0) -> gp_Vec:
     vector = gp_Vec(
         p2.X() - p1.X(),
