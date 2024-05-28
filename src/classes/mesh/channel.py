@@ -118,7 +118,7 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
     channel_points[:,2] += offset
 
     # Number of decimal places to keep
-    decimals = 3
+    decimals = 5
 
     # Truncate without rounding
     channel_points = np.floor(channel_points * 10**decimals) / 10**decimals
