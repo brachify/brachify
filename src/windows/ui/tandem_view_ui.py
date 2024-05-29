@@ -143,8 +143,8 @@ class Ui_Tandem_View(object):
         self.sb_tandem_height.setStyleSheet(u"background-color: rgb(255, 255, 250)")
         self.sb_tandem_height.setMinimum(10.000000000000000)
         self.sb_tandem_height.setMaximum(500.000000000000000)
-        self.sb_tandem_height.setValue(129.000000000000000)
-
+        
+        
         self.formLayout_2.setWidget(0, QFormLayout.FieldRole, self.sb_tandem_height)
 
         self.sp_channel_diameter = QDoubleSpinBox(self.verticalLayoutWidget_4)
