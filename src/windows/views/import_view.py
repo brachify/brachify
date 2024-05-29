@@ -1,4 +1,5 @@
 from PySide6.QtWidgets import QWidget, QFileDialog
+from PySide6.QtGui import QFont, QFontDatabase
 
 from classes.app import get_app
 from classes.logger import log
@@ -46,23 +47,27 @@ class ImportView(CustomView):
         window.change_color_export()
 
     def action_update_import_label(self, data:DicomData):
-        alldata="Patient and Plan Info:\n"
-        a = "{:<30}".format("Patient ID: ")               + "\t"+str(data.patient_id)+ "\n"
-        b = "{:<30}".format("Patient Name: ")             + "\t"+str(data.patient_name)+ "\n"
-        c = "{:<30}".format("Plan ID: ")                  + "\t"+str(data.plan_label)+ "\n"
-        d = "{:<30}".format("Approval Status: ")          + "\t"+str(data.approval_status) + "\n"
-        e = "{:<30}".format("Operator: ")                 + "\t"+str(data.operator) + "\n\n"
-        f = "{:<30}".format("Channels Info")                  + "\n"
+        
+        alldata="Patient and Plan Info\n"
+        a = "{:<20}".format("Patient ID: ")               + str(data.patient_id)+ "\n"
+        b = "{:<20}".format("Patient Name: ")             + str(data.patient_name)+ "\n"
+        c = "{:<20}".format("Plan ID: ")                  + str(data.plan_label)+ "\n"
+        d = "{:<20}".format("Approval Status: ")          + str(data.approval_status) + "\n"
+        e = "{:<20}".format("Operator: ")                 + str(data.operator) + "\n\n"
+        f = "{:<20}".format("Channels Info")                  + "\n"
         for i in range(len(data.channels_labels)):
-            f = f+"{:<30}".format("Label: "+str(data.channels_labels[i]))+"\t Channel: "+str(data.channel_numbers[i])+"\n"
+            f = f+"{:<20}".format("Label: "+str(data.channels_labels[i]))+ "Channel: "+str(data.channel_numbers[i])+"\n"
         
         #line below has not yet been tested, remove is there is an issue
         tandem = get_app().window.channelsmodel.tandem_channel
-        g = "{:<30}".format("Tandem Label:")+"\t "+str(tandem)
+        g = "{:<20}".format("Tandem Label:")+str(tandem)
         
         
         alldata = alldata+a+b+c+d+e+f+g
         #last = data.toString()
+        #font = QFontDatabase().font("fira Mono", "no Italic", 9)
+        font = QFont("Consolas", 9)
+        self.ui.label_file_info.setFont(font)
         self.ui.label_file_info.setText(alldata)
 
     @display_action
