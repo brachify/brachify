@@ -23,7 +23,7 @@ class Ui_Tandem_View(object):
     def setupUi(self, Tandem_View):
         if not Tandem_View.objectName():
             Tandem_View.setObjectName(u"Tandem_View")
-        Tandem_View.resize(271, 4095)
+        Tandem_View.resize(271, 5000)
         Tandem_View.setStyleSheet(u"background-color: rgb(230, 235, 240)")
         self.label_3 = QLabel(Tandem_View)
         self.label_3.setObjectName(u"label_3")
@@ -47,11 +47,11 @@ class Ui_Tandem_View(object):
         self.verticalLayout_4 = QVBoxLayout(self.verticalLayoutWidget_3)
         self.verticalLayout_4.setSpacing(10)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
-        self.verticalLayout_4.setSizeConstraint(QLayout.SizeConstraint.SetMaximumSize)
+        self.verticalLayout_4.setSizeConstraint(QLayout.SetMaximumSize)
         self.verticalLayout_4.setContentsMargins(10, 10, 10, 10)
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.horizontalLayout.setSizeConstraint(QLayout.SizeConstraint.SetMaximumSize)
+        self.horizontalLayout.setSizeConstraint(QLayout.SetMaximumSize)
         self.label_4 = QLabel(self.verticalLayoutWidget_3)
         self.label_4.setObjectName(u"label_4")
         self.label_4.setMaximumSize(QSize(70, 25))
@@ -60,19 +60,13 @@ class Ui_Tandem_View(object):
 
         self.sb_height_offset = QDoubleSpinBox(self.verticalLayoutWidget_3)
         self.sb_height_offset.setObjectName(u"sb_height_offset")
-        self.sb_height_offset.setMinimumSize(QSize(20, 0))
+        self.sb_height_offset.setMinimumSize(QSize(0, 20))
         self.sb_height_offset.setStyleSheet(u"background-color: rgb(255, 255, 255)")
-        self.sb_height_offset.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.sb_height_offset.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
         self.sb_height_offset.setMinimum(-100.000000000000000)
         self.sb_height_offset.setMaximum(100.000000000000000)
 
         self.horizontalLayout.addWidget(self.sb_height_offset)
-
-        self.btn_apply_offset = QPushButton(self.verticalLayoutWidget_3)
-        self.btn_apply_offset.setObjectName(u"btn_apply_offset")
-        self.btn_apply_offset.setMaximumSize(QSize(50, 16777215))
-
-        self.horizontalLayout.addWidget(self.btn_apply_offset)
 
 
         self.verticalLayout_4.addLayout(self.horizontalLayout)
@@ -139,7 +133,7 @@ class Ui_Tandem_View(object):
         self.verticalLayout_5 = QVBoxLayout(self.verticalLayoutWidget_4)
         self.verticalLayout_5.setSpacing(10)
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
-        self.verticalLayout_5.setSizeConstraint(QLayout.SizeConstraint.SetMaximumSize)
+        self.verticalLayout_5.setSizeConstraint(QLayout.SetMaximumSize)
         self.verticalLayout_5.setContentsMargins(10, 10, 10, 10)
         self.formLayout_2 = QFormLayout()
         self.formLayout_2.setObjectName(u"formLayout_2")
@@ -270,7 +264,6 @@ class Ui_Tandem_View(object):
         self.label_3.setText("")
         self.label_4.setText(QCoreApplication.translate("Tandem_View", u"Height Offset", None))
         self.sb_height_offset.setSuffix(QCoreApplication.translate("Tandem_View", u" mm", None))
-        self.btn_apply_offset.setText(QCoreApplication.translate("Tandem_View", u"Apply", None))
         self.btn_import.setText(QCoreApplication.translate("Tandem_View", u"Import", None))
         self.btn_clear_import.setText(QCoreApplication.translate("Tandem_View", u"Clear", None))
         self.label_5.setText(QCoreApplication.translate("Tandem_View", u"Model Filepath: None", None))

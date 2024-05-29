@@ -100,5 +100,6 @@ class TandemView(CustomView):
         self.ui.btn_import.pressed.connect(self.action_import_tandem)
         self.ui.btn_clear_import.pressed.connect(self.action_clear_tandem)
         self.ui.sb_height_offset.valueChanged.connect(self.action_set_import_offset)
+        # connect apply_offset button here
 
         self.update_settings()
