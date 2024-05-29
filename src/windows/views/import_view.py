@@ -1,5 +1,5 @@
 from PySide6.QtWidgets import QWidget, QFileDialog
-from PySide6.QtGui import QFont, QFontDatabase
+from PySide6.QtGui import QFont
 
 from classes.app import get_app
 from classes.logger import log
