@@ -110,8 +110,6 @@ class NeedleChannel:
         self._diameter = CONFIG_CHANNELS_DIAMETER
 
 def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) -> TopoDS_Shape:
-    global channel_on
-    channel_on = channel_on + 1
     
     """
     If a needle channel has a long distance between the first and second point, this helps stub it
