@@ -145,7 +145,7 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
 
     radius = diameter / 2
 
-    print("Channel")
+    log.debug("Channel being printed to 3d display")
 
     # generate starting point on top (cone)
     p1 = points[0]
