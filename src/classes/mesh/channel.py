@@ -173,7 +173,7 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
             # print(tempfuse.HasErrors())
             if tempfuse.HasWarnings():
                 
-                print(i,"Grr")
+                log.warning("warning sent while making 3d model of channel")
                 # tempfuse = BRepAlgoAPI_Fuse(pipe, cylinder).SetFuzzyValue(0.00005)
                 # print(tempfuse.HasWarnings())
                 
