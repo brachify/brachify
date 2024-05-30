@@ -38,6 +38,8 @@ class NavigationModel():
         if page == self.current_page: return
         log.debug(f"setting page to {page}")
         self.views[self.current_page].on_close()
+        print("current page closed.")
         self.current_page = page
         self.views[self.current_page].on_open()
+        print("new page opened.")
         get_app().window.ui.viewswidget.setCurrentIndex(page)
