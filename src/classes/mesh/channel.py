@@ -180,7 +180,7 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
             # print(tempfuse.HasWarnings())
             pipe = tempfuse.Shape()
         except:
-            print("Grrr")
+            log.error("loading channel to 3d display failed")
 
     # if the points extend past z zero, don't extend
     if points[-1].Z() < 0:
