@@ -131,7 +131,6 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
     channel_points = np.array(channel_points)
     
     # apply the offset for the cylinder length
-    # [:, 2] in numpy arrays https://jakevdp.github.io/PythonDataScienceHandbook/02.02-the-basics-of-numpy-arrays.html
     # all rows column 3
     channel_points[:,2] += offset
 
