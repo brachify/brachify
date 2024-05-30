@@ -153,7 +153,7 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
     if length < TIP_LENGTH:
         pipe = _cone_pipe(p1, p2, radius)
     else:
-        vector = helper.get_vector(p1, p2, length=TIP_LENGTH) #gives normalized vector if p2-p1 *TIP_LENGTH
+        vector = helper.get_vector(p1, p2, length=TIP_LENGTH) #gives normalized vector of p2-p1 *TIP_LENGTH
         p_mid = gp_Pnt(p1.X() + vector.X(), p1.Y() +
                        vector.Y(), p1.Z() + vector.Z())
         cone = _cone_pipe(p1, p_mid, radius) #makes cone at end of needle
