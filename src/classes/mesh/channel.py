@@ -205,7 +205,7 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
 def _cone_pipe(p1, p2, radius: float) -> TopoDS_Shape:
     length = helper.get_magnitude(p1, p2) #gives vector p2 - p1 and then get the norm
     direction = helper.get_direction(p1, p2) #gives normalised p2-p1 vector 
-    axis = gp_Ax2(p1, direction) # creates coordinate system with an origin at p1, and z- axis pointed in "direction" (referes to z-axis as main direction I believe)
+    axis = gp_Ax2(p1, direction) # creates coordinate system with an origin at p1, and z- axis pointed in "direction"
     return BRepPrimAPI_MakeCone(axis, 0.0, radius, length).Shape() # Cone made with height = length, bottom radius = 0, top radius =radius, on the axis as defined in the previous line
 '''
 def _cone_pipe(p1, p2, radius: float) -> TopoDS_Shape:
