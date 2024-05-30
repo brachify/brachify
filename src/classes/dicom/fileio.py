@@ -89,7 +89,7 @@ def load_central_axis_varian(data: DicomData, rs_dataset):
     data.cylinder_direction = data.cylinder_tip - data.cylinder_base   
 
 
-def remove_collinear_points(points): #unused, left in case it's needed later.
+def remove_collinear_points(points):
 
     def is_collinear(p1, p2, p3):
         """Check if three points are collinear"""
