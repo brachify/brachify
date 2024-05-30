@@ -56,7 +56,7 @@ class ImportView(CustomView):
         e = ("Operator:        \t\t")          + str(data.operator) + "\n\n"
         f = ("Channels Info")                  + "\n"
         for i in range(len(data.channels_labels)):
-            f = f+("Label: "+str(data.channels_labels[i]))+ ",  Channel: "+str(data.channel_numbers[i])+"\n"
+            f = f+(str(data.channels_labels[i]))+ ",  Channel: "+str(data.channel_numbers[i])+"\n"
         
         #line below has not yet been tested, remove is there is an issue
         tandem = get_app().window.channelsmodel.tandem_channel
