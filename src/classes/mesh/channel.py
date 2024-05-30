@@ -57,7 +57,7 @@ class NeedleChannel:
         self._shape = None
         self.shape()
 
-    ''' Quite sure this is never uesed either
+    ''' Quite sure this is never used either
     def getOffset(self) -> float:
         return self._offset
     '''
