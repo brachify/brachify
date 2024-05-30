@@ -219,8 +219,13 @@ class MainWindow(QMainWindow):
         dialog.setWindowTitle("Notification")
         dialog.setText(text) 
         dialog.setIcon(QMessageBox.Icon.Information)
-        
         dialog.exec()
 
+    def pdf_save_error(self):
+        dialog = QMessageBox()
+        dialog.setText("Your PDF was not saved, this may be because a pdf with the same name is open in another application. If this is the case please close the pdf and try exporting again.")
+        dialog.setWindowTitle("PDF save error")
+        dialog.setIcon(QMessageBox.Icon.Warning)
+        dialog.exec()
 
 
