@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QMainWindow
+from PySide6.QtWidgets import QMainWindow, QMessageBox
 
 from classes.logger import log
 from classes.app import get_app
@@ -214,6 +214,12 @@ class MainWindow(QMainWindow):
         self.resize(size[0], size[1])
         
         
+    def pdf_save_error(self):
+        dialog = QMessageBox()
+        dialog.setText("Your PDF was not saved, this may be because a pdf with the same name is open in another application. If this is the case please close the pdf and try exporting again.")
+        dialog.setWindowTitle("PDF save error")
+        dialog.setIcon(QMessageBox.Icon.Warning)
 
+        dialog.exec()
 
 
