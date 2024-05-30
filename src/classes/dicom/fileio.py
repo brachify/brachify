@@ -79,6 +79,8 @@ def load_central_axis_varian(data: DicomData, rs_dataset):
 
     channel_contour_raw = central_channel.ContourSequence[0].ContourData
     points = [channel_contour_raw[i:i + 3] for i in range(0, len(channel_contour_raw), 3)]
+
+    points = remove_collinear_points(points)
     data.central_channel = points
 
     data.cylinder_tip = np.asarray(data.central_channel[0])
@@ -145,6 +147,8 @@ def load_central_axis_nucletron(data: DicomData, rp_dataset):
 
     
     central_channel_points = [central_channel[i:i+3] for i in range(0, len(central_channel), 3)] 
+
+    central_channel_points = remove_collinear_points(central_channel_points)
     data.central_channel = central_channel_points
 
     data.cylinder_tip = np.asarray(data.central_channel[0])
@@ -168,6 +172,9 @@ def load_channels_varian(data: DicomData, rs_dataset):
             for i in range(0, len(channel.ContourSequence[0].ContourData), 3)
         ]
         channel_contour_points.append(points)
+    
+    for channel in channel_contour_points:
+        channel = remove_collinear_points(channel)
     data.channel_contours = channel_contour_points
 
     channel_paths = []
@@ -191,6 +198,7 @@ def load_channels_varian(data: DicomData, rs_dataset):
             new_points = new_points + offset_vector
             channel_paths.append(list(list(points) for points in new_points))
     else:
+        #needs to be updated to delete channel_name when that is added
         del data.channels_rois[i]
     data.channel_paths = channel_paths
 
@@ -227,6 +235,8 @@ def load_channels_nucletron(data: DicomData, rp_dataset):
             print(f"ContourNumber {contour_number} not found in data.channels_labels")
 
     
+    for channel in channel_contours:
+        channel = remove_collinear_points(channel)
     channel_paths = []
     # use the brachy cylinder to offset the points
     # z axis reference, the direction we want the cylinder and needles to go
