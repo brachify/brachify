@@ -50,7 +50,10 @@ class TandemView(CustomView):
         self.update_settings()
 
     @display_action
-    def action_set_import_offset(self, offset):
+    def action_set_import_offset(self):
+        # get the current value in the spin box
+        offset = self.ui.sb_height_offset.value()
+        # use the spin box value as the new height offset value
         self.tandemmodel.set_import_height_offset(offset)
 
     def on_close(self):
@@ -85,6 +88,10 @@ class TandemView(CustomView):
         self.ui.sb_tandem_height.setValue(tandem_length)
         #self.ui.sb_height_offset.setValue(tandem_length)
 
+        # set the spin box value of height offset to the value currently in use
+        height_offset = self.tandemmodel.mesh_offset
+        self.ui.sb_height_offset.setValue(height_offset)
+
         filepath = self.tandemmodel.filepath
         self.ui.label_5.setText(f"Model filepath:\n{filepath}")
 
@@ -98,8 +105,7 @@ class TandemView(CustomView):
         self.ui.btn_apply.pressed.connect(self.action_set_tandem)
         self.ui.btn_clear_generate.pressed.connect(self.action_clear_tandem)
         self.ui.btn_import.pressed.connect(self.action_import_tandem)
-        self.ui.btn_clear_import.pressed.connect(self.action_clear_tandem)
-        self.ui.sb_height_offset.valueChanged.connect(self.action_set_import_offset)
-        # connect apply_offset button here
+        self.ui.btn_clear_import.pressed.connect(self.action_clear_tandem)     
+        self.ui.btn_apply_offset.pressed.connect(self.action_set_import_offset)
 
         self.update_settings()
