@@ -140,7 +140,7 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
 
     radius = diameter / 2
 
-    log.debug("Channel being printed to 3d display")
+    log.debug("Channel being constructed for 3d display")
 
     # generate starting point on top (cone)
     p1 = points[0]
@@ -202,12 +202,6 @@ def _cone_pipe(p1, p2, radius: float) -> TopoDS_Shape:
     axis = gp_Ax2(p1, direction) # creates coordinate system with an origin at p1, and z- axis pointed in "direction"
     return BRepPrimAPI_MakeCone(axis, 0.0, radius, length).Shape() # Cone made with height = length, bottom radius = 0, top radius =radius, on the axis as defined in the previous line
 '''
-def _cone_pipe(p1, p2, radius: float) -> TopoDS_Shape:
-    length = helper.get_magnitude(p1, p2)
-    direction = helper.get_direction(p1, p2)
-    axis = gp_Ax2(p1, direction)
-    return BRepPrimAPI_MakeCone(axis, 0.0, radius, length).Shape()
-
 
 def _straight_pipe(p1, p2, face) -> TopoDS_Shape:
     edge = BRepBuilderAPI_MakeEdge(p1, p2).Edge()
@@ -222,7 +216,6 @@ def down_to_end(p1: gp_Pnt, radius: float) -> TopoDS_Shape:
     direction = helper.get_direction(p1, p2) #gives normalised p2-p1 vector
     length = helper.get_magnitude(p1,p2)
 
-    #cylinder = BRepOffsetAPI_MakePipe(guide_wire, profile).Shape() #I believe this makes the cylinder the around the "guild_wire" (which is just a line from p1 to p2) using the circle shape (profile) as the radius
     cylinder = BRepPrimAPI_MakeCylinder(gp_Ax2(p1, direction), radius, length).Shape()
     return cylinder#tempfusedpipe.Shape() # adds cylinder an sphere together
 
@@ -230,7 +223,6 @@ def _rounded_pipe(p1: gp_Pnt, p2: gp_Pnt, radius: float) -> TopoDS_Shape:
     direction = helper.get_direction(p1, p2) #gives normalised p2-p1 vector
     length = helper.get_magnitude(p1,p2)
 
-    #cylinder = BRepOffsetAPI_MakePipe(guide_wire, profile).Shape() #I believe this makes the cylinder the around the "guild_wire" (which is just a line from p1 to p2) using the circle shape (profile) as the radius
     sphere = BRepPrimAPI_MakeSphere(p2, radius).Shape()# makes a sphere centered at p2 and then makes it radius = radius
     cylinder = BRepPrimAPI_MakeCylinder(gp_Ax2(p1, direction), radius, length).Shape()
     pipe_cylinder = BRepAlgoAPI_Fuse(cylinder, sphere).Shape()
