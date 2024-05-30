@@ -187,7 +187,7 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
         return pipe
 
     '''
-    #origional code
+    #original code
     # curve downwards
     curve = _curved_end(points, radius)
     pipe = BRepAlgoAPI_Fuse(pipe, curve).Shape()
