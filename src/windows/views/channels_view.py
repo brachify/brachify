@@ -11,7 +11,7 @@ config_values = get_app().values.config_values
 CONFIG_NEEDLE_LENGTH = config_values.get("CONFIG_NEEDLE_LENGTH")
 if CONFIG_NEEDLE_LENGTH == None:
     log.debug(
-        "Couldn't load CONFIG_NEEDLE_LENGTH from config.json file.  Using default value 200 instead.")
+        "Couldn't read CONFIG_NEEDLE_LENGTH from current config values.  Using default value 200 instead.")
     CONFIG_NEEDLE_LENGTH = 200
 
 

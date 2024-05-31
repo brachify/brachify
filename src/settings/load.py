@@ -38,11 +38,8 @@ def load_config_file():
         config_values = json_contents
         log.debug("Successfully loaded a config.json file.")
 
-        try:
-            # check which keys exist in the loaded file, and compile a list of which exist and which don't.
-            checkValuesExist(config_values, config_keys_loaded)
-        except:
-            log.debug("Error in checkValuesExist.")
+        # check which keys exist in the loaded file, and compile a list of which exist and which don't.
+        checkValuesExist(config_values, config_keys_loaded)
 
         return (config_values, config_keys_loaded)
             

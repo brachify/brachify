@@ -19,31 +19,31 @@ config_values = get_app().values.config_values
 CONFIG_TANDEM_CHANNEL_DIAMETER = config_values.get("CONFIG_TANDEM_CHANNEL_DIAMETER") 
 if CONFIG_TANDEM_CHANNEL_DIAMETER == None:
     log.debug(
-        "Couldn't load CONFIG_TANDEM_CHANNEL_DIAMETER from config.json file.  Using default value 4.0 instead.")
+        "Couldn't read CONFIG_TANDEM_CHANNEL_DIAMETER from current config values.  Using default value 4.0 instead.")
     CONFIG_TANDEM_CHANNEL_DIAMETER = 4.0
 
 CONFIG_TANDEM_STOPPER_DIAMETER = config_values.get("CONFIG_TANDEM_STOPPER_DIAMETER") 
 if CONFIG_TANDEM_STOPPER_DIAMETER == None:
     log.debug(
-        "Couldn't load CONFIG_TANDEM_STOPPER_DIAMETER from config.json file.  Using default value 8.0 instead.")
+        "Couldn't read CONFIG_TANDEM_STOPPER_DIAMETER from current config values.  Using default value 8.0 instead.")
     CONFIG_TANDEM_STOPPER_DIAMETER = 8.0
 
 CONFIG_TANDEM_TIP_ANGLE = config_values.get("CONFIG_TANDEM_TIP_ANGLE") 
 if CONFIG_TANDEM_TIP_ANGLE == None:
     log.debug(
-        "Couldn't load CONFIG_TANDEM_TIP_ANGLE from config.json file.  Using default value 30.0 instead.")
+        "Couldn't read CONFIG_TANDEM_TIP_ANGLE from current config values.  Using default value 30.0 instead.")
     CONFIG_TANDEM_TIP_ANGLE = 30.0
 
 CONFIG_TANDEM_TIP_HEIGHT = config_values.get("CONFIG_TANDEM_TIP_HEIGHT") 
 if CONFIG_TANDEM_TIP_HEIGHT == None:
     log.debug(
-        "Couldn't load CONFIG_TANDEM_TIP_HEIGHT from config.json file.  Using default value 129.0 instead.")
+        "Couldn't read CONFIG_TANDEM_TIP_HEIGHT from current config values.  Using default value 129.0 instead.")
     CONFIG_TANDEM_TIP_HEIGHT = 129.0
 
 CONFIG_TANDEM_BEND_RADIUS = config_values.get("CONFIG_TANDEM_BEND_RADIUS") 
 if CONFIG_TANDEM_BEND_RADIUS == None:
     log.debug(
-        "Couldn't load CONFIG_TANDEM_BEND_RADIUS from config.json file.  Using default value 35.0 instead.")
+        "Couldn't read CONFIG_TANDEM_BEND_RADIUS from current config values.  Using default value 35.0 instead.")
     CONFIG_TANDEM_BEND_RADIUS = 35.0
 
 class TandemModel(QObject):

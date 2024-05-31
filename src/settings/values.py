@@ -1,7 +1,6 @@
 # object to store all the config and default values
 from settings import load
 from settings.load import DEFAULT_CONFIG_VALUES
-#from classes.app import get_app
 
 class Values():
 
@@ -10,7 +9,6 @@ class Values():
         Generates the string that is printed to the pop-up window to notify user of which values
         were successfully loaded from the config.json file, and which use the default values.
         """
-        #app = get_app()
         # create the text for the pop-up window label
         text = "The following values were successfully loaded from config.json:\n"
         if len(self.config_keys_loaded[0]) < 1:

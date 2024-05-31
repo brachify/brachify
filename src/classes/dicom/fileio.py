@@ -13,7 +13,7 @@ config_values = get_app().values.config_values
 CONFIG_CYLINDER_DIAMETER = config_values.get("CONFIG_CYLINDER_DIAMETER") 
 if CONFIG_CYLINDER_DIAMETER == None:
     log.debug(
-        "Couldn't load CONFIG_CYLINDER_DIAMETER from config.json file.  Using default value 30.0 instead.")
+        "Couldn't read CONFIG_CYLINDER_DIAMETER from current config values.  Using default value 30.0 instead.")
     CONFIG_CYLINDER_DIAMETER = 30.0
 
 

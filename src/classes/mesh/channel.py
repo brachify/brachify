@@ -22,7 +22,7 @@ config_values = get_app().values.config_values
 CONFIG_CHANNELS_DIAMETER = config_values.get("CONFIG_CHANNELS_DIAMETER")
 if CONFIG_CHANNELS_DIAMETER == None:
     log.debug(
-        "Couldn't load CONFIG_CHANNELS_DIAMETER from config.json file.  Using default value 3.0 instead.")
+        "Couldn't read CONFIG_CHANNELS_DIAMETER from current config values.  Using default value 3.0 instead.")
     CONFIG_CHANNELS_DIAMETER = 3.0
 
 class NeedleChannel:
