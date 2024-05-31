@@ -22,11 +22,12 @@ class Ui_Import_View(object):
     def setupUi(self, Import_View):
         if not Import_View.objectName():
             Import_View.setObjectName(u"Import_View")
-        Import_View.resize(271, 5000)
+        Import_View.resize(290, 5000)
+        Import_View.setMinimumSize(QSize(290, 0))
         Import_View.setStyleSheet(u"background-color: rgb(240, 245, 250);")
         self.verticalLayoutWidget = QWidget(Import_View)
         self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
-        self.verticalLayoutWidget.setGeometry(QRect(0, 0, 271, 5000))
+        self.verticalLayoutWidget.setGeometry(QRect(0, 0, 290, 5000))
         self.verticalLayout = QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setSpacing(10)
         self.verticalLayout.setObjectName(u"verticalLayout")
@@ -35,7 +36,7 @@ class Ui_Import_View(object):
         self.btn_import_folder = QPushButton(self.verticalLayoutWidget)
         self.btn_import_folder.setObjectName(u"btn_import_folder")
         self.btn_import_folder.setMinimumSize(QSize(240, 33))
-        self.btn_import_folder.setMaximumSize(QSize(271, 33))
+        self.btn_import_folder.setMaximumSize(QSize(16777215, 33))
         self.btn_import_folder.setStyleSheet(u"QPushButton {\n"
 "	color: rgb(0, 0, 0);\n"
 "	background-color: rgb(199, 219, 237);\n"
@@ -75,7 +76,7 @@ class Ui_Import_View(object):
         self.verticalLayout_2 = QVBoxLayout()
         self.verticalLayout_2.setSpacing(10)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.verticalLayout_2.setContentsMargins(10, 10, 10, 10)
+        self.verticalLayout_2.setContentsMargins(0, 10, 0, 10)
         self.label_file_info = QLabel(self.verticalLayoutWidget)
         self.label_file_info.setObjectName(u"label_file_info")
         self.label_file_info.setMaximumSize(QSize(271, 16777215))

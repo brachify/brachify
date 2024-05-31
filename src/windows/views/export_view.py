@@ -122,13 +122,17 @@ class Export_View(CustomView):
 
         # generate pdf
         tandembool = window.tandemmodel.shape() != None
-        template_reference.generate_pdf(
-            dicom=window.dicommodel.data,
-            cylinder=window.cylindermodel.cylinder,
-            channels=window.channelsmodel.get_visible_channels(),
-            filepath=Path(filename[0]),
-            needle_length=needle_length, 
-            has_tandem = tandembool)
+        try:
+            template_reference.generate_pdf(
+                dicom=window.dicommodel.data,
+                cylinder=window.cylindermodel.cylinder,
+                channels=window.channelsmodel.get_visible_channels(),
+                filepath=Path(filename[0]),
+                needle_length=needle_length, 
+                has_tandem = tandembool)
+        except:
+            log.error("PDF did not save")
+            get_app().window.pdf_save_error()
 
     def action_show_tandem(self, tandem_visible: bool):
         self.update_display()

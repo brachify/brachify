@@ -18,6 +18,7 @@ class DicomData:
         self.central_channel_roi = None
 
         self.channels_rois = None
+        self.channel_numbers = None
         self.channels_labels = None
         self.channel_contours = None
         self.channel_paths = None
@@ -25,6 +26,10 @@ class DicomData:
         self.central_channel_roi = False
         self.central_axis_flag = None
         self.central_channel = None
+
+        self.approval_status = None
+        self.operator = None
+        self.plan_ID = None
 
     def update(self, new_data):
         if new_data.patient_name:
