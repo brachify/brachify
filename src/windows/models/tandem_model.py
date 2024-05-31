@@ -40,7 +40,6 @@ class TandemModel(QObject):
         self.update()
 
     def set_import_height_offset(self, height_offset: float):
-        print(get_app().window.navigationmodel.views[3].ui.sb_tandem_height.value())
         if self.mesh_offset == height_offset:
             return
         if not self.filepath:
