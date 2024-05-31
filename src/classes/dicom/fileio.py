@@ -67,14 +67,6 @@ def is_rs_file(filepath: str) -> bool:
         log.info(f"Error reading dicom file: {filepath}\n{error_message}")
         return False
 
-    return True
-
-
-def load_central_axis_varian(data: DicomData, rs_dataset):
-
-    for sequence in rs_dataset.ROIContourSequence:
-        if sequence.ReferencedROINumber == data.central_channel_roi:
-            central_channel = sequence
             break
 
     channel_contour_raw = central_channel.ContourSequence[0].ContourData
