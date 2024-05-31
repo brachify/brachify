@@ -70,7 +70,22 @@ class Ui_Tandem_View(object):
 
         self.btn_apply_offset = QPushButton(self.verticalLayoutWidget_3)
         self.btn_apply_offset.setObjectName(u"btn_apply_offset")
+        self.btn_apply_offset.setEnabled(True)
+        self.btn_apply_offset.setMinimumSize(QSize(0, 20))
         self.btn_apply_offset.setMaximumSize(QSize(50, 16777215))
+        self.btn_apply_offset.setStyleSheet(u"QPushButton {\n"
+"	color: rgb(0, 0, 0);\n"
+"	background-color: rgb(199, 219, 237);\n"
+"	border: 0px solid;\n"
+"}\n"
+"QPushButton:hover {\n"
+"	color: rgb(250,250,250);\n"
+"	background-color: rgb(48, 88, 162);\n"
+"}\n"
+"QPushButton:pressed {\n"
+"	color: rgb(250,250,250);\n"
+"	background-color: rgb(28, 44, 81);\n"
+"}")
 
         self.horizontalLayout.addWidget(self.btn_apply_offset)
 
@@ -149,8 +164,8 @@ class Ui_Tandem_View(object):
         self.sb_tandem_height.setStyleSheet(u"background-color: rgb(255, 255, 250)")
         self.sb_tandem_height.setMinimum(10.000000000000000)
         self.sb_tandem_height.setMaximum(500.000000000000000)
-        
-        
+        #self.sb_tandem_height.setValue(129.000000000000000)
+
         self.formLayout_2.setWidget(0, QFormLayout.FieldRole, self.sb_tandem_height)
 
         self.sp_channel_diameter = QDoubleSpinBox(self.verticalLayoutWidget_4)
