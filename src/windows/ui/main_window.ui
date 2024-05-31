@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>884</width>
-    <height>610</height>
+    <width>947</width>
+    <height>631</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -42,6 +42,9 @@
       <property name="spacing">
        <number>0</number>
       </property>
+      <property name="sizeConstraint">
+       <enum>QLayout::SetDefaultConstraint</enum>
+      </property>
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -52,7 +55,7 @@
        <widget class="QWidget" name="display_view_widget" native="true">
         <property name="minimumSize">
          <size>
-          <width>600</width>
+          <width>642</width>
           <height>585</height>
          </size>
         </property>
@@ -63,6 +66,9 @@
          </size>
         </property>
         <layout class="QGridLayout" name="gridLayout_3">
+         <property name="sizeConstraint">
+          <enum>QLayout::SetMaximumSize</enum>
+         </property>
          <property name="leftMargin">
           <number>0</number>
          </property>
@@ -85,6 +91,9 @@
       <property name="spacing">
        <number>0</number>
       </property>
+      <property name="sizeConstraint">
+       <enum>QLayout::SetDefaultConstraint</enum>
+      </property>
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -98,13 +107,13 @@
        <widget class="QWidget" name="top_menu_bar" native="true">
         <property name="minimumSize">
          <size>
-          <width>270</width>
+          <width>290</width>
           <height>180</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>271</width>
+          <width>290</width>
           <height>180</height>
          </size>
         </property>
@@ -128,13 +137,13 @@
           <widget class="QPushButton" name="btn_import_view">
            <property name="minimumSize">
             <size>
-             <width>270</width>
+             <width>290</width>
              <height>33</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>270</width>
+             <width>290</width>
              <height>33</height>
             </size>
            </property>
@@ -162,13 +171,13 @@ QPushButton:pressed {
           <widget class="QPushButton" name="btn_cylinder_view">
            <property name="minimumSize">
             <size>
-             <width>270</width>
+             <width>290</width>
              <height>33</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>270</width>
+             <width>290</width>
              <height>33</height>
             </size>
            </property>
@@ -196,13 +205,13 @@ QPushButton:pressed {
           <widget class="QPushButton" name="btn_channels_view">
            <property name="minimumSize">
             <size>
-             <width>270</width>
+             <width>290</width>
              <height>33</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>270</width>
+             <width>290</width>
              <height>33</height>
             </size>
            </property>
@@ -230,13 +239,13 @@ QPushButton:pressed {
           <widget class="QPushButton" name="btn_tandem_view">
            <property name="minimumSize">
             <size>
-             <width>270</width>
+             <width>290</width>
              <height>33</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>270</width>
+             <width>290</width>
              <height>33</height>
             </size>
            </property>
@@ -264,13 +273,13 @@ QPushButton:pressed {
           <widget class="QPushButton" name="btn_export_view">
            <property name="minimumSize">
             <size>
-             <width>270</width>
+             <width>290</width>
              <height>33</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>270</width>
+             <width>290</width>
              <height>33</height>
             </size>
            </property>
@@ -301,13 +310,13 @@ QPushButton:pressed {
        <widget class="QStackedWidget" name="viewswidget">
         <property name="minimumSize">
          <size>
-          <width>100</width>
+          <width>290</width>
           <height>100</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>270</width>
+          <width>290</width>
           <height>16777215</height>
          </size>
         </property>
