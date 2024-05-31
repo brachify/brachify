@@ -40,19 +40,14 @@ class TandemModel(QObject):
         self.update()
 
     def set_import_height_offset(self, height_offset: float):
-        print("TandemModel set_import_height_offset: current mesh_offset value is: ", self.mesh_offset)
-        print("TandemModel set_import_height_offset: current height_offset value is: ", height_offset)
         print(get_app().window.navigationmodel.views[3].ui.sb_tandem_height.value())
         if self.mesh_offset == height_offset:
-            print("self.mesh_offset == height_offset")
             return
         if not self.filepath:
             # if we have not imported a tandem yet, then do not offset height.
             # ie. cannot offset height of generated tandem, bc instead use "tandem height" under "generate" tab
-            print("not self.filepath")
             return
 
-        print("none of the above.")
         self.mesh_offset = height_offset
         # tandem_length is the length of the tandem itself plus the offset
         self.tandem_length = CONFIG_TANDEM_TIP_HEIGHT + height_offset
@@ -74,7 +69,6 @@ class TandemModel(QObject):
         self.tip_angle = tip_angle
         self.bend_radius = bend_radius
         self.tandem_length = tandem_length
-        print("TandemModel set_tandem: This is the current tandem length: ", tandem_length)
 
         self._generate_tandem()
 
@@ -205,7 +199,6 @@ class TandemModel(QObject):
         self.tandem_angle = CONFIG_TANDEM_TIP_ANGLE
         self.bend_radius = CONFIG_TANDEM_BEND_RADIUS
         self.tandem_length = CONFIG_TANDEM_TIP_HEIGHT
-        print("TandemModel __init__: This is the current tandem length: ", self.tandem_length)
 
         # generated tandem settings
         self.tip_angle = CONFIG_TANDEM_TIP_ANGLE

@@ -84,7 +84,6 @@ class TandemView(CustomView):
         self.ui.sb_bend_radius.setValue(bend_radius)
 
         tandem_length = self.tandemmodel.tandem_length
-        print("TandemView update_settings: This is the current tandem length: ", tandem_length)
         self.ui.sb_tandem_height.setValue(tandem_length)
         #self.ui.sb_height_offset.setValue(tandem_length)
 
