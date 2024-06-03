@@ -4,17 +4,21 @@ from settings.load import DEFAULT_CONFIG_VALUES
 from classes.info import USER_PATH
 from classes.logger import log
 from classes.app import get_app
+import json
 
 class Values():
 
-    def rememberConfigFilePaths(self):
+    def saveFilePaths(self):
+        
+        pass
+
+    def readConfigFilePaths(self):
         """
         Reads and writes a .json file that stores the filepaths for which config files were most recently used and saved.
         """  
 
         # Search in the location where the log is stored to find a .json file called filepaths.json.
         file_name = USER_PATH.joinpath("filepaths.json")
-
 
         try:
             # open, read, parse as dictionary, and close the filepaths.json file
@@ -27,13 +31,15 @@ class Values():
             # if can't read default settings from filepaths.json file, then ??????
             log.debug("Couldn't read from filepaths.json.")
 
+        # if the key does not exist, get() returns None.
+        self.most_recently_opened_config_file = file_paths.get("most_recently_opened_config_file")
+        self.most_recently_saved_config_file = file_paths.get("most_recently_saved_config_file")
+
 
     def resetAllValues(self, values_dict: dict):
         """
         Resets all values in spin boxes to the values in the given dictionary and applies them to the views.
         """
-
-        
         app = get_app()
 
         # set all the spin box values and apply the changes

@@ -9,6 +9,9 @@ from windows.models.shape_model import ShapeTypes
 from windows.ui.import_view_ui import Ui_Import_View
 from windows.views.custom_view import display_action, CustomView
 
+import json
+from settings.load import load_config_file
+
 materials = {
     ShapeTypes.CYLINDER: {"rgb": [0.2, 0.55, 0.55], "transparent": True},
     ShapeTypes.CHANNEL: {"rgb": [0.2, 0.55, 0.55], "transparent": True},
@@ -22,11 +25,11 @@ class ImportView(CustomView):
     def action_import_config_file(self):
         # consider changing this to [0] at the end to only grab the filename, not a tuple, example:
         # 'C:/Users/stephanie.merkl/brachify/test-config-1.json', '(*.json)') == ('file path', 'extension')
-        foldername = QFileDialog.getOpenFileName(
-            self, "Open config file", "C:/Users/stephanie.merkl/Documents/Other", "(*.json)")
+        file_name = QFileDialog.getOpenFileName(
+            self, "Open config file", "C:/Users/stephanie.merkl/Documents/Other", "(*.json)")[0]
         
         # if no .json file is selected, then return (cancel the import)
-        if foldername == ("", ""): # NOTE: may have to update the other action_import_* methods below
+        if file_name == "": # NOTE: may have to update the other action_import_* methods below
             """
               NOTE: the other action_import_* methods below return '' if user presses cancel, since they are 
               expecting a string.  This is why if not foldername: works for those, but it doesn't for here.
@@ -35,11 +38,29 @@ class ImportView(CustomView):
             return
 
         # if a .json file has been selected
-        log.info(f"file {foldername} has been selected")
+        log.info(f"file {file_name} has been selected")
+
 
         app = get_app()
-        app.window.navigationmodel.views[3].ui.sp_channel_diameter.setValue(4.3)
-        print("reached this line") # remove this line when finished debugging
+        # read in the file and store the values.
+        # read the default settings from the config.json file, as a dictionary,
+        # and store it in an attribtue called config_values so it can be accessed later.
+        load_config_file_tuple = load_config_file()
+        app.values.config_values = load_config_file_tuple[0]
+        # store the list of which config values were successfully loaded or not.
+        app.values.config_keys_loaded = load_config_file_tuple[1]
+
+        # Pop-up window to alert user to which values were successfully read and which had to revert to defaults.
+        # create the text that is printed to the pop-up window.
+        text = app.values.createConfigMessageText()
+        # call the pop-up window.
+        app.window.configLoadMessageBox(text=text)
+
+        # reset all the values in the spin boxes and in the views.
+        app.values.resetAllValues(app.values.config_values)
+        
+       
+        
 
 
     def action_import_dicom_folder(self):

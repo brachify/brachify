@@ -22,9 +22,11 @@ DEFAULT_CONFIG_VALUES = {
 config_values = None
 
 # import the config.json file
-def load_config_file():
-    # Search in the location where the log is stored to find a config file named "config.json".
-    file_name = USER_PATH.joinpath("config.json")
+def load_config_file(file_name: str):
+    # make sure the file_name is not an empty string
+    if file_name == "":
+        log.debug("Empty filename.")
+        # return something empty (I'm not sure what yet)
 
     # a list containing 2 lists:
     # [0] contains a list of all the keys/values that were successfully loaded from the config file

@@ -38,7 +38,7 @@ class Export_View(CustomView):
         # User chooses location of config file and file name.
         # returns a tuple containing (filepath, filetype)
         filename = QFileDialog.getSaveFileName(
-            self, "Save config", "", "JSON File (*.json)", "")
+            self, "Save config", "", "JSON File (*.json)", "")[0]
         
         if not filename:   # no file selected?
             log.info("no valid filename selected for config file.")
@@ -75,8 +75,11 @@ class Export_View(CustomView):
             "CONFIG_NEEDLE_LENGTH": default_needle_length
         }
         # Save dictionary as .json file
-        with open(filename[0], "w") as outfile:
+        with open(filename, "w") as outfile:
             json.dump(config_values, outfile, indent=0)
+
+        # save the file path to the most recently saved config file.
+        app.values.most_recently_saved_config_file = filename
 
     def action_export_mesh(self):
         """
