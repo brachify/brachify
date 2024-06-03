@@ -23,7 +23,9 @@ class Ui_Tandem_View(object):
     def setupUi(self, Tandem_View):
         if not Tandem_View.objectName():
             Tandem_View.setObjectName(u"Tandem_View")
-        Tandem_View.resize(271, 4095)
+        Tandem_View.resize(290, 5000)
+        Tandem_View.setMinimumSize(QSize(290, 0))
+        Tandem_View.setMaximumSize(QSize(290, 16777215))
         Tandem_View.setStyleSheet(u"background-color: rgb(230, 235, 240)")
         self.label_3 = QLabel(Tandem_View)
         self.label_3.setObjectName(u"label_3")
@@ -31,7 +33,7 @@ class Ui_Tandem_View(object):
         self.label_3.setStyleSheet(u"background-color: rgb(240, 245, 250)")
         self.verticalLayoutWidget_2 = QWidget(Tandem_View)
         self.verticalLayoutWidget_2.setObjectName(u"verticalLayoutWidget_2")
-        self.verticalLayoutWidget_2.setGeometry(QRect(0, 0, 271, 5000))
+        self.verticalLayoutWidget_2.setGeometry(QRect(0, 0, 290, 5000))
         self.verticalLayout_3 = QVBoxLayout(self.verticalLayoutWidget_2)
         self.verticalLayout_3.setSpacing(0)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
@@ -43,12 +45,12 @@ class Ui_Tandem_View(object):
         self.Import_2.setObjectName(u"Import_2")
         self.verticalLayoutWidget_3 = QWidget(self.Import_2)
         self.verticalLayoutWidget_3.setObjectName(u"verticalLayoutWidget_3")
-        self.verticalLayoutWidget_3.setGeometry(QRect(0, 0, 271, 5000))
+        self.verticalLayoutWidget_3.setGeometry(QRect(0, 0, 290, 5000))
         self.verticalLayout_4 = QVBoxLayout(self.verticalLayoutWidget_3)
         self.verticalLayout_4.setSpacing(10)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
-        self.verticalLayout_4.setSizeConstraint(QLayout.SizeConstraint.SetMaximumSize)
-        self.verticalLayout_4.setContentsMargins(10, 10, 10, 10)
+        self.verticalLayout_4.setSizeConstraint(QLayout.SetMaximumSize)
+        self.verticalLayout_4.setContentsMargins(10, 10, 5, 10)
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setSizeConstraint(QLayout.SizeConstraint.SetMaximumSize)
@@ -150,12 +152,12 @@ class Ui_Tandem_View(object):
         self.tab_2.setObjectName(u"tab_2")
         self.verticalLayoutWidget_4 = QWidget(self.tab_2)
         self.verticalLayoutWidget_4.setObjectName(u"verticalLayoutWidget_4")
-        self.verticalLayoutWidget_4.setGeometry(QRect(0, -1, 271, 391))
+        self.verticalLayoutWidget_4.setGeometry(QRect(0, -1, 281, 390))
         self.verticalLayout_5 = QVBoxLayout(self.verticalLayoutWidget_4)
         self.verticalLayout_5.setSpacing(10)
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
-        self.verticalLayout_5.setSizeConstraint(QLayout.SizeConstraint.SetMaximumSize)
-        self.verticalLayout_5.setContentsMargins(10, 10, 10, 10)
+        self.verticalLayout_5.setSizeConstraint(QLayout.SetMaximumSize)
+        self.verticalLayout_5.setContentsMargins(10, 10, 5, 10)
         self.formLayout_2 = QFormLayout()
         self.formLayout_2.setObjectName(u"formLayout_2")
         self.formLayout_2.setVerticalSpacing(6)
@@ -225,7 +227,7 @@ class Ui_Tandem_View(object):
         self.btn_apply = QPushButton(self.verticalLayoutWidget_4)
         self.btn_apply.setObjectName(u"btn_apply")
         self.btn_apply.setMinimumSize(QSize(240, 33))
-        self.btn_apply.setMaximumSize(QSize(245, 16777215))
+        self.btn_apply.setMaximumSize(QSize(16777215, 16777215))
         self.btn_apply.setStyleSheet(u"QPushButton {\n"
 "	color: rgb(0, 0, 0);\n"
 "	background-color: rgb(199, 219, 237);\n"
@@ -245,7 +247,7 @@ class Ui_Tandem_View(object):
         self.btn_clear_generate = QPushButton(self.verticalLayoutWidget_4)
         self.btn_clear_generate.setObjectName(u"btn_clear_generate")
         self.btn_clear_generate.setMinimumSize(QSize(240, 33))
-        self.btn_clear_generate.setMaximumSize(QSize(245, 16777215))
+        self.btn_clear_generate.setMaximumSize(QSize(16777215, 16777215))
         self.btn_clear_generate.setStyleSheet(u"QPushButton {\n"
 "	color: rgb(0, 0, 0);\n"
 "	background-color: rgb(199, 219, 237);\n"
@@ -273,7 +275,7 @@ class Ui_Tandem_View(object):
 
         self.retranslateUi(Tandem_View)
 
-        self.ab_1.setCurrentIndex(0)
+        self.ab_1.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(Tandem_View)
