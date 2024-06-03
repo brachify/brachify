@@ -3,6 +3,8 @@ from PySide6.QtWidgets import QApplication
 
 from classes.signals import AppSignals
 
+from settings.values import Values
+
 
 def get_app():
     """ Returns the current QApplication instance """
@@ -26,6 +28,12 @@ class RadiotherapyApp(QApplication):
             self.window.initViews()
 
             # TODO process args like autoloading a file or project
+            
+            # create the text that is printed to the pop-up window
+            text = self.values.createConfigMessageText()
+
+            # call the pop-up window
+            self.window.configLoadMessageBox(text=text)
 
             return True
         
@@ -58,3 +66,6 @@ class RadiotherapyApp(QApplication):
             raise
 
         self.path = DIR_PATH
+
+        # attribute that contains config and default values
+        self.values = Values()
