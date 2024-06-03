@@ -1,4 +1,5 @@
 from PySide6.QtWidgets import QWidget, QFileDialog
+from PySide6.QtGui import QFont
 
 from classes.app import get_app
 from classes.logger import log
@@ -69,7 +70,28 @@ class ImportView(CustomView):
         window.change_color_export()
 
     def action_update_import_label(self, data:DicomData):
-        self.ui.label_file_info.setText(data.toString())
+        
+        alldata="Patient and Plan Info\n"
+        a = ("Patient ID:      \t\t")          + str(data.patient_id)+ "\n"
+        b = ("Patient Name:    \t\t")          + str(data.patient_name)+ "\n"
+        c = ("Plan ID:         \t\t")          + str(data.plan_label)+ "\n"
+        d = ("Approval Status: \t\t")          + str(data.approval_status) + "\n"
+        e = ("Operator:        \t\t")          + str(data.operator) + "\n\n"
+        f = ("Channels Info")                  + "\n"
+        for i in range(len(data.channels_labels)):
+            f = f+(str(data.channels_labels[i]))+ ",  Channel: "+str(data.channel_numbers[i])+"\n"
+        
+        #line below has not yet been tested, remove is there is an issue
+        tandem = get_app().window.channelsmodel.tandem_channel
+        g = ("Tandem Label:  ")+str(tandem)
+        
+        
+        alldata = alldata+a+b+c+d+e+f+g
+        #last = data.toString()
+        #font = QFontDatabase().font("fira Mono", "no Italic", 9)
+        #font = QFont("Consolas", 9)
+        #self.ui.label_file_info.setFont(font)
+        self.ui.label_file_info.setText(alldata)
 
     @display_action
     def on_open(self):

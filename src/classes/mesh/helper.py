@@ -76,8 +76,7 @@ def lowest_face_by_normal(shape: TopoDS_Shape) -> TopoDS_Face:
 
     faces.sort(key=sortByZ)
     return faces[0]
-
-
+'''
 def get_highest_face(shape: TopoDS_Shape) -> TopoDS_Face:
     faces = get_faces(shape)
     return faces[-1][0]
@@ -86,8 +85,7 @@ def get_highest_face(shape: TopoDS_Shape) -> TopoDS_Face:
 def get_lowest_face(shape: TopoDS_Shape) -> TopoDS_Face:
     faces = get_faces(shape)
     return faces[0][0]
-
-
+'''
 def get_vector(p1: gp_Pnt, p2: gp_Pnt, length: float = 1.0) -> gp_Vec:
     vector = gp_Vec(
         p2.X() - p1.X(),
@@ -99,12 +97,12 @@ def get_vector(p1: gp_Pnt, p2: gp_Pnt, length: float = 1.0) -> gp_Vec:
 def get_magnitude(p1: gp_Pnt, p2: gp_Pnt) -> float:
     vector = np.array([p2.X(), p2.Y(), p2.Z()]) \
         - np.array([p1.X(), p1.Y(), p1.Z()])
-    return np.linalg.norm(vector)
+    return np.linalg.norm(vector)#np.linalg.norm (defaults to 2-norm)
 
 
 def get_direction(p1: gp_Pnt, p2: gp_Pnt) -> gp_Dir:
-    vector = get_vector(p1, p2)
-    return gp_Dir(vector.X(), vector.Y(), vector.Z())
+    vector = get_vector(p1, p2) #p2-p1*length where p2 and p1 are vectors and length is 1 by default
+    return gp_Dir(vector.X(), vector.Y(), vector.Z()) #gives normalized vector
 
 
 def get_vector_from_angle(v1: gp_Vec = gp_Vec(1, 0, 0), angle: float = 0.0, length: float = 1.0) -> gp_Vec:
@@ -172,14 +170,13 @@ def rotate_points(points, v_1, v_2):
             pts_rotated[i] = p_rotated
     return pts_rotated
 
-
+'''
 def circle_profile(origin: gp_Pnt, direction: gp_Vec, radius: float) -> TopoDS_Face:
     circle = gp_Circ(gp_Ax2(origin, direction), radius)
     edge = BRepBuilderAPI_MakeEdge(circle).Edge()
     wire = BRepBuilderAPI_MakeWire(edge).Wire()
     return BRepBuilderAPI_MakeFace(wire).Face()
-
-
+'''
 def add_point_and_vector(p1: gp_Pnt, v1: gp_Vec) -> gp_Pnt:
     return gp_Pnt(
         p1.X() + v1.X(),

@@ -12,22 +12,6 @@ from classes.app import get_app
 config_values = get_app().config_values
 CONFIG_CYLINDER_DIAMETER = config_values.get("CONFIG_CYLINDER_DIAMETER", 30.0) 
 
-
-def get_channels_from_dicom(data: DicomData) -> list[NeedleChannel]:
-    channels = []
-    log.debug("### Importing RP Data ###")
-    for i in range(len(data.channels_rois)):
-        channel_number = f"{data.channels_rois[i]}"
-        channel_id = f"Channel {data.channels_labels[i]}"
-        points = data.channel_contours[i]
-
-        log.debug(f" Raw Points: \n{points}\n\n")
-        needle = NeedleChannel(number=channel_number,
-                               id=channel_id, points=points)
-        channels.append(needle)
-    return channels
-     
-
 def get_cylinder_from_dicom(data: DicomData) -> BrachyCylinder: 
     diameter = data.cylinder_diameter
     tip = data.cylinder_tip
@@ -184,11 +168,14 @@ def load_channels_varian(data: DicomData, rs_dataset):
 
     updated_base = helper.rotate_points(base, cyl_vec, z_up)
     for i, c in enumerate(channel_contour_points):
-        new_points = np.array(c)
-        new_points = helper.rotate_points(new_points, cyl_vec, z_up)
-        new_points = np.array(new_points) - updated_base
-        new_points = new_points + offset_vector
-        channel_paths.append(list(list(points) for points in new_points))
+        if(len(c)>1):
+            new_points = np.array(c)
+            new_points = helper.rotate_points(new_points, cyl_vec, z_up)
+            new_points = np.array(new_points) - updated_base
+            new_points = new_points + offset_vector
+            channel_paths.append(list(list(points) for points in new_points))
+    else:
+        del data.channels_rois[i]
     data.channel_paths = channel_paths
 
 
@@ -238,11 +225,15 @@ def load_channels_nucletron(data: DicomData, rp_dataset):
 
     updated_base = helper.rotate_points(base, cyl_vec, z_up)
     for i, c in enumerate(channel_contours):
-        new_points = np.array(c)
-        new_points = helper.rotate_points(new_points, cyl_vec, z_up)
-        new_points = np.array(new_points) - updated_base
-        new_points = new_points + offset_vector
-        channel_paths.append(list(list(points) for points in new_points))
+        if(len(c)>1):
+            new_points = np.array(c)
+            new_points = helper.rotate_points(new_points, cyl_vec, z_up)
+            new_points = np.array(new_points) - updated_base
+            new_points = new_points + offset_vector
+            channel_paths.append(list(list(points) for points in new_points))
+        else:
+            del data.channels_rois[i]
+            #Need to delete the channel number associated with a point if it exists
     data.channel_paths = channel_paths
 
 
@@ -335,11 +326,25 @@ def load_varian_dicom_data(rp_file: str, rs_file: str) -> DicomData:
             roi.ReferencedROINumber for roi in rp_dataset.ApplicationSetupSequence[0].ChannelSequence]
         data.channels_labels = [
             roi.SourceApplicatorID for roi in rp_dataset.ApplicationSetupSequence[0].ChannelSequence]
+        data.channel_numbers = [
+            number.ChannelNumber for number in  rp_dataset.ApplicationSetupSequence[0].ChannelSequence
+        ]
         data.patient_name = rp_dataset.PatientName.family_name
         data.patient_id = rp_dataset.PatientID
         data.plan_label = rp_dataset.RTPlanLabel
     except Exception as error_message:
         log.error(f"Reading RP Dicom file failed! {rp_file}\n{error_message}")
+
+    #additional info
+    try:
+        data.approval_status = rp_dataset.ApprovalStatus
+    except Exception as error_message:
+        log.error("did not find Approval Status")
+    try:
+        data.operator = rp_dataset.OperatorsName
+    except Exception as error_message:
+        log.error("did not find Operators Name")
+    
 
     # Central Axis data
     try:
@@ -401,11 +406,28 @@ def load_nucletron_dicom_data(rp_file: str, rs_file: str) -> DicomData:
         data.channels_rois = [int(channel_label.ROINumber) for channel_label in rp_dataset[0x300f,0x1000][0].StructureSetROISequence] 
         data.channels_labels = [
             roi.SourceApplicatorID for roi in rp_dataset.ApplicationSetupSequence[0].ChannelSequence] #not needed?
+        try:
+            data.channel_numbers = [
+                number.ChannelNumber for number in  rp_dataset.ApplicationSetupSequence[0].ChannelSequence
+            ]
+        except:
+            print("Channel Numbers not loaded -- Nucletron")
+
         data.patient_name = rp_dataset.PatientName.family_name
         data.patient_id = rp_dataset.PatientID
         data.plan_label = rp_dataset.RTPlanLabel
     except Exception as error_message:
         log.error(f"Reading RP Dicom file failed! {rp_file}\n{error_message}")
+    
+    #additional info
+    try:
+        data.approval_status = rp_dataset.ApprovalStatus
+    except Exception as error_message:
+        log.error("did not find Approval Status")
+    try:
+        data.operator = rp_dataset.OperatorsName
+    except Exception as error_message:
+        log.error("did not find Operators Name")
 
     # Central Axis data
     try:
@@ -427,11 +449,11 @@ def load_nucletron_dicom_data(rp_file: str, rs_file: str) -> DicomData:
     except Exception as error_message:
         log.error(f"Error locating central axis: {error_message}")    
 
-    # IF THERE'S A CENTRAL AXIS, ADD IT TO DATA AND REMOVE IT FROM THE LIST
+    # IF THERE'S A CENTRAL AXIS, ADD IT TO DATA AND REMOVE IT FROM THE LIST (it is added above this removes it from list)
     if data.central_channel_roi is not None:
         data.channels_labels.pop(center_index)
         data.channels_rois.pop(center_index)
-
+        #Will have to pop Channel Numbers when they are added
 
     # Contour Data
     try:
