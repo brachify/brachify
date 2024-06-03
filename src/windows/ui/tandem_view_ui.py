@@ -23,7 +23,7 @@ class Ui_Tandem_View(object):
     def setupUi(self, Tandem_View):
         if not Tandem_View.objectName():
             Tandem_View.setObjectName(u"Tandem_View")
-        Tandem_View.resize(290, 5000)
+        Tandem_View.resize(290, 4095)
         Tandem_View.setMinimumSize(QSize(290, 0))
         Tandem_View.setMaximumSize(QSize(290, 16777215))
         Tandem_View.setStyleSheet(u"background-color: rgb(230, 235, 240)")
@@ -49,7 +49,7 @@ class Ui_Tandem_View(object):
         self.verticalLayout_4 = QVBoxLayout(self.verticalLayoutWidget_3)
         self.verticalLayout_4.setSpacing(10)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
-        self.verticalLayout_4.setSizeConstraint(QLayout.SetMaximumSize)
+        self.verticalLayout_4.setSizeConstraint(QLayout.SizeConstraint.SetMaximumSize)
         self.verticalLayout_4.setContentsMargins(10, 10, 5, 10)
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
@@ -140,6 +140,7 @@ class Ui_Tandem_View(object):
 
         self.label_5 = QLabel(self.verticalLayoutWidget_3)
         self.label_5.setObjectName(u"label_5")
+        self.label_5.setWordWrap(True)
 
         self.verticalLayout_4.addWidget(self.label_5)
 
@@ -152,11 +153,11 @@ class Ui_Tandem_View(object):
         self.tab_2.setObjectName(u"tab_2")
         self.verticalLayoutWidget_4 = QWidget(self.tab_2)
         self.verticalLayoutWidget_4.setObjectName(u"verticalLayoutWidget_4")
-        self.verticalLayoutWidget_4.setGeometry(QRect(0, -1, 281, 390))
+        self.verticalLayoutWidget_4.setGeometry(QRect(0, 0, 281, 391))
         self.verticalLayout_5 = QVBoxLayout(self.verticalLayoutWidget_4)
         self.verticalLayout_5.setSpacing(10)
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
-        self.verticalLayout_5.setSizeConstraint(QLayout.SetMaximumSize)
+        self.verticalLayout_5.setSizeConstraint(QLayout.SizeConstraint.SetMaximumSize)
         self.verticalLayout_5.setContentsMargins(10, 10, 5, 10)
         self.formLayout_2 = QFormLayout()
         self.formLayout_2.setObjectName(u"formLayout_2")
@@ -166,6 +167,7 @@ class Ui_Tandem_View(object):
         self.sb_tandem_height.setStyleSheet(u"background-color: rgb(255, 255, 250)")
         self.sb_tandem_height.setMinimum(10.000000000000000)
         self.sb_tandem_height.setMaximum(500.000000000000000)
+        
 
         self.formLayout_2.setWidget(0, QFormLayout.FieldRole, self.sb_tandem_height)
 

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>290</width>
-    <height>5000</height>
+    <height>4095</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -75,7 +75,7 @@
        <string notr="true">background-color: rgb(240, 245, 250);</string>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="Import_2">
        <attribute name="title">
@@ -262,6 +262,9 @@ QPushButton:pressed {
            <property name="text">
             <string>Model Filepath: None</string>
            </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
          <item>
@@ -332,7 +335,7 @@ QPushButton:pressed {
               <double>500.000000000000000</double>
              </property>
              <property name="value">
-              <double>129.000000000000000</double>
+              <double>10.000000000000000</double>
              </property>
             </widget>
            </item>
