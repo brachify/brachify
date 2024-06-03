@@ -23,7 +23,7 @@ class Ui_Tandem_View(object):
     def setupUi(self, Tandem_View):
         if not Tandem_View.objectName():
             Tandem_View.setObjectName(u"Tandem_View")
-        Tandem_View.resize(290, 5000)
+        Tandem_View.resize(290, 4089)
         Tandem_View.setMinimumSize(QSize(290, 0))
         Tandem_View.setMaximumSize(QSize(290, 16777215))
         Tandem_View.setStyleSheet(u"background-color: rgb(230, 235, 240)")
@@ -131,7 +131,7 @@ class Ui_Tandem_View(object):
         self.tab_2.setObjectName(u"tab_2")
         self.verticalLayoutWidget_4 = QWidget(self.tab_2)
         self.verticalLayoutWidget_4.setObjectName(u"verticalLayoutWidget_4")
-        self.verticalLayoutWidget_4.setGeometry(QRect(0, -1, 281, 390))
+        self.verticalLayoutWidget_4.setGeometry(QRect(0, 0, 281, 391))
         self.verticalLayout_5 = QVBoxLayout(self.verticalLayoutWidget_4)
         self.verticalLayout_5.setSpacing(10)
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
@@ -280,8 +280,8 @@ class Ui_Tandem_View(object):
         self.label_10.setText(QCoreApplication.translate("Tandem_View", u"Stopper Diameter", None))
         self.label_11.setText(QCoreApplication.translate("Tandem_View", u"Bend Angle", None))
         self.label_12.setText(QCoreApplication.translate("Tandem_View", u"Bend Radius", None))
-        self.btn_apply.setText(QCoreApplication.translate("Tandem_View", u"apply", None))
-        self.btn_clear_generate.setText(QCoreApplication.translate("Tandem_View", u"clear", None))
+        self.btn_apply.setText(QCoreApplication.translate("Tandem_View", u"Apply", None))
+        self.btn_clear_generate.setText(QCoreApplication.translate("Tandem_View", u"Clear", None))
         self.ab_1.setTabText(self.ab_1.indexOf(self.tab_2), QCoreApplication.translate("Tandem_View", u"Generate", None))
     # retranslateUi
 
