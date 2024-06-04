@@ -16,7 +16,7 @@ class Values():
 
     def readConfigFilePaths(self):
         """
-        Reads and writes a .json file that stores the filepaths for which config files were most recently used and saved.
+        Reads a .json file that stores the filepaths for which config files were most recently used and saved.
         """  
 
         # Search in the location where the log is stored to find a .json file called filepaths.json.
@@ -28,14 +28,15 @@ class Values():
             file_paths = json.load(file)
             file.close()       
             log.debug("Successfully loaded the filepaths.json file.")
+            # if the key does not exist, get() returns None.
+            self.most_recently_opened_config_file = file_paths.get("most_recently_opened_config_file")
+            self.most_recently_saved_config_file = file_paths.get("most_recently_saved_config_file")
 
         except:
             # if can't read default settings from filepaths.json file, then ??????
             log.debug("Couldn't read from filepaths.json.")
-
-        # if the key does not exist, get() returns None.
-        self.most_recently_opened_config_file = file_paths.get("most_recently_opened_config_file")
-        self.most_recently_saved_config_file = file_paths.get("most_recently_saved_config_file")
+            self.most_recently_opened_config_file = None
+            self.most_recently_saved_config_file = None
 
 
 
@@ -76,8 +77,15 @@ class Values():
         # these are to be used if config values cannot be pulled from a .json file on the user's computer.
         self.DEFAULT_CONFIG_VALUES = DEFAULT_CONFIG_VALUES
         
+        # initialize attributes that contian file paths to config files.
+        self.readConfigFilePaths()
+
+        # on start up, reload the most recently used config file.
+        file_name = self.most_recently_opened_config_file
+
+
         # the location of the config file for start up.
-        file_name = USER_PATH.joinpath("config.json")
+        #file_name = USER_PATH.joinpath("config.json")
 
         # read the default settings from the config.json file, as a dictionary,
         # and store it in an attribtue called config_values so it can be accessed later.

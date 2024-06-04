@@ -22,6 +22,19 @@ config_values = None
 
 # import the config.json file
 def load_config_file(file_name: str):
+    
+    def use_defaults():
+        pass
+
+
+    # if got file_name from a dictionary, such as during start up, then it could be None if 
+    # the dict was not found, or if the desired key was not found.
+    if file_name is None:
+        log.debug("None filename.")
+        # return something empty (I'm not sure what yet)
+
+    # If got file_name from user selecting from a file dialog, such as when user clicks import config file, 
+    # then could be empty string "" if user pressed cancel instead of selecting a file.
     # make sure the file_name is not an empty string
     if file_name == "":
         log.debug("Empty filename.")
