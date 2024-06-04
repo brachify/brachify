@@ -24,14 +24,21 @@ config_values = None
 def load_config_file(file_name: str):
     
     def use_defaults():
-        pass
+        config_values = DEFAULT_CONFIG_VALUES
+        config_keys_loaded[1] = [key for key in config_values]
 
+        return (config_values, config_keys_loaded)
+
+    # a list containing 2 lists:
+    # [0] contains a list of all the keys/values that were successfully loaded from the config file
+    # [1] contains a list of all the keys that did not exist in the config file
+    config_keys_loaded = [[],[]]
 
     # if got file_name from a dictionary, such as during start up, then it could be None if 
     # the dict was not found, or if the desired key was not found.
     if file_name is None:
         log.debug("None filename.")
-        # return something empty (I'm not sure what yet)
+        return use_defaults()
 
     # If got file_name from user selecting from a file dialog, such as when user clicks import config file, 
     # then could be empty string "" if user pressed cancel instead of selecting a file.
@@ -40,10 +47,6 @@ def load_config_file(file_name: str):
         log.debug("Empty filename.")
         # return something empty (I'm not sure what yet)
 
-    # a list containing 2 lists:
-    # [0] contains a list of all the keys/values that were successfully loaded from the config file
-    # [1] contains a list of all the keys that did not exist in the config file
-    config_keys_loaded = [[],[]]
 
     try:
         # open, read, parse as dictionary, and close the config.json file
@@ -61,10 +64,8 @@ def load_config_file(file_name: str):
     except:
         # if can't read default settings from config.json file, then use the defaults.
         log.debug("Couldn't load settings from config.json file.  Using hard-coded default settings instead.")
-        config_values = DEFAULT_CONFIG_VALUES
-        config_keys_loaded[1] = [key for key in config_values]
 
-        return (config_values, config_keys_loaded)
+        return use_defaults()
     
 
 

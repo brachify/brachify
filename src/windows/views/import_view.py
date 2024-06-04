@@ -61,6 +61,8 @@ class ImportView(CustomView):
         # reset all the values in the spin boxes and in the views.
         resetAllValues(app.values.config_values)
 
+        app = get_app()
+        app.values.most_recently_opened_config_file = file_name
         log.info("Successfully reset all the values and views.")
         
        

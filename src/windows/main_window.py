@@ -11,6 +11,9 @@ from windows.models.cylinder_model import CylinderModel
 from windows.models.tandem_model import TandemModel
 from windows.models.navigation_model import NavigationModel
 
+from classes.info import USER_PATH
+import json
+
 class MainWindow(QMainWindow):
 
     def __init__(self, *args):
@@ -228,4 +231,39 @@ class MainWindow(QMainWindow):
         dialog.setIcon(QMessageBox.Icon.Warning)
         dialog.exec()
 
+    def save_file_paths(self):
+        """
+        Saves the filepaths to config files in a .json dictionary called filepaths.json.
+        """
+        # create the dictionary that we want to save.
+        app = get_app()
+        most_recently_opened_config_file = app.values.most_recently_opened_config_file
+        most_recently_saved_config_file = app.values.most_recently_saved_config_file
+        filePathsDict = {
+            "most_recently_opened_config_file": most_recently_opened_config_file,
+            "most_recently_saved_config_file": most_recently_saved_config_file
+        }
 
+
+        # the name of the file we want to save to.
+        filename = USER_PATH.joinpath("filepaths.json")
+
+        # Save dictionary as .json file
+        with open(filename, "w") as outfile:
+            json.dump(filePathsDict, outfile, indent=0)
+        outfile.close()
+
+        log.info("Successfully saved filepaths.")
+
+
+    def closeEvent(self, event):
+        """
+        Rewrites the filepaths.json file before closing.
+        Overloads the default closeEvent method for this QMainWindow.
+        """
+        # When user presses "exit" of the brachify main window, 
+        # then save all the most recent filepaths in a file called filepaths.json 
+        # before exiting the program.
+
+        self.save_file_paths()
+        print("close event of main window.")

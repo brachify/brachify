@@ -36,12 +36,13 @@ class Export_View(CustomView):
         Create a config.json file to save the current settings as defaults.
         """
         # User chooses location of config file and file name.
-        # returns a tuple containing (filepath, filetype)
+        # if user presses "cancel", then returns empty string ("")
         filename = QFileDialog.getSaveFileName(
             self, "Save config", "", "JSON File (*.json)", "")[0]
         
-        if not filename:   # no file selected?
+        if not filename:   # no file selected
             log.info("no valid filename selected for config file.")
+            return
         
         log.info(f"file {filename} has been selected for exporting config.")
 
@@ -80,6 +81,9 @@ class Export_View(CustomView):
 
         # save the file path to the most recently saved config file.
         app.values.most_recently_saved_config_file = filename
+
+        log.info("Successfully saved all the current values.")
+        
 
     def action_export_mesh(self):
         """
