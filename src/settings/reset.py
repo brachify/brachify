@@ -1,0 +1,78 @@
+
+from classes.app import get_app
+
+
+def resetAllValues(values_dict: dict):
+    """
+    Resets all values in spin boxes to the values in the given dictionary and applies them to the views.
+    """
+    app = get_app()
+
+    """
+    Steps:
+    1. read the value from the dictionary.
+    2. set the spin box value.
+    3. apply the value.
+    """
+
+    # Cylinder View values
+    cylinder_diameter = values_dict.get("CONFIG_CYLINDER_DIAMETER")
+    cylinder_length = values_dict.get("CONFIG_CYLINDER_LENGTH")
+    app.window.navigationmodel.views[1].ui.spinbox_diameter.setValue(cylinder_diameter)
+    app.window.navigationmodel.views[1].ui.spinbox_length.setValue(cylinder_length)
+    app.window.navigationmodel.views[1].action_apply_settings() # apply the above settings
+
+    # Channels View values
+    channels_diameter = values_dict.get("CONFIG_CHANNELS_DIAMETER")
+    needle_length = values_dict.get("CONFIG_NEEDLE_LENGTH")
+    app.window.navigationmodel.views[2].ui.spinbox_diameter.setValue(channels_diameter)
+    app.window.navigationmodel.views[2].ui.sb_needle_length.setValue(needle_length)
+    app.window.navigationmodel.views[2].action_apply_settings() # apply the above settings
+    # note for above: the needle lengths do not affect the view at all.  They are only used when
+    # generating the .pdf reference sheet.
+
+    """
+    Tandem is more complicated than cylinder and channels.
+    Cylinder and channels have their models reset from the action_apply_settings() methods.
+    Cylinder and channels always exist.
+    BUT tandem may:
+        1. not exist yet.
+        2. exist from being generated.
+        3. exist from being imported.
+    So always need to manually update tandem model values. Then:
+        if (1), do not generate or import a tandem.
+        if (2), action_set_tandem() to reset the view.
+        if (3), do not generate a tandem, or need to do anything else.
+    """
+
+    # Tandem View values
+    tandem_tip_height = values_dict.get("CONFIG_TANDEM_TIP_HEIGHT")
+    tandem_channel_diameter = values_dict.get("CONFIG_TANDEM_CHANNEL_DIAMETER")
+    tandem_stopper_diameter = values_dict.get("CONFIG_TANDEM_STOPPER_DIAMETER")
+    tandem_tip_angle = values_dict.get("CONFIG_TANDEM_TIP_ANGLE")
+    tandem_bend_radius = values_dict.get("CONFIG_TANDEM_BEND_RADIUS")
+
+    app.window.navigationmodel.views[3].ui.sb_tandem_height.setValue(tandem_tip_height)
+    app.window.navigationmodel.views[3].ui.sp_channel_diameter.setValue(tandem_channel_diameter)
+    app.window.navigationmodel.views[3].ui.sp_stopper_diameter.setValue(tandem_stopper_diameter)
+    app.window.navigationmodel.views[3].ui.sp_bend_angle.setValue(tandem_tip_angle)
+    app.window.navigationmodel.views[3].ui.sb_bend_radius.setValue(tandem_bend_radius)
+
+    # For tandem, must first reset the values in the model.
+    tandemmodel = app.window.tandemmodel
+    tandemmodel.tandem_length = tandem_tip_height
+    tandemmodel.tandem_diameter = tandem_channel_diameter
+    tandemmodel.stopper_diameter = tandem_stopper_diameter
+    tandemmodel.tandem_angle = tandem_tip_angle
+    tandemmodel.bend_radius = tandem_bend_radius
+    tandemmodel.tip_angle = tandem_tip_angle
+
+    # Now update the view, if applicable.
+    # if there is a tandem already generated, update its values.  If not, don't generate one.
+    # if tandem exists  
+    if app.window.tandemmodel.exists(): 
+        # if tandem is generated rather than imported
+        if not app.window.tandemmodel.is_shape_imported:
+            # apply the config settings
+            app.window.navigationmodel.views[3].action_set_tandem()
+    

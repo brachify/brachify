@@ -5,7 +5,6 @@ For loading default settings.
 from classes.info import USER_PATH
 import json
 from classes.logger import log
-from classes.app import get_app
 
 DEFAULT_CONFIG_VALUES = {
     "CONFIG_CYLINDER_DIAMETER": 30.0, 

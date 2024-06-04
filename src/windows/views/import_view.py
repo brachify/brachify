@@ -12,6 +12,8 @@ from windows.views.custom_view import display_action, CustomView
 import json
 from settings.load import load_config_file
 
+from settings.reset import resetAllValues
+
 materials = {
     ShapeTypes.CYLINDER: {"rgb": [0.2, 0.55, 0.55], "transparent": True},
     ShapeTypes.CHANNEL: {"rgb": [0.2, 0.55, 0.55], "transparent": True},
@@ -43,9 +45,9 @@ class ImportView(CustomView):
 
         app = get_app()
         # read in the file and store the values.
-        # read the default settings from the config.json file, as a dictionary,
+        # read the default settings from the .json file, as a dictionary,
         # and store it in an attribtue called config_values so it can be accessed later.
-        load_config_file_tuple = load_config_file()
+        load_config_file_tuple = load_config_file(file_name)
         app.values.config_values = load_config_file_tuple[0]
         # store the list of which config values were successfully loaded or not.
         app.values.config_keys_loaded = load_config_file_tuple[1]
@@ -57,7 +59,9 @@ class ImportView(CustomView):
         app.window.configLoadMessageBox(text=text)
 
         # reset all the values in the spin boxes and in the views.
-        app.values.resetAllValues(app.values.config_values)
+        resetAllValues(app.values.config_values)
+
+        log.info("Successfully reset all the values and views.")
         
        
         
