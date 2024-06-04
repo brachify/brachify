@@ -31,6 +31,8 @@ class DicomData:
         self.operator = None
         self.plan_ID = None
 
+        self.tandem_channel = None
+    '''
     def update(self, new_data):
         if new_data.patient_name:
             self.patient_name = new_data.patient_name
@@ -52,6 +54,38 @@ class DicomData:
 
         if new_data.channel_contours:
             self.channel_contours = new_data.channel_contours
+    
+     '''
+    #note if any value is added to __init__ it will also have to be added to here so that it is reset after an import 
+    def reset(self):
+        self.patient_name = None
+        self.patient_id = None
+        self.plan_label = None
+
+        self.cylinder_roi = None
+        self.cylinder_contour = None
+        self.cylinder_tip = None
+        self.cylinder_base = None
+        self.cylinder_direction = None
+        self.cylinder_diameter = None
+
+        self.central_channel_roi = None
+
+        self.channels_rois = None
+        self.channel_numbers = None
+        self.channels_labels = None
+        self.channel_contours = None
+        self.channel_paths = None
+
+        self.central_channel_roi = False
+        self.central_axis_flag = None
+        self.central_channel = None
+
+        self.approval_status = None
+        self.operator = None
+        self.plan_ID = None
+
+        self.tandem_channel = None #stores the name of the tandem channel
 
     def toString(self):
         text = "## DicomData Object:\n"

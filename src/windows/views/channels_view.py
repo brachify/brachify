@@ -5,6 +5,7 @@ from classes.logger import log
 from windows.models.shape_model import ShapeTypes
 from windows.ui.channels_view_ui import Ui_Channels_View
 from windows.views.custom_view import display_action, CustomView
+from classes.dicom.data import DicomData
 
 # get default needle length from config file.  If can't read from dictionary, set to 200.0.
 config_values = get_app().config_values
@@ -46,6 +47,7 @@ class ChannelsView(CustomView):
 
     @display_action
     def action_set_tandem(self):
+        data = get_app().window.dicommodel.data
         log.debug(f"setting channel's tandem status")
 
         model = get_app().window.channelsmodel
@@ -53,7 +55,7 @@ class ChannelsView(CustomView):
 
         # set or clear the tandem channel
         label = None
-        if channel_label != model.tandem_channel: label = channel_label
+        if channel_label != data.tandem_channel: label = channel_label
         model.set_tandem(label)
 
     @display_action

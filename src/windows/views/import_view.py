@@ -28,7 +28,11 @@ class ImportView(CustomView):
             return
 
         log.info(f"file {foldername} has been selected")
-
+        try:
+            data = get_app().window.dicommodel.data
+            data.reset()
+        except:
+            print("",end='') #if this is the case then DicomData has not already been initialized
         data = read_dicom_folder(foldername)
 
         # Add patient and plan info to window
@@ -59,15 +63,12 @@ class ImportView(CustomView):
             f = f+(str(data.channels_labels[i]))+ ",  Channel: "+str(data.channel_numbers[i])+"\n"
         
         #line below has not yet been tested, remove is there is an issue
-        tandem = get_app().window.channelsmodel.tandem_channel
+        tandem = data.tandem_channel
         g = ("Tandem Label:  ")+str(tandem)
         
         
         alldata = alldata+a+b+c+d+e+f+g
-        #last = data.toString()
-        #font = QFontDatabase().font("fira Mono", "no Italic", 9)
-        #font = QFont("Consolas", 9)
-        #self.ui.label_file_info.setFont(font)
+
         self.ui.label_file_info.setText(alldata)
 
     @display_action

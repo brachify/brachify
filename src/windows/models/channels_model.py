@@ -23,8 +23,9 @@ class ChannelsModel(QObject):
         return self.selected_channels[0]
     
     def get_tandem_channel(self) -> NeedleChannel:
-        if not self.tandem_channel: return None
-        return self.channels[self.tandem_channel]
+        data = get_app().window.dicommodel.data
+        if not data.tandem_channel: return None
+        return self.channels[data.tandem_channel]
 
     def get_visible_channels(self) -> list[NeedleChannel]:
         """Returns a list of NeedleChannel where the objects are not disabled"""
@@ -36,7 +37,8 @@ class ChannelsModel(QObject):
         return label in self.disabled_channels
     
     def is_channel_tandem(self, label:str) -> bool:
-        return label == self.tandem_channel
+        data = get_app().window.dicommodel.data
+        return label == data.tandem_channel
 
     # Slotted to Dicom Model's update
     def load_data(self, data: DicomData):
@@ -109,11 +111,12 @@ class ChannelsModel(QObject):
             log.critical(f"error while setting selected shapes from viewport:\n{error_message}")
 
     def set_tandem(self, label:str) -> None:
-        old_label = self.tandem_channel
+        data = get_app().window.dicommodel.data
+        old_label = data.tandem_channel
         if old_label and old_label in self.disabled_channels:
             self.disabled_channels.remove(old_label)
 
-        self.tandem_channel = label
+        data.tandem_channel = label
         if not label in self.disabled_channels:
             self.disabled_channels.append(label)
 
@@ -164,7 +167,6 @@ class ChannelsModel(QObject):
         self.channels = {}
         self.diameter = NeedleChannel.default_diameter()
         self.selected_channels = []
-        self.tandem_channel = None  # a label for the specified channel to represent the tandem
         self.disabled_channels = []
 
     @staticmethod
