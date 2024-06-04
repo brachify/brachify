@@ -192,9 +192,13 @@ def load_channels_nucletron(data: DicomData, rp_dataset):
     channel_contours = []
 
     # Iterate over each item in rp_channels
-    for channel in rp_channels:
+    
+    for i, channel in enumerate(rp_channels):
         # Get the ContourNumber for the current channel
         contour_number = int(channel.ReferencedROINumber)
+        #test code for Devins problem
+        if i == 18:
+            print("")
         
         # Check if the contour_number exists in data.channels_rois
         if contour_number in data.channels_rois:
@@ -203,9 +207,8 @@ def load_channels_nucletron(data: DicomData, rp_dataset):
             
             # Extract ContourData using the found index
             contour_data = rp_channels[index].ContourSequence[0].ContourData
-            contour_data_float = [float(value_str) for value_str in contour_data]
 
-            # Reshape the contour_data into lists of lists with shape (n, 3)
+            # Reshape the contour_data into list of lists with shape (n, 3)
             reshaped_contour_data = [contour_data[i:i+3] for i in range(0, len(contour_data), 3)]
 
             # Append the extracted ContourData to the list
@@ -237,7 +240,6 @@ def load_channels_nucletron(data: DicomData, rp_dataset):
             channel_paths.append(list(list(points) for points in new_points))
         else:
             del data.channels_rois[i]
-            #Need to delete the channel number associated with a point if it exists
     data.channel_paths = channel_paths
 
 
@@ -372,6 +374,7 @@ def load_varian_dicom_data(rp_file: str, rs_file: str) -> DicomData:
         data.central_channel_roi = data.channels_rois[center_index]
         data.channels_labels.pop(center_index)
         data.channels_rois.pop(center_index)
+        data.channel_numbers.pop(center_index)
 
     # Contour Data
     try:
@@ -457,7 +460,7 @@ def load_nucletron_dicom_data(rp_file: str, rs_file: str) -> DicomData:
     if data.central_channel_roi is not None:
         data.channels_labels.pop(center_index)
         data.channels_rois.pop(center_index)
-        #Will have to pop Channel Numbers when they are added
+        data.channel_numbers.pop(center_index)
 
     # Contour Data
     try:
