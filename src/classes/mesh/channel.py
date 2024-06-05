@@ -22,7 +22,6 @@ from classes.logger import log
 
 from classes.app import get_app
 
-#test code so that I can figure out which channel is currently being run through
 
 TIP_LENGTH = 2.5
 # get default channel diameter from config file.  If can't read from dictionary, set to 3.0.
@@ -35,7 +34,7 @@ class NeedleChannel:
     @staticmethod
     def default_diameter() -> float: return CONFIG_CHANNELS_DIAMETER
 
-    #setChannel function is never referenced nor is it in any comment in any of the other files
+    #setChannel function is not currently in use.  It is left here in case it is needed in the future.
     '''
     def setChannel(self, height: float = 0.0, diameter: float = 3.0) -> None:
         self._offset = height
@@ -57,7 +56,7 @@ class NeedleChannel:
         self._shape = None
         self.shape()
 
-    ''' Quite sure this is never used either
+    ''' #getOffset() function is not currently in use.  It is left here in case it is needed in the future.
     def getOffset(self) -> float:
         return self._offset
     '''
@@ -115,7 +114,7 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
     If a needle channel has a long distance between the first and second point, this helps stub it
     """
     ################################################
-    # possibly remove this if statment later, there should never be a channel points that gets to this point with <2 points
+    # if statement is currently double checking that there are no singletons, may be able to be removed in the future
     ################################################
     if len(channel_points) < 2:
         log.error(F"Needle Channel Generation error! needs 2 or more points!")
@@ -136,6 +135,8 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
     # Truncate without rounding
     channel_points = np.floor(channel_points * 10**decimals) / 10**decimals
 
+    channel_points = remove_collinear_points(channel_points)
+    
     points = [gp_Pnt(point[0], point[1], point[2]) for point in channel_points]
 
     radius = diameter/2
@@ -284,7 +285,7 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
         return pipe
 
     '''
-    #original code
+    # previous method
     # curve downwards
     curve = _curved_end(points, radius)
     pipe = BRepAlgoAPI_Fuse(pipe, curve).Shape()
@@ -329,10 +330,9 @@ def _rounded_pipe(p1: gp_Pnt, p2: gp_Pnt, radius: float) -> TopoDS_Shape:
     sphere = BRepPrimAPI_MakeSphere(p2, radius).Shape()# makes a sphere centered at p2 and then makes it radius = radius
     cylinder = BRepPrimAPI_MakeCylinder(gp_Ax2(p1, direction), radius, length).Shape()
     pipe_cylinder = BRepAlgoAPI_Fuse(cylinder, sphere).Shape()
-    return pipe_cylinder#tempfusedpipe.Shape() # adds cylinder an sphere together
+    return pipe_cylinder # adds cylinder an sphere together
     
-def printpoint(p1: gp_Pnt):
-    print("("+str(p1.X())+","+str(p1.Y())+","+str(p1.Z())+")")
+    
 '''
     Original methods
     def _extended_pipe(shape: TopoDS_Shape) -> TopoDS_Shape:
