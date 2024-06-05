@@ -74,7 +74,7 @@ class ChannelsView(CustomView):
         # channels list
         selected_channel = self.channelsmodel.get_selected_channel()
         self.ui.listwidget_channels.blockSignals(True)  # prevents accidently emitting signals
-        self.ui.listwidget_channels.clear()          
+        self.ui.listwidget_channels.clear()
         for row, channel in enumerate(self.channelsmodel.channels.values()):
             new_item = QListWidgetItem()
             new_item.setText(channel.label)

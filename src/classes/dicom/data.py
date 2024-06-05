@@ -15,15 +15,13 @@ class DicomData:
         self.cylinder_direction = None
         self.cylinder_diameter = None
 
-        self.central_channel_roi = None
-
         self.channels_rois = None
         self.channel_numbers = None
         self.channels_labels = None
         self.channel_contours = None
         self.channel_paths = None
 
-        self.central_channel_roi = False
+        self.central_channel_roi = None
         self.central_axis_flag = None
         self.central_channel = None
 
@@ -69,16 +67,13 @@ class DicomData:
         self.cylinder_direction = None
         self.cylinder_diameter = None
 
-        self.central_channel_roi = None
-
         self.channels_rois = None
         self.channel_numbers = None
         self.channels_labels = None
         self.channel_contours = None
         self.channel_paths = None
 
-        self.central_channel_roi = False
-        self.central_axis_flag = None
+        self.central_channel_roi = None
         self.central_channel = None
 
         self.approval_status = None

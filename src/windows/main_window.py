@@ -222,4 +222,12 @@ class MainWindow(QMainWindow):
 
         dialog.exec()
 
+    def anchoring_points_warning(self):
+        dialog = QMessageBox()
+        dialog.setText("Warning, you seem to be using 2 anchoring points, please ensure that none of your anchoring points have a channel number or are labeled, or that all of them have a channel number and are labeled")
+        dialog.setWindowTitle("Multiple Anchoring Points")
+        dialog.setIcon(QMessageBox.Icon.Warning)
+
+        dialog.exec()
+
 

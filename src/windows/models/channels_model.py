@@ -45,7 +45,7 @@ class ChannelsModel(QObject):
         self.selected_channels = []
         self.channels = {}
         log.debug("### Importing RP Data ###")
-        channel_index = 1
+
         for i in range(len(data.channels_rois)):
             channel_number = f"{data.channels_rois[i]}"
             channel_id = f"{data.channels_labels[i]}"

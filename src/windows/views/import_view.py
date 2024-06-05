@@ -27,17 +27,20 @@ class ImportView(CustomView):
             log.info("no valid filename selected for importing")
             return
 
+        app = get_app()
+        window = app.window
+
         log.info(f"file {foldername} has been selected")
         try:
-            data = get_app().window.dicommodel.data
+            data = window.dicommodel.data
             data.reset()
+            window.canvas._display.ResetView()
+            window.canvas._display.EraseAll() #Note working yet (screen does not reset as it should prior to)
         except:
             print("",end='') #if this is the case then DicomData has not already been initialized
         data = read_dicom_folder(foldername)
 
         # Add patient and plan info to window
-        app = get_app()
-        window = app.window
         
         #if dicom file has been opened then the export tap can open and the button will change color
         #else the button will not change color, see main (not related to not being able to go to the
