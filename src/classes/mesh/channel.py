@@ -56,7 +56,7 @@ class NeedleChannel:
         self._shape = None
         self.shape()
 
-    ''' Quite sure this is never used either
+    ''' #getOffset() function is not currently in use.  It is left here in case it is needed in the future.
     def getOffset(self) -> float:
         return self._offset
     '''
