@@ -190,7 +190,8 @@ class MainWindow(QMainWindow):
         self.ui.display_view_widget.layout().addWidget(self.canvas)
         self.canvas.InitDriver()
         self.display = self.canvas._display
-
+        self.display.SetBackgroundImage('resources\\3D_Display_Background.png')
+        self.display.Repaint()
         self.display.display_triedron()
         self.display.FitAll()
 
