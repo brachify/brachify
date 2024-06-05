@@ -35,7 +35,7 @@ class NeedleChannel:
     @staticmethod
     def default_diameter() -> float: return CONFIG_CHANNELS_DIAMETER
 
-    #setChannel function is never referenced nor is it in any comment in any of the other files
+    #setChannel function is not currently in use.  It is left here in case it is needed in the future.
     '''
     def setChannel(self, height: float = 0.0, diameter: float = 3.0) -> None:
         self._offset = height
