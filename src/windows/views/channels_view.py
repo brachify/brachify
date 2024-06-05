@@ -8,8 +8,13 @@ from windows.views.custom_view import display_action, CustomView
 from classes.dicom.data import DicomData
 
 # get default needle length from config file.  If can't read from dictionary, set to 200.0.
-config_values = get_app().config_values
-CONFIG_NEEDLE_LENGTH = config_values.get("CONFIG_NEEDLE_LENGTH", 200)
+config_values = get_app().values.config_values
+CONFIG_NEEDLE_LENGTH = config_values.get("CONFIG_NEEDLE_LENGTH")
+if CONFIG_NEEDLE_LENGTH == None:
+    log.debug(
+        "Couldn't read CONFIG_NEEDLE_LENGTH from current config values.  Using default value 200 instead.")
+    CONFIG_NEEDLE_LENGTH = 200
+
 
 materials = {
     ShapeTypes.CYLINDER: {"rgb": [0.8, 0.8, 0.8], "transparent": True},
