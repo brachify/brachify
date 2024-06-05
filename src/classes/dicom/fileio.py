@@ -71,7 +71,7 @@ def load_central_axis_varian(data: DicomData, rs_dataset):
 
     data.cylinder_tip = np.asarray(data.central_channel[0])
     data.cylinder_base = np.asarray(data.central_channel[-1])
-    data.cylinder_diameter = CONFIG_CYLINDER_DIAMETER  # hardcoded default. user needs to be flagged...
+    data.cylinder_diameter = CONFIG_CYLINDER_DIAMETER 
     data.cylinder_direction = data.cylinder_tip - data.cylinder_base   
 
 
