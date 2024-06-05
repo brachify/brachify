@@ -24,6 +24,24 @@ materials = {
 
 class ImportView(CustomView):
 
+    def action_update_config_label(self, file_name):
+        """
+        Updates the config label on the Import view to display the file name of the current config file.
+        If no config file was loaded, or if no values from it were used, then display "None".
+        """
+        app = get_app()
+        # create the text for the pop-up window label
+        text = "Config file currently loaded:\n"
+        # If the file was not found, or if the file did not contain any valid keys, then print None.
+        if len(app.values.config_keys_loaded[0]) < 1:
+            text += "None\n\n"
+        # If the file did contain at least 1 valid key, then print the file path.
+        else:
+            text += f"{file_name}"
+
+        self.ui.label_config_info.setText(text)
+
+
     def action_import_config_file(self):
         # consider changing this to [0] at the end to only grab the filename, not a tuple, example:
         # 'C:/Users/stephanie.merkl/brachify/test-config-1.json', '(*.json)') == ('file path', 'extension')
@@ -54,7 +72,7 @@ class ImportView(CustomView):
 
         # Pop-up window to alert user to which values were successfully read and which had to revert to defaults.
         # create the text that is printed to the pop-up window.
-        text = app.values.createConfigMessageText()
+        text = app.values.createConfigMessageText(file_name)
         # call the pop-up window.
         app.window.configLoadMessageBox(text=text)
 
@@ -63,9 +81,11 @@ class ImportView(CustomView):
 
         app = get_app()
         app.values.most_recently_opened_config_file = file_name
+
+        # this updates the label to show the filepath of the current config file.
+        self.action_update_config_label(file_name)
         log.info("Successfully reset all the values and views.")
         
-       
         
 
 

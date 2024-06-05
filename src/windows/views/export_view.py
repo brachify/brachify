@@ -68,12 +68,12 @@ class Export_View(CustomView):
             "CONFIG_CYLINDER_DIAMETER": default_cylinder_diameter,
             "CONFIG_CYLINDER_LENGTH": default_length,
             "CONFIG_CHANNELS_DIAMETER": default_diameter,
+            "CONFIG_NEEDLE_LENGTH": default_needle_length,
             "CONFIG_TANDEM_TIP_HEIGHT": tandem_length, # tandem_length may not actually be Tandem_Tip_Height_Default
             "CONFIG_TANDEM_CHANNEL_DIAMETER": tandem_channel_diameter_default, 
             "CONFIG_TANDEM_STOPPER_DIAMETER": tandem_stopper_diameter_default,
             "CONFIG_TANDEM_TIP_ANGLE": tandem_tip_angle_default,
-            "CONFIG_TANDEM_BEND_RADIUS": tandem_bend_radius,
-            "CONFIG_NEEDLE_LENGTH": default_needle_length
+            "CONFIG_TANDEM_BEND_RADIUS": tandem_bend_radius
         }
         # Save dictionary as .json file
         with open(filename, "w") as outfile:

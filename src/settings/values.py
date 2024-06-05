@@ -43,13 +43,13 @@ class Values():
 
 
 
-    def createConfigMessageText(self):
+    def createConfigMessageText(self, file_name):
         """
         Generates the string that is printed to the pop-up window to notify user of which values
         were successfully loaded from the config.json file, and which use the default values.
         """
         # create the text for the pop-up window label
-        text = "The following values were successfully loaded from config.json:\n"
+        text = "The following values were successfully loaded from the config file:\n"
         if len(self.config_keys_loaded[0]) < 1:
             text += "None\n\n"
         else:
@@ -59,7 +59,7 @@ class Values():
                 )
                 text += '\n'
 
-        text += "\nThe following values were not found in config.json:\n(Default values used instead.)\n"
+        text += "\nThe following values were not found in the config file:\n(Default values used instead.)\n"
         if len(self.config_keys_loaded[1]) < 1:
             text += "None\n\n"
         else:
@@ -68,6 +68,8 @@ class Values():
                     f"{name}   =   {str(self.config_values.get(name))}"
                 )
                 text += '\n'
+
+        text += "\nConfig file: \n" + f"{file_name}"
 
         return text
 

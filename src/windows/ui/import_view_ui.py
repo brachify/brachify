@@ -31,7 +31,7 @@ class Ui_Import_View(object):
         self.verticalLayout = QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setSpacing(10)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalLayout.setSizeConstraint(QLayout.SetMaximumSize)
+        self.verticalLayout.setSizeConstraint(QLayout.SizeConstraint.SetMaximumSize)
         self.verticalLayout.setContentsMargins(10, 10, 10, 10)
         self.btn_import_folder = QPushButton(self.verticalLayoutWidget)
         self.btn_import_folder.setObjectName(u"btn_import_folder")
@@ -85,6 +85,12 @@ class Ui_Import_View(object):
 
         self.verticalLayout_2.addWidget(self.label_file_info)
 
+        self.label_config_info = QLabel(self.verticalLayoutWidget)
+        self.label_config_info.setObjectName(u"label_config_info")
+        self.label_config_info.setWordWrap(True)
+
+        self.verticalLayout_2.addWidget(self.label_config_info)
+
         self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_2.addItem(self.verticalSpacer)
@@ -103,5 +109,6 @@ class Ui_Import_View(object):
         self.btn_import_folder.setText(QCoreApplication.translate("Import_View", u"Import Dicom", None))
         self.btn_config_file.setText(QCoreApplication.translate("Import_View", u"Import Config File", None))
         self.label_file_info.setText(QCoreApplication.translate("Import_View", u"No Model(s) Loaded", None))
+        self.label_config_info.setText(QCoreApplication.translate("Import_View", u"Config file currently loaded: ", None))
     # retranslateUi
 
