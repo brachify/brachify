@@ -335,8 +335,50 @@ def _rounded_pipe(p1: gp_Pnt, p2: gp_Pnt, radius: float) -> TopoDS_Shape:
     cylinder = BRepPrimAPI_MakeCylinder(gp_Ax2(p1, direction), radius, length).Shape()
     pipe_cylinder = BRepAlgoAPI_Fuse(cylinder, sphere).Shape()
     return pipe_cylinder # adds cylinder an sphere together
-    
-    
+
+def remove_collinear_points(points):
+        def is_collinear(p1, p2, p3):
+            """Check if three points are collinear"""
+            # Create vectors
+            v1 = np.array(p2) - np.array(p1)
+            v2 = np.array(p3) - np.array(p2)
+            if np.all(v1 == v2):
+                return True
+
+            # Calculate the dot product
+            dot_product = np.dot(v1, v2)
+
+            # Calculate the magnitude of the vectors
+            magnitude_vector1 = np.linalg.norm(v1)
+            magnitude_vector2 = np.linalg.norm(v2)
+            
+
+            # Calculate the cosine of the angle
+            cos_angle = dot_product / (magnitude_vector1 * magnitude_vector2)
+
+            # Calculate the angle in radians
+            angle_radians = np.arccos(cos_angle)
+
+            # Convert to degrees, if needed
+            angle_degrees = np.degrees(angle_radians)
+
+            parallel = angle_degrees < 0.02
+            # print(is_close)
+            return parallel
+
+        # Handle lists with fewer than 3 points
+        if len(points) < 3:
+            return points
+
+        filtered_points = [points[0]]
+        last_point = points[0]
+        for i in range(1, len(points) - 1):
+            if not is_collinear(last_point, points[i], points[i + 1]):
+                filtered_points.append(points[i])
+                last_point = points[i]
+        filtered_points.append(points[-1])
+
+        return filtered_points
 '''
     Original methods
     def _extended_pipe(shape: TopoDS_Shape) -> TopoDS_Shape:
