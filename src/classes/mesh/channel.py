@@ -22,7 +22,6 @@ from classes.logger import log
 
 from classes.app import get_app
 
-#test code so that I can figure out which channel is currently being run through
 
 TIP_LENGTH = 2.5
 # get default channel diameter from config file.  If can't read from dictionary, set to 3.0.
