@@ -227,7 +227,7 @@ def _rounded_pipe(p1: gp_Pnt, p2: gp_Pnt, radius: float) -> TopoDS_Shape:
     sphere = BRepPrimAPI_MakeSphere(p2, radius).Shape()# makes a sphere centered at p2 and then makes it radius = radius
     cylinder = BRepPrimAPI_MakeCylinder(gp_Ax2(p1, direction), radius, length).Shape()
     pipe_cylinder = BRepAlgoAPI_Fuse(cylinder, sphere).Shape()
-    return pipe_cylinder#tempfusedpipe.Shape() # adds cylinder an sphere together
+    return pipe_cylinder # adds cylinder an sphere together
 
 def remove_collinear_points(points):
         def is_collinear(p1, p2, p3):
