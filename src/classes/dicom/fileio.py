@@ -387,7 +387,8 @@ def load_nucletron_dicom_data(rp_file: str, rs_file: str) -> DicomData:
     except Exception as error_message:
         log.error(f"Error locating central axis: {error_message}")    
 
-    # IF THERE'S A CENTRAL AXIS, ADD IT TO DATA AND REMOVE IT FROM THE LIST (it is added above this removes it from list)
+    # IF THERE'S A CENTRAL AXIS, ADD IT TO DATA AND REMOVE IT FROM THE LIST
+    # (It is added above.  The following removes it from list.)
     if data.central_channel_roi is not None:
         data.channels_labels.pop(center_index)
         data.channels_rois.pop(center_index)
