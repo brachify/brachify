@@ -7,6 +7,8 @@ from windows.models.shape_model import ShapeTypes
 from windows.ui.cylinder_view_ui import Ui_Cylinder_View
 from windows.views.custom_view import display_action, CustomView
 
+from settings.reset import getCurrentValues
+
 materials = {
     ShapeTypes.CYLINDER: {"rgb": [0.2, 0.55, 0.55], "transparent": True},
     ShapeTypes.CHANNEL: {"rgb": [0.8, 0.8, 0.8], "transparent": True},
@@ -39,6 +41,9 @@ class CylinderView(CustomView):
         cylinder.enableBase(add_base)  # this will force the cylinder's shape to be recalculated
 
         model.update_cylinder(cylinder)
+
+        # update the config_values dict
+        get_app().values.config_values = getCurrentValues()
 
     def action_update_settings(self, cylinder: BrachyCylinder):    
         log.debug(f"updating cylinder view's settings")

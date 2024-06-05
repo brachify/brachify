@@ -1,6 +1,5 @@
 
 from settings import load
-from settings.load import DEFAULT_CONFIG_VALUES
 from classes.info import USER_PATH
 from classes.logger import log
 # from classes.app import get_app

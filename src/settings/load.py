@@ -50,7 +50,7 @@ def load_config_file(file_name: str, alternate_dict: dict):
         log.debug("Successfully loaded a config file.")
 
         # check which keys exist in the loaded file, and compile a list of which exist and which don't.
-        checkValuesExist(config_values, config_keys_loaded)
+        checkValuesExist(config_values, config_keys_loaded, alternate_dict)
 
         return (config_values, config_keys_loaded)
             
@@ -66,7 +66,7 @@ def load_config_file(file_name: str, alternate_dict: dict):
 
 
 
-def checkValuesExist(config_values: dict, config_keys_loaded: list):
+def checkValuesExist(config_values: dict, config_keys_loaded: list, alternate_dict: dict):
     # record which keys exist in the config file and which don't.
     for key in DEFAULT_CONFIG_VALUES:
         if (key in config_values) and \
@@ -79,7 +79,7 @@ def checkValuesExist(config_values: dict, config_keys_loaded: list):
             # if the desired key is not found, then save that key name to a different list, and create a key-value for it.
             config_keys_loaded[1].append(key)
             log.debug(f"{key} not in config_values")
-            config_values[key] = DEFAULT_CONFIG_VALUES.get(key)
+            config_values[key] = alternate_dict.get(key)
             # Note: the keys in config_values that are not used (ie, they are misnamed), are NOT deleted.
             # they remain, but are simply not used.
 

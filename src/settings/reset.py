@@ -79,8 +79,38 @@ def resetAllValues(values_dict: dict):
             # apply the config settings
             app.window.navigationmodel.views[3].action_set_tandem()
     
-"""def getCurrentValues():
-    # this takes all the currently set values and returns them as a dict
-    
+def getCurrentValues():
+    """ 
+    Collects all the currently set values and returns them as a dict.
+    """
+    # Collect the data to be stored in the config file.
+    app = get_app()
+    # 1. cylinder data
+    default_cylinder_diameter = app.window.cylindermodel.cylinder.diameter
+    default_length = app.window.cylindermodel.cylinder.length
+    # 2. channels data
+    default_diameter = app.window.channelsmodel.diameter
+    # 3. tandem data
+    tandem_channel_diameter_default = app.window.tandemmodel.tandem_diameter
+    tandem_stopper_diameter_default = app.window.tandemmodel.stopper_diameter
+    tandem_tip_angle_default = app.window.tandemmodel.tip_angle
+    tandem_bend_radius = app.window.tandemmodel.bend_radius
+    tandem_length = app.window.tandemmodel.tandem_length # this appears to coincide with Tandem Height in the GUI
 
-"""
+    # 4. needle data - pulls the current value in the spin box
+    default_needle_length = app.window.navigationmodel.views[2].ui.sb_needle_length.value() 
+
+    # Create a dictionary containing the data.
+    current_values = {
+        "CONFIG_CYLINDER_DIAMETER": default_cylinder_diameter,
+        "CONFIG_CYLINDER_LENGTH": default_length,
+        "CONFIG_CHANNELS_DIAMETER": default_diameter,
+        "CONFIG_NEEDLE_LENGTH": default_needle_length,
+        "CONFIG_TANDEM_TIP_HEIGHT": tandem_length, # tandem_length may not actually be Tandem_Tip_Height_Default
+        "CONFIG_TANDEM_CHANNEL_DIAMETER": tandem_channel_diameter_default, 
+        "CONFIG_TANDEM_STOPPER_DIAMETER": tandem_stopper_diameter_default,
+        "CONFIG_TANDEM_TIP_ANGLE": tandem_tip_angle_default,
+        "CONFIG_TANDEM_BEND_RADIUS": tandem_bend_radius
+    }
+
+    return current_values
