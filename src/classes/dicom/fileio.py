@@ -170,6 +170,7 @@ def load_channels_varian(data: DicomData, rs_dataset):
     from classes.mesh.cylinder import CONFIG_CYLINDER_LENGTH
     offset_vector = np.array([0, 0, - cyl_length + CONFIG_CYLINDER_LENGTH])
 
+    anchor_points = 0
     updated_base = helper.rotate_points(base, cyl_vec, z_up)
     for i, c in enumerate(channel_contour_points):
         if(len(c)>1):
@@ -192,9 +193,8 @@ def load_channels_varian(data: DicomData, rs_dataset):
         # in the event of 2 anchoring points a warning is sent to the user asking them to ensure they
         # have not labeled either of their anchouring points to ensure all of the channeles are lined
         # up properly
-        # there may be a way to improve on this method in the future
-        #
-        get_app().window.anchoring_points_warning()
+        if(anchor_points==2):
+            get_app().window.anchoring_points_warning()
     data.channel_paths = channel_paths
 
 
@@ -239,6 +239,7 @@ def load_channels_nucletron(data: DicomData, rp_dataset, center_index):
     offset_vector = np.array([0, 0, - cyl_length + CONFIG_CYLINDER_LENGTH])
 
     updated_base = helper.rotate_points(base, cyl_vec, z_up)
+    anchor_points=0
     for i, c in enumerate(channel_contours):
         if(len(c)>1):
             new_points = np.array(c)
@@ -248,6 +249,7 @@ def load_channels_nucletron(data: DicomData, rp_dataset, center_index):
             channel_paths.append(list(list(points) for points in new_points))
         else:
             del data.channels_rois[i]
+            anchor_points+=1
             # single points used as anchoring points do not always have labels or
             # channel numbers, if they do not then the length of the ROI list is longer than the
             # list of channel numbers and channel_labels, this will only work for if there is one
@@ -260,9 +262,9 @@ def load_channels_nucletron(data: DicomData, rp_dataset, center_index):
             # in the event of 2 anchoring points a warning is sent to the user asking them to ensure they
             # have not labeled either of their anchouring points to ensure all of the channeles are lined
             # up properly
-            # there may be a way to improve on this method in the future
             #
-            get_app().window.anchoring_points_warning()
+            if(anchor_points==2):
+                get_app().window.anchoring_points_warning()
     data.channel_paths = channel_paths
 
 
