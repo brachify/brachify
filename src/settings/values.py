@@ -6,6 +6,7 @@ from classes.logger import log
 # from classes.app import get_app
 import json
 from classes.info import USER_PATH
+from settings.defaults import DEFAULT_CONFIG_VALUES
 
 # object to store all the config and default values
 class Values():
@@ -79,6 +80,10 @@ class Values():
         # these are to be used if config values cannot be pulled from a .json file on the user's computer.
         self.DEFAULT_CONFIG_VALUES = DEFAULT_CONFIG_VALUES
         
+        # define default values for the following attributes
+        self.most_recently_opened_config_file = None
+        self.most_recently_saved_config_file = None
+
         # initialize attributes that contian file paths to config files.
         self.readConfigFilePaths()
 
@@ -91,7 +96,7 @@ class Values():
 
         # read the default settings from the config.json file, as a dictionary,
         # and store it in an attribtue called config_values so it can be accessed later.
-        load_config_file_tuple = load.load_config_file(file_name)
+        load_config_file_tuple = load.load_config_file(file_name=file_name, alternate_dict=DEFAULT_CONFIG_VALUES)
         self.config_values = load_config_file_tuple[0]
 
         # store the list of which config values were successfully loaded or not.

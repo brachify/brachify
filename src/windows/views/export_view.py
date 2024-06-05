@@ -78,6 +78,7 @@ class Export_View(CustomView):
         # Save dictionary as .json file
         with open(filename, "w") as outfile:
             json.dump(config_values, outfile, indent=0)
+        outfile.close()
 
         # save the file path to the most recently saved config file.
         app.values.most_recently_saved_config_file = filename

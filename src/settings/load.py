@@ -5,57 +5,49 @@ For loading default settings.
 from classes.info import USER_PATH
 import json
 from classes.logger import log
+import settings.defaults
 
-DEFAULT_CONFIG_VALUES = {
-    "CONFIG_CYLINDER_DIAMETER": 30.0, 
-    "CONFIG_CYLINDER_LENGTH": 160.0, # cylinder length
-    "CONFIG_CHANNELS_DIAMETER": 3.0, # channels diameter
-    "CONFIG_NEEDLE_LENGTH": 200.0,
-    "CONFIG_TANDEM_TIP_HEIGHT": 129.0, 
-    "CONFIG_TANDEM_CHANNEL_DIAMETER": 4.0, 
-    "CONFIG_TANDEM_STOPPER_DIAMETER": 8.0, 
-    "CONFIG_TANDEM_TIP_ANGLE": 30.0,
-    "CONFIG_TANDEM_BEND_RADIUS": 35.0
-}
+DEFAULT_CONFIG_VALUES = settings.defaults.DEFAULT_CONFIG_VALUES
+
+
 
 config_values = None
 
 # import the config.json file
-def load_config_file(file_name: str):
+def load_config_file(file_name: str, alternate_dict: dict):
     
-    def use_defaults():
-        config_values = DEFAULT_CONFIG_VALUES
-        config_keys_loaded[1] = [key for key in config_values]
-
-        return (config_values, config_keys_loaded)
-
     # a list containing 2 lists:
     # [0] contains a list of all the keys/values that were successfully loaded from the config file
     # [1] contains a list of all the keys that did not exist in the config file
     config_keys_loaded = [[],[]]
 
-    # if got file_name from a dictionary, such as during start up, then it could be None if 
-    # the dict was not found, or if the desired key was not found.
+    # file_name could be None during start up if either:
+    # 1. filepath.json file not found.
+    # 2. filepath.json file found but most_recently_opened_config_file key didn't exist.
     if file_name is None:
         log.debug("Config filename is None. Using defaults instead.")
-        return use_defaults()
+        # alternate_dict provided during start up is the DEFAULTs
+        config_values = alternate_dict
+        # all the key names should be in [1].  
+        config_keys_loaded[1] = [key for key in DEFAULT_CONFIG_VALUES]
+        return (config_values, config_keys_loaded)
 
     ############################################################# FIGURE OUT WHAT TO DO WITH THIS *****************
     # If got file_name from user selecting from a file dialog, such as when user clicks import config file, 
     # then could be empty string "" if user pressed cancel instead of selecting a file.
     # make sure the file_name is not an empty string
-    if file_name == "":
-        log.debug("Empty filename.")
+    #if file_name == "":
+    #    log.debug("Empty filename.")
         # return something empty (I'm not sure what yet)
 
 
     try:
         # open, read, parse as dictionary, and close the config.json file
-        with open(file_name) as json_file:
-            json_contents = json.load(json_file)
-        # set the default settings to the json dictionary
-        config_values = json_contents
-        log.debug("Successfully loaded a config.json file.")
+        json_file = open(file_name)
+        config_values = json.load(json_file)
+        json_file.close()
+
+        log.debug("Successfully loaded a config file.")
 
         # check which keys exist in the loaded file, and compile a list of which exist and which don't.
         checkValuesExist(config_values, config_keys_loaded)
@@ -64,10 +56,14 @@ def load_config_file(file_name: str):
             
     except:
         # if can't read default settings from config.json file, then use the defaults.
-        log.debug("Couldn't load settings from config.json file.  Using hard-coded default settings instead.")
+        log.debug("Couldn't load settings from the config file.  Using hard-coded default settings instead.")
 
-        return use_defaults()
-    
+        # use alternate_dict provided.
+        config_values = alternate_dict
+        # all the key names should be in [1].  
+        config_keys_loaded[1] = [key for key in DEFAULT_CONFIG_VALUES]
+        return (config_values, config_keys_loaded)
+
 
 
 def checkValuesExist(config_values: dict, config_keys_loaded: list):

@@ -62,10 +62,12 @@ class ImportView(CustomView):
 
 
         app = get_app()
+        # get the current values in use.
+        alternate_dict = app.values.config_values
         # read in the file and store the values.
         # read the default settings from the .json file, as a dictionary,
         # and store it in an attribtue called config_values so it can be accessed later.
-        load_config_file_tuple = load_config_file(file_name)
+        load_config_file_tuple = load_config_file(file_name=file_name, alternate_dict=alternate_dict)
         app.values.config_values = load_config_file_tuple[0]
         # store the list of which config values were successfully loaded or not.
         app.values.config_keys_loaded = load_config_file_tuple[1]
