@@ -114,7 +114,7 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
     If a needle channel has a long distance between the first and second point, this helps stub it
     """
     ################################################
-    # possibly remove this if statment later, there should never be a channel points that gets to this point with <2 points
+    # if statement is currently double checking that there are no singletons, may be able to be removed in the future
     ################################################
     if len(channel_points) < 2:
         log.error(F"Needle Channel Generation error! needs 2 or more points!")
