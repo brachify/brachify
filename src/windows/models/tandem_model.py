@@ -74,10 +74,13 @@ class TandemModel(QObject):
         if self.mesh_offset == height_offset:
             return
         if not self.filepath:
+            # if we have not imported a tandem yet, then do not offset height.
+            # ie. cannot offset height of generated tandem, bc instead use "tandem height" under "generate" tab
             return
 
         self.mesh_offset = height_offset
-        self.tandem.tandem_height = CONFIG_TANDEM_TIP_HEIGHT + height_offset
+        # tandem_length is the length of the tandem itself plus the offset
+        self.tandem_length = CONFIG_TANDEM_TIP_HEIGHT + height_offset
         self.update()
 
     def set_tandem(self,
@@ -88,7 +91,7 @@ class TandemModel(QObject):
                    tandem_length: float):
 
         log.debug(f"setting tandem")
-        self.filepath = ""
+        self.filepath = None
         self.is_shape_imported = False  # used to flag height offsets
 
         self.tandem_diameter = tandem_diameter
