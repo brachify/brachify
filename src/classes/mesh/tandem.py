@@ -10,19 +10,24 @@ from OCC.Core.Geom2d import Geom2d_Circle, Geom2d_Line
 from OCC.Core.Geom2dAPI import Geom2dAPI_InterCurveCurve
 from OCC.Core.gp import *
 from OCC.Core.TopoDS import TopoDS_Shape
+from classes.app import get_app#note: this file can be run independently to view the tandem, 
+#but the classes.app impoort must be commented out and the indicated values must be changed to hardcoded default values
 
 # TODO create a step file that shows the points and measurements here to visualize what is being done
 
 
 class Tandem():
-    cylinder_height: float = 160.0
-    cylinder_diameter: float = 15
-    tandem_height: float = 129.0  # default
-    tandem_diameter: float = 8.0
-    tandem_angle: float = 60.0
-    bend_radius: float = 35.0
+    values = get_app().values.DEFAULT_CONFIG_VALUES.get
+    #indicated values########################
+    cylinder_height: float = values('CONFIG_CYLINDER_LENGTH')
+    cylinder_diameter: float = values('CONFIG_CYLINDER_DIAMETER')
+    tandem_height: float = values('CONFIG_TANDEM_TIP_HEIGHT')
+    tandem_diameter: float = values('CONFIG_TANDEM_CHANNEL_DIAMETER')
+    tandem_angle: float = values('CONFIG_TANDEM_TIP_ANGLE')
+    bend_radius: float = values('CONFIG_TANDEM_BEND_RADIUS')
     tandem_length: float = 8.0
     height_offset = 10.0
+    #########################################
 
     stopper_enabled = True
     stopper_length = 8.0
@@ -68,7 +73,6 @@ class Tandem():
     def stopper_shape(self) -> TopoDS_Shape:
         # create a slanted circle and extrude it upwards
         max_height = self.cylinder_height + self.height_offset
-        stopper_depth = self.stopper_length
         stopper_radius = self.stopper_diameter / 2
         stopper_start = self.bend_end
 
@@ -146,7 +150,6 @@ class Tandem():
         #########################################################################################
         # 2D points
         #########################################################################################
-        origin = gp_Pnt2d(0, 0)
         # circle origin for the top arc
         top_circle_origin = gp_Pnt(0, 0, max_height - cylinder_radius)
         bend_start = gp_Pnt2d(0, tandem_height)

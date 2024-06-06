@@ -189,17 +189,44 @@ class TandemModel(QObject):
 
     def _generate_tandem(self):
         tandem = Tandem()
-
-        tandem.tandem_diameter = self.tandem_diameter
-        tandem.stopper_diameter = self.stopper_diameter
-        tandem.tandem_angle = self.tip_angle
-        tandem.bend_radius = self.bend_radius
-        tandem.tandem_height = self.tandem_length
-
+        errors = []
+        
         tandem.cylinder_height = self.cylinder_length
         tandem.cylinder_diameter = self.cylinder_diameter
+        
+        try:
+            tandem.tandem_diameter = self.tandem_diameter
+            shape = tandem.generate_shape()
+        except:
+            errors.append("diam")
+        try:
+            tandem.stopper_diameter = self.stopper_diameter
+            shape = tandem.generate_shape()
+        except:
+            errors.append("stopper")
+        try:
+            tandem.tandem_angle = self.tip_angle
+            shape = tandem.generate_shape()
+        except:
+            errors.append("angle")
+        try:
+            tandem.bend_radius = self.bend_radius
+            shape = tandem.generate_shape()
+        except:
+            errors.append("radius")
+        try:
+            tandem.tandem_height = self.tandem_length
+            shape = tandem.generate_shape()
+            if(len(errors)>=1):
+                errors = []
+        except:
+            errors.append("height")
+        
+        if(len(errors)>0):
+            for err in errors:
+                get_app().window.tandem_error(err)
 
-        self._base_shape = tandem.generate_shape()
+        self._base_shape = shape
 
     def __init__(self) -> None:
         super().__init__()

@@ -228,4 +228,29 @@ class MainWindow(QMainWindow):
         dialog.setIcon(QMessageBox.Icon.Warning)
         dialog.exec()
 
+    def tandem_error(self, code):
+        dialog = QMessageBox()
+        if(code == "diam"):
+            dialog.setText("Error your tandem is too thin or too wide, please adjust the tandem diameter")
+            dialog.setWindowTitle("Tandem Diameter Error - Tandem Diameter Unchanged")
+
+        elif(code == "stopper"):
+            dialog.setText("Error your tandem's stopper diameter is too small or too large, please adjust your tandem's stopper diameter")
+            dialog.setWindowTitle("Tandem Stopper Diameter Error - Stopper Diameter Unchanged")
+
+        elif(code == 'angle'):
+            dialog.setText("Error your tandem angle is too large or too small, please adjust the tandem angle")
+            dialog.setWindowTitle("Tandem Angle Error - Tandem Angle Unchanged")
+
+        elif(code == 'height'):
+            dialog.setText("Error your tandem is too tall or too short, please adjust the height")
+            dialog.setWindowTitle("Tandem Height Error - Tandem Height Unchanged")
+
+        elif(code == 'radius'):
+            dialog.setText("Error your tandem's bend radius is too larger or too small, please adjust the tandems bend radius")
+            dialog.setWindowTitle("Tandem Bend Radius Error - Tandem Bend Radius Unchanged")
+        
+        dialog.setIcon(QMessageBox.Icon.Warning)
+        dialog.exec()
+
 
