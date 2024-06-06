@@ -179,9 +179,9 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
                 p1.SetX(round(p1.X(),i))
                 p1.SetY(round(p1.Y(),i))
                 p1.SetZ(round(p1.Z(),i))
-                p1.SetX(round(p1.X(),i))
-                p1.SetY(round(p1.Y(),i))
-                p1.SetZ(round(p1.Z(),i))
+                p2.SetX(round(p2.X(),i))
+                p2.SetY(round(p2.Y(),i))
+                p2.SetZ(round(p2.Z(),i))
                 cylinder = _rounded_pipe(p1, p2, radius+0.001)
                 try:
                     tempfuse = BRepAlgoAPI_Fuse(pipe, cylinder)
@@ -200,10 +200,10 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
             p2copy = gp_Pnt(p2.X(), p2.Y(), p2.Z())
             tests = [[p1copy.SetX(p1copy.X()+0.01), p1copy.SetX(p1copy.X()-0.01)],
             [p1copy.SetY(p1copy.Y()+0.01), p1copy.SetY(p1copy.Y()-0.01)],
-            [p1copy.SetZ(p1copy.Z()+0.01), p1copy.SetZ(p1copy.Z()+0.01)],
-            [p2copy.SetX(p2copy.X()+0.01), p2copy.SetX(p2copy.X()+0.01)],
-            [p2copy.SetY(p2copy.Y()+0.01), p2copy.SetY(p2copy.Y()+0.01)],
-            [p2copy.SetZ(p2copy.Z()+0.01), p2copy.SetZ(p2copy.Z()+0.01)]]
+            [p1copy.SetZ(p1copy.Z()+0.01), p1copy.SetZ(p1copy.Z()-0.01)],
+            [p2copy.SetX(p2copy.X()+0.01), p2copy.SetX(p2copy.X()-0.01)],
+            [p2copy.SetY(p2copy.Y()+0.01), p2copy.SetY(p2copy.Y()-0.01)],
+            [p2copy.SetZ(p2copy.Z()+0.01), p2copy.SetZ(p2copy.Z()-0.01)]]
             for item in tests:
                 cylinder = _rounded_pipe(p1copy, p2copy, radius+0.001)
                 item[0]
@@ -218,7 +218,6 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
                         return [1, tempfuse]
                 except:
                     item[1]
-                    print('',end='')
             return [max_attempt_value, tempfuse]
 
         for i in range(1, len(points) - 1):
@@ -255,7 +254,7 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
                     if(fix[0]==1 or fix[0] ==0):
                         tempfuse = fix[1]
                         if(fix[0] ==0):
-                            fix = fix3()#tries rounding decimals =4,3,2
+                            fix = fix3()
                             if(fix[0]==1):
                                 tempfuse = fix[1]
                             else:
@@ -379,6 +378,9 @@ def remove_collinear_points(points):
         filtered_points.append(points[-1])
 
         return filtered_points
+
+def printpoint(p1: gp_Pnt):
+    print("("+str(p1.X())+","+str(p1.Y())+","+str(p1.Z())+")")
 '''
     Original methods
     def _extended_pipe(shape: TopoDS_Shape) -> TopoDS_Shape:
