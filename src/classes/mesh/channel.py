@@ -162,7 +162,7 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
 
         # rest of the points
 
-        def fix1():
+        def fix1(): #returns -1 if error, 0 if warning, 1 if success
             cylinder = _rounded_pipe(p1, p2, radius+0.001)
             try:
                 tempfuse = BRepAlgoAPI_Fuse(pipe, cylinder)
