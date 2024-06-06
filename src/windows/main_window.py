@@ -237,7 +237,7 @@ class MainWindow(QMainWindow):
 
     def channel_display_error(self):
         dialog = QMessageBox()
-        dialog.setText(""Error thrown while constructing channels. Please inspect the export view to ensure the channels look the way they should. Note there will probably be an error, to resolves this check to ensure there is no error in the plan (such as 2 needles crossing), or replace the points on the needle that is not displaying properly.")
+        dialog.setText("Error thrown while constructing channels. Please inspect the export view to ensure the channels look the way they should. Note there will probably be an error, to resolves this check to ensure there is no error in the plan (such as 2 needles crossing), or replace the points on the needle that is not displaying properly.")
         dialog.setWindowTitle("Warning")
         dialog.setIcon(QMessageBox.Icon.Critical)
         dialog.exec()
