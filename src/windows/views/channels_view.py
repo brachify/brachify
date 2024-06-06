@@ -43,11 +43,13 @@ class ChannelsView(CustomView):
     @display_action
     def action_apply_settings(self):
         log.debug(f"action: apply settings")
+        app = get_app()
+        # update config_values dict for needles
+        needles_length = self.ui.sb_needle_length.value()
+        app.values.config_values["CONFIG_NEEDLE_LENGTH"] = needles_length
         diameter = self.ui.spinbox_diameter.value()
         log.debug(f"setting channel diameters to: {diameter}")
         self.channelsmodel.set_diameter(diameter)
-        # update the config_values dict
-        get_app().values.config_values = getCurrentValues()
         
     @display_action
     def action_set_selected_shapes(self, *args, **kwargs):
@@ -77,6 +79,8 @@ class ChannelsView(CustomView):
         
         # diameter spin box
         self.ui.spinbox_diameter.setValue(self.channelsmodel.diameter)
+        # needle channels spin box
+        self.ui.sb_needle_length.setValue(get_app().values.config_values["CONFIG_NEEDLE_LENGTH"])
 
         # channels list
         selected_channel = self.channelsmodel.get_selected_channel()
