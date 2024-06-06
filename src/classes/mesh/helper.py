@@ -97,7 +97,7 @@ def get_vector(p1: gp_Pnt, p2: gp_Pnt, length: float = 1.0) -> gp_Vec:
 def get_magnitude(p1: gp_Pnt, p2: gp_Pnt) -> float:
     vector = np.array([p2.X(), p2.Y(), p2.Z()]) \
         - np.array([p1.X(), p1.Y(), p1.Z()])
-    return np.linalg.norm(vector)#np.linalg.norm (defaults to 2-norm)
+    return np.linalg.norm(vector) # (defaults to 2-norm)
 
 
 def get_direction(p1: gp_Pnt, p2: gp_Pnt) -> gp_Dir:

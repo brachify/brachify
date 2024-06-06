@@ -15,13 +15,36 @@ TANDEM_LABEL = "tandem_shape"
 
 # Defaults
 # get defaults from config file.  If can't read from dictionary, set to 4.0, 8.0, ...
-config_values = get_app().config_values
-CONFIG_TANDEM_CHANNEL_DIAMETER = config_values.get("CONFIG_TANDEM_CHANNEL_DIAMETER", 4.0) 
-CONFIG_TANDEM_STOPPER_DIAMETER = config_values.get("CONFIG_TANDEM_STOPPER_DIAMETER", 8.0) 
-CONFIG_TANDEM_TIP_ANGLE = config_values.get("CONFIG_TANDEM_TIP_ANGLE", 30.0) 
-CONFIG_TANDEM_TIP_HEIGHT = config_values.get("CONFIG_TANDEM_TIP_HEIGHT", 129.0) 
-CONFIG_TANDEM_BEND_RADIUS = config_values.get("CONFIG_TANDEM_BEND_RADIUS", 35.0) 
+config_values = get_app().values.config_values
+CONFIG_TANDEM_CHANNEL_DIAMETER = config_values.get("CONFIG_TANDEM_CHANNEL_DIAMETER") 
+if CONFIG_TANDEM_CHANNEL_DIAMETER == None:
+    log.debug(
+        "Couldn't read CONFIG_TANDEM_CHANNEL_DIAMETER from current config values.  Using default value 4.0 instead.")
+    CONFIG_TANDEM_CHANNEL_DIAMETER = 4.0
 
+CONFIG_TANDEM_STOPPER_DIAMETER = config_values.get("CONFIG_TANDEM_STOPPER_DIAMETER") 
+if CONFIG_TANDEM_STOPPER_DIAMETER == None:
+    log.debug(
+        "Couldn't read CONFIG_TANDEM_STOPPER_DIAMETER from current config values.  Using default value 8.0 instead.")
+    CONFIG_TANDEM_STOPPER_DIAMETER = 8.0
+
+CONFIG_TANDEM_TIP_ANGLE = config_values.get("CONFIG_TANDEM_TIP_ANGLE") 
+if CONFIG_TANDEM_TIP_ANGLE == None:
+    log.debug(
+        "Couldn't read CONFIG_TANDEM_TIP_ANGLE from current config values.  Using default value 30.0 instead.")
+    CONFIG_TANDEM_TIP_ANGLE = 30.0
+
+CONFIG_TANDEM_TIP_HEIGHT = config_values.get("CONFIG_TANDEM_TIP_HEIGHT") 
+if CONFIG_TANDEM_TIP_HEIGHT == None:
+    log.debug(
+        "Couldn't read CONFIG_TANDEM_TIP_HEIGHT from current config values.  Using default value 129.0 instead.")
+    CONFIG_TANDEM_TIP_HEIGHT = 129.0
+
+CONFIG_TANDEM_BEND_RADIUS = config_values.get("CONFIG_TANDEM_BEND_RADIUS") 
+if CONFIG_TANDEM_BEND_RADIUS == None:
+    log.debug(
+        "Couldn't read CONFIG_TANDEM_BEND_RADIUS from current config values.  Using default value 35.0 instead.")
+    CONFIG_TANDEM_BEND_RADIUS = 35.0
 
 class TandemModel(QObject):
 
@@ -43,10 +66,13 @@ class TandemModel(QObject):
         if self.mesh_offset == height_offset:
             return
         if not self.filepath:
+            # if we have not imported a tandem yet, then do not offset height.
+            # ie. cannot offset height of generated tandem, bc instead use "tandem height" under "generate" tab
             return
 
         self.mesh_offset = height_offset
-        self.tandem.tandem_height = CONFIG_TANDEM_TIP_HEIGHT + height_offset
+        # tandem_length is the length of the tandem itself plus the offset
+        self.tandem_length = CONFIG_TANDEM_TIP_HEIGHT + height_offset
         self.update()
 
     def set_tandem(self,
@@ -57,7 +83,7 @@ class TandemModel(QObject):
                    tandem_length: float):
 
         log.debug(f"setting tandem")
-        self.filepath = ""
+        self.filepath = None
         self.is_shape_imported = False  # used to flag height offsets
 
         self.tandem_diameter = tandem_diameter
