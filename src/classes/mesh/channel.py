@@ -22,7 +22,6 @@ from classes.logger import log
 
 from classes.app import get_app
 
-#test code so that I can figure out which channel is currently being run through
 
 TIP_LENGTH = 2.5
 
@@ -39,7 +38,7 @@ class NeedleChannel:
     @staticmethod
     def default_diameter() -> float: return CONFIG_CHANNELS_DIAMETER
 
-    #setChannel function is never referenced nor is it in any comment in any of the other files
+    #setChannel function is not currently in use.  It is left here in case it is needed in the future.
     '''
     def setChannel(self, height: float = 0.0, diameter: float = 3.0) -> None:
         self._offset = height
@@ -61,7 +60,7 @@ class NeedleChannel:
         self._shape = None
         self.shape()
 
-    ''' Quite sure this is never used either
+    ''' #getOffset() function is not currently in use.  It is left here in case it is needed in the future.
     def getOffset(self) -> float:
         return self._offset
     '''
@@ -119,7 +118,7 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
     If a needle channel has a long distance between the first and second point, this helps stub it
     """
     ################################################
-    # possibly remove this if statment later, there should never be a channel points that gets to this point with <2 points
+    # if statement is currently double checking that there are no singletons, may be able to be removed in the future
     ################################################
     if len(channel_points) < 2:
         log.error(F"Needle Channel Generation error! needs 2 or more points!")
@@ -140,6 +139,8 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
     # Truncate without rounding
     channel_points = np.floor(channel_points * 10**decimals) / 10**decimals
 
+    channel_points = remove_collinear_points(channel_points)
+    
     points = [gp_Pnt(point[0], point[1], point[2]) for point in channel_points]
 
     radius = diameter / 2
@@ -185,7 +186,7 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
         return pipe
 
     '''
-    #original code
+    # previous method
     # curve downwards
     curve = _curved_end(points, radius)
     pipe = BRepAlgoAPI_Fuse(pipe, curve).Shape()
@@ -230,9 +231,51 @@ def _rounded_pipe(p1: gp_Pnt, p2: gp_Pnt, radius: float) -> TopoDS_Shape:
     sphere = BRepPrimAPI_MakeSphere(p2, radius).Shape()# makes a sphere centered at p2 and then makes it radius = radius
     cylinder = BRepPrimAPI_MakeCylinder(gp_Ax2(p1, direction), radius, length).Shape()
     pipe_cylinder = BRepAlgoAPI_Fuse(cylinder, sphere).Shape()
-    return pipe_cylinder#tempfusedpipe.Shape() # adds cylinder an sphere together
-    
-    
+    return pipe_cylinder # adds cylinder an sphere together
+
+def remove_collinear_points(points):
+        def is_collinear(p1, p2, p3):
+            """Check if three points are collinear"""
+            # Create vectors
+            v1 = np.array(p2) - np.array(p1)
+            v2 = np.array(p3) - np.array(p2)
+            if np.all(v1 == v2):
+                return True
+
+            # Calculate the dot product
+            dot_product = np.dot(v1, v2)
+
+            # Calculate the magnitude of the vectors
+            magnitude_vector1 = np.linalg.norm(v1)
+            magnitude_vector2 = np.linalg.norm(v2)
+            
+
+            # Calculate the cosine of the angle
+            cos_angle = dot_product / (magnitude_vector1 * magnitude_vector2)
+
+            # Calculate the angle in radians
+            angle_radians = np.arccos(cos_angle)
+
+            # Convert to degrees, if needed
+            angle_degrees = np.degrees(angle_radians)
+
+            parallel = angle_degrees < 0.02
+            # print(is_close)
+            return parallel
+
+        # Handle lists with fewer than 3 points
+        if len(points) < 3:
+            return points
+
+        filtered_points = [points[0]]
+        last_point = points[0]
+        for i in range(1, len(points) - 1):
+            if not is_collinear(last_point, points[i], points[i + 1]):
+                filtered_points.append(points[i])
+                last_point = points[i]
+        filtered_points.append(points[-1])
+
+        return filtered_points
 '''
     Original methods
     def _extended_pipe(shape: TopoDS_Shape) -> TopoDS_Shape:

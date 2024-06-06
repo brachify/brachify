@@ -74,53 +74,6 @@ def load_central_axis_varian(data: DicomData, rs_dataset):
     data.cylinder_diameter = CONFIG_CYLINDER_DIAMETER  # hardcoded default. user needs to be flagged...
     data.cylinder_direction = data.cylinder_tip - data.cylinder_base   
 
-
-def remove_collinear_points(points): #unused, left in case it's needed later.
-
-    def is_collinear(p1, p2, p3):
-        """Check if three points are collinear"""
-        # Create vectors
-        v1 = np.array(p2) - np.array(p1)
-        v2 = np.array(p3) - np.array(p2)
-        if np.all(v1 == v2):
-            return True
-
-        # Calculate the dot product
-        dot_product = np.dot(v1, v2)
-
-        # Calculate the magnitude of the vectors
-        magnitude_vector1 = np.linalg.norm(v1)
-        magnitude_vector2 = np.linalg.norm(v2)
-        
-
-        # Calculate the cosine of the angle
-        cos_angle = dot_product / (magnitude_vector1 * magnitude_vector2)
-
-        # Calculate the angle in radians
-        angle_radians = np.arccos(cos_angle)
-
-        # Convert to degrees, if needed
-        angle_degrees = np.degrees(angle_radians)
-
-        parallel = angle_degrees < 0.02
-        # print(is_close)
-        return parallel
-
-    # Handle lists with fewer than 3 points
-    if len(points) < 3:
-        return points
-
-    filtered_points = [points[0]]
-    last_point = points[0]
-    for i in range(1, len(points) - 1):
-        if not is_collinear(last_point, points[i], points[i + 1]):
-            filtered_points.append(points[i])
-            last_point = points[i]
-    filtered_points.append(points[-1])
-
-    return filtered_points
-
-
 def load_central_axis_nucletron(data: DicomData, rp_dataset):
     central_channel = None
     # central_channel = rp_dataset.ApplicationSetupSequence[0].ChannelSequence[data.central_channel_roi].BrachyControlPointSequence
@@ -481,7 +434,8 @@ def load_nucletron_dicom_data(rp_file: str, rs_file: str) -> DicomData:
     except Exception as error_message:
         log.error(f"Error locating central axis: {error_message}")    
 
-    # IF THERE'S A CENTRAL AXIS, ADD IT TO DATA AND REMOVE IT FROM THE LIST (it is added above this removes it from list)
+    # IF THERE'S A CENTRAL AXIS, ADD IT TO DATA AND REMOVE IT FROM THE LIST
+    # (It is added above.  The following removes it from list.)
     if data.central_channel_roi is not None:
         data.channels_labels.pop(center_index)
         data.channels_rois.pop(center_index)
