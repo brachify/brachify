@@ -303,8 +303,8 @@ class Ui_Tandem_View(object):
         self.label_10.setText(QCoreApplication.translate("Tandem_View", u"Stopper Diameter", None))
         self.label_11.setText(QCoreApplication.translate("Tandem_View", u"Bend Angle", None))
         self.label_12.setText(QCoreApplication.translate("Tandem_View", u"Bend Radius", None))
-        self.btn_apply.setText(QCoreApplication.translate("Tandem_View", u"apply", None))
-        self.btn_clear_generate.setText(QCoreApplication.translate("Tandem_View", u"clear", None))
+        self.btn_apply.setText(QCoreApplication.translate("Tandem_View", u"Apply", None))
+        self.btn_clear_generate.setText(QCoreApplication.translate("Tandem_View", u"Clear", None))
         self.ab_1.setTabText(self.ab_1.indexOf(self.tab_2), QCoreApplication.translate("Tandem_View", u"Generate", None))
     # retranslateUi
 
