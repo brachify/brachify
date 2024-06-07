@@ -5,6 +5,7 @@ from classes.signals import AppSignals
 
 from settings.values import Values
 
+from PySide6.QtGui import QIcon
 
 def get_app():
     """ Returns the current QApplication instance """
@@ -26,6 +27,9 @@ class RadiotherapyApp(QApplication):
             # these were seperated from the MainWindow __init__ to ease signal connections
             self.window.initModels()
             self.window.initViews()
+
+            my_icon = QIcon("resources\\brachify_splash-ico.ico")
+            self.window.setWindowIcon(my_icon)
 
             # TODO process args like autoloading a file or project
             
