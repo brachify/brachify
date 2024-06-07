@@ -148,7 +148,7 @@ def load_channels_varian(data: DicomData, rs_dataset):
             # have not labeled either of their anchouring points to ensure all of the channeles are lined
             # up properly
             if(anchor_points==2):
-                get_app().window.anchoring_points_warning()
+                get_app().window.single_point_pop_up_Varian()
     data.channel_paths = channel_paths
 
 

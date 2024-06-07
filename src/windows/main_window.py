@@ -236,4 +236,11 @@ class MainWindow(QMainWindow):
 
         dialog.exec()
 
+    def single_point_pop_up_Varian(self):
+        dialog = QMessageBox()
+        dialog.setText("Warning, at least one channel with a single point was detected, this point WILL NOT be included in the 3D model")
+        dialog.setWindowTitle("Channel with Single Point Detected")
+        dialog.setIcon(QMessageBox.Icon.Warning)
+
+        dialog.exec()
 
