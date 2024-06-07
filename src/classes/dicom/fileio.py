@@ -133,6 +133,7 @@ def load_channels_varian(data: DicomData, rs_dataset):
             new_points = new_points + offset_vector
             channel_paths.append(list(list(points) for points in new_points))
         else:
+            anchor_points += 1
             del data.channels_rois[i]
             # single points used as anchoring points do not always have labels or
             # channel numbers, if they do not then the length of the ROI list is longer than the
@@ -201,6 +202,7 @@ def load_channels_nucletron(data: DicomData, rp_dataset, center_index):
             new_points = new_points + offset_vector
             channel_paths.append(list(list(points) for points in new_points))
         else:
+            #ROI_singlton = data.channels_rois[i]
             del data.channels_rois[i]
             anchor_points+=1
             # single points used as anchoring points do not always have labels or

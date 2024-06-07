@@ -65,7 +65,7 @@ class ImportView(CustomView):
         for i in range(len(data.channels_labels)):
             f = f+(str(data.channels_labels[i]))+ ",  Channel: "+str(data.channel_numbers[i])+"\n"
         
-        #line below has not yet been tested, remove is there is an issue
+
         tandem = data.tandem_channel
         g = ("Tandem Label:  ")+str(tandem)
         
