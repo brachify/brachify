@@ -163,6 +163,7 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
         # rest of the points
 
         def fix1(): #returns -1 if error, 0 if warning, 1 if success
+            # tries increasing the radius by an infinitesimal amount (0.001), then fusing.
             cylinder = _rounded_pipe(p1, p2, radius+0.001)
             try:
                 tempfuse = BRepAlgoAPI_Fuse(pipe, cylinder)
@@ -172,7 +173,7 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
             except:
                 return [-1, tempfuse]
             
-        def fix2():
+        def fix2(): # tries rounding to different amounts of decimals, then fusing.
             max_attempt_value = -1#-1 if error, 0 if warning, 1 if success
             for i in [4,3,2]:
                 #may introduce some rounding error (up to 0.01 can correct later if need be)
@@ -192,32 +193,32 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
                         return [1, tempfuse]
                 except:
                     return [-1, tempfuse]
-                return[max_attempt_value, tempfuse]
+            return[max_attempt_value, tempfuse]
             
-        def fix3():
-            max_attempt_value = -1#-1 if error, 0 if warning, 1 if success
+        def fix3(): # tries adjusting the point by an infinitesimal amount in each direction (+/- 0.01), then fusing.
+            max_attempt_value = -1 #-1 if error, 0 if warning, 1 if success
             p1copy = gp_Pnt(p1.X(), p1.Y(), p1.Z())
             p2copy = gp_Pnt(p2.X(), p2.Y(), p2.Z())
-            tests = [[p1copy.SetX(p1copy.X()+0.01), p1copy.SetX(p1copy.X()-0.01)],
-            [p1copy.SetY(p1copy.Y()+0.01), p1copy.SetY(p1copy.Y()-0.01)],
-            [p1copy.SetZ(p1copy.Z()+0.01), p1copy.SetZ(p1copy.Z()-0.01)],
-            [p2copy.SetX(p2copy.X()+0.01), p2copy.SetX(p2copy.X()-0.01)],
-            [p2copy.SetY(p2copy.Y()+0.01), p2copy.SetY(p2copy.Y()-0.01)],
-            [p2copy.SetZ(p2copy.Z()+0.01), p2copy.SetZ(p2copy.Z()-0.01)]]
+            tests = [['p1copy.SetX(p1copy.X()+0.01)', 'p1copy.SetX(p1copy.X()-0.01)'],
+            ['p1copy.SetY(p1copy.Y()+0.01)', 'p1copy.SetY(p1copy.Y()-0.01)'],
+            ['p1copy.SetZ(p1copy.Z()+0.01)', 'p1copy.SetZ(p1copy.Z()-0.01)'],
+            ['p2copy.SetX(p2copy.X()+0.01)', 'p2copy.SetX(p2copy.X()-0.01)'],
+            ['p2copy.SetY(p2copy.Y()+0.01)', 'p2copy.SetY(p2copy.Y()-0.01)'],
+            ['p2copy.SetZ(p2copy.Z()+0.01)', 'p2copy.SetZ(p2copy.Z()-0.01)']]
             for item in tests:
                 cylinder = _rounded_pipe(p1copy, p2copy, radius+0.001)
-                item[0]
+                eval(item[0])
                 try:
                     tempfuse = BRepAlgoAPI_Fuse(pipe, cylinder)
                     if tempfuse.HasWarnings():
                         if(0>max_attempt_value):
                             max_attempt_value=0
-                            item[1]
+                            eval(item[1])
                     else:
-                        item[1]
+                        eval(item[1])
                         return [1, tempfuse]
                 except:
-                    item[1]
+                    eval(item[1])
             return [max_attempt_value, tempfuse]
 
         for i in range(1, len(points) - 1):
@@ -235,7 +236,7 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
                         if(fix[0]==1):
                             tempfuse = fix[1]
                         else:
-                            fix = fix3()#tries rounding decimals =4,3,2
+                            fix = fix3() #tries moving the point by +/- 0.001 in each direction.
                             if(fix[0]==1):
                                 tempfuse = fix[1]
                             else:
