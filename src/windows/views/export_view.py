@@ -124,6 +124,7 @@ class Export_View(CustomView):
         tandembool = window.tandemmodel.shape() != None
         # tandem rotation (to show dotted line in image)
         tandem_rotation = window.tandemmodel.rotation
+        is_tandem_imported = window.tandemmodel.is_shape_imported
 
         try:
             template_reference.generate_pdf(
@@ -133,7 +134,8 @@ class Export_View(CustomView):
                 filepath=Path(filename[0]),
                 needle_length=needle_length, 
                 has_tandem = tandembool,
-                tandem_rotation=tandem_rotation)
+                tandem_rotation=tandem_rotation, 
+                is_tandem_imported=is_tandem_imported)
         except:
             log.error("PDF did not save")
             get_app().window.pdf_save_error()

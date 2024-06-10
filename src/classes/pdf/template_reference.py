@@ -266,7 +266,8 @@ def process_lengths_and_create_data(is_lengths, protrusion_lengths, label_list):
     return needle_data
 
 
-def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False, tandem_rotation=0.0):
+def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False, tandem_rotation=0.0,
+                        is_tandem_imported=False):
     # Create a figure and axis
     fig, ax = plt.subplots()
 
@@ -289,23 +290,25 @@ def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False
         ax.add_artist(plt.Circle((0.0, 0.0), 1.25, color='black', fill=False))
         ax.text(0.0, 0.0, 'T', color='black', ha='center', va='center')
 
-        # add dotted line to indicate tandem direction.
-        angle = tandem_rotation
-        # construct a line segment of a fixed length, with the angle of rotation of the tandem
-        line_length = circle_radius / 2
-        end_pt_x = line_length * np.cos(angle)
-        end_pt_y = line_length * np.sin(angle)
-        x_values = [0, end_pt_x]
-        y_values = [0, end_pt_y]
-        # want line going from (0,0) to (end_pt_x, end_pt_y)
-        #try:
-            #ax.add_artist(plt.Arrow(x=0, y=0, dx=end_pt_x, dy=end_pt_y, width=0.5, color='black'))
-            #ax.add_artist(plt.plot(x_values, y_values, color='blue', linestyle='dashed'))
-            #ax.add_artist(plt.axline((0,0), (end_pt_x,end_pt_y)))
-        ax.add_artist(lines.Line2D(x_values, y_values,color='grey', linestyle='--'))
-        #except Exception as e:
-        #   log.debug(f'{e}')
-        #ax.text(end_pt_x, end_pt_y, 'tip')
+        # if the tandem was generated, then display a dotted line on the pdf.
+        if not is_tandem_imported:
+            # add dotted line to indicate tandem direction.
+            angle = tandem_rotation
+            # construct a line segment of a fixed length, with the angle of rotation of the tandem
+            line_length = circle_radius / 2
+            end_pt_x = line_length * np.cos(angle)
+            end_pt_y = line_length * np.sin(angle)
+            x_values = [0, end_pt_x]
+            y_values = [0, end_pt_y]
+            # want line going from (0,0) to (end_pt_x, end_pt_y)
+            #try:
+                #ax.add_artist(plt.Arrow(x=0, y=0, dx=end_pt_x, dy=end_pt_y, width=0.5, color='black'))
+                #ax.add_artist(plt.plot(x_values, y_values, color='blue', linestyle='dashed'))
+                #ax.add_artist(plt.axline((0,0), (end_pt_x,end_pt_y)))
+            ax.add_artist(lines.Line2D(x_values, y_values,color='grey', linestyle='--'))
+            #except Exception as e:
+            #   log.debug(f'{e}')
+            #ax.text(end_pt_x, end_pt_y, 'tip')
 
     # Add a filled black rectangle at the top center of the big circle
     tick_width = 0.2
@@ -344,7 +347,8 @@ def generate_pdf(
         filepath: Path,
         needle_length: float,
         has_tandem: bool, 
-        tandem_rotation: float):
+        tandem_rotation: float, 
+        is_tandem_imported: bool):
 
     # Get today's date in the format "Month Day, Year"
     today_date = datetime.today().strftime('%B %d, %Y')
@@ -422,7 +426,7 @@ def generate_pdf(
     last_xy_points = get_last_xy_points(needles) 
     
     png_path = save_points_diagram(last_xy_points, circle_radius, pdf_output_dir, has_tandem=has_tandem,
-                                    tandem_rotation=tandem_rotation)
+                                    tandem_rotation=tandem_rotation, is_tandem_imported=is_tandem_imported)
 
     img = Image(str(png_path), width=300, height=300)
     content.append(img)
