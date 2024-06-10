@@ -50,11 +50,14 @@ class TandemView(CustomView):
         self.update_settings()
 
     @display_action
-    def action_set_import_offset(self):
+    def action_set_import(self):
         # get the current value in the spin box
         offset = self.ui.sb_height_offset.value()
         # use the spin box value as the new height offset value
         self.tandemmodel.set_import_height_offset(offset)
+        tan = get_app().window.tandemmodel
+        tan.imported_tandem_rotation(self.ui.tandem_rotation.value()) # set only for the purpose of refference document, can be removed if it is decided the refference document is uneccessary
+
 
     def on_close(self):
         log.debug(f"on view close")
@@ -105,6 +108,6 @@ class TandemView(CustomView):
         self.ui.btn_clear_generate.pressed.connect(self.action_clear_tandem)
         self.ui.btn_import.pressed.connect(self.action_import_tandem)
         self.ui.btn_clear_import.pressed.connect(self.action_clear_tandem)     
-        self.ui.btn_apply_offset.pressed.connect(self.action_set_import_offset)
+        self.ui.btn_apply_import.pressed.connect(self.action_set_import)
 
         self.update_settings()
