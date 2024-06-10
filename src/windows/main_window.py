@@ -280,4 +280,4 @@ class MainWindow(QMainWindow):
         # before exiting the program.
 
         self.save_file_paths()
-        print("close event of main window.")
+        
