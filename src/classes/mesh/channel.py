@@ -36,7 +36,7 @@ if CONFIG_CHANNELS_DIAMETER == None:
 class NeedleChannel:
 
     @staticmethod
-    def default_diameter() -> float: return CONFIG_CHANNELS_DIAMETER
+    def default_diameter() -> float: return config_values.get("CONFIG_CHANNELS_DIAMETER", 3.0)
 
     #setChannel function is not currently in use.  It is left here in case it is needed in the future.
     '''
@@ -110,7 +110,7 @@ class NeedleChannel:
         self._shape = None
 
         self._offset = 0.0
-        self._diameter = CONFIG_CHANNELS_DIAMETER
+        self._diameter = config_values.get("CONFIG_CHANNELS_DIAMETER", 3.0)
 
 def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) -> TopoDS_Shape:
     
