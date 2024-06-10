@@ -284,6 +284,24 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
 
             pipe = tempfuse.Shape()
 
+    try:
+        for point in points[1:len(points)]:
+            #BRepPrimAPI_MakeSphere makes a sphere centered at point and then makes it radius = radius
+            temp = BRepAlgoAPI_Fuse(pipe, BRepPrimAPI_MakeSphere(point, radius).Shape())
+            if(temp.HasWarnings):
+                temp = BRepAlgoAPI_Fuse(pipe, BRepPrimAPI_MakeSphere(point, radius+0.01).Shape())
+                if(temp.HasWarnings()):
+                    log.error("Error Constructing corner of a 3D channel")
+                    window = get_app().window
+                    window.channel_display_error()
+                else:
+                    pipe = temp.Shape()
+            else:
+                pipe = temp.Shape()
+    except:
+        window = get_app().window
+        window.channel_display_error()
+
     # if the points extend past z zero, don't extend
     if points[-1].Z() < 0:
         return pipe
@@ -330,11 +348,8 @@ def down_to_end(p1: gp_Pnt, radius: float) -> TopoDS_Shape:
 def _rounded_pipe(p1: gp_Pnt, p2: gp_Pnt, radius: float) -> TopoDS_Shape:
     direction = helper.get_direction(p1, p2) #gives normalised p2-p1 vector
     length = helper.get_magnitude(p1,p2)
-
-    sphere = BRepPrimAPI_MakeSphere(p2, radius).Shape()# makes a sphere centered at p2 and then makes it radius = radius
     cylinder = BRepPrimAPI_MakeCylinder(gp_Ax2(p1, direction), radius, length).Shape()
-    pipe_cylinder = BRepAlgoAPI_Fuse(cylinder, sphere).Shape()
-    return pipe_cylinder # adds cylinder an sphere together
+    return cylinder
 
 def remove_collinear_points(points):
         def is_collinear(p1, p2, p3):
