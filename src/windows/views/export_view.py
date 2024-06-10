@@ -112,7 +112,7 @@ class Export_View(CustomView):
             self, 'Save solid as PDF', '', "PDF files (*.pdf)")
         
         # error checking
-        if not filename:  # no file selected?
+        if not filename[0]:  # no file selected
             log.info("no valid filename selected for importing")
             return
         
@@ -122,6 +122,9 @@ class Export_View(CustomView):
 
         # generate pdf
         tandembool = window.tandemmodel.shape() != None
+        # tandem rotation (to show dotted line in image)
+        tandem_rotation = window.tandemmodel.rotation
+
         try:
             template_reference.generate_pdf(
                 dicom=window.dicommodel.data,
@@ -129,7 +132,8 @@ class Export_View(CustomView):
                 channels=window.channelsmodel.get_visible_channels(),
                 filepath=Path(filename[0]),
                 needle_length=needle_length, 
-                has_tandem = tandembool)
+                has_tandem = tandembool,
+                tandem_rotation=tandem_rotation)
         except:
             log.error("PDF did not save")
             get_app().window.pdf_save_error()

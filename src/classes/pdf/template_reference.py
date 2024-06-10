@@ -264,7 +264,7 @@ def process_lengths_and_create_data(is_lengths, protrusion_lengths, label_list):
     return needle_data
 
 
-def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False):
+def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False, tandem_rotation=0.0):
     # Create a figure and axis
     fig, ax = plt.subplots()
 
@@ -286,6 +286,17 @@ def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False
     if has_tandem: 
         ax.add_artist(plt.Circle((0.0, 0.0), 1.25, color='black', fill=False))
         ax.text(0.0, 0.0, 'T', color='black', ha='center', va='center')
+
+        # add dotted line to indicate tandem direction.
+        angle = tandem_rotation
+        # construct a line segment of a fixed length, with the angle of rotation of the tandem
+        line_length = circle_radius / 2
+        end_pt_x = line_length * np.cos(angle)
+        end_pt_y = line_length * np.sin(angle)
+        # want line going from (0,0) to (end_pt_x, end_pt_y)
+        ax.add_artist(plt.Arrow(x=0, y=0, dx=end_pt_x, dy=end_pt_y, width=0.5, color='black'))
+        #ax.text(end_pt_x, end_pt_y, 'tip')
+
     # Add a filled black rectangle at the top center of the big circle
     tick_width = 0.2
     tick_height = 1.0
@@ -322,7 +333,8 @@ def generate_pdf(
         channels: list[NeedleChannel],
         filepath: Path,
         needle_length: float,
-        has_tandem: bool):
+        has_tandem: bool, 
+        tandem_rotation: float):
 
     # Get today's date in the format "Month Day, Year"
     today_date = datetime.today().strftime('%B %d, %Y')
@@ -399,7 +411,8 @@ def generate_pdf(
     circle_radius = cylinder.diameter / 2
     last_xy_points = get_last_xy_points(needles) 
     
-    png_path = save_points_diagram(last_xy_points, circle_radius, pdf_output_dir, has_tandem=has_tandem)
+    png_path = save_points_diagram(last_xy_points, circle_radius, pdf_output_dir, has_tandem=has_tandem,
+                                    tandem_rotation=tandem_rotation)
 
     img = Image(str(png_path), width=300, height=300)
     content.append(img)
