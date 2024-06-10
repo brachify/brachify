@@ -300,15 +300,8 @@ def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False
             end_pt_y = line_length * np.sin(angle)
             x_values = [0, end_pt_x]
             y_values = [0, end_pt_y]
-            # want line going from (0,0) to (end_pt_x, end_pt_y)
-            #try:
-                #ax.add_artist(plt.Arrow(x=0, y=0, dx=end_pt_x, dy=end_pt_y, width=0.5, color='black'))
-                #ax.add_artist(plt.plot(x_values, y_values, color='blue', linestyle='dashed'))
-                #ax.add_artist(plt.axline((0,0), (end_pt_x,end_pt_y)))
+            # Line goes from (0,0) to (end_pt_x, end_pt_y)
             ax.add_artist(lines.Line2D(x_values, y_values,color='grey', linestyle='--'))
-            #except Exception as e:
-            #   log.debug(f'{e}')
-            #ax.text(end_pt_x, end_pt_y, 'tip')
 
     # Add a filled black rectangle at the top center of the big circle
     tick_width = 0.2
