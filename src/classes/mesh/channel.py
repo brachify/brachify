@@ -320,12 +320,28 @@ def _straight_pipe(p1, p2, face) -> TopoDS_Shape:
 '''
 
 def down_to_end(p1: gp_Pnt, radius: float) -> TopoDS_Shape:
-    p2 = gp_Pnt(p1.X(), p1.Y(), -1)
-    direction = helper.get_direction(p1, p2) #gives normalised p2-p1 vector
-    length = helper.get_magnitude(p1,p2)
+    config = get_app().values.config_values.get
+    window = get_app().window
+    depth = config('CONFIG_THREADING_DEPTH')
+    threading_radius = config('CONFIG_THREADING_RADIUS')
+    if(config('CONFIG_THREADING') and depth != None and threading_radius != None):        
+        p2 = gp_Pnt(p1.X(), p1.Y(), depth)#p2 will be placed at a z-value of depth which will be the end of the channel going down to the base of the cylinder at z = 0
+        direction = helper.get_direction(p1, p2) #gives normalised p2-p1 vector
+        length = helper.get_magnitude(p1,p2)
 
-    cylinder = BRepPrimAPI_MakeCylinder(gp_Ax2(p1, direction), radius, length).Shape()
-    return cylinder#tempfusedpipe.Shape() # adds cylinder an sphere together
+        cylinder1 = BRepPrimAPI_MakeCylinder(gp_Ax2(p1, direction), radius, length+0.01).Shape()#+0.01 is so that the smaller cylinder extends into the larger cylinder for the threading a little bit so that they will merge without issue
+        cylinder2 = BRepPrimAPI_MakeCylinder(gp_Ax2(p2, direction), threading_radius, depth-1).Shape()#extends the threading 1 past the end of the cylinder so to help with merging
+        cylinder = BRepAlgoAPI_Fuse(cylinder1, cylinder2).Shape()
+        return cylinder# adds cylinder an sphere together
+    else:
+        if(depth == None or threading_radius == None):
+            window.Threading_Values_Error()
+        p2 = gp_Pnt(p1.X(), p1.Y(), -1)
+        direction = helper.get_direction(p1, p2) #gives normalised p2-p1 vector
+        length = helper.get_magnitude(p1,p2)
+
+        cylinder = BRepPrimAPI_MakeCylinder(gp_Ax2(p1, direction), radius, length).Shape()
+        return cylinder#tempfusedpipe.Shape() # adds cylinder an sphere together
 
 def _rounded_pipe(p1: gp_Pnt, p2: gp_Pnt, radius: float) -> TopoDS_Shape:
     direction = helper.get_direction(p1, p2) #gives normalised p2-p1 vector

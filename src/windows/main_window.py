@@ -241,3 +241,10 @@ class MainWindow(QMainWindow):
         dialog.setWindowTitle("Warning")
         dialog.setIcon(QMessageBox.Icon.Critical)
         dialog.exec()
+
+    def Threading_Values_Error(self):
+        dialog = QMessageBox()
+        dialog.setText("Error, you have indicated you would like threading channels; however, either threading depth or threading radius has been set to None, please check settings")
+        dialog.setWindowTitle("Threading Values Error")
+        dialog.setIcon(QMessageBox.Icon.Warning)
+        dialog.exec()
