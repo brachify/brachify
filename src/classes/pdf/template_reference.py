@@ -296,8 +296,12 @@ def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False
             angle = tandem_rotation
             # construct a line segment of a fixed length, with the angle of rotation of the tandem
             line_length = circle_radius / 2
-            end_pt_x = line_length * np.cos(angle)
-            end_pt_y = line_length * np.sin(angle)
+            end_pt_x = line_length * np.cos(np.radians(angle))
+            # must make y-value negative bc the view is from the bottom of the cylinder, with  y-axis pointing down.
+            # ie: o ---> x
+            #     |
+            #     y
+            end_pt_y = -1* line_length * np.sin(np.radians(angle)) 
             x_values = [0, end_pt_x]
             y_values = [0, end_pt_y]
             # Line goes from (0,0) to (end_pt_x, end_pt_y)
