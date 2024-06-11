@@ -39,7 +39,7 @@ class Ui_Channels_View(object):
         self.gridLayout.setObjectName(u"gridLayout")
         self.btn_apply_settings = QPushButton(self.groupBox_3)
         self.btn_apply_settings.setObjectName(u"btn_apply_settings")
-        self.btn_apply_settings.setMinimumSize(QSize(45, 20))
+        self.btn_apply_settings.setMinimumSize(QSize(240, 33))
         self.btn_apply_settings.setMaximumSize(QSize(16777215, 16777215))
         self.btn_apply_settings.setStyleSheet(u"QPushButton {\n"
 "	color: rgb(0, 0, 0);\n"
