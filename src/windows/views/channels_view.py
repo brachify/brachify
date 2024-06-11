@@ -49,6 +49,7 @@ class ChannelsView(CustomView):
         app.values.config_values["CONFIG_NEEDLE_LENGTH"] = needles_length
         diameter = self.ui.spinbox_diameter.value()
         log.debug(f"setting channel diameters to: {diameter}")
+        app.values.config_values["CONFIG_CHANNELS_DIAMETER"] = diameter
         self.channelsmodel.set_diameter(diameter)
         
     @display_action
