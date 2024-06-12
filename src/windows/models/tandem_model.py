@@ -217,6 +217,9 @@ class TandemModel(QObject):
         try:
             tandem.tandem_height = self.tandem_length
             shape = tandem.generate_shape()
+            # if the above did not generate errors, then this means that there is no error in the final tandem.
+            # So, set errors list to empty.
+            if(len(errors)>=1):
             if(len(errors)>=1):
                 errors = []
         except:
