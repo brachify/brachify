@@ -228,6 +228,20 @@ class MainWindow(QMainWindow):
         dialog.setIcon(QMessageBox.Icon.Warning)
         dialog.exec()
 
+    def channel_display_warning(self):
+        dialog = QMessageBox()
+        dialog.setText("Warning thrown while constructing needle channels. Please inspect the export view to ensure the needle channels look the way they should. \nIf a needle does not look the way it should, check to ensure there is no mistake in the plan, or replace the points on the needle that are not displaying properly.")
+        dialog.setWindowTitle("Warning")
+        dialog.setIcon(QMessageBox.Icon.Warning)
+        dialog.exec()
+
+    def channel_display_error(self):
+        dialog = QMessageBox()
+        dialog.setText("Error thrown while constructing channels. This indicates that there is likely a mistake in the 3D construction of your plan so please inspect the export view to ensure the needle channels look the way they should. Check to ensure there is no mistake in the plan, or replace the points on the needle that are not displaying properly.")
+        dialog.setWindowTitle("Warning")
+        dialog.setIcon(QMessageBox.Icon.Critical)
+        dialog.exec()
+
     def anchoring_points_warning(self):
         dialog = QMessageBox()
         dialog.setText("Warning: at least two of your channels contain only a single point. If you intend to use these points as anchoring points please ensure that either: \n1. none of your anchoring points have a channel number nor a label,\nOR\n2. all of your anchoring points have a channel number and a label.")
@@ -243,4 +257,3 @@ class MainWindow(QMainWindow):
         dialog.setIcon(QMessageBox.Icon.Warning)
 
         dialog.exec()
-

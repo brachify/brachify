@@ -458,7 +458,7 @@ QPushButton:pressed {
 }</string>
            </property>
            <property name="text">
-            <string>apply</string>
+            <string>Apply</string>
            </property>
           </widget>
          </item>
@@ -492,7 +492,7 @@ QPushButton:pressed {
 }</string>
            </property>
            <property name="text">
-            <string>clear</string>
+            <string>Clear</string>
            </property>
           </widget>
          </item>
