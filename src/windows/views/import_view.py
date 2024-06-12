@@ -23,6 +23,8 @@ class ImportView(CustomView):
         foldername = QFileDialog.getExistingDirectoryUrl(
             self, "Open patient folder").toLocalFile()
         
+        self.folder_name = foldername
+
         if not foldername:  # no folder selected?
             log.info("no valid filename selected for importing")
             return
@@ -54,8 +56,7 @@ class ImportView(CustomView):
         window.change_color_export()
 
     def action_update_import_label(self, data:DicomData):
-        
-        alldata="Patient and Plan Info\n"
+        alldata= "Folder: "+self.folder_name+"\n\nPatient and Plan Info\n"
         a = ("Patient ID:      \t\t")          + str(data.patient_id)+ "\n"
         b = ("Patient Name:    \t\t")          + str(data.patient_name)+ "\n"
         c = ("Plan ID:         \t\t")          + str(data.plan_label)+ "\n"
@@ -81,6 +82,7 @@ class ImportView(CustomView):
         displaymodel.set_materials(materials)
 
     def __init__(self):
+        self.folder_name = ""
         self.dicom_file_opened = False
         super().__init__()
         self.ui = Ui_Import_View()
