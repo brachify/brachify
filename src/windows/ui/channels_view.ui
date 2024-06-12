@@ -261,7 +261,7 @@ QPushButton:pressed {
         <property name="minimumSize">
          <size>
           <width>251</width>
-          <height>230</height>
+          <height>200</height>
          </size>
         </property>
         <property name="maximumSize">

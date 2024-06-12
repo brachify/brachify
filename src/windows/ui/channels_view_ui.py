@@ -135,7 +135,7 @@ class Ui_Channels_View(object):
 
         self.listwidget_channels = QListWidget(self.groupBox_3)
         self.listwidget_channels.setObjectName(u"listwidget_channels")
-        self.listwidget_channels.setMinimumSize(QSize(251, 230))
+        self.listwidget_channels.setMinimumSize(QSize(251, 200))
         self.listwidget_channels.setMaximumSize(QSize(16777215, 16777215))
         self.listwidget_channels.setStyleSheet(u"background-color: rgb(240, 245, 250);")
 
