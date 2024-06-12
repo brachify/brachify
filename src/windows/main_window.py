@@ -265,7 +265,6 @@ class MainWindow(QMainWindow):
         # Save dictionary as .json file
         with open(filename, "w") as outfile:
             json.dump(filePathsDict, outfile, indent=0)
-        outfile.close()
 
         log.info("Successfully saved filepaths.")
 

@@ -34,9 +34,8 @@ def load_config_file(file_name: str, alternate_dict: dict):
 
     try:
         # open, read, parse as dictionary, and close the config.json file
-        json_file = open(file_name)
-        config_values = json.load(json_file)
-        json_file.close()
+        with open(file_name) as json_file:
+            config_values = json.load(json_file)
 
         log.debug("Successfully loaded a config file.")
 

@@ -19,9 +19,9 @@ class Values():
 
         try:
             # open, read, parse as dictionary, and close the filepaths.json file
-            file = open(file_name)
-            file_paths = json.load(file)
-            file.close()       
+            with open(file_name) as file:
+                file_paths = json.load(file)
+
             log.debug("Successfully loaded the filepaths.json file.")
             # if the key does not exist, get() returns None.
             self.most_recently_opened_config_file = file_paths.get("most_recently_opened_config_file")
