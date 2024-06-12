@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
-
+################################################################################
+#
+# WARNING IMPORTANT: please re-add this comment and delete the line
+# self.sb_tandem_height.setValue(10.000000000000000) when this file is generated
+#
+################################################################################
 ################################################################################
 ## Form generated from reading UI file 'tandem_view.ui'
 ##
@@ -169,7 +174,6 @@ class Ui_Tandem_View(object):
         self.sb_tandem_height.setStyleSheet(u"background-color: rgb(255, 255, 250)")
         self.sb_tandem_height.setMinimum(10.000000000000000)
         self.sb_tandem_height.setMaximum(500.000000000000000)
-        self.sb_tandem_height.setValue(10.000000000000000)
 
         self.formLayout_2.setWidget(0, QFormLayout.FieldRole, self.sb_tandem_height)
 
