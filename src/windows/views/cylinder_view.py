@@ -74,8 +74,8 @@ class CylinderView(CustomView):
         self.ui.setupUi(self)
 
         # Set the spin box values
-        self.ui.spinbox_length.setValue(get_app().values.config_values.get("CONFIG_CYLINDER_LENGTH", 160.0))
-        self.ui.spinbox_diameter.setValue(get_app().values.config_values.get("CONFIG_CYLINDER_DIAMETER", 30.0))
+        self.ui.spinbox_length.setValue(get_app().values.config_values.get("CONFIG_CYLINDER_LENGTH"))
+        self.ui.spinbox_diameter.setValue(get_app().values.config_values.get("CONFIG_CYLINDER_DIAMETER"))
 
         # signals and slots
         self.ui.btn_apply_settings.pressed.connect(self.action_apply_settings)

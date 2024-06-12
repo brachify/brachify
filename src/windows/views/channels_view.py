@@ -81,7 +81,7 @@ class ChannelsView(CustomView):
         # diameter spin box
         self.ui.spinbox_diameter.setValue(self.channelsmodel.diameter)
         # needle channels spin box
-        self.ui.sb_needle_length.setValue(get_app().values.config_values.get("CONFIG_NEEDLE_LENGTH", 200.0))
+        self.ui.sb_needle_length.setValue(get_app().values.config_values.get("CONFIG_NEEDLE_LENGTH"))
 
         # channels list
         selected_channel = self.channelsmodel.get_selected_channel()
