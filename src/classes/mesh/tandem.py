@@ -17,14 +17,14 @@ from classes.app import get_app # note: this file can be run independently to vi
 
 
 class Tandem():
-    values = get_app().values.DEFAULT_CONFIG_VALUES.get
+    values = get_app().values.DEFAULT_CONFIG_VALUES
     #indicated values########################
-    cylinder_height: float = values('CONFIG_CYLINDER_LENGTH')
-    cylinder_diameter: float = values('CONFIG_CYLINDER_DIAMETER')
-    tandem_height: float = values('CONFIG_TANDEM_TIP_HEIGHT')
-    tandem_diameter: float = values('CONFIG_TANDEM_CHANNEL_DIAMETER')
-    tandem_angle: float = values('CONFIG_TANDEM_TIP_ANGLE')
-    bend_radius: float = values('CONFIG_TANDEM_BEND_RADIUS')
+    cylinder_height: float = values.get('CONFIG_CYLINDER_LENGTH')
+    cylinder_diameter: float = values.get('CONFIG_CYLINDER_DIAMETER')
+    tandem_height: float = values.get('CONFIG_TANDEM_TIP_HEIGHT')
+    tandem_diameter: float = values.get('CONFIG_TANDEM_CHANNEL_DIAMETER')
+    tandem_angle: float = values.get('CONFIG_TANDEM_TIP_ANGLE')
+    bend_radius: float = values.get('CONFIG_TANDEM_BEND_RADIUS')
     tandem_length: float = 8.0
     height_offset = 10.0
     #########################################
