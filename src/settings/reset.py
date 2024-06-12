@@ -29,7 +29,7 @@ def resetAllValues(values_dict: dict):
     needle_length = values_dict.get("CONFIG_NEEDLE_LENGTH")
     app.window.navigationmodel.views[2].ui.spinbox_diameter.setValue(channels_diameter)
     app.window.navigationmodel.views[2].ui.sb_needle_length.setValue(needle_length)
-    # do not need to check if is None (like for cylinder) bc channelsmodel always has a diameter value, when initialized.
+    # do not need to check if is None (like for cylinder) because channelsmodel always has a diameter value, when initialized.
     app.window.navigationmodel.views[2].action_apply_settings() # apply the above settings
     # note for above: the needle lengths do not affect the view at all.  They are only used when
     # generating the .pdf reference sheet.

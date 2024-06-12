@@ -72,7 +72,7 @@ def load_central_axis_varian(data: DicomData, rs_dataset):
     data.cylinder_tip = np.asarray(data.central_channel[0])
     data.cylinder_base = np.asarray(data.central_channel[-1])
     config_values = get_app().values.config_values
-    data.cylinder_diameter = config_values.get("CONFIG_CYLINDER_DIAMETER")  # hardcoded default. user needs to be flagged...
+    data.cylinder_diameter = config_values.get("CONFIG_CYLINDER_DIAMETER")
     data.cylinder_direction = data.cylinder_tip - data.cylinder_base   
 
 def load_central_axis_nucletron(data: DicomData, rp_dataset):
@@ -92,7 +92,7 @@ def load_central_axis_nucletron(data: DicomData, rp_dataset):
     data.cylinder_tip = np.asarray(data.central_channel[0])
     data.cylinder_base = np.asarray(data.central_channel[-1])
     config_values = get_app().values.config_values
-    data.cylinder_diameter = config_values.get("CONFIG_CYLINDER_DIAMETER")  # hardcoded default. user needs to be flagged...
+    data.cylinder_diameter = config_values.get("CONFIG_CYLINDER_DIAMETER")
     data.cylinder_direction = data.cylinder_tip - data.cylinder_base   
 
 
