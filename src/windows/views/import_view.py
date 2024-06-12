@@ -34,7 +34,7 @@ class ImportView(CustomView):
         text = "Config file currently loaded:\n"
         # If the file was not found, or if the file did not contain any valid keys, then print None.
         if len(app.values.config_keys_loaded[0]) < 1:
-            text += "None\n\n"
+            text += " None\n\n"
         # If the file did contain at least 1 valid key, then print the file path.
         else:
             text += f"{file_name}"
@@ -43,13 +43,12 @@ class ImportView(CustomView):
 
 
     def action_import_config_file(self):
-        # consider changing this to [0] at the end to only grab the filename, not a tuple, example:
-        # 'C:/Users/stephanie.merkl/brachify/test-config-1.json', '(*.json)') == ('file path', 'extension')
+
         file_name = QFileDialog.getOpenFileName(
-            self, "Open config file", "C:/Users/stephanie.merkl/Documents/Other", "(*.json)")[0]
+            self, "Open config file", "", "(*.json)")[0]
         
         # if no .json file is selected, then return (cancel the import)
-        if file_name == "": # NOTE: may have to update the other action_import_* methods below
+        if file_name == "": 
             """
               NOTE: the other action_import_* methods below return '' if user presses cancel, since they are 
               expecting a string.  This is why if not foldername: works for those, but it doesn't for here.
@@ -81,7 +80,6 @@ class ImportView(CustomView):
         # reset all the values in the spin boxes and in the views.
         resetAllValues(app.values.config_values)
 
-        app = get_app()
         app.values.most_recently_opened_config_file = file_name
 
         # this updates the label to show the filepath of the current config file.

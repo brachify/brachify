@@ -32,15 +32,6 @@ def load_config_file(file_name: str, alternate_dict: dict):
         config_keys_loaded[1] = [key for key in DEFAULT_CONFIG_VALUES]
         return (config_values, config_keys_loaded)
 
-    ############################################################# FIGURE OUT WHAT TO DO WITH THIS *****************
-    # If got file_name from user selecting from a file dialog, such as when user clicks import config file, 
-    # then could be empty string "" if user pressed cancel instead of selecting a file.
-    # make sure the file_name is not an empty string
-    #if file_name == "":
-    #    log.debug("Empty filename.")
-        # return something empty (I'm not sure what yet)
-
-
     try:
         # open, read, parse as dictionary, and close the config.json file
         json_file = open(file_name)

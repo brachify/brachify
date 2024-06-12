@@ -274,10 +274,10 @@ class MainWindow(QMainWindow):
         """
         Rewrites the filepaths.json file before closing.
         Overloads the default closeEvent method for this QMainWindow.
+        
+        When user presses "exit" of the brachify main window, 
+        then save all the most recent filepaths in a file called filepaths.json 
+        before exiting the program.
         """
-        # When user presses "exit" of the brachify main window, 
-        # then save all the most recent filepaths in a file called filepaths.json 
-        # before exiting the program.
-
         self.save_file_paths()
         

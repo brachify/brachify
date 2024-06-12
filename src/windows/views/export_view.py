@@ -56,6 +56,7 @@ class Export_View(CustomView):
 
         # save the file path to the most recently saved config file.
         app = get_app()
+        # the following value will be saved in filepaths.json, but is not used otherwise. (future developement)
         app.values.most_recently_saved_config_file = filename
 
         log.info("Successfully saved all the current values.")

@@ -2,17 +2,12 @@
 from settings import load
 from classes.info import USER_PATH
 from classes.logger import log
-# from classes.app import get_app
 import json
 from classes.info import USER_PATH
 from settings.defaults import DEFAULT_CONFIG_VALUES
 
 # object to store all the config and default values
 class Values():
-
-    def saveFilePaths(self):
-        
-        pass
 
     def readConfigFilePaths(self):
         """
@@ -33,7 +28,7 @@ class Values():
             self.most_recently_saved_config_file = file_paths.get("most_recently_saved_config_file")
 
         except:
-            # if can't read default settings from filepaths.json file, then ??????
+            # if can't read default settings from filepaths.json file
             log.debug("Couldn't read from filepaths.json.")
             self.most_recently_opened_config_file = None
             self.most_recently_saved_config_file = None
@@ -81,6 +76,7 @@ class Values():
         
         # define default values for the following attributes
         self.most_recently_opened_config_file = None
+            # the following value is saved in filepaths.json, but is not used otherwise. (future developement)
         self.most_recently_saved_config_file = None
 
         # initialize attributes that contian file paths to config files.
@@ -88,10 +84,6 @@ class Values():
 
         # on start up, reload the most recently used config file.
         file_name = self.most_recently_opened_config_file
-
-
-        # the location of the config file for start up.
-        #file_name = USER_PATH.joinpath("config.json")
 
         # read the default settings from the config.json file, as a dictionary,
         # and store it in an attribtue called config_values so it can be accessed later.
