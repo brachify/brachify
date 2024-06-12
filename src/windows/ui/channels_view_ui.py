@@ -76,7 +76,8 @@ class Ui_Channels_View(object):
         self.spinbox_diameter.setObjectName(u"spinbox_diameter")
         self.spinbox_diameter.setMinimumSize(QSize(20, 0))
         self.spinbox_diameter.setStyleSheet(u"background-color: rgb(255, 255, 255);")
-
+        self.spinbox_diameter.setMinimum(0.300000000000000)
+        
         self.horizontalLayout.addWidget(self.spinbox_diameter)
 
 

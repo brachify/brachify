@@ -141,6 +141,9 @@ QPushButton:pressed {
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);</string>
            </property>
+           <property name="minimum">
+            <double>0.300000000000000</double>
+           </property>
           </widget>
          </item>
         </layout>
