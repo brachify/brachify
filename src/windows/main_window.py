@@ -242,7 +242,7 @@ class MainWindow(QMainWindow):
         dialog.setIcon(QMessageBox.Icon.Critical)
         dialog.exec()
 
-    def anchoring_points_warning(self):
+    def single_point_pop_up_Nucleatron(self):
         dialog = QMessageBox()
         dialog.setText("Warning: at least two of your channels contain only a single point. If you intend to use these points as anchoring points please ensure that either: \n1. none of your anchoring points have a channel number nor a label,\nOR\n2. all of your anchoring points have a channel number and a label.")
         dialog.setWindowTitle("Multiple Anchoring Points")

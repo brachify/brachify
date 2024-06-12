@@ -219,7 +219,7 @@ def load_channels_nucletron(data: DicomData, rp_dataset, center_index):
             # up properly
             #
             if(anchor_points==2):
-                get_app().window.anchoring_points_warning()
+                get_app().window.single_point_pop_up_Nucleatron()
     data.channel_paths = channel_paths
 
 
