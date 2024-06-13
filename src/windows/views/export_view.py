@@ -16,6 +16,7 @@ from windows.views.custom_view import display_action, CustomView
 from windows.views.channels_view import ChannelsView
 
 import json
+from settings.reset import getCurrentValues
 
 EXPORT_LABEL = "export"
 BASEMAP = "basemap.png"
@@ -36,47 +37,29 @@ class Export_View(CustomView):
         Create a config.json file to save the current settings as defaults.
         """
         # User chooses location of config file and file name.
-        # returns a tuple containing (filepath, filetype)
+        # if user presses "cancel", then returns empty string ("")
         filename = QFileDialog.getSaveFileName(
-            self, "Save config", "", "JSON File (*.json)", "")
+            self, "Save config", "", "JSON File (*.json)", "")[0]
         
-        if not filename:   # no file selected?
+        if not filename:   # no file selected
             log.info("no valid filename selected for config file.")
+            return
         
         log.info(f"file {filename} has been selected for exporting config.")
 
-        # Collect the data to be stored in the config file.
-        app = get_app()
-        # 1. cylinder data
-        default_cylinder_diameter = app.window.cylindermodel.cylinder.diameter
-        default_length = app.window.cylindermodel.cylinder.length
-        # 2. channels data
-        default_diameter = app.window.channelsmodel.diameter
-        # 3. tandem data
-        tandem_channel_diameter_default = app.window.tandemmodel.tandem_diameter
-        tandem_stopper_diameter_default = app.window.tandemmodel.stopper_diameter
-        tandem_tip_angle_default = app.window.tandemmodel.tip_angle
-        tandem_bend_radius = app.window.tandemmodel.bend_radius
-        tandem_length = app.window.tandemmodel.tandem_length # this appears to coincide with Tandem Height in the GUI
+        config_values = getCurrentValues()
 
-        # 4. needle data - pulls the current value in the spin box
-        default_needle_length = app.window.navigationmodel.views[2].ui.sb_needle_length.value() 
-
-        # Create a dictionary containing the data.
-        config_values = {
-            "CONFIG_CYLINDER_DIAMETER": default_cylinder_diameter,
-            "CONFIG_CYLINDER_LENGTH": default_length,
-            "CONFIG_CHANNELS_DIAMETER": default_diameter,
-            "CONFIG_TANDEM_TIP_HEIGHT": tandem_length, # tandem_length may not actually be Tandem_Tip_Height_Default
-            "CONFIG_TANDEM_CHANNEL_DIAMETER": tandem_channel_diameter_default, 
-            "CONFIG_TANDEM_STOPPER_DIAMETER": tandem_stopper_diameter_default,
-            "CONFIG_TANDEM_TIP_ANGLE": tandem_tip_angle_default,
-            "CONFIG_TANDEM_BEND_RADIUS": tandem_bend_radius,
-            "CONFIG_NEEDLE_LENGTH": default_needle_length
-        }
         # Save dictionary as .json file
-        with open(filename[0], "w") as outfile:
+        with open(filename, "w") as outfile:
             json.dump(config_values, outfile, indent=0)
+
+        # save the file path to the most recently saved config file.
+        app = get_app()
+        # the following value will be saved in filepaths.json, but is not used otherwise. (future developement)
+        app.values.most_recently_saved_config_file = filename
+
+        log.info("Successfully saved all the current values.")
+        
 
     def action_export_mesh(self):
         """
@@ -118,7 +101,7 @@ class Export_View(CustomView):
         
         window = get_app().window
 
-        needle_length = window.navigationmodel.views[2].ui.sb_needle_length.value()
+        needle_length = get_app().values.config_values.get("CONFIG_NEEDLE_LENGTH")
 
         # generate pdf
         tandembool = window.tandemmodel.shape() != None
