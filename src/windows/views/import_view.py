@@ -99,13 +99,20 @@ class ImportView(CustomView):
             log.info("no valid filename selected for importing")
             return
 
-        log.info(f"file {foldername} has been selected")
+        app = get_app()
+        window = app.window
 
+        log.info(f"file {foldername} has been selected")
+        try:
+            data = window.dicommodel.data
+            data.reset()
+            window.canvas._display.ResetView()
+            window.canvas._display.EraseAll() #Note working yet (screen does not reset as it should prior to)
+        except:
+            print("",end='') #if this is the case then DicomData has not already been initialized
         data = read_dicom_folder(foldername)
 
         # Add patient and plan info to window
-        app = get_app()
-        window = app.window
         
         #if dicom file has been opened then the export tap can open and the button will change color
         #else the button will not change color, see main (not related to not being able to go to the
@@ -129,16 +136,13 @@ class ImportView(CustomView):
         for i in range(len(data.channels_labels)):
             f = f+(str(data.channels_labels[i]))+ ",  Channel: "+str(data.channel_numbers[i])+"\n"
         
-        #line below has not yet been tested, remove is there is an issue
-        tandem = get_app().window.channelsmodel.tandem_channel
+
+        tandem = data.tandem_channel
         g = ("Tandem Label:  ")+str(tandem)
         
         
         alldata = alldata+a+b+c+d+e+f+g
-        #last = data.toString()
-        #font = QFontDatabase().font("fira Mono", "no Italic", 9)
-        #font = QFont("Consolas", 9)
-        #self.ui.label_file_info.setFont(font)
+
         self.ui.label_file_info.setText(alldata)
 
     @display_action

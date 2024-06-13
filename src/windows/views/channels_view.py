@@ -58,6 +58,7 @@ class ChannelsView(CustomView):
 
     @display_action
     def action_set_tandem(self):
+        data = get_app().window.dicommodel.data
         log.debug(f"setting channel's tandem status")
 
         model = get_app().window.channelsmodel
@@ -65,7 +66,7 @@ class ChannelsView(CustomView):
 
         # set or clear the tandem channel
         label = None
-        if channel_label != model.tandem_channel: label = channel_label
+        if channel_label != data.tandem_channel: label = channel_label
         model.set_tandem(label)
 
     @display_action
@@ -86,7 +87,7 @@ class ChannelsView(CustomView):
         # channels list
         selected_channel = self.channelsmodel.get_selected_channel()
         self.ui.listwidget_channels.blockSignals(True)  # prevents accidently emitting signals
-        self.ui.listwidget_channels.clear()          
+        self.ui.listwidget_channels.clear()
         for row, channel in enumerate(self.channelsmodel.channels.values()):
             new_item = QListWidgetItem()
             new_item.setText(channel.label)

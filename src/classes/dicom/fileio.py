@@ -126,6 +126,7 @@ def load_channels_varian(data: DicomData, rs_dataset):
     CONFIG_CYLINDER_LENGTH = config_values.get("CONFIG_CYLINDER_LENGTH")
     offset_vector = np.array([0, 0, - cyl_length + CONFIG_CYLINDER_LENGTH])
 
+    anchor_points = 0
     updated_base = helper.rotate_points(base, cyl_vec, z_up)
     for i, c in enumerate(channel_contour_points):
         if(len(c)>1):
@@ -134,12 +135,27 @@ def load_channels_varian(data: DicomData, rs_dataset):
             new_points = np.array(new_points) - updated_base
             new_points = new_points + offset_vector
             channel_paths.append(list(list(points) for points in new_points))
-    else:
-        del data.channels_rois[i]
+        else:
+            anchor_points += 1
+            del data.channels_rois[i]
+            # single points used as anchoring points do not always have labels or
+            # channel numbers, if they do not then the length of the ROI list is longer than the
+            # list of channel numbers and channel_labels, this will only work for if there is one
+            # single point though since the user could potentially have one labeled anchoring point and
+            # one unlabeled anchoring point
+            if(len(data.channels_rois) != len(data.channel_numbers)):
+                del data.channel_numbers[i]
+            if(len(data.channels_rois) != len(data.channels_labels)):
+                del data.channels_labels[i]
+            # in the event of 2 anchoring points a warning is sent to the user asking them to ensure they
+            # have not labeled either of their anchouring points to ensure all of the channeles are lined
+            # up properly
+            if(anchor_points==1):
+                get_app().window.single_point_pop_up_Varian()
     data.channel_paths = channel_paths
 
 
-def load_channels_nucletron(data: DicomData, rp_dataset):
+def load_channels_nucletron(data: DicomData, rp_dataset, center_index):
 
     # Get the xyz values for each needle that isn't the central needle.
     rp_channels = rp_dataset[0x300f, 0x1000][0].ROIContourSequence
@@ -147,28 +163,24 @@ def load_channels_nucletron(data: DicomData, rp_dataset):
     # Initialize a list to store the extracted ContourData
     channel_contours = []
 
-    # Iterate over each item in rp_channels
-    for channel in rp_channels:
-        # Get the ContourNumber for the current channel
-        contour_number = int(channel.ReferencedROINumber)
+    #loads all channels information in the order they are in the dicom, just as the ROI_Channels are loaded
+    try:
+        channel_contours = [
+            channel.ContourSequence[0].ContourData for channel in  rp_channels
+            ]
+        #removes central channel
+        del channel_contours[center_index]
+
+        # Reshape the contour_data into lists of lists with shape (n, 3) 
+        for i, contour in enumerate(channel_contours):
+            channel_contours[i] = [contour[i:i+3] for i in range(0, len(contour), 3)]
         
-        # Check if the contour_number exists in data.channels_rois
-        if contour_number in data.channels_rois:
-            # Set the Contour Data index to the contour number: this may cause future problems, there may be a more robust method of doing this.
-            index = contour_number
-            
-            # Extract ContourData using the found index
-            contour_data = rp_channels[index].ContourSequence[0].ContourData
-            contour_data_float = [float(value_str) for value_str in contour_data]
-
-            # Reshape the contour_data into lists of lists with shape (n, 3)
-            reshaped_contour_data = [contour_data[i:i+3] for i in range(0, len(contour_data), 3)]
-
-            # Append the extracted ContourData to the list
-            channel_contours.append(reshaped_contour_data)
-        else:
-            # If the contour_number doesn't exist in data.channels_labels, handle it accordingly
-            print(f"ContourNumber {contour_number} not found in data.channels_labels")
+        for i in range(len(channel_contours)):
+            for j in range(len(channel_contours[i])):
+                for k in range(len(channel_contours[i][j])):
+                    channel_contours[i][j][k] = float(channel_contours[i][j][k])
+    except Exception as e:
+        log.error("Failed to load channels due to: " + str(e))
 
     
     channel_paths = []
@@ -185,6 +197,7 @@ def load_channels_nucletron(data: DicomData, rp_dataset):
     offset_vector = np.array([0, 0, - cyl_length + CONFIG_CYLINDER_LENGTH])
 
     updated_base = helper.rotate_points(base, cyl_vec, z_up)
+    anchor_points=0
     for i, c in enumerate(channel_contours):
         if(len(c)>1):
             new_points = np.array(c)
@@ -193,8 +206,24 @@ def load_channels_nucletron(data: DicomData, rp_dataset):
             new_points = new_points + offset_vector
             channel_paths.append(list(list(points) for points in new_points))
         else:
+            #ROI_singlton = data.channels_rois[i]
             del data.channels_rois[i]
-            #Need to delete the channel number associated with a point if it exists
+            anchor_points+=1
+            # single points used as anchoring points do not always have labels or
+            # channel numbers, if they do not then the length of the ROI list is longer than the
+            # list of channel numbers and channel_labels, this will only work for if there is one
+            # single point though since the user could potentially have one labeled anchoring point and
+            # one unlabeled anchoring point
+            if(len(data.channels_rois) != len(data.channel_numbers)):
+                del data.channel_numbers[i]
+            if(len(data.channels_rois) != len(data.channels_labels)):
+                del data.channels_labels[i]
+            # in the event of 2 anchoring points a warning is sent to the user asking them to ensure they
+            # have not labeled either of their anchouring points to ensure all of the channeles are lined
+            # up properly
+            #
+            if(anchor_points==2):
+                get_app().window.single_point_pop_up_Nucleatron()
     data.channel_paths = channel_paths
 
 
@@ -329,6 +358,7 @@ def load_varian_dicom_data(rp_file: str, rs_file: str) -> DicomData:
         data.central_channel_roi = data.channels_rois[center_index]
         data.channels_labels.pop(center_index)
         data.channels_rois.pop(center_index)
+        data.channel_numbers.pop(center_index)
 
     # Contour Data
     try:
@@ -415,7 +445,7 @@ def load_nucletron_dicom_data(rp_file: str, rs_file: str) -> DicomData:
     if data.central_channel_roi is not None:
         data.channels_labels.pop(center_index)
         data.channels_rois.pop(center_index)
-        #Will have to pop Channel Numbers when they are added
+        data.channel_numbers.pop(center_index)
 
     # Contour Data
     try:
@@ -435,7 +465,7 @@ def load_nucletron_dicom_data(rp_file: str, rs_file: str) -> DicomData:
         
         # channels info
         if data.channels_rois:
-            load_channels_nucletron(data, rp_dataset)
+            load_channels_nucletron(data, rp_dataset, center_index)
     except Exception as error_message:
         log.error(f"Loading RS Dicom file failed! {rs_file}\n{error_message}")
 

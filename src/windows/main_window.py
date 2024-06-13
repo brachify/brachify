@@ -244,6 +244,22 @@ class MainWindow(QMainWindow):
         dialog.setWindowTitle("Warning")
         dialog.setIcon(QMessageBox.Icon.Critical)
         dialog.exec()
+
+    def single_point_pop_up_Nucleatron(self):
+        dialog = QMessageBox()
+        dialog.setText("Warning: at least two of your channels contain only a single point. If you intend to use these points as anchoring points please ensure that either: \n1. none of your anchoring points have a channel number nor a label,\nOR\n2. all of your anchoring points have a channel number and a label.")
+        dialog.setWindowTitle("Multiple Anchoring Points")
+        dialog.setIcon(QMessageBox.Icon.Warning)
+
+        dialog.exec()
+
+    def single_point_pop_up_Varian(self):
+        dialog = QMessageBox()
+        dialog.setText("Warning, at least one channel with a single point was detected, this point WILL NOT be included in the 3D model.")
+        dialog.setWindowTitle("Channel with Single Point Detected")
+        dialog.setIcon(QMessageBox.Icon.Warning)
+
+        dialog.exec()
         
     def save_file_paths(self):
         """
