@@ -4,7 +4,6 @@ import sys
 
 from classes import info
 from classes.logger import log
-from settings.load import load_config_file, DEFAULT_CONFIG_VALUES
 
 app = None
 

@@ -71,7 +71,8 @@ def load_central_axis_varian(data: DicomData, rs_dataset):
 
     data.cylinder_tip = np.asarray(data.central_channel[0])
     data.cylinder_base = np.asarray(data.central_channel[-1])
-    data.cylinder_diameter = CONFIG_CYLINDER_DIAMETER  # hardcoded default. user needs to be flagged...
+    config_values = get_app().values.config_values
+    data.cylinder_diameter = config_values.get("CONFIG_CYLINDER_DIAMETER")
     data.cylinder_direction = data.cylinder_tip - data.cylinder_base   
 
 def load_central_axis_nucletron(data: DicomData, rp_dataset):
@@ -90,7 +91,8 @@ def load_central_axis_nucletron(data: DicomData, rp_dataset):
 
     data.cylinder_tip = np.asarray(data.central_channel[0])
     data.cylinder_base = np.asarray(data.central_channel[-1])
-    data.cylinder_diameter = CONFIG_CYLINDER_DIAMETER  # hardcoded default. user needs to be flagged...
+    config_values = get_app().values.config_values
+    data.cylinder_diameter = config_values.get("CONFIG_CYLINDER_DIAMETER")
     data.cylinder_direction = data.cylinder_tip - data.cylinder_base   
 
 
@@ -120,7 +122,8 @@ def load_channels_varian(data: DicomData, rs_dataset):
     cyl_length = np.linalg.norm(cyl_vec)
     
     # normalized direction from tip to base
-    from classes.mesh.cylinder import CONFIG_CYLINDER_LENGTH
+    config_values = get_app().values.config_values
+    CONFIG_CYLINDER_LENGTH = config_values.get("CONFIG_CYLINDER_LENGTH")
     offset_vector = np.array([0, 0, - cyl_length + CONFIG_CYLINDER_LENGTH])
 
     anchor_points = 0
@@ -189,7 +192,8 @@ def load_channels_nucletron(data: DicomData, rp_dataset, center_index):
     cyl_length = np.linalg.norm(cyl_vec)
     
     # normalized direction from tip to base
-    from classes.mesh.cylinder import CONFIG_CYLINDER_LENGTH
+    config_values = get_app().values.config_values
+    CONFIG_CYLINDER_LENGTH = config_values.get("CONFIG_CYLINDER_LENGTH")
     offset_vector = np.array([0, 0, - cyl_length + CONFIG_CYLINDER_LENGTH])
 
     updated_base = helper.rotate_points(base, cyl_vec, z_up)

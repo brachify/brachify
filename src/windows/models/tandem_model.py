@@ -50,6 +50,14 @@ class TandemModel(QObject):
 
     values_changed = Signal()
 
+    def exists(self):
+        # Returns True if the tandem has a _base_shape (ie, if there is a tandem currently in use, both generated or imported).
+        # Returns False if the tandem does not have a _base_shape (ie, if there is no tandem currently in use).
+        if self._base_shape is None:
+            return False
+        else:
+            return True
+
     def clear_tandem(self):
         # remove tandem from the display
         self._base_shape = None

@@ -6,6 +6,8 @@ from windows.models.shape_model import ShapeTypes
 from windows.ui.channels_view_ui import Ui_Channels_View
 from windows.views.custom_view import display_action, CustomView
 
+from settings.reset import getCurrentValues
+
 # get default needle length from config file.  If can't read from dictionary, set to 200.0.
 config_values = get_app().values.config_values
 CONFIG_NEEDLE_LENGTH = config_values.get("CONFIG_NEEDLE_LENGTH")
@@ -41,8 +43,13 @@ class ChannelsView(CustomView):
     @display_action
     def action_apply_settings(self):
         log.debug(f"action: apply settings")
+        app = get_app()
+        # update config_values dict for needles
+        needles_length = self.ui.sb_needle_length.value()
+        app.values.config_values["CONFIG_NEEDLE_LENGTH"] = needles_length
         diameter = self.ui.spinbox_diameter.value()
         log.debug(f"setting channel diameters to: {diameter}")
+        app.values.config_values["CONFIG_CHANNELS_DIAMETER"] = diameter
         self.channelsmodel.set_diameter(diameter)
         
     @display_action
@@ -74,6 +81,8 @@ class ChannelsView(CustomView):
         
         # diameter spin box
         self.ui.spinbox_diameter.setValue(self.channelsmodel.diameter)
+        # needle channels spin box
+        self.ui.sb_needle_length.setValue(get_app().values.config_values.get("CONFIG_NEEDLE_LENGTH"))
 
         # channels list
         selected_channel = self.channelsmodel.get_selected_channel()
