@@ -74,53 +74,6 @@ def load_central_axis_varian(data: DicomData, rs_dataset):
     data.cylinder_diameter = CONFIG_CYLINDER_DIAMETER 
     data.cylinder_direction = data.cylinder_tip - data.cylinder_base   
 
-
-def remove_collinear_points(points): #unused, left in case it's needed later.
-
-    def is_collinear(p1, p2, p3):
-        """Check if three points are collinear"""
-        # Create vectors
-        v1 = np.array(p2) - np.array(p1)
-        v2 = np.array(p3) - np.array(p2)
-        if np.all(v1 == v2):
-            return True
-
-        # Calculate the dot product
-        dot_product = np.dot(v1, v2)
-
-        # Calculate the magnitude of the vectors
-        magnitude_vector1 = np.linalg.norm(v1)
-        magnitude_vector2 = np.linalg.norm(v2)
-        
-
-        # Calculate the cosine of the angle
-        cos_angle = dot_product / (magnitude_vector1 * magnitude_vector2)
-
-        # Calculate the angle in radians
-        angle_radians = np.arccos(cos_angle)
-
-        # Convert to degrees, if needed
-        angle_degrees = np.degrees(angle_radians)
-
-        parallel = angle_degrees < 0.02
-        # print(is_close)
-        return parallel
-
-    # Handle lists with fewer than 3 points
-    if len(points) < 3:
-        return points
-
-    filtered_points = [points[0]]
-    last_point = points[0]
-    for i in range(1, len(points) - 1):
-        if not is_collinear(last_point, points[i], points[i + 1]):
-            filtered_points.append(points[i])
-            last_point = points[i]
-    filtered_points.append(points[-1])
-
-    return filtered_points
-
-
 def load_central_axis_nucletron(data: DicomData, rp_dataset):
     central_channel = None
     # central_channel = rp_dataset.ApplicationSetupSequence[0].ChannelSequence[data.central_channel_roi].BrachyControlPointSequence
@@ -180,6 +133,7 @@ def load_channels_varian(data: DicomData, rs_dataset):
             new_points = new_points + offset_vector
             channel_paths.append(list(list(points) for points in new_points))
         else:
+            anchor_points += 1
             del data.channels_rois[i]
             # single points used as anchoring points do not always have labels or
             # channel numbers, if they do not then the length of the ROI list is longer than the
@@ -193,8 +147,8 @@ def load_channels_varian(data: DicomData, rs_dataset):
             # in the event of 2 anchoring points a warning is sent to the user asking them to ensure they
             # have not labeled either of their anchouring points to ensure all of the channeles are lined
             # up properly
-            if(anchor_points==2):
-                get_app().window.anchoring_points_warning()
+            if(anchor_points==1):
+                get_app().window.single_point_pop_up_Varian()
     data.channel_paths = channel_paths
 
 
@@ -248,6 +202,7 @@ def load_channels_nucletron(data: DicomData, rp_dataset, center_index):
             new_points = new_points + offset_vector
             channel_paths.append(list(list(points) for points in new_points))
         else:
+            #ROI_singlton = data.channels_rois[i]
             del data.channels_rois[i]
             anchor_points+=1
             # single points used as anchoring points do not always have labels or
@@ -264,7 +219,7 @@ def load_channels_nucletron(data: DicomData, rp_dataset, center_index):
             # up properly
             #
             if(anchor_points==2):
-                get_app().window.anchoring_points_warning()
+                get_app().window.single_point_pop_up_Nucleatron()
     data.channel_paths = channel_paths
 
 
@@ -481,7 +436,8 @@ def load_nucletron_dicom_data(rp_file: str, rs_file: str) -> DicomData:
     except Exception as error_message:
         log.error(f"Error locating central axis: {error_message}")    
 
-    # IF THERE'S A CENTRAL AXIS, ADD IT TO DATA AND REMOVE IT FROM THE LIST (it is added above this removes it from list)
+    # IF THERE'S A CENTRAL AXIS, ADD IT TO DATA AND REMOVE IT FROM THE LIST
+    # (It is added above.  The following removes it from list.)
     if data.central_channel_roi is not None:
         data.channels_labels.pop(center_index)
         data.channels_rois.pop(center_index)

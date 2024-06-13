@@ -98,8 +98,8 @@ class Ui_Channels_View(object):
 
         self.frame = QFrame(self.groupBox_3)
         self.frame.setObjectName(u"frame")
-        self.frame.setFrameShape(QFrame.StyledPanel)
-        self.frame.setFrameShadow(QFrame.Raised)
+        self.frame.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame.setFrameShadow(QFrame.Shadow.Raised)
         self.horizontalLayout = QHBoxLayout(self.frame)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
@@ -115,6 +115,7 @@ class Ui_Channels_View(object):
         self.spinbox_diameter.setObjectName(u"spinbox_diameter")
         self.spinbox_diameter.setMinimumSize(QSize(20, 0))
         self.spinbox_diameter.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+        self.spinbox_diameter.setMinimum(0.300000000000000)
 
         self.horizontalLayout.addWidget(self.spinbox_diameter)
 

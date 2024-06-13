@@ -99,25 +99,3 @@ class DicomData:
             text += "\nNo Channel Data!\n"
 
         return text
-
-    def toJson(self) -> dict:
-        return {
-            "Patient Name": self.patient_name,
-            "Patient ID": self.patient_id,
-            "Plan Label": self.plan_label,
-            "Cylinder ROI": self.cylinder_roi,
-            "Cylinder Contour": self.cylinder_contour,
-            "Channel ROIs": self.channels_rois,
-            "Channel Labels": self.channels_labels,
-            "Channel Contours": self.channel_contours
-        }
-
-    def fromJson(self, json: dict) -> None:
-        self.patient_name = json["Patient Name"]
-        self.patient_id = json["Patient ID"]
-        self.plan_label = json["Plan Label"]
-        self.cylinder_roi = json["Cylinder ROI"]
-        self.cylinder_contour = json["Cylinder Contour"]
-        self.channels_rois = json["Channel ROIs"]
-        self.channels_labels = json["Channel Labels"]
-        self.channel_contours = json["Channel Contours"]

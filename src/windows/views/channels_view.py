@@ -5,7 +5,6 @@ from classes.logger import log
 from windows.models.shape_model import ShapeTypes
 from windows.ui.channels_view_ui import Ui_Channels_View
 from windows.views.custom_view import display_action, CustomView
-from classes.dicom.data import DicomData
 
 # get default needle length from config file.  If can't read from dictionary, set to 200.0.
 config_values = get_app().values.config_values
