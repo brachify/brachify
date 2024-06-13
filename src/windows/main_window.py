@@ -11,6 +11,9 @@ from windows.models.cylinder_model import CylinderModel
 from windows.models.tandem_model import TandemModel
 from windows.models.navigation_model import NavigationModel
 
+from classes.info import USER_PATH
+import json
+
 class MainWindow(QMainWindow):
 
     def __init__(self, *args):
@@ -242,6 +245,56 @@ class MainWindow(QMainWindow):
         dialog.setWindowTitle("Warning")
         dialog.setIcon(QMessageBox.Icon.Critical)
         dialog.exec()
+
+    def single_point_pop_up_Nucleatron(self):
+        dialog = QMessageBox()
+        dialog.setText("Warning: at least two of your channels contain only a single point. If you intend to use these points as anchoring points please ensure that either: \n1. none of your anchoring points have a channel number nor a label,\nOR\n2. all of your anchoring points have a channel number and a label.")
+        dialog.setWindowTitle("Multiple Anchoring Points")
+        dialog.setIcon(QMessageBox.Icon.Warning)
+
+        dialog.exec()
+
+    def single_point_pop_up_Varian(self):
+        dialog = QMessageBox()
+        dialog.setText("Warning, at least one channel with a single point was detected, this point WILL NOT be included in the 3D model.")
+        dialog.setWindowTitle("Channel with Single Point Detected")
+        dialog.setIcon(QMessageBox.Icon.Warning)
+
+        dialog.exec()    
+    
+    def save_file_paths(self):
+        """
+        Saves the filepaths to config files in a .json dictionary called filepaths.json.
+        """
+        # create the dictionary that we want to save.
+        app = get_app()
+        most_recently_opened_config_file = app.values.most_recently_opened_config_file
+        most_recently_saved_config_file = app.values.most_recently_saved_config_file
+        filePathsDict = {
+            "most_recently_opened_config_file": most_recently_opened_config_file,
+            "most_recently_saved_config_file": most_recently_saved_config_file
+        }
+
+
+        # the name of the file we want to save to.
+        filename = USER_PATH.joinpath("filepaths.json")
+
+        # Save dictionary as .json file
+        with open(filename, "w") as outfile:
+            json.dump(filePathsDict, outfile, indent=0)
+
+        log.info("Successfully saved filepaths.")
+
+    def closeEvent(self, event):
+        """
+        Rewrites the filepaths.json file before closing.
+        Overloads the default closeEvent method for this QMainWindow.
+        
+        When user presses "exit" of the brachify main window, 
+        then save all the most recent filepaths in a file called filepaths.json 
+        before exiting the program.
+        """
+        self.save_file_paths()
 
     def tandem_error(self, code):
         dialog = QMessageBox()
