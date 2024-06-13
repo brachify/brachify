@@ -146,6 +146,8 @@ class ChannelsView(CustomView):
 
         #sets default needle length
         self.ui.sb_needle_length.setValue(CONFIG_NEEDLE_LENGTH)
+        self.ui.sb_threading_dept.setValue(config_values.get("CONFIG_THREADING_DEPTH"))
+        self.ui.sb_threading_diameter.setValue(config_values.get("CONFIG_THREADING_RADIUS"))
 
         # signals and slots
         self.ui.btn_apply_settings.pressed.connect(self.action_apply_settings)
