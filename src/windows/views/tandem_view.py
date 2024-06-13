@@ -54,6 +54,9 @@ class TandemView(CustomView):
 
         self.tandemmodel.import_tandem(filename)
         self.update_settings()
+        #sets tandem rotation to the value in the box and then
+        tan = get_app().window.tandemmodel
+        tan.imported_tandem_rotation(self.ui.tandem_rotation.value())
 
     @display_action
     def action_set_import(self):
@@ -61,8 +64,6 @@ class TandemView(CustomView):
         offset = self.ui.sb_height_offset.value()
         # use the spin box value as the new height offset value
         self.tandemmodel.set_import_height_offset(offset)
-        tan = get_app().window.tandemmodel
-        tan.imported_tandem_rotation(self.ui.tandem_rotation.value()) # set only for the purpose of refference document, can be removed if it is decided the refference document is uneccessary
 
 
     def on_close(self):
