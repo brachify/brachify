@@ -58,7 +58,7 @@ class TandemView(CustomView):
 
         self.tandemmodel.import_tandem(filename)
         self.update_settings()
-        #sets tandem rotation to the value in the box and then
+        #sets tandem rotation to the value in the box
         tan = get_app().window.tandemmodel
         tan.imported_tandem_rotation(self.ui.tandem_rotation.value())
 
