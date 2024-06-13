@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+# please remove self.sb_tandem_height.setValue(10.000000000000000) and re-add this line if tandem_view_ui.py is reconstructed
 ################################################################################
 ## Form generated from reading UI file 'tandem_view.ui'
 ##
@@ -49,11 +49,11 @@ class Ui_Tandem_View(object):
         self.verticalLayout_4 = QVBoxLayout(self.verticalLayoutWidget_3)
         self.verticalLayout_4.setSpacing(10)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
-        self.verticalLayout_4.setSizeConstraint(QLayout.SizeConstraint.SetMaximumSize)
+        self.verticalLayout_4.setSizeConstraint(QLayout.SetDefaultConstraint)
         self.verticalLayout_4.setContentsMargins(10, 10, 5, 10)
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.horizontalLayout.setSizeConstraint(QLayout.SizeConstraint.SetMaximumSize)
+        self.horizontalLayout.setSizeConstraint(QLayout.SetDefaultConstraint)
         self.label_4 = QLabel(self.verticalLayoutWidget_3)
         self.label_4.setObjectName(u"label_4")
         self.label_4.setMaximumSize(QSize(70, 25))
@@ -64,7 +64,6 @@ class Ui_Tandem_View(object):
         self.sb_height_offset.setObjectName(u"sb_height_offset")
         self.sb_height_offset.setMinimumSize(QSize(20, 0))
         self.sb_height_offset.setStyleSheet(u"background-color: rgb(255, 255, 255)")
-        self.sb_height_offset.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
         self.sb_height_offset.setMinimum(-100.000000000000000)
         self.sb_height_offset.setMaximum(100.000000000000000)
 
@@ -144,7 +143,7 @@ class Ui_Tandem_View(object):
 
         self.verticalLayout_4.addWidget(self.label_5)
 
-        self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.verticalLayout_4.addItem(self.verticalSpacer_3)
 
@@ -157,7 +156,7 @@ class Ui_Tandem_View(object):
         self.verticalLayout_5 = QVBoxLayout(self.verticalLayoutWidget_4)
         self.verticalLayout_5.setSpacing(10)
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
-        self.verticalLayout_5.setSizeConstraint(QLayout.SizeConstraint.SetMaximumSize)
+        self.verticalLayout_5.setSizeConstraint(QLayout.SetDefaultConstraint)
         self.verticalLayout_5.setContentsMargins(10, 10, 5, 10)
         self.formLayout_2 = QFormLayout()
         self.formLayout_2.setObjectName(u"formLayout_2")
@@ -167,7 +166,6 @@ class Ui_Tandem_View(object):
         self.sb_tandem_height.setStyleSheet(u"background-color: rgb(255, 255, 250)")
         self.sb_tandem_height.setMinimum(10.000000000000000)
         self.sb_tandem_height.setMaximum(500.000000000000000)
-        
 
         self.formLayout_2.setWidget(0, QFormLayout.FieldRole, self.sb_tandem_height)
 
@@ -175,12 +173,14 @@ class Ui_Tandem_View(object):
         self.sp_channel_diameter.setObjectName(u"sp_channel_diameter")
         self.sp_channel_diameter.setMaximumSize(QSize(16777215, 16777215))
         self.sp_channel_diameter.setStyleSheet(u"background-color: rgb(255, 255, 250)")
+        self.sp_channel_diameter.setMinimum(0.500000000000000)
 
         self.formLayout_2.setWidget(1, QFormLayout.FieldRole, self.sp_channel_diameter)
 
         self.sp_stopper_diameter = QDoubleSpinBox(self.verticalLayoutWidget_4)
         self.sp_stopper_diameter.setObjectName(u"sp_stopper_diameter")
         self.sp_stopper_diameter.setStyleSheet(u"background-color: rgb(255, 255, 250)")
+        self.sp_stopper_diameter.setMinimum(0.500000000000000)
 
         self.formLayout_2.setWidget(2, QFormLayout.FieldRole, self.sp_stopper_diameter)
 
@@ -266,7 +266,7 @@ class Ui_Tandem_View(object):
 
         self.verticalLayout_5.addWidget(self.btn_clear_generate)
 
-        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.verticalLayout_5.addItem(self.verticalSpacer_2)
 

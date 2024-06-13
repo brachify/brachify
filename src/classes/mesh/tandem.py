@@ -300,7 +300,7 @@ class Tandem():
             pass  # TODO
 
         # variables used
-        tandem_radius = self.tandem_diameter / 2 - 0.1
+        tandem_radius = self.tandem_diameter / 2 
         tandem_height = self.tandem_height
         bend_radius = self.bend_radius
 

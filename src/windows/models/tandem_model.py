@@ -199,38 +199,55 @@ class TandemModel(QObject):
         tandem = Tandem()
         errors = []
         
+        tandemUI = get_app().window.navigationmodel.views[3].ui
+
         tandem.cylinder_height = self.cylinder_length
         tandem.cylinder_diameter = self.cylinder_diameter
         
         try:
+            temp = tandem.tandem_diameter
             tandem.tandem_diameter = self.tandem_diameter
             shape = tandem.generate_shape()
+            tandemUI.sp_channel_diameter.setValue(self.tandem_diameter)
         except:
             errors.append("diam")
+            tandemUI.sp_channel_diameter.setValue(temp)
         try:
+            temp = tandem.stopper_diameter
             tandem.stopper_diameter = self.stopper_diameter
             shape = tandem.generate_shape()
+            tandemUI.sp_stopper_diameter.setValue(self.stopper_diameter)
         except:
             errors.append("stopper")
+            tandemUI.sp_stopper_diameter.setValue(temp)
         try:
+            temp = tandem.tandem_angle
             tandem.tandem_angle = self.tip_angle
             shape = tandem.generate_shape()
+            tandemUI.sp_bend_angle.setValue(self.tip_angle)
         except:
             errors.append("angle")
+            tandemUI.sp_bend_angle.setValue(temp)
         try:
+            temp = tandem.bend_radius
             tandem.bend_radius = self.bend_radius
             shape = tandem.generate_shape()
+            tandemUI.sb_bend_radius.setValue(self.bend_radius)
         except:
             errors.append("radius")
+            tandemUI.sb_bend_radius.setValue(temp)
         try:
+            temp = tandem.tandem_height
             tandem.tandem_height = self.tandem_length
             shape = tandem.generate_shape()
+            tandemUI.sb_tandem_height.setValue(self.tandem_length)
             # if the above did not generate errors, then this means that there is no error in the final tandem.
             # So, set errors list to empty.
             if(len(errors)>=1):
                 errors = []
         except:
             errors.append("height")
+            tandemUI.sb_tandem_height.setValue(temp)
         
         if(len(errors)>0):
             for err in errors:
