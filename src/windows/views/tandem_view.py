@@ -6,6 +6,8 @@ from windows.models.shape_model import ShapeTypes
 from windows.ui.tandem_view_ui import Ui_Tandem_View
 from windows.views.custom_view import display_action, CustomView
 
+from settings.reset import getCurrentValues
+
 materials = {
     ShapeTypes.CYLINDER: {"rgb": [0.8, 0.8, 0.8], "transparent": True},
     ShapeTypes.CHANNEL: {"rgb": [0.8, 0.8, 0.8], "transparent": True},
@@ -32,6 +34,10 @@ class TandemView(CustomView):
             bend_radius= self.ui.sb_bend_radius.value(),
             tandem_length= self.ui.sb_tandem_height.value()
         )
+
+        # update the config_values dict
+        get_app().values.config_values = getCurrentValues()
+
 
     @display_action
     def action_import_tandem(self):
