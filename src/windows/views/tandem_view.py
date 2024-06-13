@@ -35,6 +35,10 @@ class TandemView(CustomView):
             tandem_length= self.ui.sb_tandem_height.value()
         )
 
+        #updates the spin box value of rotation
+        window = get_app().window
+        rotation = window.tandemmodel.rotation
+        window.navigationmodel.views[3].ui.tandem_rotation.setValue(rotation)
         # update the config_values dict
         get_app().values.config_values = getCurrentValues()
 
@@ -64,6 +68,10 @@ class TandemView(CustomView):
         offset = self.ui.sb_height_offset.value()
         # use the spin box value as the new height offset value
         self.tandemmodel.set_import_height_offset(offset)
+
+        #sets tandem rotation to the value in the box and then
+        tan = get_app().window.tandemmodel
+        tan.imported_tandem_rotation(self.ui.tandem_rotation.value())
 
 
     def on_close(self):
