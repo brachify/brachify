@@ -1,10 +1,5 @@
 # -*- coding: utf-8 -*-
-################################################################################
-#
-# WARNING IMPORTANT: please re-add this comment and delete the line
-# self.sb_tandem_height.setValue(10.000000000000000) when this file is generated
-#
-################################################################################
+
 ################################################################################
 ## Form generated from reading UI file 'tandem_view.ui'
 ##
@@ -35,23 +30,23 @@ class Ui_Tandem_View(object):
         self.verticalLayoutWidget_2 = QWidget(Tandem_View)
         self.verticalLayoutWidget_2.setObjectName(u"verticalLayoutWidget_2")
         self.verticalLayoutWidget_2.setGeometry(QRect(0, 0, 290, 4091))
-        self.verticalLayout_3 = QVBoxLayout(self.verticalLayoutWidget_2)
-        self.verticalLayout_3.setSpacing(0)
-        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
-        self.ab_1 = QTabWidget(self.verticalLayoutWidget_2)
-        self.ab_1.setObjectName(u"ab_1")
-        self.ab_1.setStyleSheet(u"background-color: rgb(240, 245, 250);")
-        self.Import_2 = QWidget()
-        self.Import_2.setObjectName(u"Import_2")
-        self.verticalLayoutWidget_3 = QWidget(self.Import_2)
+        self.verticalLayout = QVBoxLayout(self.verticalLayoutWidget_2)
+        self.verticalLayout.setSpacing(0)
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.ab = QTabWidget(self.verticalLayoutWidget_2)
+        self.ab.setObjectName(u"ab")
+        self.ab.setStyleSheet(u"background-color: rgb(240, 245, 250);")
+        self.Import = QWidget()
+        self.Import.setObjectName(u"Import")
+        self.verticalLayoutWidget_3 = QWidget(self.Import)
         self.verticalLayoutWidget_3.setObjectName(u"verticalLayoutWidget_3")
-        self.verticalLayoutWidget_3.setGeometry(QRect(0, 0, 290, 5000))
-        self.verticalLayout_4 = QVBoxLayout(self.verticalLayoutWidget_3)
-        self.verticalLayout_4.setSpacing(10)
-        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
-        self.verticalLayout_4.setSizeConstraint(QLayout.SetDefaultConstraint)
-        self.verticalLayout_4.setContentsMargins(10, 10, 10, 10)
+        self.verticalLayoutWidget_3.setGeometry(QRect(0, 0, 281, 4971))
+        self.verticalLayout_2 = QVBoxLayout(self.verticalLayoutWidget_3)
+        self.verticalLayout_2.setSpacing(10)
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.verticalLayout_2.setSizeConstraint(QLayout.SetMaximumSize)
+        self.verticalLayout_2.setContentsMargins(9, 10, 5, 10)
         self.btn_import = QPushButton(self.verticalLayoutWidget_3)
         self.btn_import.setObjectName(u"btn_import")
         self.btn_import.setMinimumSize(QSize(100, 33))
@@ -70,7 +65,7 @@ class Ui_Tandem_View(object):
 "	background-color: rgb(28, 44, 81);\n"
 "}")
 
-        self.verticalLayout_4.addWidget(self.btn_import)
+        self.verticalLayout_2.addWidget(self.btn_import)
 
         self.btn_clear_import = QPushButton(self.verticalLayoutWidget_3)
         self.btn_clear_import.setObjectName(u"btn_clear_import")
@@ -90,15 +85,15 @@ class Ui_Tandem_View(object):
 "	background-color: rgb(28, 44, 81);\n"
 "}")
 
-        self.verticalLayout_4.addWidget(self.btn_clear_import)
+        self.verticalLayout_2.addWidget(self.btn_clear_import)
 
         self.formLayout = QFormLayout()
         self.formLayout.setObjectName(u"formLayout")
-        self.label_4 = QLabel(self.verticalLayoutWidget_3)
-        self.label_4.setObjectName(u"label_4")
-        self.label_4.setMaximumSize(QSize(70, 25))
+        self.label_2 = QLabel(self.verticalLayoutWidget_3)
+        self.label_2.setObjectName(u"label_2")
+        self.label_2.setMaximumSize(QSize(70, 25))
 
-        self.formLayout.setWidget(0, QFormLayout.LabelRole, self.label_4)
+        self.formLayout.setWidget(0, QFormLayout.LabelRole, self.label_2)
 
         self.sb_height_offset = QDoubleSpinBox(self.verticalLayoutWidget_3)
         self.sb_height_offset.setObjectName(u"sb_height_offset")
@@ -112,6 +107,7 @@ class Ui_Tandem_View(object):
         self.tandem_rotation = QDoubleSpinBox(self.verticalLayoutWidget_3)
         self.tandem_rotation.setObjectName(u"tandem_rotation")
         self.tandem_rotation.setStyleSheet(u"background-color: rgb(255, 255, 255)")
+        self.tandem_rotation.setMinimum(-360.000000000000000)
         self.tandem_rotation.setMaximum(360.000000000000000)
 
         self.formLayout.setWidget(1, QFormLayout.FieldRole, self.tandem_rotation)
@@ -122,7 +118,7 @@ class Ui_Tandem_View(object):
         self.formLayout.setWidget(1, QFormLayout.LabelRole, self.label)
 
 
-        self.verticalLayout_4.addLayout(self.formLayout)
+        self.verticalLayout_2.addLayout(self.formLayout)
 
         self.btn_apply_import = QPushButton(self.verticalLayoutWidget_3)
         self.btn_apply_import.setObjectName(u"btn_apply_import")
@@ -143,29 +139,29 @@ class Ui_Tandem_View(object):
 "	background-color: rgb(28, 44, 81);\n"
 "}")
 
-        self.verticalLayout_4.addWidget(self.btn_apply_import)
+        self.verticalLayout_2.addWidget(self.btn_apply_import)
 
-        self.label_5 = QLabel(self.verticalLayoutWidget_3)
-        self.label_5.setObjectName(u"label_5")
-        self.label_5.setWordWrap(True)
+        self.label_3 = QLabel(self.verticalLayoutWidget_3)
+        self.label_3.setObjectName(u"label_3")
+        self.label_3.setWordWrap(True)
 
-        self.verticalLayout_4.addWidget(self.label_5)
+        self.verticalLayout_2.addWidget(self.label_3)
 
-        self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
-        self.verticalLayout_4.addItem(self.verticalSpacer_3)
+        self.verticalLayout_2.addItem(self.verticalSpacer)
 
-        self.ab_1.addTab(self.Import_2, "")
-        self.tab_2 = QWidget()
-        self.tab_2.setObjectName(u"tab_2")
-        self.verticalLayoutWidget_4 = QWidget(self.tab_2)
+        self.ab.addTab(self.Import, "")
+        self.tab = QWidget()
+        self.tab.setObjectName(u"tab")
+        self.verticalLayoutWidget_4 = QWidget(self.tab)
         self.verticalLayoutWidget_4.setObjectName(u"verticalLayoutWidget_4")
         self.verticalLayoutWidget_4.setGeometry(QRect(0, 0, 281, 391))
-        self.verticalLayout_5 = QVBoxLayout(self.verticalLayoutWidget_4)
-        self.verticalLayout_5.setSpacing(10)
-        self.verticalLayout_5.setObjectName(u"verticalLayout_5")
-        self.verticalLayout_5.setSizeConstraint(QLayout.SetDefaultConstraint)
-        self.verticalLayout_5.setContentsMargins(10, 10, 5, 10)
+        self.verticalLayout_3 = QVBoxLayout(self.verticalLayoutWidget_4)
+        self.verticalLayout_3.setSpacing(10)
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.verticalLayout_3.setSizeConstraint(QLayout.SetDefaultConstraint)
+        self.verticalLayout_3.setContentsMargins(10, 10, 5, 10)
         self.formLayout_2 = QFormLayout()
         self.formLayout_2.setObjectName(u"formLayout_2")
         self.formLayout_2.setVerticalSpacing(6)
@@ -174,6 +170,7 @@ class Ui_Tandem_View(object):
         self.sb_tandem_height.setStyleSheet(u"background-color: rgb(255, 255, 250)")
         self.sb_tandem_height.setMinimum(10.000000000000000)
         self.sb_tandem_height.setMaximum(500.000000000000000)
+        self.sb_tandem_height.setValue(10.000000000000000)
 
         self.formLayout_2.setWidget(0, QFormLayout.FieldRole, self.sb_tandem_height)
 
@@ -214,23 +211,23 @@ class Ui_Tandem_View(object):
 
         self.formLayout_2.setWidget(1, QFormLayout.LabelRole, self.label_8)
 
-        self.label_10 = QLabel(self.verticalLayoutWidget_4)
-        self.label_10.setObjectName(u"label_10")
+        self.label_4 = QLabel(self.verticalLayoutWidget_4)
+        self.label_4.setObjectName(u"label_4")
 
-        self.formLayout_2.setWidget(2, QFormLayout.LabelRole, self.label_10)
+        self.formLayout_2.setWidget(2, QFormLayout.LabelRole, self.label_4)
 
-        self.label_11 = QLabel(self.verticalLayoutWidget_4)
-        self.label_11.setObjectName(u"label_11")
+        self.label_5 = QLabel(self.verticalLayoutWidget_4)
+        self.label_5.setObjectName(u"label_5")
 
-        self.formLayout_2.setWidget(3, QFormLayout.LabelRole, self.label_11)
+        self.formLayout_2.setWidget(3, QFormLayout.LabelRole, self.label_5)
 
-        self.label_12 = QLabel(self.verticalLayoutWidget_4)
-        self.label_12.setObjectName(u"label_12")
+        self.label_6 = QLabel(self.verticalLayoutWidget_4)
+        self.label_6.setObjectName(u"label_6")
 
-        self.formLayout_2.setWidget(4, QFormLayout.LabelRole, self.label_12)
+        self.formLayout_2.setWidget(4, QFormLayout.LabelRole, self.label_6)
 
 
-        self.verticalLayout_5.addLayout(self.formLayout_2)
+        self.verticalLayout_3.addLayout(self.formLayout_2)
 
         self.btn_apply = QPushButton(self.verticalLayoutWidget_4)
         self.btn_apply.setObjectName(u"btn_apply")
@@ -250,7 +247,7 @@ class Ui_Tandem_View(object):
 "	background-color: rgb(28, 44, 81);\n"
 "}")
 
-        self.verticalLayout_5.addWidget(self.btn_apply)
+        self.verticalLayout_3.addWidget(self.btn_apply)
 
         self.btn_clear_generate = QPushButton(self.verticalLayoutWidget_4)
         self.btn_clear_generate.setObjectName(u"btn_clear_generate")
@@ -270,20 +267,20 @@ class Ui_Tandem_View(object):
 "	background-color: rgb(28, 44, 81);\n"
 "}")
 
-        self.verticalLayout_5.addWidget(self.btn_clear_generate)
+        self.verticalLayout_3.addWidget(self.btn_clear_generate)
 
         self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
-        self.verticalLayout_5.addItem(self.verticalSpacer_2)
+        self.verticalLayout_3.addItem(self.verticalSpacer_2)
 
-        self.ab_1.addTab(self.tab_2, "")
+        self.ab.addTab(self.tab, "")
 
-        self.verticalLayout_3.addWidget(self.ab_1)
+        self.verticalLayout.addWidget(self.ab)
 
 
         self.retranslateUi(Tandem_View)
 
-        self.ab_1.setCurrentIndex(0)
+        self.ab.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(Tandem_View)
@@ -293,13 +290,13 @@ class Ui_Tandem_View(object):
         Tandem_View.setWindowTitle(QCoreApplication.translate("Tandem_View", u"Form", None))
         self.btn_import.setText(QCoreApplication.translate("Tandem_View", u"Import", None))
         self.btn_clear_import.setText(QCoreApplication.translate("Tandem_View", u"Clear", None))
-        self.label_4.setText(QCoreApplication.translate("Tandem_View", u"Height Offset", None))
+        self.label_2.setText(QCoreApplication.translate("Tandem_View", u"Height Offset", None))
         self.sb_height_offset.setSuffix(QCoreApplication.translate("Tandem_View", u" mm", None))
         self.tandem_rotation.setSuffix(QCoreApplication.translate("Tandem_View", u"\u00b0", None))
         self.label.setText(QCoreApplication.translate("Tandem_View", u"Rotation", None))
         self.btn_apply_import.setText(QCoreApplication.translate("Tandem_View", u"Apply", None))
-        self.label_5.setText(QCoreApplication.translate("Tandem_View", u"Model Filepath: None", None))
-        self.ab_1.setTabText(self.ab_1.indexOf(self.Import_2), QCoreApplication.translate("Tandem_View", u"Import", None))
+        self.label_3.setText(QCoreApplication.translate("Tandem_View", u"Model Filepath: None", None))
+        self.ab.setTabText(self.ab.indexOf(self.Import), QCoreApplication.translate("Tandem_View", u"Import", None))
         self.sb_tandem_height.setSuffix(QCoreApplication.translate("Tandem_View", u" mm", None))
         self.sp_channel_diameter.setSuffix(QCoreApplication.translate("Tandem_View", u" mm", None))
         self.sp_stopper_diameter.setSuffix(QCoreApplication.translate("Tandem_View", u" mm", None))
@@ -307,11 +304,11 @@ class Ui_Tandem_View(object):
         self.sb_bend_radius.setSuffix(QCoreApplication.translate("Tandem_View", u" mm", None))
         self.label_7.setText(QCoreApplication.translate("Tandem_View", u"Tandem Height", None))
         self.label_8.setText(QCoreApplication.translate("Tandem_View", u"Channel Diameter", None))
-        self.label_10.setText(QCoreApplication.translate("Tandem_View", u"Stopper Diameter", None))
-        self.label_11.setText(QCoreApplication.translate("Tandem_View", u"Bend Angle", None))
-        self.label_12.setText(QCoreApplication.translate("Tandem_View", u"Bend Radius", None))
+        self.label_4.setText(QCoreApplication.translate("Tandem_View", u"Stopper Diameter", None))
+        self.label_5.setText(QCoreApplication.translate("Tandem_View", u"Bend Angle", None))
+        self.label_6.setText(QCoreApplication.translate("Tandem_View", u"Bend Radius", None))
         self.btn_apply.setText(QCoreApplication.translate("Tandem_View", u"Apply", None))
         self.btn_clear_generate.setText(QCoreApplication.translate("Tandem_View", u"Clear", None))
-        self.ab_1.setTabText(self.ab_1.indexOf(self.tab_2), QCoreApplication.translate("Tandem_View", u"Generate", None))
+        self.ab.setTabText(self.ab.indexOf(self.tab), QCoreApplication.translate("Tandem_View", u"Generate", None))
     # retranslateUi
 
