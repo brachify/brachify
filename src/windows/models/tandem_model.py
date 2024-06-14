@@ -232,33 +232,37 @@ class TandemModel(QObject):
             tandem.tandem_diameter = self.tandem_diameter
             shape = tandem.generate_shape()
             tandemUI.sp_channel_diameter.setValue(self.tandem_diameter)
-        except:
+        except Exception as e:
             errors.append("diam")
             tandemUI.sp_channel_diameter.setValue(temp)
+            log.debug(e)
         try:
             temp = tandem.stopper_diameter
             tandem.stopper_diameter = self.stopper_diameter
             shape = tandem.generate_shape()
             tandemUI.sp_stopper_diameter.setValue(self.stopper_diameter)
-        except:
+        except Exception as e:
             errors.append("stopper")
             tandemUI.sp_stopper_diameter.setValue(temp)
+            log.debug(e)
         try:
             temp = tandem.tandem_angle
             tandem.tandem_angle = self.tip_angle
             shape = tandem.generate_shape()
             tandemUI.sp_bend_angle.setValue(self.tip_angle)
-        except:
+        except Exception as e:
             errors.append("angle")
             tandemUI.sp_bend_angle.setValue(temp)
+            log.debug(e)
         try:
             temp = tandem.bend_radius
             tandem.bend_radius = self.bend_radius
             shape = tandem.generate_shape()
             tandemUI.sb_bend_radius.setValue(self.bend_radius)
-        except:
+        except Exception as e:
             errors.append("radius")
             tandemUI.sb_bend_radius.setValue(temp)
+            log.debug(e)
         try:
             temp = tandem.tandem_height
             tandem.tandem_height = self.tandem_length
@@ -268,9 +272,10 @@ class TandemModel(QObject):
             # So, set errors list to empty.
             if(len(errors)>=1):
                 errors = []
-        except:
+        except Exception as e:
             errors.append("height")
             tandemUI.sb_tandem_height.setValue(temp)
+            log.debug(e)
         
         # if there are remaining errors with a particular value, set values to previous values, 
         # since shape is now built with the previous values, not the erroneus, new values.
