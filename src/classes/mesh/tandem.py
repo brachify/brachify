@@ -17,7 +17,7 @@ from classes.app import get_app # note: this file can be run independently to vi
 
 
 class Tandem():
-    values = get_app().values.DEFAULT_CONFIG_VALUES
+    """values = get_app().values.config_values
     #indicated values########################
     cylinder_height: float = values.get('CONFIG_CYLINDER_LENGTH')
     cylinder_diameter: float = values.get('CONFIG_CYLINDER_DIAMETER')
@@ -31,10 +31,10 @@ class Tandem():
 
     stopper_enabled = True
     stopper_length = 8.0
-    stopper_diameter = 12.0
+    stopper_diameter = 12.0 # should use config value, right?????
 
     bend_end = gp_Pnt(0, 0, 0)
-    bend_direction = gp_Dir(0, 0, 1)
+    bend_direction = gp_Dir(0, 0, 1)"""
 
     def cylinder_offset_shape(self) -> TopoDS_Shape:
         radius = self.cylinder_diameter / 2 + self.height_offset
@@ -371,7 +371,25 @@ class Tandem():
         return fuse_shapes([pipe.Shape(), cylinder])
 
     def __init__(self, *args, **kwargs):
-        pass
+        values = get_app().values.config_values
+        #indicated values########################
+        self.cylinder_height: float = values.get('CONFIG_CYLINDER_LENGTH')
+        self.cylinder_diameter: float = values.get('CONFIG_CYLINDER_DIAMETER')
+        self.tandem_height: float = values.get('CONFIG_TANDEM_TIP_HEIGHT')
+        self.tandem_diameter: float = values.get('CONFIG_TANDEM_CHANNEL_DIAMETER')
+        self.tandem_angle: float = values.get('CONFIG_TANDEM_TIP_ANGLE')
+        self.bend_radius: float = values.get('CONFIG_TANDEM_BEND_RADIUS')
+        self.tandem_length: float = 8.0
+        self.height_offset = 10.0
+        #########################################
+
+        #self.stopper_enabled = True # unused?
+        #self.stopper_length = 8.0 # unused?
+        self.stopper_diameter = values.get('CONFIG_TANDEM_STOPPER_DIAMETER')
+
+        self.bend_end = gp_Pnt(0, 0, 0)
+        self.bend_direction = gp_Dir(0, 0, 1)
+
 
 
 def fuse_shapes(shapes: []):
