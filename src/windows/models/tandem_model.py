@@ -198,7 +198,30 @@ class TandemModel(QObject):
     def _generate_tandem(self):
         tandem = Tandem()
         errors = []
-        
+        """
+        Algorithm:
+        1. For each spin box value, try to generate a new tandem with the new values up to that point.
+        2. If there is NO error in the tandem generation, then: 
+            a. set the spin box to the new value.
+        3. If there IS an error in the tandem generation, then:
+            a. this means that the values in "shape" are from the ones that have already been successfully applied, 
+                but not the current one that generated the error.  So the view will not display a shape with the 
+                erroneous value.
+            b. record the name of the value that caused the error in the errors list.
+            c. change the spin box back to the previous value.
+            d. keep self.*(value_name) as the ERRONEOUS value, to continue down the list and try to generate
+                the tandem with the further new values.  It may be that one of the later values will fix the problem.
+        4. After generating a tandem for each new value, if there are NO errors remaining in the list:
+            a. use the final shape to update _base_shape().  You are happy.
+        5. After generating a tandem for each new value, if there ARE errors remaining:
+            a. for each erroneous value, set self.*(value_name) back to the previous value, 
+                since it is not used in the current "shape".
+            b. call a pop-up message to alert the user which values were erroneous.
+        """
+        # store a copy of the previous values in case there are errors.
+        # if there are errors, we will reset back to previous values.
+        previous_tandem = Tandem()
+
         tandemUI = get_app().window.navigationmodel.views[3].ui
 
         tandem.cylinder_height = self.cylinder_length
@@ -249,6 +272,24 @@ class TandemModel(QObject):
             errors.append("height")
             tandemUI.sb_tandem_height.setValue(temp)
         
+        # if there are remaining errors with a particular value, set values to previous values, 
+        # since shape is now built with the previous values, not the erroneus, new values.
+        for code in errors:
+            if(code == 'diam'):
+                self.tandem_diameter = previous_tandem.tandem_diameter
+
+            elif(code == 'stopper'):
+                self.stopper_diameter = previous_tandem.stopper_diameter
+
+            elif(code == 'angle'):
+                self.tip_angle = previous_tandem.tandem_angle
+
+            elif(code == 'height'):
+                self.tandem_length = previous_tandem.tandem_height
+
+            elif(code == 'radius'):
+                self.bend_radius = previous_tandem.bend_radius
+
         if(len(errors)>0):
             for err in errors:
                 get_app().window.tandem_error(err)
