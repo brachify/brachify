@@ -268,8 +268,23 @@ class Tandem():
         #########################################################################################
         # Shapes
         #########################################################################################
-        shape_channel = BRepPrimAPI_MakeCylinder(
-            tandem_radius, max_height).Shape()
+        # this bit makes the cylinder for the bottom of the tandem
+        # if threading diameter or threading depth = 0 then do not created threading channel
+        # else creat threading channel
+        if(self.threading_diameter == 0 or self.threading_depth == 0):
+            shape_channel = BRepPrimAPI_MakeCylinder(
+                tandem_radius, max_height).Shape()
+        else:
+            threading_channel =  BRepPrimAPI_MakeCylinder(self.threading_diameter/2, self.threading_depth).Shape()
+            
+            up_direction = gp_Dir(0,0,1)                 # direction of up for axise
+            orig = gp_Pnt(0,0,self.threading_depth-0.1)  # origin point for axis, -0.1 so that the 2 cylinders fuse without issue
+            ax = gp_Ax2(orig, up_direction)
+            remaining_channel = BRepPrimAPI_MakeCylinder(ax,tandem_radius, max_height-self.threading_depth+0.1).Shape()
+
+
+            shape_channel  = BRepAlgoAPI_Fuse(threading_channel, remaining_channel).Shape()
+
 
         bend_profile = BRepBuilderAPI_MakeWire(
             BRepBuilderAPI_MakeEdge(
@@ -368,6 +383,8 @@ class Tandem():
         return fuse_shapes([pipe.Shape(), cylinder])
 
     def __init__(self, *args, **kwargs):
+        self.threading_diameter = 9
+        self.threading_depth = 9
         pass
 
 
@@ -500,7 +517,7 @@ if __name__ == "__main__":
     display, start_display, add_menu, add_function_to_menu = init_display()
 
     tandem = Tandem()  # object to hold the tandem settings
-    tandem.tandem_angle = 0.0  # manually change a setting
+    tandem.tandem_angle = 2.0  # manually change a setting
 
     display.DisplayColoredShape(tandem.generate_shape(), "BLUE")
     # generate a stopper

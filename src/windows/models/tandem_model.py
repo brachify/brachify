@@ -203,6 +203,9 @@ class TandemModel(QObject):
     def _generate_tandem(self):
         tandem = Tandem()
 
+        tandem.threading_depth = self.threading_depth
+        tandem.threading_diameter = self.threading_diameter
+
         tandem.tandem_diameter = self.tandem_diameter
         tandem.stopper_diameter = self.stopper_diameter
         tandem.tandem_angle = self.tip_angle
@@ -223,6 +226,8 @@ class TandemModel(QObject):
         self.filepath = None
         self.mesh_offset = 0.0
         self.is_shape_imported = False
+        self.threading_diameter = config_values.get("CONFIG_TANDEM_THREADING_DIAMETER")
+        self.threading_depth = config_values.get("CONFIG_TANDEM_THREADING_DEPTH")
 
         # cylinder settings
         self.cylinder_length = 0
