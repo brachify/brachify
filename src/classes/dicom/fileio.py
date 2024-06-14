@@ -10,11 +10,11 @@ from classes.app import get_app
 
 # get default cylinder diameter from config file.  If can't read from dictionary, set to 30.0.
 config_values = get_app().values.config_values
-CONFIG_CYLINDER_DIAMETER = config_values.get("CONFIG_CYLINDER_DIAMETER") 
+"""CONFIG_CYLINDER_DIAMETER = config_values.get("CONFIG_CYLINDER_DIAMETER") 
 if CONFIG_CYLINDER_DIAMETER == None:
     log.debug(
         "Couldn't read CONFIG_CYLINDER_DIAMETER from current config values.  Using default value 30.0 instead.")
-    CONFIG_CYLINDER_DIAMETER = 30.0
+    CONFIG_CYLINDER_DIAMETER = 30.0"""
 
 def get_cylinder_from_dicom(data: DicomData) -> BrachyCylinder: 
     diameter = data.cylinder_diameter

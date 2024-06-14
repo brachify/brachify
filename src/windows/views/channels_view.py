@@ -10,11 +10,11 @@ from settings.reset import getCurrentValues
 
 # get default needle length from config file.  If can't read from dictionary, set to 200.0.
 config_values = get_app().values.config_values
-CONFIG_NEEDLE_LENGTH = config_values.get("CONFIG_NEEDLE_LENGTH")
+"""CONFIG_NEEDLE_LENGTH = config_values.get("CONFIG_NEEDLE_LENGTH")
 if CONFIG_NEEDLE_LENGTH == None:
     log.debug(
         "Couldn't read CONFIG_NEEDLE_LENGTH from current config values.  Using default value 200 instead.")
-    CONFIG_NEEDLE_LENGTH = 200
+    CONFIG_NEEDLE_LENGTH = 200"""
 
 
 materials = {
@@ -145,7 +145,7 @@ class ChannelsView(CustomView):
         self.is_active = False
 
         #sets default needle length
-        self.ui.sb_needle_length.setValue(CONFIG_NEEDLE_LENGTH)
+        self.ui.sb_needle_length.setValue(get_app().values.config_values.get("CONFIG_NEEDLE_LENGTH"))
 
         # signals and slots
         self.ui.btn_apply_settings.pressed.connect(self.action_apply_settings)
