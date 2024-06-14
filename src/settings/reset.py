@@ -28,7 +28,7 @@ def resetAllValues(values_dict: dict):
     channels_diameter = values_dict.get("CONFIG_CHANNELS_DIAMETER")
     needle_length = values_dict.get("CONFIG_NEEDLE_LENGTH")
     threading_depth = values_dict.get("CONFIG_THREADING_DEPTH")
-    threading_radius = values_dict.get("CONFIG_THREADING_RADIUS")
+    threading_radius = values_dict.get("CONFIG_THREADING_DIAMETER")
     app.window.navigationmodel.views[2].ui.spinbox_diameter.setValue(channels_diameter)
     app.window.navigationmodel.views[2].ui.sb_needle_length.setValue(needle_length)
     app.window.navigationmodel.views[2].ui.sb_threading_dept.setValue(threading_depth)
@@ -95,8 +95,8 @@ def getCurrentValues():
     default_length = app.window.cylindermodel.cylinder.length
     # 2. channels data
     default_diameter = app.window.channelsmodel.diameter
-    threading_depth = app.window.navigationmodel.views[2].ui.sb_threading_dept.value()
-    threading_radius = app.window.navigationmodel.views[2].ui.sb_threading_diameter.value()
+    threading_depth = app.window.channelsmodel.threading_depth
+    threading_diamenter = app.window.channelsmodel.threading_diamenter
     # 3. tandem data
     tandem_channel_diameter_default = app.window.tandemmodel.tandem_diameter
     tandem_stopper_diameter_default = app.window.tandemmodel.stopper_diameter
@@ -119,7 +119,7 @@ def getCurrentValues():
         "CONFIG_TANDEM_TIP_ANGLE": tandem_tip_angle_default,
         "CONFIG_TANDEM_BEND_RADIUS": tandem_bend_radius,
         "CONFIG_THREADING_DEPTH": threading_depth,
-        "CONFIG_THREADING_RADIUS": threading_radius
+        "CONFIG_THREADING_DIAMETER": threading_diamenter
     }
 
     return current_values
