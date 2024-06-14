@@ -219,7 +219,7 @@ class TandemModel(QObject):
         self._base_shape = None  # base shape before extending due to height offset
         self._display_shape = None  # used to show tandem in export view
         self.height_offset = 0.0
-        self.rotation = 0.0
+        self.rotation = config_values.get("CONFIG_TANDEM_ROTATION") 
         self.filepath = None
         self.mesh_offset = 0.0
         self.is_shape_imported = False

@@ -109,6 +109,9 @@ class TandemView(CustomView):
         height_offset = self.tandemmodel.mesh_offset
         self.ui.sb_height_offset.setValue(height_offset)
 
+        tandem_rotation = self.tandemmodel.rotation
+        self.ui.tandem_rotation.setValue(tandem_rotation)
+
         filepath = self.tandemmodel.filepath
         self.ui.label_5.setText(f"Model filepath:\n{filepath}")
 
