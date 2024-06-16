@@ -69,6 +69,11 @@ class ChannelsView(CustomView):
         if channel_label != data.tandem_channel: label = channel_label
         model.set_tandem(label)
 
+        #updates the spin box value of rotation
+        window = get_app().window
+        rotation = window.tandemmodel.rotation
+        window.navigationmodel.views[3].ui.tandem_rotation.setValue(rotation)
+
     @display_action
     def action_toggle_channel_disable(self):
         log.debug(f"toggling channel's disabled status")
