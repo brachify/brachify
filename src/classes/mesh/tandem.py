@@ -270,7 +270,7 @@ class Tandem():
         #########################################################################################
         # this bit makes the cylinder for the bottom of the tandem
         # if threading diameter or threading depth = 0 then do not created threading channel
-        # else creat threading channel
+        # else create threading channel
         if(self.threading_diameter == 0 or self.threading_depth == 0):
             shape_channel = BRepPrimAPI_MakeCylinder(
                 tandem_radius, max_height).Shape()
