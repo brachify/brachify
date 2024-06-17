@@ -221,7 +221,7 @@ class TandemModel(QObject):
         5. After generating a tandem for each new value, if there ARE errors remaining:
             a. for each erroneous value, set self.*(value_name) back to the previous value, 
                 since it is not used in the current "shape".
-            b. call a pop-up message to alert the user which values were erroneous.
+            b. call a pop-up message to alert the user to which values were erroneous.
         """
         # store a copy of the previous values in case there are errors.
         # if there are errors, we will reset back to previous values.

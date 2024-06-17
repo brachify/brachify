@@ -299,23 +299,23 @@ class MainWindow(QMainWindow):
     def tandem_error(self, code):
         dialog = QMessageBox()
         if(code == "diam"):
-            dialog.setText("Error: The input channel diameter value is too wide or too thin. Channel diameter reset to previous value.")
+            dialog.setText("Error: The input for channel diameter is too large or too small. Channel diameter reset to previous value.")
             dialog.setWindowTitle("Tandem Diameter Error - Tandem Diameter Set to Previous Value")
 
         elif(code == "stopper"):
-            dialog.setText("Error: The input stopper diameter is too large or too small. Stopper diameter reset to previous value.")
+            dialog.setText("Error: The input for stopper diameter is too large or too small. Stopper diameter reset to previous value.")
             dialog.setWindowTitle("Tandem Stopper Diameter Error - Tandem Stopper Diameter Set to Previous Value")
 
         elif(code == 'angle'):
-            dialog.setText("Error: The input bend angle is too large or too small. Bend angle reset to previous value.")
+            dialog.setText("Error: The input for bend angle is too large or too small. Bend angle reset to previous value.")
             dialog.setWindowTitle("Tandem Bend Angle Error - Tandem Angle Set to Previous Value")
 
         elif(code == 'height'):
-            dialog.setText("Error: The input height is too tall or too short. Tandem height reset to previous value.")
+            dialog.setText("Error: The input for tandem height is too large or too small. Tandem height reset to previous value.")
             dialog.setWindowTitle("Tandem Height Error - Tandem Height Set to Previous Value")
 
         elif(code == 'radius'):
-            dialog.setText("Error: The input bend radius is too large or too small. Bend radius reset to previous value.")
+            dialog.setText("Error: The input for bend radius is too large or too small. Bend radius reset to previous value.")
             dialog.setWindowTitle("Tandem Bend Radius Error - Tandem Bend Radius Set to Previous Value")
         
         dialog.setIcon(QMessageBox.Icon.Warning)

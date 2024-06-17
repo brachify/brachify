@@ -365,8 +365,8 @@ class Tandem():
         self.height_offset = 10.0
         #########################################
 
-        #self.stopper_enabled = True # unused?
-        #self.stopper_length = 8.0 # unused?
+        #self.stopper_enabled = True # unused
+        #self.stopper_length = 8.0 # unused
         self.stopper_diameter = values.get('CONFIG_TANDEM_STOPPER_DIAMETER')
 
         self.bend_end = gp_Pnt(0, 0, 0)
