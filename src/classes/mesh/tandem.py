@@ -277,7 +277,7 @@ class Tandem():
         else:
             threading_channel =  BRepPrimAPI_MakeCylinder(self.threading_diameter/2, self.threading_depth).Shape()
             
-            up_direction = gp_Dir(0,0,1)                 # direction of up for axise
+            up_direction = gp_Dir(0,0,1)                 # direction of up for axis
             orig = gp_Pnt(0,0,self.threading_depth-0.1)  # origin point for axis, -0.1 so that the 2 cylinders fuse without issue
             ax = gp_Ax2(orig, up_direction)
             remaining_channel = BRepPrimAPI_MakeCylinder(ax,tandem_radius, max_height-self.threading_depth+0.1).Shape()
