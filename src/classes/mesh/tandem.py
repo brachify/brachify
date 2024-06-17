@@ -383,7 +383,7 @@ class Tandem():
         return fuse_shapes([pipe.Shape(), cylinder])
 
     def __init__(self, *args, **kwargs):
-        self.threading_diameter = 9
+        self.threading_diameter = get_app().values.config_values.get('CONFIG_TANDEM_THREADING_DIAMETER')
         self.threading_depth = 9
         pass
 
