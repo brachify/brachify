@@ -268,7 +268,7 @@ class Tandem():
         #########################################################################################
         # Shapes
         #########################################################################################
-        # this bit makes the cylinder for the bottom of the tandem
+        # this makes the cylinder for the bottom of the tandem
         # if threading diameter or threading depth = 0 then do not create threading channel
         # else create threading channel
         if(self.threading_diameter == 0 or self.threading_depth == 0):
