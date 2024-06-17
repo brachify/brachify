@@ -156,133 +156,151 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
         p_mid = gp_Pnt(p1.X() + vector.X(), p1.Y() +
                         vector.Y(), p1.Z() + vector.Z())
         cone = _cone_pipe(p1, p_mid, radius) #makes cone at end of needle
-        pipe = _rounded_pipe(p_mid, p2, radius)
+        pipe = pipe_segment(p_mid, p2, radius)
         pipe = BRepAlgoAPI_Fuse(cone, pipe).Shape()
         
 
-        # rest of the points
+    # rest of the points
 
-        def fix1(): #returns -1 if error, 0 if warning, 1 if success
-            # tries increasing the radius by an infinitesimal amount (0.001), then fusing.
-            cylinder = _rounded_pipe(p1, p2, radius+0.001)
+    def fix1(): #returns -1 if error, 0 if warning, 1 if success
+        # tries increasing the radius by an infinitesimal amount (0.001), then fusing.
+        cylinder = pipe_segment(p1, p2, radius+0.001)
+        try:
+            tempfuse = BRepAlgoAPI_Fuse(pipe, cylinder)
+            if tempfuse.HasWarnings():
+                return [0,tempfuse]
+            return [1, tempfuse]
+        except:
+            return [-1, tempfuse]
+        
+    def fix2(): # tries rounding to different amounts of decimals, then fusing.
+        max_attempt_value = -1#-1 if error, 0 if warning, 1 if success
+        for i in [4,3,2]:
+            #may introduce some rounding error (up to 0.01 can correct later if need be)
+            p1.SetX(round(p1.X(),i))
+            p1.SetY(round(p1.Y(),i))
+            p1.SetZ(round(p1.Z(),i))
+            p2.SetX(round(p2.X(),i))
+            p2.SetY(round(p2.Y(),i))
+            p2.SetZ(round(p2.Z(),i))
+            cylinder = pipe_segment(p1, p2, radius+0.001)
             try:
                 tempfuse = BRepAlgoAPI_Fuse(pipe, cylinder)
                 if tempfuse.HasWarnings():
-                    return [0,tempfuse]
-                return [1, tempfuse]
+                    if(0>max_attempt_value):
+                        max_attempt_value = 0
+                else:
+                    return [1, tempfuse]
             except:
                 return [-1, tempfuse]
-            
-        def fix2(): # tries rounding to different amounts of decimals, then fusing.
-            max_attempt_value = -1#-1 if error, 0 if warning, 1 if success
-            for i in [4,3,2]:
-                #may introduce some rounding error (up to 0.01 can correct later if need be)
-                p1.SetX(round(p1.X(),i))
-                p1.SetY(round(p1.Y(),i))
-                p1.SetZ(round(p1.Z(),i))
-                p2.SetX(round(p2.X(),i))
-                p2.SetY(round(p2.Y(),i))
-                p2.SetZ(round(p2.Z(),i))
-                cylinder = _rounded_pipe(p1, p2, radius+0.001)
-                try:
-                    tempfuse = BRepAlgoAPI_Fuse(pipe, cylinder)
-                    if tempfuse.HasWarnings():
-                        if(0>max_attempt_value):
-                            max_attempt_value = 0
-                    else:
-                        return [1, tempfuse]
-                except:
-                    return [-1, tempfuse]
-            return[max_attempt_value, tempfuse]
-            
-        def fix3(): # tries adjusting the point by an infinitesimal amount in each direction (+/- 0.01), then fusing.
-            max_attempt_value = -1 #-1 if error, 0 if warning, 1 if success
-            p1copy = gp_Pnt(p1.X(), p1.Y(), p1.Z())
-            p2copy = gp_Pnt(p2.X(), p2.Y(), p2.Z())
-            tests = [['p1copy.SetX(p1copy.X()+0.01)', 'p1copy.SetX(p1copy.X()-0.01)'],
-            ['p1copy.SetY(p1copy.Y()+0.01)', 'p1copy.SetY(p1copy.Y()-0.01)'],
-            ['p1copy.SetZ(p1copy.Z()+0.01)', 'p1copy.SetZ(p1copy.Z()-0.01)'],
-            ['p2copy.SetX(p2copy.X()+0.01)', 'p2copy.SetX(p2copy.X()-0.01)'],
-            ['p2copy.SetY(p2copy.Y()+0.01)', 'p2copy.SetY(p2copy.Y()-0.01)'],
-            ['p2copy.SetZ(p2copy.Z()+0.01)', 'p2copy.SetZ(p2copy.Z()-0.01)']]
-            for item in tests:
-                cylinder = _rounded_pipe(p1copy, p2copy, radius+0.001)
-                eval(item[0])
-                try:
-                    tempfuse = BRepAlgoAPI_Fuse(pipe, cylinder)
-                    if tempfuse.HasWarnings():
-                        if(0>max_attempt_value):
-                            max_attempt_value=0
-                            eval(item[1])
-                    else:
-                        eval(item[1])
-                        return [1, tempfuse]
-                except:
-                    eval(item[1])
-            return [max_attempt_value, tempfuse]
-
-        for i in range(1, len(points) - 1):
-            p1 = points[i]
-            p2 = points[i + 1]
-            cylinder = _rounded_pipe(p1, p2, radius)
+        return[max_attempt_value, tempfuse]
+        
+    def fix3(): # tries adjusting the point by an infinitesimal amount in each direction (+/- 0.01), then fusing.
+        max_attempt_value = -1 #-1 if error, 0 if warning, 1 if success
+        p1copy = gp_Pnt(p1.X(), p1.Y(), p1.Z())
+        p2copy = gp_Pnt(p2.X(), p2.Y(), p2.Z())
+        tests = [['p1copy.SetX(p1copy.X()+0.01)', 'p1copy.SetX(p1copy.X()-0.01)'],
+        ['p1copy.SetY(p1copy.Y()+0.01)', 'p1copy.SetY(p1copy.Y()-0.01)'],
+        ['p1copy.SetZ(p1copy.Z()+0.01)', 'p1copy.SetZ(p1copy.Z()-0.01)'],
+        ['p2copy.SetX(p2copy.X()+0.01)', 'p2copy.SetX(p2copy.X()-0.01)'],
+        ['p2copy.SetY(p2copy.Y()+0.01)', 'p2copy.SetY(p2copy.Y()-0.01)'],
+        ['p2copy.SetZ(p2copy.Z()+0.01)', 'p2copy.SetZ(p2copy.Z()-0.01)']]
+        for item in tests:
+            cylinder = pipe_segment(p1copy, p2copy, radius+0.001)
+            eval(item[0])
             try:
                 tempfuse = BRepAlgoAPI_Fuse(pipe, cylinder)
                 if tempfuse.HasWarnings():
-                    fix = fix1()#tries adjusting the radius a bit (0.001)
+                    if(0>max_attempt_value):
+                        max_attempt_value=0
+                        eval(item[1])
+                else:
+                    eval(item[1])
+                    return [1, tempfuse]
+            except:
+                eval(item[1])
+        return [max_attempt_value, tempfuse]
+
+    for i in range(1, len(points) - 1):
+        p1 = points[i]
+        p2 = points[i + 1]
+        cylinder = pipe_segment(p1, p2, radius)
+        try:
+            tempfuse = BRepAlgoAPI_Fuse(pipe, cylinder)
+            if tempfuse.HasWarnings():
+                fix = fix1()#tries adjusting the radius a bit (0.001)
+                if(fix[0]==1):
+                    tempfuse = fix[1]
+                else:
+                    fix = fix2()#tries rounding decimals =4,3,2
                     if(fix[0]==1):
                         tempfuse = fix[1]
                     else:
-                        fix = fix2()#tries rounding decimals =4,3,2
+                        fix = fix3() #tries moving the point by +/- 0.001 in each direction.
                         if(fix[0]==1):
                             tempfuse = fix[1]
                         else:
-                            fix = fix3() #tries moving the point by +/- 0.001 in each direction.
-                            if(fix[0]==1):
-                                tempfuse = fix[1]
-                            else:
-                                printpoint(p1)
-                                printpoint(p2)
-                                log.warning("Warning thrown while constructing channel")
-                                window = get_app().window
-                                window.channel_display_warning()
-                    
-            except:
-                fix = fix1()
+                            printpoint(p1)
+                            printpoint(p2)
+                            log.warning("Warning thrown while constructing channel")
+                            window = get_app().window
+                            window.channel_display_warning()
+                
+        except:
+            fix = fix1()
+            if(fix[0]==1 or fix[0] ==0):
+                tempfuse = fix[1]
+            else:
+                fix = fix2(p1,p2,radius)
                 if(fix[0]==1 or fix[0] ==0):
                     tempfuse = fix[1]
-                else:
-                    fix = fix2(p1,p2,radius)
-                    if(fix[0]==1 or fix[0] ==0):
-                        tempfuse = fix[1]
-                        if(fix[0] ==0):
-                            fix = fix3()
-                            if(fix[0]==1):
-                                tempfuse = fix[1]
-                            else:
-                                printpoint(p1)
-                                printpoint(p2)
-                                log.warning("Warning sent while making 3d model of channel")
-                                window = get_app().window
-                                window.channel_display_warning()
-                    else:
+                    if(fix[0] ==0):
                         fix = fix3()
-                        if(fix[0]==1 or fix[0] ==0):
+                        if(fix[0]==1):
                             tempfuse = fix[1]
-                            if(fix[0] ==0):
-                                printpoint(p1)
-                                printpoint(p2)
-                                log.warning("Warning sent while making 3d model of channel")
-                                window = get_app().window
-                                window.channel_display_warning()
                         else:
                             printpoint(p1)
                             printpoint(p2)
-                            log.error("loading channel to 3d display failed")
+                            log.warning("Warning sent while making 3d model of channel")
                             window = get_app().window
-                            window.channel_display_error()
+                            window.channel_display_warning()
+                else:
+                    fix = fix3()
+                    if(fix[0]==1 or fix[0] ==0):
+                        tempfuse = fix[1]
+                        if(fix[0] ==0):
+                            printpoint(p1)
+                            printpoint(p2)
+                            log.warning("Warning sent while making 3d model of channel")
+                            window = get_app().window
+                            window.channel_display_warning()
+                    else:
+                        printpoint(p1)
+                        printpoint(p2)
+                        log.error("loading channel to 3d display failed")
+                        window = get_app().window
+                        window.channel_display_error()
 
 
-            pipe = tempfuse.Shape()
+        pipe = tempfuse.Shape()
+
+    try:
+        for point in points[1:len(points)]:
+            #BRepPrimAPI_MakeSphere makes a sphere centered at point and then makes it radius = radius
+            temp = BRepAlgoAPI_Fuse(pipe, BRepPrimAPI_MakeSphere(point, radius).Shape())
+            if(temp.HasWarnings):
+                temp = BRepAlgoAPI_Fuse(pipe, BRepPrimAPI_MakeSphere(point, radius+0.01).Shape())
+                if(temp.HasWarnings()):
+                    log.error("Error Constructing corner of a 3D channel")
+                    window = get_app().window
+                    window.channel_display_error()
+                else:
+                    pipe = temp.Shape()
+            else:
+                pipe = temp.Shape()
+    except:
+        window = get_app().window
+        window.channel_display_error()
 
     # if the points extend past z zero, don't extend
     if points[-1].Z() < 0:
@@ -341,14 +359,11 @@ def down_to_end(p1: gp_Pnt, radius: float) -> TopoDS_Shape:
         cylinder = BRepPrimAPI_MakeCylinder(gp_Ax2(p1, direction), radius, length).Shape()
         return cylinder#tempfusedpipe.Shape() # adds cylinder an sphere together
 
-def _rounded_pipe(p1: gp_Pnt, p2: gp_Pnt, radius: float) -> TopoDS_Shape:
+def pipe_segment(p1: gp_Pnt, p2: gp_Pnt, radius: float) -> TopoDS_Shape:
     direction = helper.get_direction(p1, p2) #gives normalised p2-p1 vector
     length = helper.get_magnitude(p1,p2)
-
-    sphere = BRepPrimAPI_MakeSphere(p2, radius).Shape()# makes a sphere centered at p2 and then makes it radius = radius
     cylinder = BRepPrimAPI_MakeCylinder(gp_Ax2(p1, direction), radius, length).Shape()
-    pipe_cylinder = BRepAlgoAPI_Fuse(cylinder, sphere).Shape()
-    return pipe_cylinder # adds cylinder an sphere together
+    return cylinder
 
 def remove_collinear_points(points):
         def is_collinear(p1, p2, p3):
@@ -443,7 +458,7 @@ def _curved_end(points: list[gp_Pnt], radius: float) -> TopoDS_Shape:
     return BRepOffsetAPI_MakePipe(wire, profile).Shape()
 
 
-def _rounded_pipe(p1: gp_Pnt, p2: gp_Pnt, radius: float) -> TopoDS_Shape:
+def pipe_segment(p1: gp_Pnt, p2: gp_Pnt, radius: float) -> TopoDS_Shape:
     direction = helper.get_direction(p1, p2)
     profile = helper.circle_profile(p1, direction, radius)
 
