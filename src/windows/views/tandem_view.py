@@ -27,6 +27,8 @@ class TandemView(CustomView):
     def action_set_tandem(self):
         log.debug(f"action: generate a tandem")
 
+        self.tandemmodel.threading_diameter = self.ui.sb_threading_diameter.value()
+        self.tandemmodel.threading_depth = self.ui.sb_threading_depth.value()
         self.tandemmodel.set_tandem(
             tandem_diameter=self.ui.sp_channel_diameter.value(),
             stopper_diameter=self.ui.sp_stopper_diameter.value(),
@@ -35,6 +37,10 @@ class TandemView(CustomView):
             tandem_length= self.ui.sb_tandem_height.value()
         )
 
+        #updates the spin box value of rotation
+        window = get_app().window
+        rotation = window.tandemmodel.rotation
+        window.navigationmodel.views[3].ui.tandem_rotation.setValue(rotation)
         # update the config_values dict
         get_app().values.config_values = getCurrentValues()
 
@@ -54,13 +60,21 @@ class TandemView(CustomView):
 
         self.tandemmodel.import_tandem(filename)
         self.update_settings()
+        #sets tandem rotation to the value in the box
+        tan = get_app().window.tandemmodel
+        tan.imported_tandem_rotation(self.ui.tandem_rotation.value())
 
     @display_action
-    def action_set_import_offset(self):
+    def action_set_import(self):
         # get the current value in the spin box
         offset = self.ui.sb_height_offset.value()
         # use the spin box value as the new height offset value
         self.tandemmodel.set_import_height_offset(offset)
+
+        #sets tandem rotation to the value in the box and then
+        tan = get_app().window.tandemmodel
+        tan.imported_tandem_rotation(self.ui.tandem_rotation.value())
+
 
     def on_close(self):
         log.debug(f"on view close")
@@ -97,6 +111,14 @@ class TandemView(CustomView):
         height_offset = self.tandemmodel.mesh_offset
         self.ui.sb_height_offset.setValue(height_offset)
 
+        tandem_rotation = self.tandemmodel.rotation
+        self.ui.tandem_rotation.setValue(tandem_rotation)
+
+        tandem_threading_diameter = self.tandemmodel.threading_diameter
+        tandem_threading_depth = self.tandemmodel.threading_depth
+        self.ui.sb_threading_depth.setValue(tandem_threading_depth)
+        self.ui.sb_threading_diameter.setValue(tandem_threading_diameter)
+
         filepath = self.tandemmodel.filepath
         self.ui.label_5.setText(f"Model filepath:\n{filepath}")
 
@@ -111,6 +133,6 @@ class TandemView(CustomView):
         self.ui.btn_clear_generate.pressed.connect(self.action_clear_tandem)
         self.ui.btn_import.pressed.connect(self.action_import_tandem)
         self.ui.btn_clear_import.pressed.connect(self.action_clear_tandem)     
-        self.ui.btn_apply_offset.pressed.connect(self.action_set_import_offset)
+        self.ui.btn_apply_import.pressed.connect(self.action_set_import)
 
         self.update_settings()

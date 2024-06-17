@@ -113,6 +113,11 @@ class TandemModel(QObject):
         self.rotation = rotation
         self.update_display()
 
+    def imported_tandem_rotation(self, rotation):
+        self.rotation = rotation
+        self._display_shape = rotate_shape(shape=self._base_shape, axis=gp.OZ(), angle=rotation)
+        self.update()
+
     def shape(self):
         if not self._base_shape:
             return None
@@ -198,6 +203,9 @@ class TandemModel(QObject):
     def _generate_tandem(self):
         tandem = Tandem()
 
+        tandem.threading_depth = self.threading_depth
+        tandem.threading_diameter = self.threading_diameter
+
         tandem.tandem_diameter = self.tandem_diameter
         tandem.stopper_diameter = self.stopper_diameter
         tandem.tandem_angle = self.tip_angle
@@ -214,10 +222,12 @@ class TandemModel(QObject):
         self._base_shape = None  # base shape before extending due to height offset
         self._display_shape = None  # used to show tandem in export view
         self.height_offset = 0.0
-        self.rotation = 0.0
+        self.rotation = config_values.get("CONFIG_TANDEM_ROTATION") 
         self.filepath = None
         self.mesh_offset = 0.0
         self.is_shape_imported = False
+        self.threading_diameter = config_values.get("CONFIG_TANDEM_THREADING_DIAMETER")
+        self.threading_depth = config_values.get("CONFIG_TANDEM_THREADING_DEPTH")
 
         # cylinder settings
         self.cylinder_length = 0
