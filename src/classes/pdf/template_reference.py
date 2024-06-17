@@ -15,6 +15,7 @@ from classes.logger import log
 from classes.mesh.channel import NeedleChannel
 from classes.mesh.cylinder import BrachyCylinder
 from classes.mesh.tandem import Tandem
+from classes.app import get_app
 
 import matplotlib.lines as lines
 
@@ -68,7 +69,7 @@ def extract_points_from_channels(channels: list):
         
         # Error Checks: We ignore all points below zero (below the bottom of the cylinder)
         # Find the index of the element just before the first instance in channel_list where the third element of the tuple is less than 0
-        last_pos_index = index_before_negative_point(channel_list)
+        last_pos_index = index_before_negative_point(filtered_channel_list)
 
         # Append last point at x,y,0 because channel.get_points() doesn't include the point at the base for some reason.
         final_point = channel_list[last_pos_index][:]
@@ -268,6 +269,11 @@ def process_lengths_and_create_data(is_lengths, protrusion_lengths, label_list):
 
 def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False, tandem_rotation=0.0,
                         is_tandem_imported=False):
+    config = get_app().values.config_values
+    channel_diam = config.get("CONFIG_CHANNELS_DIAMETER")
+    #tandem will show up at config tandem value even if it is imported
+    tandem_diam = config.get("CONFIG_TANDEM_CHANNEL_DIAMETER")
+
     # Create a figure and axis
     fig, ax = plt.subplots()
 
@@ -282,13 +288,29 @@ def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False
     ax.add_artist(circle)
 
     # Plot each point as a circle with a number inside
-    for i, (x, y) in enumerate(points, start=1):
-        ax.add_artist(plt.Circle((x, -y), 1.25, color='black', fill=False))
-        ax.text(x, -y, str(i), color='black', ha='center', va='center')
+    #if channel diameter/4 >1.25 then there is enough room to write letters inside of the channel
+    #else write the number outside of the channel
+    if(channel_diam/4>=(3/4)):
+        for i, (x, y) in enumerate(points, start=1):
+            #checks to make sure that needles are within 5 cm of center
+            if(((x**2+y**2)/2)<circle_radius+250):
+                #/4 since the scale is /2 and then need radius rather than diameter
+                ax.add_artist(plt.Circle((x, -y), channel_diam/4, color='black', fill=False))
+                ax.text(x, -y, str(i), color='black', ha='center', va='center')
+    else:
+        for i, (x, y) in enumerate(points, start=1):
+            #/4 since the scale is /2 and then need radius rather than diameter
+            ax.add_artist(plt.Circle((x, -y), channel_diam/4, color='black', fill=False))
+            #so that text will print outside of neele channel to the right if the channel is too thin
+            ax.text(x+(channel_diam/2), -y, str(i), color='black', ha='left', va='center')
 
-    if has_tandem: 
-        ax.add_artist(plt.Circle((0.0, 0.0), 1.25, color='black', fill=False))
-        ax.text(0.0, 0.0, 'T', color='black', ha='center', va='center')
+    if has_tandem:
+        if(tandem_diam/4>=(3/4)):
+            ax.add_artist(plt.Circle((0.0, 0.0), tandem_diam/4, color='black', fill=False))
+            ax.text(0.0, 0.0, 'T', color='black', ha='center', va='center')
+        else:
+            ax.add_artist(plt.Circle((0.0, 0.0), tandem_diam/4, color='black', fill=False))
+            ax.text((channel_diam/2), 0.0, 'T', color='black', ha='left', va='center')
 
         # if the tandem was generated, then display a dotted line on the pdf.
         if not is_tandem_imported:
