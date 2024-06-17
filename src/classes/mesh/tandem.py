@@ -384,7 +384,7 @@ class Tandem():
 
     def __init__(self, *args, **kwargs):
         self.threading_diameter = get_app().values.config_values.get('CONFIG_TANDEM_THREADING_DIAMETER')
-        self.threading_depth = 9
+        self.threading_depth = get_app().values.config_values.get('CONFIG_TANDEM_THREADING_DEPTH')
         pass
 
 
