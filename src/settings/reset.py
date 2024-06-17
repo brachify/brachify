@@ -59,12 +59,15 @@ def resetAllValues(values_dict: dict):
     tandem_stopper_diameter = values_dict.get("CONFIG_TANDEM_STOPPER_DIAMETER")
     tandem_tip_angle = values_dict.get("CONFIG_TANDEM_TIP_ANGLE")
     tandem_bend_radius = values_dict.get("CONFIG_TANDEM_BEND_RADIUS")
+    tandem_rotation = values_dict.get("CONFIG_TANDEM_ROTATION")
 
-    app.window.navigationmodel.views[3].ui.sb_tandem_height.setValue(tandem_tip_height)
-    app.window.navigationmodel.views[3].ui.sp_channel_diameter.setValue(tandem_channel_diameter)
-    app.window.navigationmodel.views[3].ui.sp_stopper_diameter.setValue(tandem_stopper_diameter)
-    app.window.navigationmodel.views[3].ui.sp_bend_angle.setValue(tandem_tip_angle)
-    app.window.navigationmodel.views[3].ui.sb_bend_radius.setValue(tandem_bend_radius)
+    tandem_ui = app.window.navigationmodel.views[3].ui
+    tandem_ui.sb_tandem_height.setValue(tandem_tip_height)
+    tandem_ui.sp_channel_diameter.setValue(tandem_channel_diameter)
+    tandem_ui.sp_stopper_diameter.setValue(tandem_stopper_diameter)
+    tandem_ui.sp_bend_angle.setValue(tandem_tip_angle)
+    tandem_ui.sb_bend_radius.setValue(tandem_bend_radius)
+    tandem_ui.tandem_rotation.setValue(tandem_rotation)
 
     # For tandem, must first reset the values in the model.
     tandemmodel = app.window.tandemmodel
@@ -98,11 +101,13 @@ def getCurrentValues():
     threading_depth = app.window.channelsmodel.threading_depth
     threading_diamenter = app.window.channelsmodel.threading_diamenter
     # 3. tandem data
-    tandem_channel_diameter_default = app.window.tandemmodel.tandem_diameter
-    tandem_stopper_diameter_default = app.window.tandemmodel.stopper_diameter
-    tandem_tip_angle_default = app.window.tandemmodel.tip_angle
-    tandem_bend_radius = app.window.tandemmodel.bend_radius
-    tandem_length = app.window.tandemmodel.tandem_length # this appears to coincide with Tandem Height in the GUI
+    tandemmodel = app.window.tandemmodel
+    tandem_channel_diameter_default = tandemmodel.tandem_diameter
+    tandem_stopper_diameter_default = tandemmodel.stopper_diameter
+    tandem_tip_angle_default = tandemmodel.tip_angle
+    tandem_bend_radius = tandemmodel.bend_radius
+    tandem_length = tandemmodel.tandem_length # this appears to coincide with Tandem Height in the GUI
+    tandem_rotation = tandemmodel.rotation
 
     # 4. needle data - pulls the current value in the spin box
     default_needle_length = app.window.navigationmodel.views[2].ui.sb_needle_length.value() 
@@ -119,7 +124,8 @@ def getCurrentValues():
         "CONFIG_TANDEM_TIP_ANGLE": tandem_tip_angle_default,
         "CONFIG_TANDEM_BEND_RADIUS": tandem_bend_radius,
         "CONFIG_THREADING_DEPTH": threading_depth,
-        "CONFIG_THREADING_DIAMETER": threading_diamenter
+        "CONFIG_THREADING_DIAMETER": threading_diamenter,
+        "CONFIG_TANDEM_ROTATION": tandem_rotation
     }
 
     return current_values
