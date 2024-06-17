@@ -54,6 +54,8 @@ class ChannelsView(CustomView):
 
         app.window.channelsmodel.threading_depth =  self.ui.sb_threading_dept.value()
         app.window.channelsmodel.threading_diamenter = self.ui.sb_threading_diameter.value()
+        app.values.config_values["CONFIG_THREADING_DEPTH"] = app.window.channelsmodel.threading_depth
+        app.values.config_values["CONFIG_THREADING_DIAMETER"] = app.window.channelsmodel.threading_diamenter
         
     @display_action
     def action_set_selected_shapes(self, *args, **kwargs):
