@@ -10,6 +10,7 @@ from OCC.Core.Geom2d import Geom2d_Circle, Geom2d_Line
 from OCC.Core.Geom2dAPI import Geom2dAPI_InterCurveCurve
 from OCC.Core.gp import *
 from OCC.Core.TopoDS import TopoDS_Shape
+from classes.app import get_app
 
 # TODO create a step file that shows the points and measurements here to visualize what is being done
 
