@@ -16,21 +16,6 @@ from classes.app import get_app
 
 
 class Tandem():
-    cylinder_height: float = 160.0
-    cylinder_diameter: float = 15
-    tandem_height: float = 129.0  # default
-    tandem_diameter: float = 8.0
-    tandem_angle: float = 60.0
-    bend_radius: float = 35.0
-    tandem_length: float = 8.0
-    height_offset = 10.0
-
-    stopper_enabled = True
-    stopper_length = 8.0
-    stopper_diameter = 12.0
-
-    bend_end = gp_Pnt(0, 0, 0)
-    bend_direction = gp_Dir(0, 0, 1)
 
     def cylinder_offset_shape(self) -> TopoDS_Shape:
         radius = self.cylinder_diameter / 2 + self.height_offset
@@ -69,7 +54,6 @@ class Tandem():
     def stopper_shape(self) -> TopoDS_Shape:
         # create a slanted circle and extrude it upwards
         max_height = self.cylinder_height + self.height_offset
-        stopper_depth = self.stopper_length
         stopper_radius = self.stopper_diameter / 2
         stopper_start = self.bend_end
 
@@ -147,7 +131,6 @@ class Tandem():
         #########################################################################################
         # 2D points
         #########################################################################################
-        origin = gp_Pnt2d(0, 0)
         # circle origin for the top arc
         top_circle_origin = gp_Pnt(0, 0, max_height - cylinder_radius)
         bend_start = gp_Pnt2d(0, tandem_height)
@@ -313,7 +296,7 @@ class Tandem():
             pass  # TODO
 
         # variables used
-        tandem_radius = self.tandem_diameter / 2 - 0.1
+        tandem_radius = self.tandem_diameter / 2 
         tandem_height = self.tandem_height
         bend_radius = self.bend_radius
 
@@ -384,9 +367,28 @@ class Tandem():
         return fuse_shapes([pipe.Shape(), cylinder])
 
     def __init__(self, *args, **kwargs):
-        self.threading_diameter = get_app().values.config_values.get('CONFIG_TANDEM_THREADING_DIAMETER')
-        self.threading_depth = get_app().values.config_values.get('CONFIG_TANDEM_THREADING_DEPTH')
-        pass
+
+        values = get_app().values.config_values
+        #indicated values########################
+        self.cylinder_height: float = values.get('CONFIG_CYLINDER_LENGTH')
+        self.cylinder_diameter: float = values.get('CONFIG_CYLINDER_DIAMETER')
+        self.tandem_height: float = values.get('CONFIG_TANDEM_TIP_HEIGHT')
+        self.tandem_diameter: float = values.get('CONFIG_TANDEM_CHANNEL_DIAMETER')
+        self.tandem_angle: float = values.get('CONFIG_TANDEM_TIP_ANGLE')
+        self.bend_radius: float = values.get('CONFIG_TANDEM_BEND_RADIUS')
+        self.tandem_length: float = 8.0
+        self.height_offset = 10.0
+        self.threading_diameter = values.get('CONFIG_TANDEM_THREADING_DIAMETER')
+        self.threading_depth = values.get('CONFIG_TANDEM_THREADING_DEPTH')
+        #########################################
+
+        #self.stopper_enabled = True # unused
+        #self.stopper_length = 8.0 # unused
+        self.stopper_diameter = values.get('CONFIG_TANDEM_STOPPER_DIAMETER')
+
+        self.bend_end = gp_Pnt(0, 0, 0)
+        self.bend_direction = gp_Dir(0, 0, 1)
+
 
 
 def fuse_shapes(shapes: []):
