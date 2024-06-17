@@ -108,12 +108,10 @@ class ImportView(CustomView):
 
         log.info(f"file {foldername} has been selected")
         try:
-            data = window.dicommodel.data
-            data.reset()
-            window.canvas._display.ResetView()
-            window.canvas._display.EraseAll() #Note working yet (screen does not reset as it should prior to)
+            data = window.dicommodel.data.reset() # resets all the data in the dicom 
+            window.displaymodel.reset() # resets all the data in the display
         except:
-            print("",end='') #if this is the case then DicomData has not already been initialized
+            log.error("Error: Unable to reset screen properly")
         data = read_dicom_folder(foldername)
 
         # Add patient and plan info to window
