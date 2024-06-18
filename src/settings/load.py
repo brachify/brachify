@@ -14,12 +14,13 @@ DEFAULT_CONFIG_VALUES = settings.defaults.DEFAULT_CONFIG_VALUES
 config_values = None
 
 # import the config.json file
-def load_config_file(file_name: str, alternate_dict: dict):
+def load_config_file(file_name: str, alternate_dict: dict, num_configs_loaded_successfully):
     
     # a list containing 2 lists:
     # [0] contains a list of all the keys/values that were successfully loaded from the config file
     # [1] contains a list of all the keys that did not exist in the config file
     config_keys_loaded = [[],[]]
+    #num_configs_loaded_successfully = False
 
     # file_name could be None during start up if either:
     # 1. filepath.json file not found.
@@ -30,7 +31,7 @@ def load_config_file(file_name: str, alternate_dict: dict):
         config_values = alternate_dict
         # all the key names should be in [1].  
         config_keys_loaded[1] = [key for key in DEFAULT_CONFIG_VALUES]
-        return (config_values, config_keys_loaded)
+        return (config_values, config_keys_loaded, num_configs_loaded_successfully)
 
     try:
         # open, read, parse as dictionary, and close the config.json file
@@ -42,7 +43,11 @@ def load_config_file(file_name: str, alternate_dict: dict):
         # check which keys exist in the loaded file, and compile a list of which exist and which don't.
         checkValuesExist(config_values, config_keys_loaded, alternate_dict)
 
-        return (config_values, config_keys_loaded)
+        # if we were able to load at least 1 value from the file, then indicate this with the boolean.
+        if len(config_keys_loaded[0]) >= 1:
+            num_configs_loaded_successfully += 1
+
+        return (config_values, config_keys_loaded, num_configs_loaded_successfully)
             
     except:
         # if can't read default settings from config.json file, then use the defaults.
@@ -52,7 +57,7 @@ def load_config_file(file_name: str, alternate_dict: dict):
         config_values = alternate_dict
         # all the key names should be in [1].  
         config_keys_loaded[1] = [key for key in DEFAULT_CONFIG_VALUES]
-        return (config_values, config_keys_loaded)
+        return (config_values, config_keys_loaded, num_configs_loaded_successfully)
 
 
 
