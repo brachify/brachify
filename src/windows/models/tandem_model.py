@@ -172,19 +172,112 @@ class TandemModel(QObject):
     def _generate_tandem(self):
         tandem = Tandem()
 
+
+        errors = []
+        """
+        Algorithm:
+        1. For each spin box value, try to generate a new tandem with the new values up to that point.
+        2. If there is NO error in the tandem generation, then: 
+            a. set the spin box to the new value.
+        3. If there IS an error in the tandem generation, then:
+            a. this means that the values in "shape" are from the ones that have already been successfully applied, 
+                but not the current one that generated the error.  So the view will not display a shape with the 
+                erroneous value.
+            b. record the name of the value that caused the error in the errors list.
+            c. change the spin box back to the previous value.
+            d. keep self.*(value_name) as the ERRONEOUS value, to continue down the list and try to generate
+                the tandem with the further new values.  It may be that one of the later values will fix the problem.
+        4. After generating a tandem for each new value, if there are NO errors remaining in the list:
+            a. use the final shape to update _base_shape().  You are happy.
+        5. After generating a tandem for each new value, if there ARE errors remaining:
+            a. for each erroneous value, set self.*(value_name) back to the previous value, 
+                since it is not used in the current "shape".
+            b. call a pop-up message to alert the user to which values were erroneous.
+        """
+        # store a copy of the previous values in case there are errors.
+        # if there are errors, we will reset back to previous values.
+        previous_tandem = Tandem()
+
+        tandemUI = get_app().window.navigationmodel.views[3].ui
+        
         tandem.threading_depth = self.threading_depth
         tandem.threading_diameter = self.threading_diameter
-
-        tandem.tandem_diameter = self.tandem_diameter
-        tandem.stopper_diameter = self.stopper_diameter
-        tandem.tandem_angle = self.tip_angle
-        tandem.bend_radius = self.bend_radius
-        tandem.tandem_height = self.tandem_length
-
         tandem.cylinder_height = self.cylinder_length
         tandem.cylinder_diameter = self.cylinder_diameter
+        
+        try:
+            temp = tandem.tandem_diameter
+            tandem.tandem_diameter = self.tandem_diameter
+            shape = tandem.generate_shape()
+            tandemUI.sp_channel_diameter.setValue(self.tandem_diameter)
+        except Exception as e:
+            errors.append("diam")
+            tandemUI.sp_channel_diameter.setValue(temp)
+            log.debug(e)
+        try:
+            temp = tandem.stopper_diameter
+            tandem.stopper_diameter = self.stopper_diameter
+            shape = tandem.generate_shape()
+            tandemUI.sp_stopper_diameter.setValue(self.stopper_diameter)
+        except Exception as e:
+            errors.append("stopper")
+            tandemUI.sp_stopper_diameter.setValue(temp)
+            log.debug(e)
+        try:
+            temp = tandem.tandem_angle
+            tandem.tandem_angle = self.tip_angle
+            shape = tandem.generate_shape()
+            tandemUI.sp_bend_angle.setValue(self.tip_angle)
+        except Exception as e:
+            errors.append("angle")
+            tandemUI.sp_bend_angle.setValue(temp)
+            log.debug(e)
+        try:
+            temp = tandem.bend_radius
+            tandem.bend_radius = self.bend_radius
+            shape = tandem.generate_shape()
+            tandemUI.sb_bend_radius.setValue(self.bend_radius)
+        except Exception as e:
+            errors.append("radius")
+            tandemUI.sb_bend_radius.setValue(temp)
+            log.debug(e)
+        try:
+            temp = tandem.tandem_height
+            tandem.tandem_height = self.tandem_length
+            shape = tandem.generate_shape()
+            tandemUI.sb_tandem_height.setValue(self.tandem_length)
+            # if the above did not generate errors, then this means that there is no error in the final tandem.
+            # So, set errors list to empty.
+            if(len(errors)>=1):
+                errors = []
+        except Exception as e:
+            errors.append("height")
+            tandemUI.sb_tandem_height.setValue(temp)
+            log.debug(e)
+        
+        # if there are remaining errors with a particular value, set values to previous values, 
+        # since shape is now built with the previous values, not the erroneus, new values.
+        for code in errors:
+            if(code == 'diam'):
+                self.tandem_diameter = previous_tandem.tandem_diameter
 
-        self._base_shape = tandem.generate_shape()
+            elif(code == 'stopper'):
+                self.stopper_diameter = previous_tandem.stopper_diameter
+
+            elif(code == 'angle'):
+                self.tip_angle = previous_tandem.tandem_angle
+
+            elif(code == 'height'):
+                self.tandem_length = previous_tandem.tandem_height
+
+            elif(code == 'radius'):
+                self.bend_radius = previous_tandem.bend_radius
+
+        if(len(errors)>0):
+            for err in errors:
+                get_app().window.tandem_error(err)
+
+        self._base_shape = shape
 
     def __init__(self) -> None:
         super().__init__()

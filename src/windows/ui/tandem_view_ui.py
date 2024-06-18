@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+# please remove self.sb_tandem_height.setValue(10.000000000000000) and re-add this line if tandem_view_ui.py is reconstructed
 ################################################################################
 ## Form generated from reading UI file 'tandem_view.ui'
 ##
@@ -178,12 +178,14 @@ class Ui_Tandem_View(object):
         self.sp_channel_diameter.setObjectName(u"sp_channel_diameter")
         self.sp_channel_diameter.setMaximumSize(QSize(16777215, 16777215))
         self.sp_channel_diameter.setStyleSheet(u"background-color: rgb(255, 255, 250)")
+        self.sp_channel_diameter.setMinimum(0.500000000000000)
 
         self.formLayout_2.setWidget(1, QFormLayout.FieldRole, self.sp_channel_diameter)
 
         self.sp_stopper_diameter = QDoubleSpinBox(self.verticalLayoutWidget_4)
         self.sp_stopper_diameter.setObjectName(u"sp_stopper_diameter")
         self.sp_stopper_diameter.setStyleSheet(u"background-color: rgb(255, 255, 250)")
+        self.sp_stopper_diameter.setMinimum(0.500000000000000)
 
         self.formLayout_2.setWidget(2, QFormLayout.FieldRole, self.sp_stopper_diameter)
 
@@ -301,7 +303,7 @@ class Ui_Tandem_View(object):
 
         self.verticalLayout_3.addWidget(self.btn_clear_generate)
 
-        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.verticalLayout_3.addItem(self.verticalSpacer_2)
 

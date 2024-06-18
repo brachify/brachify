@@ -41,6 +41,10 @@ class ImportView(CustomView):
 
         self.ui.label_config_info.setText(text)
 
+        #The tandems length should not be larger than the cylinder
+        max_tandem_len = app.values.config_values.get('CONFIG_CYLINDER_LENGTH')
+        app.window.navigationmodel.views[3].ui.sb_tandem_height.setMaximum(max_tandem_len)
+
 
     def action_import_config_file(self):
 
