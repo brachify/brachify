@@ -290,7 +290,7 @@ def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False
     # Plot each point as a circle with a number inside
     #if channel diameter/4 >1.25 then there is enough room to write letters inside of the channel
     #else write the number outside of the channel
-    if(channel_diam/4>=(3/4)):
+    if(channel_diam/4 >= (3/4)):
         for i, (x, y) in enumerate(points, start=1):
             #checks to make sure that needles are within 5 cm of center
             if(((x**2+y**2)/2)<circle_radius+250):
