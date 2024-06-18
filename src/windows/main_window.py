@@ -264,7 +264,7 @@ class MainWindow(QMainWindow):
         
     def tandem_import_wrong_filetype_error(self):
         dialog = QMessageBox()
-        dialog.setText("Please use a step file if importing a tandem")
+        dialog.setText("Please use a step file if importing a tandem.")
         dialog.setWindowTitle("Tandem Import Error")
         dialog.setIcon(QMessageBox.Icon.Warning)
 
