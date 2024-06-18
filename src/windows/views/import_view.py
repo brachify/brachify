@@ -85,7 +85,7 @@ class ImportView(CustomView):
 
         # Pop-up window to alert user to which values were successfully read and which had to revert to defaults.
         # create the text that is printed to the pop-up window.
-        text = app.values.createConfigMessageText(file_name)
+        text = app.values.createConfigMessageText(file_name, isFromUserImport=True)
         # call the pop-up window.
         #app.window.configLoadMessageBox(text=text)
 

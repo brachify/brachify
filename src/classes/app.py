@@ -36,7 +36,7 @@ class RadiotherapyApp(QApplication):
             # update the config label on the import view to display the file path of the loaded config file.            
             file_name = self.values.most_recently_opened_config_file
             # create the text that is printed to the pop-up window
-            text = self.values.createConfigMessageText(file_name)
+            text = self.values.createConfigMessageText(file_name, isFromUserImport=False)
             self.window.navigationmodel.views[0].action_update_config_label(file_name, text)
 
             # call the pop-up window

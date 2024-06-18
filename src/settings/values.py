@@ -38,7 +38,7 @@ class Values():
 
 
 
-    def createConfigMessageText(self, file_name):
+    def createConfigMessageText(self, file_name, isFromUserImport):
         """
         Generates the string that is printed to the pop-up window to notify user of which values
         were successfully loaded from the config.json file, and which use the default values.
@@ -71,7 +71,7 @@ class Values():
                 text += '\n'
 
         text += "\nThe following values were not found in the config file:\n"
-        text += f"({'Previous' if (self.num_configs_loaded_successfully > 1) else 'Default'} values used instead.)"
+        text += f"({'Previous' if isFromUserImport else 'Default'} values used instead.)"
         text += "\n"
         if len(self.config_keys_loaded[1]) < 1:
             text += "None\n\n"
