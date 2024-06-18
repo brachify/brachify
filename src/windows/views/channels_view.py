@@ -8,14 +8,6 @@ from windows.views.custom_view import display_action, CustomView
 
 from settings.reset import getCurrentValues
 
-# get default needle length from config file.  If can't read from dictionary, set to 200.0.
-config_values = get_app().values.config_values
-"""CONFIG_NEEDLE_LENGTH = config_values.get("CONFIG_NEEDLE_LENGTH")
-if CONFIG_NEEDLE_LENGTH == None:
-    log.debug(
-        "Couldn't read CONFIG_NEEDLE_LENGTH from current config values.  Using default value 200 instead.")
-    CONFIG_NEEDLE_LENGTH = 200"""
-
 
 materials = {
     ShapeTypes.CYLINDER: {"rgb": [0.8, 0.8, 0.8], "transparent": True},
@@ -155,7 +147,8 @@ class ChannelsView(CustomView):
         self.is_active = False
 
         #sets default needle length
-        self.ui.sb_needle_length.setValue(get_app().values.config_values.get("CONFIG_NEEDLE_LENGTH"))
+        config_values = get_app().values.config_values
+        self.ui.sb_needle_length.setValue(config_values.get("CONFIG_NEEDLE_LENGTH"))
         self.ui.sb_threading_dept.setValue(config_values.get("CONFIG_THREADING_DEPTH"))
         self.ui.sb_threading_diameter.setValue(config_values.get("CONFIG_THREADING_DIAMETER"))
 

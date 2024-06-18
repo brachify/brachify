@@ -25,13 +25,6 @@ from classes.app import get_app
 
 TIP_LENGTH = 2.5
 
-# get default channel diameter from config file.  If can't read from dictionary, set to 3.0.
-config_values = get_app().values.config_values
-"""CONFIG_CHANNELS_DIAMETER = config_values.get("CONFIG_CHANNELS_DIAMETER")
-if CONFIG_CHANNELS_DIAMETER == None:
-    log.debug(
-        "Couldn't read CONFIG_CHANNELS_DIAMETER from current config values.  Using default value 3.0 instead.")
-    CONFIG_CHANNELS_DIAMETER = 3.0"""
 
 class NeedleChannel:
 
