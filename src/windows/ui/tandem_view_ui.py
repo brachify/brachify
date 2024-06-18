@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+# please remove self.sb_tandem_height.setValue(10.000000000000000) and re-add this line if tandem_view_ui.py is reconstructed
 ################################################################################
 ## Form generated from reading UI file 'tandem_view.ui'
 ##
@@ -7,6 +7,7 @@
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
+#Ensure this value is always deleted when the file is recompiled self.sb_tandem_height.setValue(10.000000000000000)
 
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect,
@@ -141,11 +142,11 @@ class Ui_Tandem_View(object):
 
         self.verticalLayout_2.addWidget(self.btn_apply_import)
 
-        self.label_3 = QLabel(self.verticalLayoutWidget_3)
-        self.label_3.setObjectName(u"label_3")
-        self.label_3.setWordWrap(True)
+        self.label_5 = QLabel(self.verticalLayoutWidget_3)
+        self.label_5.setObjectName(u"label_5")
+        self.label_5.setWordWrap(True)
 
-        self.verticalLayout_2.addWidget(self.label_3)
+        self.verticalLayout_2.addWidget(self.label_5)
 
         self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
@@ -170,7 +171,6 @@ class Ui_Tandem_View(object):
         self.sb_tandem_height.setStyleSheet(u"background-color: rgb(255, 255, 250)")
         self.sb_tandem_height.setMinimum(10.000000000000000)
         self.sb_tandem_height.setMaximum(500.000000000000000)
-        self.sb_tandem_height.setValue(10.000000000000000)
 
         self.formLayout_2.setWidget(0, QFormLayout.FieldRole, self.sb_tandem_height)
 
@@ -178,12 +178,14 @@ class Ui_Tandem_View(object):
         self.sp_channel_diameter.setObjectName(u"sp_channel_diameter")
         self.sp_channel_diameter.setMaximumSize(QSize(16777215, 16777215))
         self.sp_channel_diameter.setStyleSheet(u"background-color: rgb(255, 255, 250)")
+        self.sp_channel_diameter.setMinimum(0.500000000000000)
 
         self.formLayout_2.setWidget(1, QFormLayout.FieldRole, self.sp_channel_diameter)
 
         self.sp_stopper_diameter = QDoubleSpinBox(self.verticalLayoutWidget_4)
         self.sp_stopper_diameter.setObjectName(u"sp_stopper_diameter")
         self.sp_stopper_diameter.setStyleSheet(u"background-color: rgb(255, 255, 250)")
+        self.sp_stopper_diameter.setMinimum(0.500000000000000)
 
         self.formLayout_2.setWidget(2, QFormLayout.FieldRole, self.sp_stopper_diameter)
 
@@ -216,15 +218,47 @@ class Ui_Tandem_View(object):
 
         self.formLayout_2.setWidget(2, QFormLayout.LabelRole, self.label_4)
 
-        self.label_5 = QLabel(self.verticalLayoutWidget_4)
-        self.label_5.setObjectName(u"label_5")
+        self.label_12 = QLabel(self.verticalLayoutWidget_4)
+        self.label_12.setObjectName(u"label_12")
 
-        self.formLayout_2.setWidget(3, QFormLayout.LabelRole, self.label_5)
+        self.formLayout_2.setWidget(3, QFormLayout.LabelRole, self.label_12)
 
         self.label_6 = QLabel(self.verticalLayoutWidget_4)
         self.label_6.setObjectName(u"label_6")
 
         self.formLayout_2.setWidget(4, QFormLayout.LabelRole, self.label_6)
+
+        self.sb_threading_depth = QDoubleSpinBox(self.verticalLayoutWidget_4)
+        self.sb_threading_depth.setObjectName(u"sb_threading_depth")
+        self.sb_threading_depth.setMinimumSize(QSize(20, 0))
+        self.sb_threading_depth.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+        self.sb_threading_depth.setMaximum(350.000000000000000)
+
+        self.formLayout_2.setWidget(5, QFormLayout.FieldRole, self.sb_threading_depth)
+
+        self.sb_threading_diameter = QDoubleSpinBox(self.verticalLayoutWidget_4)
+        self.sb_threading_diameter.setObjectName(u"sb_threading_diameter")
+        self.sb_threading_diameter.setMinimumSize(QSize(20, 0))
+        self.sb_threading_diameter.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+        self.sb_threading_diameter.setMaximum(350.000000000000000)
+
+        self.formLayout_2.setWidget(6, QFormLayout.FieldRole, self.sb_threading_diameter)
+
+        self.label_9 = QLabel(self.verticalLayoutWidget_4)
+        self.label_9.setObjectName(u"label_9")
+        self.label_9.setMinimumSize(QSize(0, 18))
+        self.label_9.setMaximumSize(QSize(16777215, 18))
+        self.label_9.setStyleSheet(u"background-color: rgb(240, 245, 250);")
+
+        self.formLayout_2.setWidget(5, QFormLayout.LabelRole, self.label_9)
+
+        self.label_10 = QLabel(self.verticalLayoutWidget_4)
+        self.label_10.setObjectName(u"label_10")
+        self.label_10.setMinimumSize(QSize(0, 18))
+        self.label_10.setMaximumSize(QSize(16777215, 18))
+        self.label_10.setStyleSheet(u"background-color: rgb(240, 245, 250);")
+
+        self.formLayout_2.setWidget(6, QFormLayout.LabelRole, self.label_10)
 
 
         self.verticalLayout_3.addLayout(self.formLayout_2)
@@ -269,7 +303,7 @@ class Ui_Tandem_View(object):
 
         self.verticalLayout_3.addWidget(self.btn_clear_generate)
 
-        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.verticalLayout_3.addItem(self.verticalSpacer_2)
 
@@ -280,7 +314,7 @@ class Ui_Tandem_View(object):
 
         self.retranslateUi(Tandem_View)
 
-        self.ab.setCurrentIndex(1)
+        self.ab.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(Tandem_View)
@@ -295,7 +329,7 @@ class Ui_Tandem_View(object):
         self.tandem_rotation.setSuffix(QCoreApplication.translate("Tandem_View", u"\u00b0", None))
         self.label.setText(QCoreApplication.translate("Tandem_View", u"Rotation", None))
         self.btn_apply_import.setText(QCoreApplication.translate("Tandem_View", u"Apply", None))
-        self.label_3.setText(QCoreApplication.translate("Tandem_View", u"Model Filepath: None", None))
+        self.label_5.setText(QCoreApplication.translate("Tandem_View", u"Model Filepath: None", None))
         self.ab.setTabText(self.ab.indexOf(self.Import), QCoreApplication.translate("Tandem_View", u"Import", None))
         self.sb_tandem_height.setSuffix(QCoreApplication.translate("Tandem_View", u" mm", None))
         self.sp_channel_diameter.setSuffix(QCoreApplication.translate("Tandem_View", u" mm", None))
@@ -305,8 +339,12 @@ class Ui_Tandem_View(object):
         self.label_7.setText(QCoreApplication.translate("Tandem_View", u"Tandem Height", None))
         self.label_8.setText(QCoreApplication.translate("Tandem_View", u"Channel Diameter", None))
         self.label_4.setText(QCoreApplication.translate("Tandem_View", u"Stopper Diameter", None))
-        self.label_5.setText(QCoreApplication.translate("Tandem_View", u"Bend Angle", None))
+        self.label_12.setText(QCoreApplication.translate("Tandem_View", u"Bend Angle", None))
         self.label_6.setText(QCoreApplication.translate("Tandem_View", u"Bend Radius", None))
+        self.sb_threading_depth.setSuffix(QCoreApplication.translate("Tandem_View", u" mm", None))
+        self.sb_threading_diameter.setSuffix(QCoreApplication.translate("Tandem_View", u" mm", None))
+        self.label_9.setText(QCoreApplication.translate("Tandem_View", u"Threading Depth", None))
+        self.label_10.setText(QCoreApplication.translate("Tandem_View", u"Threading diameter", None))
         self.btn_apply.setText(QCoreApplication.translate("Tandem_View", u"Apply", None))
         self.btn_clear_generate.setText(QCoreApplication.translate("Tandem_View", u"Clear", None))
         self.ab.setTabText(self.ab.indexOf(self.tab), QCoreApplication.translate("Tandem_View", u"Generate", None))

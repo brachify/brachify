@@ -47,6 +47,8 @@ class CylinderView(CustomView):
 
         model.update_cylinder(cylinder)
 
+        #update the maximium tandem height value allowed to reduce user errors
+        get_app().window.navigationmodel.views[3].ui.sb_tandem_height.setMaximum(length)
 
     def action_update_settings(self, cylinder: BrachyCylinder):    
         log.debug(f"updating cylinder view's settings")
