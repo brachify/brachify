@@ -293,7 +293,7 @@ def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False
     if(channel_diam/4 >= (3/4)):
         for i, (x, y) in enumerate(points, start=1):
             #checks to make sure that needles are within 5 cm of center
-            if(((x**2+y**2)/2)<circle_radius+250):
+            if(((np.sqrt(x**2+y**2))/2)<circle_radius+250):
                 #/4 since the scale is /2 and then need radius rather than diameter
                 ax.add_artist(plt.Circle((x, -y), channel_diam/4, color='black', fill=False))
                 ax.text(x, -y, str(i), color='black', ha='center', va='center')
