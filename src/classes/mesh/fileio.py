@@ -18,7 +18,7 @@ def read_3d_file(filename: str, *args, **kwargs) -> TopoDS_Shape:
 
     if file_type != ".step" and file_type != ".stp":
         get_app().window.tandem_import_wrong_filetype_error()
-        raise AssertionError(f"cannot read files of type {file_type} need to be, .step or .stp")
+        raise AssertionError(f"cannot read files of type {file_type} need to be .step or .stp")
     try:
         return read_step_file(filepath._str)
     except AssertionError as error_message:
