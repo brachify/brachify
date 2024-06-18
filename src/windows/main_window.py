@@ -269,6 +269,7 @@ class MainWindow(QMainWindow):
         dialog.setIcon(QMessageBox.Icon.Warning)
 
         dialog.exec()
+        
     def save_file_paths(self):
         """
         Saves the filepaths to config files in a .json dictionary called filepaths.json.
