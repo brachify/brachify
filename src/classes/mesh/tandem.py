@@ -10,7 +10,10 @@ from OCC.Core.Geom2d import Geom2d_Circle, Geom2d_Line
 from OCC.Core.Geom2dAPI import Geom2dAPI_InterCurveCurve
 from OCC.Core.gp import *
 from OCC.Core.TopoDS import TopoDS_Shape
-from classes.app import get_app
+#from OCC.Core.TopoDS import TopoDS_Compound, TopoDS_Shape              # for testing
+#from OCC.Core.BRep import BRep_Builder                                 # for testing
+#from OCC.Extend.DataExchange import write_step_file, read_step_file    # for testing 
+from classes.app import get_app                                         # must be commented out for testing
 
 # TODO create a step file that shows the points and measurements here to visualize what is being done
 
@@ -368,7 +371,25 @@ class Tandem():
 
     def __init__(self, *args, **kwargs):
 
-        values = get_app().values.config_values
+        try:
+            values = get_app().values.config_values
+        except:#this allows for easy testing of the tandem without running all of Brachify
+            values = {
+                    "CONFIG_CYLINDER_DIAMETER": 30.0,
+                    "CONFIG_CYLINDER_LENGTH": 160.0,
+                    "CONFIG_CHANNELS_DIAMETER": 3.0,
+                    "CONFIG_NEEDLE_LENGTH": 200.0,
+                    "CONFIG_TANDEM_TIP_HEIGHT": 140.0,
+                    "CONFIG_TANDEM_CHANNEL_DIAMETER": 2.0,
+                    "CONFIG_TANDEM_STOPPER_DIAMETER": 10.0,
+                    "CONFIG_TANDEM_TIP_ANGLE": 40.0,
+                    "CONFIG_TANDEM_BEND_RADIUS": 40.0,
+                    "CONFIG_THREADING_DEPTH": 0.0,
+                    "CONFIG_THREADING_DIAMETER": 0.0,
+                    "CONFIG_TANDEM_ROTATION": 0.0,
+                    "CONFIG_TANDEM_THREADING_DEPTH": 0.0,
+                    "CONFIG_TANDEM_THREADING_DIAMETER": 0.0
+                    }
         #indicated values########################
         self.cylinder_height: float = values.get('CONFIG_CYLINDER_LENGTH')
         self.cylinder_diameter: float = values.get('CONFIG_CYLINDER_DIAMETER')
@@ -520,12 +541,26 @@ if __name__ == "__main__":
     display, start_display, add_menu, add_function_to_menu = init_display()
 
     tandem = Tandem()  # object to hold the tandem settings
-    tandem.tandem_angle = 2.0  # manually change a setting
+    
+    #The code below is used to test how the step file is exported
+    #compound = TopoDS_Compound()  # houses all the shapes
+    #shape_tool = BRep_Builder()  # add shapes to the compound
+    #shape_tool.MakeCompound(compound)
 
+    #tandem = Tandem()
+    #shape_tool.Add(TopoDS_Shape(compound), tandem.generate_shape())
+
+    #display.DisplayColoredShape(compound, "BLUE")
+
+    #write_step_file(filename= "C:\Users\user_name\Downloads\straight_from_tandem.step", a_shape= compound)
+
+    #display.DisplayColoredShape(tandem.generate_shape(), "BLUE")
+
+    
+    # saved_tandem = read_step_file(r"C:\Users\user_name\Downloads\straight_from_tandem.step")
     display.DisplayColoredShape(tandem.generate_shape(), "BLUE")
+
     # generate a stopper
     # display.DisplayColoredShape(tandem.stopper_shape(), "ORANGE")
 
-    # generate and show the tandem
-    # display.DisplayShape(tandem.cylinder_offset_shape())
     start_display()
