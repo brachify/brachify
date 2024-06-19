@@ -31,7 +31,7 @@ These values are for demostration purposes only
 
 #### Line up Cylinder and place Central Axis
 ##### The Cenral Axis will be used in order to orientate all of the other needles in Brachify so place it as acuratly as possible
-<div style="text-align:center"><img src="image-5.pn" \></div>
+<div style="text-align:center"><img src="image-5.png" \></div>
 
 <div style="text-align:center"><img src="image-6.png" \></div>
 
