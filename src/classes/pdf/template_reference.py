@@ -334,7 +334,7 @@ def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False
 
     if has_tandem:
         if(tandem_diam >= circle_radius/5 and maxx<circle_radius and maxy<circle_radius):
-            ax.add_artist(plt.Circle((0.0, 0.0), tandem_diam/4, color='black', fill=False))
+            ax.add_artist(plt.Circle((0.0, 0.0), tandem_diam/2, color='black', fill=False))
             ax.text(0.0, 0.0, 'T', color='black', ha='center', va='center')
         else:
             ax.add_artist(plt.Circle((0.0, 0.0), tandem_diam/4, color='black', fill=False))
