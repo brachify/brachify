@@ -50,7 +50,7 @@ class TandemView(CustomView):
         log.debug(f"action: import a tandem")
         # file dialog to choose file
         filename = QFileDialog.getOpenFileName(
-            self, 'Select Tandem Tool Model', "", "Supported files (*.stl *.3mf *.obj *.stp *.step)")[0]
+            self, 'Select Tandem Tool Model', "", "Supported files (*.stp *.step)")[0]
 
         if not filename:  # no folder selected?
             log.info("no valid filename selected for importing")
