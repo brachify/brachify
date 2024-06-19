@@ -277,48 +277,71 @@ def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False
     # Create a figure and axis
     fig, ax = plt.subplots()
 
+    # Plot the circle
+    circle = plt.Circle((0, 0), circle_radius, color='black', fill=False, clip_on=False)
+    ax.add_artist(circle)
+
+    #gets max x, y value that is within 5cm of cylinders origin for determining plotting
+    #area
+    #limit refers to the 5cm distance around the perimater of the cylinder where needles are allowed
+    limit = 500+circle_radius
+    min_x = 0
+    min_y = 0
+    max_x = 0
+    max_y = 0
+    for (x, y) in points:
+        if(x>max_x and x <limit):
+            max_x=x
+        if(y>max_y and y <limit):
+            max_y=y
+        if(x<min_x and x >-limit):
+            min_x=x
+        if(y<min_y and x >-limit):
+            min_y=y
+    
+    maxx = max(abs(max_x), abs(min_x))
+    maxy = max(abs(max_y), abs(min_y))
+
     # Set axis limits to fit points inside a square with a border
-    # Add a buffer of 10 to the radius to make it so that adding points 5 cm away will not break things
-    # 1 translates to a 0.2cm buffer since scale is 1/2 and units are mm. Any larger of a buffer and the cylinder will become quite small
-    # if needles are placed more than 0.2 cm away from the cylinder the cylinder will display warped and 
-    # the text may be harder to see TODO could be improved more in future
-    square_size = 2 * (circle_radius + 1)
-    ax.set_xlim(-square_size / 2, square_size / 2)
-    ax.set_ylim(-square_size / 2, square_size / 2)
+    ax.set_xlim(min(min_x, -circle_radius), max(max_x, circle_radius))
+    ax.set_ylim(min(min_y, -circle_radius), max(max_y, circle_radius))
     #makes frame invisible
     ax.set_frame_on(False)
 
-    # Plot the circle
-    circle = plt.Circle((0, 0), circle_radius, color='black', fill=False)
-    ax.add_artist(circle)
-
     # Plot each point as a circle with a number inside
-    #if channel diameter/4 > circle_radius/40 then there is enough room to write letters inside of the channel
-    #else write the number outside of the channel (this may be affected and need to be improved based on whether or not the user decides to place needles at
-    #the outter edge of what is acceptable)
-    if(channel_diam/4 >= (circle_radius/20)):
+    # if channel diameter >= circle_radius there is ~enough room to write numbers inside of channels
+    # (that is the channel diameter is 1 fourth the cylinders radius)
+    # The circle which represents the channel will not be fully visible in the event a
+    # channel is placed close to 4cm away and made to be very wide
+    if(channel_diam >= circle_radius/5 and maxx<circle_radius and maxy<circle_radius):
         for i, (x, y) in enumerate(points, start=1):
             #checks to make sure that needles are within 5 cm of center
-            if(((np.sqrt(x**2+y**2))/2)<circle_radius+250):
+            if(((np.sqrt(x**2+y**2))/2)<limit):
                 #/4 since the scale is /2 and then need radius rather than diameter
-                ax.add_artist(plt.Circle((x, -y), channel_diam/4, color='black', fill=False))
+                ax.add_artist(plt.Circle((x, -y), channel_diam/4, color='black', fill=False, clip_on=False))
                 ax.text(x, -y, str(i), color='black', ha='center', va='center')
     else:
         for i, (x, y) in enumerate(points, start=1):
             #checks to make sure that needles are within 5 cm of center
-            if((np.sqrt(x**2+y**2)/2)<circle_radius+250):
+            if((np.sqrt(x**2+y**2)/2)<limit):
                 #/4 since the scale is /2 and then need radius rather than diameter
-                ax.add_artist(plt.Circle((x, -y), channel_diam/4, color='black', fill=False))
+                ax.add_artist(plt.Circle((x, -y), channel_diam/4, color='black', fill=False, clip_on=False))
                 #so that text will print outside of neele channel to the right if the channel is too thin
-                ax.text(x+(channel_diam/2), -y, str(i), color='black', ha='left', va='center')
+                if(x<0):
+                    ax.text(x-(channel_diam/2), -y, str(i), color='black', ha='right', va='center')
+                else:
+                    ax.text(x+(channel_diam/2), -y, str(i), color='black', ha='left', va='center')
 
     if has_tandem:
-        if(tandem_diam/4 >= (circle_radius/20)):
+        if(tandem_diam >= circle_radius/5 and maxx<circle_radius and maxy<circle_radius):
             ax.add_artist(plt.Circle((0.0, 0.0), tandem_diam/4, color='black', fill=False))
             ax.text(0.0, 0.0, 'T', color='black', ha='center', va='center')
         else:
             ax.add_artist(plt.Circle((0.0, 0.0), tandem_diam/4, color='black', fill=False))
-            ax.text((channel_diam/2), 0.0, 'T', color='black', ha='left', va='center')
+            if(x<0):
+                ax.text(-(channel_diam/2), 0.0, 'T', color='black', ha='right', va='center')
+            else:
+                ax.text((channel_diam/2), 0.0, 'T', color='black', ha='left', va='center')
 
         # if the tandem was generated, then display a dotted line on the pdf.
         if not is_tandem_imported:
@@ -359,7 +382,7 @@ def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False
     # Set the Basemap Filepath
     png_path = output_filepath.joinpath('basemap.png')
     # Save the plot as a PNG file
-    fig = plt.figure(1, figsize=(100, 100))
+    fig = plt.figure(1, dpi =1000000, clip_on=False)
     fig.savefig(png_path, format='png')
     plt.close()
     return png_path
@@ -456,8 +479,8 @@ def generate_pdf(
     png_path = save_points_diagram(last_xy_points, circle_radius, pdf_output_dir, has_tandem=has_tandem,
                                     tandem_rotation=tandem_rotation, is_tandem_imported=is_tandem_imported)
 
-    #leaves margine of 50 pixels
-    img = Image(str(png_path), width=550, height=480)
+    #leaves margine of 25 pixels
+    img = Image(str(png_path), width=475, height=340)
     content.append(img)
 
     # Build and save the PDF document
