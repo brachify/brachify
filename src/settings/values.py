@@ -118,6 +118,7 @@ class Values():
         # store the list of which config values were successfully loaded or not.
         self.config_keys_loaded = load_config_file_tuple[1]
 
-        # store whether 1 or more values were successfully loaded from the config file.
+        # store the count of how many config files were "successful".
+        # "successful" means 1 or more values were loaded from it.
         self.num_configs_loaded_successfully = load_config_file_tuple[2]
 

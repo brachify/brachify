@@ -67,7 +67,8 @@ class ImportView(CustomView):
         app.values.config_values = load_config_file_tuple[0]
         # store the list of which config values were successfully loaded or not.
         app.values.config_keys_loaded = load_config_file_tuple[1]
-        # store whether 1 or more values were successfully loaded from the config file.
+        # store the count of how many config files were "successful".
+        # "successful" means 1 or more values were loaded from it.
         app.values.num_configs_loaded_successfully = load_config_file_tuple[2]
 
         # update the config label on the import view to display the info from the loaded config file.   
