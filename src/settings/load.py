@@ -20,7 +20,6 @@ def load_config_file(file_name: str, alternate_dict: dict, num_configs_loaded_su
     # [0] contains a list of all the keys/values that were successfully loaded from the config file
     # [1] contains a list of all the keys that did not exist in the config file
     config_keys_loaded = [[],[]]
-    #num_configs_loaded_successfully = False
 
     # file_name could be None during start up if either:
     # 1. filepath.json file not found.
@@ -43,7 +42,7 @@ def load_config_file(file_name: str, alternate_dict: dict, num_configs_loaded_su
         # check which keys exist in the loaded file, and compile a list of which exist and which don't.
         checkValuesExist(config_values, config_keys_loaded, alternate_dict)
 
-        # if we were able to load at least 1 value from the file, then indicate this with the boolean.
+        # if we were able to load at least 1 value from the file, then increment the count of how many config files successfully gave values.
         if len(config_keys_loaded[0]) >= 1:
             num_configs_loaded_successfully += 1
 

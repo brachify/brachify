@@ -9,12 +9,9 @@ from windows.models.shape_model import ShapeTypes
 from windows.ui.import_view_ui import Ui_Import_View
 from windows.views.custom_view import display_action, CustomView
 
-import json
 from settings.load import load_config_file
-
 from settings.reset import resetAllValues
 
-import inspect
 
 materials = {
     ShapeTypes.CYLINDER: {"rgb": [0.2, 0.55, 0.55], "transparent": True},
@@ -32,16 +29,6 @@ class ImportView(CustomView):
         If no config file was loaded, or if no values from it were used, then display "None".
         """
         app = get_app()
-        # create the text for the pop-up window label
-        """text = "Config file currently loaded:\n"
-        # If the file was not found, or if the file did not contain any valid keys, then print None.
-        if len(app.values.config_keys_loaded[0]) < 1:
-            text += " None"
-            text += "\n\n" + config_message
-        # If the file did contain at least 1 valid key, then print the file path.
-        else:
-            text += f"{file_name}"
-            text += "\n\n" + config_message"""
 
         self.ui.label_config_info.setText(config_message)
 

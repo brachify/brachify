@@ -47,10 +47,10 @@ class Values():
         text = "Config file currently loaded:\n"
         # If the file was not found, or if the file did not contain any valid keys, then print None.
         if len(self.config_keys_loaded[0]) < 1:
-            # if we had to use defaults, because no previous file had ever been successfully loaded
+            # if we had to use defaults, because no previous file had ever been successfully loaded.
             if self.num_configs_loaded_successfully < 1:
                 text += "None\n"
-            # if we had to use previous values, because we had successfully used a previous file
+            # if we had to use previous values, because we had successfully used a previous file.
             if self.num_configs_loaded_successfully >= 1:
                 text += "Previous file\n"
         # If the file did contain at least 1 valid key, then print the file path.
@@ -60,7 +60,7 @@ class Values():
 
         text += "\nThe following values were successfully loaded from the config file:\n"
         
-        # if no config values were loaded from the file (ie we had to use all defaults or all previous values)
+        # if no config values were loaded from the file (ie we had to use all defaults or all previous values).
         if len(self.config_keys_loaded[0]) < 1:
             text += "None\n"
         else:
@@ -84,7 +84,6 @@ class Values():
                 )
                 text += '\n'
 
-        #text += "\nConfig file: \n" + f"{file_name}"
 
         return text
 
