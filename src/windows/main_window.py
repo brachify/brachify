@@ -231,6 +231,7 @@ class MainWindow(QMainWindow):
         dialog.setIcon(QMessageBox.Icon.Warning)
         dialog.exec()
 
+
     def channel_display_warning(self):
         dialog = QMessageBox()
         dialog.setText("Warning thrown while constructing needle channels. Please inspect the export view to ensure the needle channels look the way they should. \nIf a needle does not look the way it should, check to ensure there is no mistake in the plan, or replace the points on the needle that are not displaying properly.")
@@ -261,6 +262,14 @@ class MainWindow(QMainWindow):
 
         dialog.exec()
         
+    def tandem_import_wrong_filetype_error(self):
+        dialog = QMessageBox()
+        dialog.setText("Please use a step file if importing a tandem.")
+        dialog.setWindowTitle("Tandem Import Error")
+        dialog.setIcon(QMessageBox.Icon.Warning)
+
+        dialog.exec()
+        
     def save_file_paths(self):
         """
         Saves the filepaths to config files in a .json dictionary called filepaths.json.
@@ -284,7 +293,6 @@ class MainWindow(QMainWindow):
 
         log.info("Successfully saved filepaths.")
 
-
     def closeEvent(self, event):
         """
         Rewrites the filepaths.json file before closing.
@@ -295,4 +303,28 @@ class MainWindow(QMainWindow):
         before exiting the program.
         """
         self.save_file_paths()
+
+    def tandem_error(self, code):
+        dialog = QMessageBox()
+        if(code == "diam"):
+            dialog.setText("Error: The input for channel diameter is too large or too small. Channel diameter reset to previous value.")
+            dialog.setWindowTitle("Tandem Diameter Error - Tandem Diameter Set to Previous Value")
+
+        elif(code == "stopper"):
+            dialog.setText("Error: The input for stopper diameter is too large or too small. Stopper diameter reset to previous value.")
+            dialog.setWindowTitle("Tandem Stopper Diameter Error - Tandem Stopper Diameter Set to Previous Value")
+
+        elif(code == 'angle'):
+            dialog.setText("Error: The input for bend angle is too large or too small. Bend angle reset to previous value.")
+            dialog.setWindowTitle("Tandem Bend Angle Error - Tandem Angle Set to Previous Value")
+
+        elif(code == 'height'):
+            dialog.setText("Error: The input for tandem height is too large or too small. Tandem height reset to previous value.")
+            dialog.setWindowTitle("Tandem Height Error - Tandem Height Set to Previous Value")
+
+        elif(code == 'radius'):
+            dialog.setText("Error: The input for bend radius is too large or too small. Bend radius reset to previous value.")
+            dialog.setWindowTitle("Tandem Bend Radius Error - Tandem Bend Radius Set to Previous Value")
         
+        dialog.setIcon(QMessageBox.Icon.Warning)
+        dialog.exec()

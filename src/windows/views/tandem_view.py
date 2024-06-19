@@ -27,6 +27,8 @@ class TandemView(CustomView):
     def action_set_tandem(self):
         log.debug(f"action: generate a tandem")
 
+        self.tandemmodel.threading_diameter = self.ui.sb_threading_diameter.value()
+        self.tandemmodel.threading_depth = self.ui.sb_threading_depth.value()
         self.tandemmodel.set_tandem(
             tandem_diameter=self.ui.sp_channel_diameter.value(),
             stopper_diameter=self.ui.sp_stopper_diameter.value(),
@@ -48,7 +50,7 @@ class TandemView(CustomView):
         log.debug(f"action: import a tandem")
         # file dialog to choose file
         filename = QFileDialog.getOpenFileName(
-            self, 'Select Tandem Tool Model', "", "Supported files (*.stl *.3mf *.obj *.stp *.step)")[0]
+            self, 'Select Tandem Tool Model', "", "Supported files (*.stp *.step)")[0]
 
         if not filename:  # no folder selected?
             log.info("no valid filename selected for importing")
@@ -111,6 +113,11 @@ class TandemView(CustomView):
 
         tandem_rotation = self.tandemmodel.rotation
         self.ui.tandem_rotation.setValue(tandem_rotation)
+
+        tandem_threading_diameter = self.tandemmodel.threading_diameter
+        tandem_threading_depth = self.tandemmodel.threading_depth
+        self.ui.sb_threading_depth.setValue(tandem_threading_depth)
+        self.ui.sb_threading_diameter.setValue(tandem_threading_diameter)
 
         filepath = self.tandemmodel.filepath
         self.ui.label_5.setText(f"Model filepath:\n{filepath}")

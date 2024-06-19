@@ -23,7 +23,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(947, 631)
+        MainWindow.resize(947, 708)
         icon = QIcon()
         icon.addFile(u":/Icon/Icon/brachify_splash-ico.png", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)

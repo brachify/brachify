@@ -25,13 +25,6 @@ from classes.app import get_app
 
 TIP_LENGTH = 2.5
 
-# get default channel diameter from config file.  If can't read from dictionary, set to 3.0.
-config_values = get_app().values.config_values
-CONFIG_CHANNELS_DIAMETER = config_values.get("CONFIG_CHANNELS_DIAMETER")
-if CONFIG_CHANNELS_DIAMETER == None:
-    log.debug(
-        "Couldn't read CONFIG_CHANNELS_DIAMETER from current config values.  Using default value 3.0 instead.")
-    CONFIG_CHANNELS_DIAMETER = 3.0
 
 class NeedleChannel:
 
@@ -338,12 +331,26 @@ def _straight_pipe(p1, p2, face) -> TopoDS_Shape:
 '''
 
 def down_to_end(p1: gp_Pnt, radius: float) -> TopoDS_Shape:
-    p2 = gp_Pnt(p1.X(), p1.Y(), -1)
-    direction = helper.get_direction(p1, p2) #gives normalised p2-p1 vector
-    length = helper.get_magnitude(p1,p2)
+    window = get_app().window
+    threading_depth = window.navigationmodel.views[2].ui.sb_threading_dept.value()
+    threading_radius = window.navigationmodel.views[2].ui.sb_threading_diameter.value()/2
+    #if threading_radius or threading_depth = 0 then just generate end of needle as normal, else make channel
+    if(threading_depth !=0 and threading_radius !=0):
+        p2 = gp_Pnt(p1.X(), p1.Y(), threading_depth)#p2 will be placed at a z-value of threading_depth which will be the end of the channel going down to the base of the cylinder
+        direction = helper.get_direction(p1, p2) #gives normalised p2-p1 vector
+        length = helper.get_magnitude(p1,p2)
 
-    cylinder = BRepPrimAPI_MakeCylinder(gp_Ax2(p1, direction), radius, length).Shape()
-    return cylinder#tempfusedpipe.Shape() # adds cylinder an sphere together
+        cylinder1 = BRepPrimAPI_MakeCylinder(gp_Ax2(p1, direction), radius, length+0.01).Shape()#+0.01 is so that the smaller cylinder extends into the larger cylinder for the threading a little bit so that they will merge without issue
+        cylinder2 = BRepPrimAPI_MakeCylinder(gp_Ax2(p2, direction), threading_radius, threading_depth+1).Shape()#extends the threading 1 past the end of the cylinder so to help with merging
+        cylinder = BRepAlgoAPI_Fuse(cylinder1, cylinder2).Shape()
+        return cylinder# adds cylinder an sphere together
+    else:
+        p2 = gp_Pnt(p1.X(), p1.Y(), -1)
+        direction = helper.get_direction(p1, p2) #gives normalised p2-p1 vector
+        length = helper.get_magnitude(p1,p2)
+
+        cylinder = BRepPrimAPI_MakeCylinder(gp_Ax2(p1, direction), radius, length).Shape()
+        return cylinder#tempfusedpipe.Shape() # adds cylinder an sphere together
 
 def pipe_segment(p1: gp_Pnt, p2: gp_Pnt, radius: float) -> TopoDS_Shape:
     direction = helper.get_direction(p1, p2) #gives normalised p2-p1 vector
