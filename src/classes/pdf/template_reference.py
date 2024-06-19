@@ -308,11 +308,9 @@ def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False
     #makes frame invisible
     ax.set_frame_on(False)
 
-    # Plot each point as a circle with a number inside
-    # if channel diameter >= circle_radius there is ~enough room to write numbers inside of channels
-    # (that is the channel diameter is 1 fourth the cylinders radius)
-    # The circle which represents the channel will not be fully visible in the event a
-    # channel is placed close to 4cm away and made to be very wide
+    # Plot each point as a circle with a number inside or to the right or left if it does not fit inside
+    # if channel diameter >= circle_radius/10 there is ~enough room to write numbers inside of channels
+    # There could be some distorting of the image if there needles are outside of the cylinder
     if(channel_diam >= circle_radius/5 and maxx<circle_radius and maxy<circle_radius):
         for i, (x, y) in enumerate(points, start=1):
             #checks to make sure that needles are within 5 cm of center
