@@ -65,8 +65,9 @@ class Values():
             text += "None\n"
         else:
             for name in self.config_keys_loaded[0]:
+                modified_name = name.removeprefix("CONFIG_").replace("_", " ").title()
                 text += (
-                    f"{name}   =   {str(self.config_values.get(name))}"
+                    f"{modified_name}   =   {str(self.config_values.get(name))}"
                 )
                 text += '\n'
 
@@ -77,8 +78,9 @@ class Values():
             text += "None\n\n"
         else:
             for name in self.config_keys_loaded[1]:
+                modified_name = name.removeprefix("CONFIG_").replace("_", " ").title()
                 text += (
-                    f"{name}   =   {str(self.config_values.get(name))}"
+                    f"{modified_name}   =   {str(self.config_values.get(name))}"
                 )
                 text += '\n'
 
