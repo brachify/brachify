@@ -54,8 +54,8 @@ class ChannelsView(CustomView):
 
         app.window.channelsmodel.threading_depth =  self.ui.sb_threading_dept.value()
         app.window.channelsmodel.threading_diamenter = self.ui.sb_threading_diameter.value()
-        app.values.config_values["CONFIG_THREADING_DEPTH"] = app.window.channelsmodel.threading_depth
-        app.values.config_values["CONFIG_THREADING_DIAMETER"] = app.window.channelsmodel.threading_diamenter
+        app.values.config_values["CONFIG_CHANNELS_THREADING_DEPTH"] = app.window.channelsmodel.threading_depth
+        app.values.config_values["CONFIG_CHANNELS_THREADING_DIAMETER"] = app.window.channelsmodel.threading_diamenter
         
     @display_action
     def action_set_selected_shapes(self, *args, **kwargs):
@@ -156,8 +156,8 @@ class ChannelsView(CustomView):
 
         #sets default needle length
         self.ui.sb_needle_length.setValue(CONFIG_NEEDLE_LENGTH)
-        self.ui.sb_threading_dept.setValue(config_values.get("CONFIG_THREADING_DEPTH"))
-        self.ui.sb_threading_diameter.setValue(config_values.get("CONFIG_THREADING_DIAMETER"))
+        self.ui.sb_threading_dept.setValue(config_values.get("CONFIG_CHANNELS_THREADING_DEPTH"))
+        self.ui.sb_threading_diameter.setValue(config_values.get("CONFIG_CHANNELS_THREADING_DIAMETER"))
 
         # signals and slots
         self.ui.btn_apply_settings.pressed.connect(self.action_apply_settings)
