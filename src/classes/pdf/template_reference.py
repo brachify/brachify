@@ -336,10 +336,7 @@ def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False
             ax.text(0.0, 0.0, 'T', color='black', ha='center', va='center')
         else:
             ax.add_artist(plt.Circle((0.0, 0.0), tandem_diam/2, color='black', fill=False))
-            if(x<0):
-                ax.text(-(channel_diam/2), 0.0, 'T', color='black', ha='right', va='center')
-            else:
-                ax.text((channel_diam/2), 0.0, 'T', color='black', ha='left', va='center')
+            ax.text((channel_diam/2), 0.0, 'T', color='black', ha='left', va='center')
 
         # if the tandem was generated, then display a dotted line on the pdf.
         if not is_tandem_imported:
