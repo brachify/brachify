@@ -284,7 +284,7 @@ def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False
     #gets max x, y value that is within 5cm of cylinders origin for determining plotting
     #area
     #limit refers to the 5cm distance around the perimater of the cylinder where needles are allowed
-    limit = 500+circle_radius
+    limit = 50+circle_radius
     min_x = 0
     min_y = 0
     max_x = 0
