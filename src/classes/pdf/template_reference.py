@@ -326,7 +326,7 @@ def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False
             if((np.sqrt(x**2+y**2)/2)<limit):
                 #/4 since the scale is /2 and then need radius rather than diameter
                 ax.add_artist(plt.Circle((x, -y), channel_diam/4, color='black', fill=False, clip_on=False))
-                #so that text will print outside of neele channel to the right if the channel is too thin
+                #so that text will print outside of needle channel to the right if the channel is too thin
                 if(x<0):
                     ax.text(x-(channel_diam/2), -y, str(i), color='black', ha='right', va='center')
                 else:
