@@ -479,7 +479,7 @@ def generate_pdf(
     png_path = save_points_diagram(last_xy_points, circle_radius, pdf_output_dir, has_tandem=has_tandem,
                                     tandem_rotation=tandem_rotation, is_tandem_imported=is_tandem_imported)
 
-    #leaves margine of 25 pixels
+    #leaves margin of 25 pixels
     img = Image(str(png_path), width=475, height=340)
     content.append(img)
 
