@@ -260,8 +260,16 @@ class MainWindow(QMainWindow):
         dialog.setWindowTitle("Channel with Single Point Detected")
         dialog.setIcon(QMessageBox.Icon.Warning)
 
-        dialog.exec()    
-    
+        dialog.exec()
+        
+    def tandem_import_wrong_filetype_error(self):
+        dialog = QMessageBox()
+        dialog.setText("Please use a step file if importing a tandem.")
+        dialog.setWindowTitle("Tandem Import Error")
+        dialog.setIcon(QMessageBox.Icon.Warning)
+
+        dialog.exec()
+        
     def save_file_paths(self):
         """
         Saves the filepaths to config files in a .json dictionary called filepaths.json.
