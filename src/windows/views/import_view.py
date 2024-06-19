@@ -83,19 +83,15 @@ class ImportView(CustomView):
         # store whether 1 or more values were successfully loaded from the config file.
         app.values.num_configs_loaded_successfully = load_config_file_tuple[2]
 
-        # Pop-up window to alert user to which values were successfully read and which had to revert to defaults.
-        # create the text that is printed to the pop-up window.
+        # update the config label on the import view to display the info from the loaded config file.   
         text = app.values.createConfigMessageText(file_name, isFromUserImport=True)
-        # call the pop-up window.
-        #app.window.configLoadMessageBox(text=text)
+        self.action_update_config_label(file_name=file_name, config_message=text)
 
         # reset all the values in the spin boxes and in the views.
         resetAllValues(app.values.config_values)
 
         app.values.most_recently_opened_config_file = file_name
 
-        # this updates the label to show the filepath of the current config file.
-        self.action_update_config_label(file_name=file_name, config_message=text)
         log.info("Successfully reset all the values and views.")
         
         

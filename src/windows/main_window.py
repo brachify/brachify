@@ -219,7 +219,7 @@ class MainWindow(QMainWindow):
     # Show a message pop up to show which config values have been loaded, and if any default values were uesed
     def configLoadMessageBox(self, text: str):
         dialog = QMessageBox()
-        dialog.setWindowTitle("Notification")
+        dialog.setWindowTitle("Config File Notification")
         dialog.setText(text) 
         dialog.setIcon(QMessageBox.Icon.Information)
         dialog.exec()
