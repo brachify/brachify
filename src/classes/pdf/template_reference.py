@@ -309,9 +309,9 @@ def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False
     ax.set_frame_on(False)
 
     # Plot each point as a circle with a number inside or to the right or left if it does not fit inside
-    # if channel diameter >= circle_radius/10 there is ~enough room to write numbers inside of channels
+    # if channel diameter >= circle_radius/12 there is ~enough room to write numbers inside of channels
     # There could be some distorting of the image if there needles are outside of the cylinder
-    if(channel_diam >= circle_radius/5 and maxx<circle_radius and maxy<circle_radius):
+    if(channel_diam >= circle_radius/12 and maxx<circle_radius and maxy<circle_radius):
         for i, (x, y) in enumerate(points, start=1):
             #checks to make sure that needles are within 5 cm of center
             if(((np.sqrt(x**2+y**2))/2)<limit):
@@ -331,7 +331,7 @@ def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False
                     ax.text(x+(channel_diam/2), -y, str(i), color='black', ha='left', va='center')
 
     if has_tandem:
-        if(tandem_diam >= circle_radius/5 and maxx<circle_radius and maxy<circle_radius):
+        if(tandem_diam >= circle_radius/12 and maxx<circle_radius and maxy<circle_radius):
             ax.add_artist(plt.Circle((0.0, 0.0), tandem_diam/2, color='black', fill=False))
             ax.text(0.0, 0.0, 'T', color='black', ha='center', va='center')
         else:
@@ -475,7 +475,7 @@ def generate_pdf(
                                     tandem_rotation=tandem_rotation, is_tandem_imported=is_tandem_imported)
 
     #leaves margin of 25 pixels
-    img = Image(str(png_path), width=475, height=340)
+    img = Image(str(png_path))
     content.append(img)
 
     # Build and save the PDF document
