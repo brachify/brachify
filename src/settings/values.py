@@ -117,3 +117,5 @@ class Values():
         # "successful" means 1 or more values were loaded from it.
         self.num_configs_loaded_successfully = load_config_file_tuple[2]
 
+        self.loaded_message = ''
+
