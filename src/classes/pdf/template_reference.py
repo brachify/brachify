@@ -315,14 +315,12 @@ def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False
         for i, (x, y) in enumerate(points, start=1):
             #checks to make sure that needles are within 5 cm of center
             if(((np.sqrt(x**2+y**2))/2)<limit):
-                #/4 since the scale is /2 and then need radius rather than diameter
                 ax.add_artist(plt.Circle((x, -y), channel_diam/2, color='black', fill=False, clip_on=False))
                 ax.text(x, -y, str(i), color='black', ha='center', va='center')
     else:
         for i, (x, y) in enumerate(points, start=1):
             #checks to make sure that needles are within 5 cm of center
             if((np.sqrt(x**2+y**2)/2)<limit):
-                #/4 since the scale is /2 and then need radius rather than diameter
                 ax.add_artist(plt.Circle((x, -y), channel_diam/2, color='black', fill=False, clip_on=False))
                 #so that text will print outside of needle channel to the right if the channel is too thin
                 if(x<0):
