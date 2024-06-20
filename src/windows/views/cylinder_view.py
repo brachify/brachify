@@ -31,14 +31,19 @@ class CylinderView(CustomView):
         length = self.ui.spinbox_length.value()
         add_base = self.ui.cb_add_base.isChecked()
 
+        #previous_cylinder_length = app.values.config_values.get("CONFIG_CYLINDER_LENGTH")
+
         # update the config_values dict
         app.values.config_values["CONFIG_CYLINDER_DIAMETER"] = diameter
         app.values.config_values["CONFIG_CYLINDER_LENGTH"] = length
 
         if cylinder.length != length:
+            # OR better way? calc offset here before reset cylinder.length
+            #offset = length - cylinder.length
             cylinder.length = length
 
             # send the new offset signal
+            #offset = length - previous_cylinder_length 
             offset = length - BrachyCylinder.default_length() 
             app.signals.height_changed.emit(offset)
 

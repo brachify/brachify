@@ -21,11 +21,14 @@ from classes.mesh.notch import CylinderNotch
 
 from classes.app import get_app
 
+# this is set on start-up to the original cylinder length.
+# it is used to calculate the proper needles offset when the cylinder height is adjusted.
+ORIGNAL_CYLINDER_LENGTH = get_app().values.config_values.get("CONFIG_CYLINDER_LENGTH")
 
 class BrachyCylinder:
     
     @staticmethod
-    def default_length() -> float: return get_app().values.config_values.get("CONFIG_CYLINDER_LENGTH")
+    def default_length() -> float: return ORIGNAL_CYLINDER_LENGTH
 
     def shape(self) -> TopoDS_Shape:
         if self._shape:

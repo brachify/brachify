@@ -44,6 +44,7 @@ class CylinderModel(QObject):
     def __init__(self):
         super().__init__()
         self.cylinder = None
+        self.original_length = get_app().values.config_values["CONFIG_CYLINDER_LENGTH"]
 
     @staticmethod
     def get_label(): return CYLINDER_LABEL
