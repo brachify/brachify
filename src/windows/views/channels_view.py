@@ -75,6 +75,7 @@ class ChannelsView(CustomView):
         window = get_app().window
         rotation = window.tandemmodel.rotation
         window.navigationmodel.views[3].ui.tandem_rotation.setValue(rotation)
+        window.navigationmodel.views[3].ui.tandem_rotation_2.setValue(rotation)
 
     @display_action
     def action_toggle_channel_disable(self):

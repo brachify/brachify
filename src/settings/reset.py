@@ -70,6 +70,7 @@ def resetAllValues(values_dict: dict):
     tandem_ui.sp_bend_angle.setValue(tandem_tip_angle)
     tandem_ui.sb_bend_radius.setValue(tandem_bend_radius)
     tandem_ui.tandem_rotation.setValue(tandem_rotation)
+    tandem_ui.tandem_rotation_2.setValue(tandem_rotation)
 
     # For tandem, must first reset the values in the model.
     tandemmodel = app.window.tandemmodel

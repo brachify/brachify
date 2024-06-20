@@ -4,7 +4,6 @@ from PySide6.QtGui import QFont
 from classes.app import get_app
 from classes.logger import log
 from classes.dicom.fileio import read_dicom_folder
-from classes.dicom.data import DicomData
 from windows.models.shape_model import ShapeTypes
 from windows.ui.import_view_ui import Ui_Import_View
 from windows.views.custom_view import display_action, CustomView
@@ -23,28 +22,6 @@ materials = {
 
 
 class ImportView(CustomView):
-
-    def action_update_config_label(self, file_name):
-        """
-        Updates the config label on the Import view to display the file name of the current config file.
-        If no config file was loaded, or if no values from it were used, then display "None".
-        """
-        app = get_app()
-        # create the text for the pop-up window label
-        text = "Config file currently loaded:\n"
-        # If the file was not found, or if the file did not contain any valid keys, then print None.
-        if len(app.values.config_keys_loaded[0]) < 1:
-            text += " None\n\n"
-        # If the file did contain at least 1 valid key, then print the file path.
-        else:
-            text += f"{file_name}"
-
-        self.ui.label_config_info.setText(text)
-
-        #The tandems length should not be larger than the cylinder
-        max_tandem_len = app.values.config_values.get('CONFIG_CYLINDER_LENGTH')
-        app.window.navigationmodel.views[3].ui.sb_tandem_height.setMaximum(max_tandem_len)
-
 
     def action_import_config_file(self):
 
@@ -87,10 +64,8 @@ class ImportView(CustomView):
         app.values.most_recently_opened_config_file = file_name
 
         # this updates the label to show the filepath of the current config file.
-        self.action_update_config_label(file_name)
+        self.action_update_import_label()
         log.info("Successfully reset all the values and views.")
-        
-        
 
 
     def action_import_dicom_folder(self):
@@ -123,29 +98,62 @@ class ImportView(CustomView):
 
         window.dicommodel.update(data)
         window.displaymodel.set_transparent(True)
+
+        self.action_update_import_label()
         
         app.signals.viewChanged.emit(4)
         window.change_color_export()
 
-    def action_update_import_label(self, data:DicomData):
-        alldata= "Folder: "+self.folder_name+"\n\nPatient and Plan Info\n"
-        a = ("Patient ID:      \t\t")          + str(data.patient_id)+ "\n"
-        b = ("Patient Name:    \t\t")          + str(data.patient_name)+ "\n"
-        c = ("Plan ID:         \t\t")          + str(data.plan_label)+ "\n"
-        d = ("Approval Status: \t\t")          + str(data.approval_status) + "\n"
-        e = ("Operator:        \t\t")          + str(data.operator) + "\n\n"
-        f = ("Channels Info")                  + "\n"
-        for i in range(len(data.channels_labels)):
-            f = f+(str(data.channels_labels[i]))+ ",  Channel: "+str(data.channel_numbers[i])+"\n"
-        
+    def action_update_import_label(self):
+        self.ui.info_area.clear()
 
-        tandem = data.tandem_channel
-        g = ("Tandem Label:  ")+str(tandem)
-        
-        
-        alldata = alldata+a+b+c+d+e+f+g
+        app = get_app()
 
-        self.ui.label_file_info.setText(alldata)
+        if(app.window.dicommodel.data.patient_id):
+            data = get_app().window.dicommodel.data
+            alldata= "Folder: "+self.folder_name+"\n\nPatient and Plan Info\n"
+            a = ("Patient ID:         \t")          + str(data.patient_id)+ "\n"
+            b = ("Patient Name:    \t")          + str(data.patient_name)+ "\n"
+            c = ("Plan ID:                \t")          + str(data.plan_label)+ "\n"
+            d = ("Approval Status: \t")          + str(data.approval_status) + "\n"
+            e = ("Operator:           \t")          + str(data.operator) + "\n\n"
+            f = ("Channels Info")                  + "\n"
+            for i in range(len(data.channels_labels)):
+                f = f+(str(data.channels_labels[i]))+ ",  Channel: "+str(data.channel_numbers[i])+"\n"
+            
+
+            tandem = data.tandem_channel
+            g = ("Tandem Label:  ")+str(tandem)
+            
+            alldata = alldata+a+b+c+d+e+f+g+'\n\n'
+
+            #self.ui.info_area.append(alldata)
+            self.ui.info_area.append(alldata)
+
+
+        """
+        Updates the config label on the Import view to display the file name of the current config file.
+        If no config file was loaded, or if no values from it were used, then display "None".
+        """
+        # create the text for the pop-up window label
+        text = "Config file currently loaded:\n"
+        # If the file was not found, or if the file did not contain any valid keys, then print None.
+
+        if len(app.values.config_keys_loaded[0]) < 1:
+            text += "None\n\n"
+        # If the file did contain at least 1 valid key, then print the file path.
+        else:
+            file_name = app.values.most_recently_opened_config_file
+            text += f"{file_name}"
+
+        self.ui.info_area.append(text)
+
+        #The tandems length should not be larger than the cylinder
+        max_tandem_len = app.values.config_values.get('CONFIG_CYLINDER_LENGTH')
+        app.window.navigationmodel.views[3].ui.sb_tandem_height.setMaximum(max_tandem_len)
+
+    def action_update_config_label(self, file_name):
+        print("")
 
     @display_action
     def on_open(self):
@@ -163,7 +171,3 @@ class ImportView(CustomView):
         # signals and slots
         self.ui.btn_import_folder.pressed.connect(self.action_import_dicom_folder)
         self.ui.btn_config_file.pressed.connect(self.action_import_config_file)
-
-        window = get_app().window
-        window.dicommodel.values_changed.connect(self.action_update_import_label)
-
