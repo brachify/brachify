@@ -216,14 +216,6 @@ class MainWindow(QMainWindow):
         self.show()
         self.resize(size[0], size[1])
         
-    # Show a message pop up to show which config values have been loaded, and if any default values were uesed
-    def configLoadMessageBox(self, text: str):
-        dialog = QMessageBox()
-        dialog.setWindowTitle("Notification")
-        dialog.setText(text) 
-        dialog.setIcon(QMessageBox.Icon.Information)
-        dialog.exec()
-
     def pdf_save_error(self):
         dialog = QMessageBox()
         dialog.setText("Your PDF was not saved, this may be because a pdf with the same name is open in another application. If this is the case please close the pdf and try exporting again.")

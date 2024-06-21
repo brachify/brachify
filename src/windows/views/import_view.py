@@ -9,10 +9,9 @@ from windows.models.shape_model import ShapeTypes
 from windows.ui.import_view_ui import Ui_Import_View
 from windows.views.custom_view import display_action, CustomView
 
-import json
 from settings.load import load_config_file
-
 from settings.reset import resetAllValues
+
 
 materials = {
     ShapeTypes.CYLINDER: {"rgb": [0.2, 0.55, 0.55], "transparent": True},
@@ -24,22 +23,14 @@ materials = {
 
 class ImportView(CustomView):
 
-    def action_update_config_label(self, file_name):
+    def action_update_config_label(self, file_name: str, config_message: str):
         """
         Updates the config label on the Import view to display the file name of the current config file.
         If no config file was loaded, or if no values from it were used, then display "None".
         """
         app = get_app()
-        # create the text for the pop-up window label
-        text = "Config file currently loaded:\n"
-        # If the file was not found, or if the file did not contain any valid keys, then print None.
-        if len(app.values.config_keys_loaded[0]) < 1:
-            text += " None\n\n"
-        # If the file did contain at least 1 valid key, then print the file path.
-        else:
-            text += f"{file_name}"
 
-        self.ui.label_config_info.setText(text)
+        self.ui.label_config_info.setText(config_message)
 
         #The tandems length should not be larger than the cylinder
         max_tandem_len = app.values.config_values.get('CONFIG_CYLINDER_LENGTH')
@@ -70,24 +61,25 @@ class ImportView(CustomView):
         # read in the file and store the values.
         # read the default settings from the .json file, as a dictionary,
         # and store it in an attribtue called config_values so it can be accessed later.
-        load_config_file_tuple = load_config_file(file_name=file_name, alternate_dict=alternate_dict)
+        load_config_file_tuple = load_config_file(file_name=file_name, 
+                                                  alternate_dict=alternate_dict,
+                                                  num_configs_loaded_successfully=app.values.num_configs_loaded_successfully)
         app.values.config_values = load_config_file_tuple[0]
         # store the list of which config values were successfully loaded or not.
         app.values.config_keys_loaded = load_config_file_tuple[1]
+        # store the count of how many config files were "successful".
+        # "successful" means 1 or more values were loaded from it.
+        app.values.num_configs_loaded_successfully = load_config_file_tuple[2]
 
-        # Pop-up window to alert user to which values were successfully read and which had to revert to defaults.
-        # create the text that is printed to the pop-up window.
-        text = app.values.createConfigMessageText(file_name)
-        # call the pop-up window.
-        app.window.configLoadMessageBox(text=text)
+        # update the config label on the import view to display the info from the loaded config file.   
+        text = app.values.createConfigMessageText(file_name, isFromUserImport=True)
+        self.action_update_config_label(file_name=file_name, config_message=text)
 
         # reset all the values in the spin boxes and in the views.
         resetAllValues(app.values.config_values)
 
         app.values.most_recently_opened_config_file = file_name
 
-        # this updates the label to show the filepath of the current config file.
-        self.action_update_config_label(file_name)
         log.info("Successfully reset all the values and views.")
         
         

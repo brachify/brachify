@@ -169,8 +169,8 @@ class ChannelsModel(QObject):
         self.selected_channels = []
         self.disabled_channels = []
         config_values = get_app().values.config_values
-        self.threading_depth = config_values.get("CONFIG_THREADING_DEPTH")
-        self.threading_diamenter = config_values.get("CONFIG_THREADING_DIAMETER")
+        self.threading_depth = config_values.get("CONFIG_CHANNELS_THREADING_DEPTH")
+        self.threading_diamenter = config_values.get("CONFIG_CHANNELS_THREADING_DIAMETER")
 
     @staticmethod
     def get_label(): return CHANNELS_LABEL
