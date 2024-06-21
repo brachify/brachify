@@ -99,6 +99,13 @@ class ImportView(CustomView):
         window = app.window
 
         log.info(f"file {foldername} has been selected")
+
+        # record the current cylinder length.
+        # This value is always compared against when the cylinder length changes.
+        cylindermodel = app.window.cylindermodel
+        cylindermodel.starting_length = app.values.config_values.get("CONFIG_CYLINDER_LENGTH")
+        
+
         try:
             data = window.dicommodel.data.reset() # resets all the data in the dicom 
             window.displaymodel.reset() # resets all the data in the display

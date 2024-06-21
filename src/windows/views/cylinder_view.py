@@ -44,7 +44,10 @@ class CylinderView(CustomView):
 
             # send the new offset signal
             #offset = length - previous_cylinder_length 
-            offset = length - BrachyCylinder.default_length() 
+            # The offset is the amount that the cylinder has changed compared to the starting_length.
+            # this is because the needle points and tandem are adjusted from their original location 
+            # from when they were originally loaded.  The needle points are never modified.
+            offset = length - model.starting_length 
             app.signals.height_changed.emit(offset)
 
         cylinder.diameter = diameter

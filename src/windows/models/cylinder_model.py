@@ -43,8 +43,11 @@ class CylinderModel(QObject):
 
     def __init__(self):
         super().__init__()
-        self.cylinder = None
-        self.original_length = get_app().values.config_values["CONFIG_CYLINDER_LENGTH"]
+        self.cylinder = None # a BrachyCylinder object (cylinder.py)
+        # stores the length that the cylinder is at the moment a new DICOM file is imported.
+        # (this is crucial for when user changes cylinder length, resulting in the need to adjust
+        # the needle points and the tandem vertically.)
+        self.starting_length = 0
 
     @staticmethod
     def get_label(): return CYLINDER_LABEL
