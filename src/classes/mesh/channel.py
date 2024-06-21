@@ -106,16 +106,9 @@ class NeedleChannel:
         self._diameter = get_app().values.config_values.get("CONFIG_CHANNELS_DIAMETER")
 
 def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) -> TopoDS_Shape:
-    
     """
     If a needle channel has a long distance between the first and second point, this helps stub it
     """
-    ################################################
-    # if statement is currently double checking that there are no singletons, may be able to be removed in the future
-    ################################################
-    if len(channel_points) < 2:
-        log.error(F"Needle Channel Generation error! needs 2 or more points!")
-        return None
     # offset points using z axis and cylinder's offset
     # and convert into a gp_Pnt
     # rounding/truncation is needed otherwise there can be a bug in pipe = BRepAlgoAPI_Fuse(cone, pipe).Shape() below.
