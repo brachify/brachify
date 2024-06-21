@@ -10,6 +10,7 @@ from OCC.Core.Geom2d import Geom2d_Circle, Geom2d_Line
 from OCC.Core.Geom2dAPI import Geom2dAPI_InterCurveCurve
 from OCC.Core.gp import *
 from OCC.Core.TopoDS import TopoDS_Shape
+from classes.mesh.helper import get_direction
 #from OCC.Core.TopoDS import TopoDS_Compound, TopoDS_Shape              # for testing
 #from OCC.Core.BRep import BRep_Builder                                 # for testing
 #from OCC.Extend.DataExchange import write_step_file, read_step_file    # for testing 
@@ -66,10 +67,8 @@ class Tandem():
             return BRepPrimAPI_MakeCylinder(axis, stopper_radius, length).Shape()
 
         stopper_rads = math.radians(90 - self.tandem_angle)
-        stopper_direction = gp_Dir(
-            math.cos(stopper_rads),
-            0,
-            math.sin(stopper_rads))
+        stopper_direction = gp_Dir(math.cos(stopper_rads), 0, math.sin(stopper_rads))
+
         axis = gp_Ax2(stopper_start, stopper_direction)
         circle = gp_Circ(axis, stopper_radius)
         stopper_profile = BRepBuilderAPI_MakeFace(BRepBuilderAPI_MakeWire(
@@ -294,80 +293,89 @@ class Tandem():
         return fuse_shapes([shape_channel, shape_interior, shape_bend])
 
     def tandem_shape(self) -> TopoDS_Shape:
-            # if angle = 0, it's a straight line
-        if self.tandem_angle < 0.1:
-            pass  # TODO
+        # if angle = 0, it's a straight line
+        if self.tandem_angle < 0.01:
+            max_height =self.cylinder_height + self.height_offset
+            stopper_radius = self.stopper_diameter / 2 - 0.1
+            tandem_height = self.tandem_height
+            # axis going in direction of p1 -> p2
+            p1 = gp_Pnt(0,0,tandem_height)
+            p2 = gp_Pnt(0,0,tandem_height+1)
+            dir = get_direction(p2,p1)      # from the tandem height straight up
+            axis = gp_Ax2(p1, dir)          # to start the cylinder to make space for the stopper
+            cylinder = BRepPrimAPI_MakeCylinder(axis, stopper_radius, max_height-tandem_height).Shape()
+            return cylinder
+        else:
+            # variables used
+            tandem_radius = self.tandem_diameter / 2 
+            tandem_height = self.tandem_height
+            bend_radius = self.bend_radius
 
-        # variables used
-        tandem_radius = self.tandem_diameter / 2 
-        tandem_height = self.tandem_height
-        bend_radius = self.bend_radius
+            origin = gp_Pnt2d(0, 0)
+            bend_start = gp_Pnt2d(0, tandem_height)
+            bend_origin = gp_Pnt2d(bend_radius, tandem_height)
 
-        origin = gp_Pnt2d(0, 0)
-        bend_start = gp_Pnt2d(0, tandem_height)
-        bend_origin = gp_Pnt2d(bend_radius, tandem_height)
+            bend_rads = math.radians(180-self.tandem_angle)
+            x = math.cos(bend_rads)
+            y = math.sin(bend_rads)
+            bend_direction = gp_Dir2d(x, y)
+            bend_circle = gp_Circ2d(
+                gp_Ax22d(bend_origin, bend_direction), bend_radius)
+            bend_line = gp_Lin2d(bend_origin, bend_direction)
 
-        bend_rads = math.radians(180-self.tandem_angle)
-        x = math.cos(bend_rads)
-        y = math.sin(bend_rads)
-        bend_direction = gp_Dir2d(x, y)
-        bend_circle = gp_Circ2d(
-            gp_Ax22d(bend_origin, bend_direction), bend_radius)
-        bend_line = gp_Lin2d(bend_origin, bend_direction)
+            line_curve = Geom2d_Line(bend_line)
+            bend_curve = Geom2d_Circle(bend_circle)
+            bend_end = intersection2d(line_curve, bend_curve)
 
-        line_curve = Geom2d_Line(bend_line)
-        bend_curve = Geom2d_Circle(bend_circle)
-        bend_end = intersection2d(line_curve, bend_curve)
+            new_line = bend_line.Rotated(bend_end, math.radians(-90))
+            vector = gp_Vec2d(new_line.Direction()) * 50.0  # placeholder
 
-        new_line = bend_line.Rotated(bend_end, math.radians(-90))
-        vector = gp_Vec2d(new_line.Direction()) * 50.0  # placeholder
+            # to 3D points
+            def to_3d(point: gp_Pnt2d):
+                return gp_Pnt(point.X(), 0, point.Y())
 
-        # to 3D points
-        def to_3d(point: gp_Pnt2d):
-            return gp_Pnt(point.X(), 0, point.Y())
+            origin_3d = to_3d(origin)
+            bend_origin_3d = to_3d(bend_origin)
+            bend_start_3d = to_3d(bend_start)
+            bend_end_3d = to_3d(bend_end)
+            tandem_end_3d = to_3d(gp_Pnt2d(bend_end.X() + vector.X(), bend_end.Y() + vector.Y()))        
+            
+            # edges
+            edge1 = make_edge(origin_3d, bend_start_3d)
 
-        origin_3d = to_3d(origin)
-        bend_origin_3d = to_3d(bend_origin)
-        bend_start_3d = to_3d(bend_start)
-        bend_end_3d = to_3d(bend_end)
-        tandem_end_3d = to_3d(gp_Pnt2d(bend_end.X() + vector.X(), bend_end.Y() + vector.Y()))        
-        
-        # edges
-        edge1 = make_edge(origin_3d, bend_start_3d)
+            axis = gp_Ax2(bend_origin_3d, gp_Dir(0, 1, 0))
+            circle = gp_Circ(axis, bend_radius)
+            arc = GC_MakeArcOfCircle(
+                circle, bend_start_3d, bend_end_3d, True).Value()
+            edge_bend = BRepBuilderAPI_MakeEdge(arc).Edge()
 
-        axis = gp_Ax2(bend_origin_3d, gp_Dir(0, 1, 0))
-        circle = gp_Circ(axis, bend_radius)
-        arc = GC_MakeArcOfCircle(
-            circle, bend_start_3d, bend_end_3d, True).Value()
-        edge_bend = BRepBuilderAPI_MakeEdge(arc).Edge()
+            edge2 = make_edge(bend_end_3d, tandem_end_3d)
 
-        edge2 = make_edge(bend_end_3d, tandem_end_3d)
+            # wire
+            wire = BRepBuilderAPI_MakeWire(edge1, edge_bend, edge2).Wire()
 
-        # wire
-        wire = BRepBuilderAPI_MakeWire(edge1, edge_bend, edge2).Wire()
+            # shape
+            bend_profile = BRepBuilderAPI_MakeWire(
+                BRepBuilderAPI_MakeEdge(
+                    gp_Circ(
+                        gp_Ax2(bend_start_3d, gp_Dir(0, 0, 1)),
+                        tandem_radius)
+                ).Edge()
+            ).Wire()
 
-        # shape
-        bend_profile = BRepBuilderAPI_MakeWire(
-            BRepBuilderAPI_MakeEdge(
-                gp_Circ(
-                    gp_Ax2(bend_start_3d, gp_Dir(0, 0, 1)),
-                    tandem_radius)
-            ).Edge()
-        ).Wire()
+            pipe = BRepFill_PipeShell(wire)
+            pipe.Add(bend_profile)
+            pipe.Build()
+            pipe.MakeSolid()
 
-        pipe = BRepFill_PipeShell(wire)
-        pipe.Add(bend_profile)
-        pipe.Build()
-        pipe.MakeSolid()
+            # stopper
+            stopper_radius = self.stopper_diameter / 2 - 0.1
+            dir = new_line.Direction()
+            stopper_direction = gp_Dir(dir.X(), 0, dir.Y())
+            stopper_axis = gp_Ax2(bend_end_3d, stopper_direction)
+            cylinder = BRepPrimAPI_MakeCylinder(stopper_axis, stopper_radius, 5.0).Shape()
 
-        # stopper
-        stopper_radius = self.stopper_diameter / 2 - 0.1
-        dir = new_line.Direction()
-        stopper_direction = gp_Dir(dir.X(), 0, dir.Y())
-        stopper_axis = gp_Ax2(bend_end_3d, stopper_direction)
-        cylinder = BRepPrimAPI_MakeCylinder(stopper_axis, stopper_radius, 5.0).Shape()
-
-        return fuse_shapes([pipe.Shape(), cylinder])
+            return fuse_shapes([pipe.Shape(), cylinder])
 
     def __init__(self, *args, **kwargs):
 
