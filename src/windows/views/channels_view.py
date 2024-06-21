@@ -6,13 +6,7 @@ from windows.models.shape_model import ShapeTypes
 from windows.ui.channels_view_ui import Ui_Channels_View
 from windows.views.custom_view import display_action, CustomView
 
-# get default needle length from config file.  If can't read from dictionary, set to 200.0.
-config_values = get_app().values.config_values
-CONFIG_NEEDLE_LENGTH = config_values.get("CONFIG_NEEDLE_LENGTH")
-if CONFIG_NEEDLE_LENGTH == None:
-    log.debug(
-        "Couldn't read CONFIG_NEEDLE_LENGTH from current config values.  Using default value 200 instead.")
-    CONFIG_NEEDLE_LENGTH = 200
+from settings.reset import getCurrentValues
 
 
 materials = {
@@ -41,9 +35,24 @@ class ChannelsView(CustomView):
     @display_action
     def action_apply_settings(self):
         log.debug(f"action: apply settings")
+        app = get_app()
+        # update config_values dict for needles
+        needles_length = self.ui.sb_needle_length.value()
+        if(needles_length != app.values.config_values["CONFIG_NEEDLE_LENGTH"]):
+            app.values.config_values["CONFIG_NEEDLE_LENGTH"] = needles_length
         diameter = self.ui.spinbox_diameter.value()
-        log.debug(f"setting channel diameters to: {diameter}")
-        self.channelsmodel.set_diameter(diameter)
+        threading_depth = self.ui.sb_threading_dept.value()
+        threading_diameter= self.ui.sb_threading_diameter.value()
+        if(diameter != app.values.config_values["CONFIG_CHANNELS_DIAMETER"] or \
+           app.window.channelsmodel.threading_depth != threading_depth or \
+            app.window.channelsmodel.threading_diamenter != threading_diameter):
+            log.debug(f"setting channel diameters to: {diameter}")
+            app.values.config_values["CONFIG_CHANNELS_DIAMETER"] = diameter
+            self.channelsmodel.set_diameter(diameter)
+            app.window.channelsmodel.threading_depth =  threading_depth
+            app.window.channelsmodel.threading_diamenter = threading_diameter
+            app.values.config_values["CONFIG_CHANNELS_THREADING_DEPTH"] = app.window.channelsmodel.threading_depth
+            app.values.config_values["CONFIG_CHANNELS_THREADING_DIAMETER"] = app.window.channelsmodel.threading_diamenter
         
     @display_action
     def action_set_selected_shapes(self, *args, **kwargs):
@@ -51,6 +60,7 @@ class ChannelsView(CustomView):
 
     @display_action
     def action_set_tandem(self):
+        data = get_app().window.dicommodel.data
         log.debug(f"setting channel's tandem status")
 
         model = get_app().window.channelsmodel
@@ -58,8 +68,13 @@ class ChannelsView(CustomView):
 
         # set or clear the tandem channel
         label = None
-        if channel_label != model.tandem_channel: label = channel_label
+        if channel_label != data.tandem_channel: label = channel_label
         model.set_tandem(label)
+
+        #updates the spin box value of rotation
+        window = get_app().window
+        rotation = window.tandemmodel.rotation
+        window.navigationmodel.views[3].ui.tandem_rotation.setValue(rotation)
 
     @display_action
     def action_toggle_channel_disable(self):
@@ -73,11 +88,13 @@ class ChannelsView(CustomView):
         
         # diameter spin box
         self.ui.spinbox_diameter.setValue(self.channelsmodel.diameter)
+        # needle channels spin box
+        self.ui.sb_needle_length.setValue(get_app().values.config_values.get("CONFIG_NEEDLE_LENGTH"))
 
         # channels list
         selected_channel = self.channelsmodel.get_selected_channel()
         self.ui.listwidget_channels.blockSignals(True)  # prevents accidently emitting signals
-        self.ui.listwidget_channels.clear()          
+        self.ui.listwidget_channels.clear()
         for row, channel in enumerate(self.channelsmodel.channels.values()):
             new_item = QListWidgetItem()
             new_item.setText(channel.label)
@@ -135,7 +152,10 @@ class ChannelsView(CustomView):
         self.is_active = False
 
         #sets default needle length
-        self.ui.sb_needle_length.setValue(CONFIG_NEEDLE_LENGTH)
+        config_values = get_app().values.config_values
+        self.ui.sb_needle_length.setValue(config_values.get("CONFIG_NEEDLE_LENGTH"))
+        self.ui.sb_threading_dept.setValue(config_values.get("CONFIG_CHANNELS_THREADING_DEPTH"))
+        self.ui.sb_threading_diameter.setValue(config_values.get("CONFIG_CHANNELS_THREADING_DIAMETER"))
 
         # signals and slots
         self.ui.btn_apply_settings.pressed.connect(self.action_apply_settings)

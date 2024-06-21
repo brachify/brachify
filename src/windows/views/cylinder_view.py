@@ -7,6 +7,8 @@ from windows.models.shape_model import ShapeTypes
 from windows.ui.cylinder_view_ui import Ui_Cylinder_View
 from windows.views.custom_view import display_action, CustomView
 
+from settings.reset import getCurrentValues
+
 materials = {
     ShapeTypes.CYLINDER: {"rgb": [0.2, 0.55, 0.55], "transparent": True},
     ShapeTypes.CHANNEL: {"rgb": [0.8, 0.8, 0.8], "transparent": True},
@@ -19,26 +21,34 @@ class CylinderView(CustomView):
 
     @display_action
     def action_apply_settings(self):
+        app = get_app()
         log.debug(f"applying cylinder settings")
 
-        model = get_app().window.cylindermodel
+        model = app.window.cylindermodel
         cylinder = model.cylinder
 
         diameter = self.ui.spinbox_diameter.value()
         length = self.ui.spinbox_length.value()
         add_base = self.ui.cb_add_base.isChecked()
 
+        # update the config_values dict
+        app.values.config_values["CONFIG_CYLINDER_DIAMETER"] = diameter
+        app.values.config_values["CONFIG_CYLINDER_LENGTH"] = length
+
         if cylinder.length != length:
             cylinder.length = length
 
             # send the new offset signal
             offset = length - BrachyCylinder.default_length() 
-            get_app().signals.height_changed.emit(offset)
+            app.signals.height_changed.emit(offset)
 
         cylinder.diameter = diameter
         cylinder.enableBase(add_base)  # this will force the cylinder's shape to be recalculated
 
         model.update_cylinder(cylinder)
+
+        #update the maximium tandem height value allowed to reduce user errors
+        get_app().window.navigationmodel.views[3].ui.sb_tandem_height.setMaximum(length)
 
     def action_update_settings(self, cylinder: BrachyCylinder):    
         log.debug(f"updating cylinder view's settings")
@@ -64,6 +74,10 @@ class CylinderView(CustomView):
         super().__init__()
         self.ui = Ui_Cylinder_View()  # the converted python file from the ui file
         self.ui.setupUi(self)
+
+        # Set the spin box values
+        self.ui.spinbox_length.setValue(get_app().values.config_values.get("CONFIG_CYLINDER_LENGTH"))
+        self.ui.spinbox_diameter.setValue(get_app().values.config_values.get("CONFIG_CYLINDER_DIAMETER"))
 
         # signals and slots
         self.ui.btn_apply_settings.pressed.connect(self.action_apply_settings)

@@ -104,6 +104,10 @@ class DisplayModel(QObject):
             shape.material = self.materials[shape_type]
         self.shapes_changed.emit(list(shapes), True)
 
+    def reset(self):
+        self.visibility = {}  # label: bool where True is visible
+        self.shapes = {}  # each entry stored as (ShapeModel)
+
     def __init__(self):
         super().__init__()
         self.colours = default_colours
