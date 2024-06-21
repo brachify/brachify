@@ -27,8 +27,9 @@ ORIGNAL_CYLINDER_LENGTH = get_app().values.config_values.get("CONFIG_CYLINDER_LE
 
 class BrachyCylinder:
     
+    # returns the current config value of the cylinder
     @staticmethod
-    def default_length() -> float: return ORIGNAL_CYLINDER_LENGTH
+    def default_length() -> float: return get_app().values.config_values.get("CONFIG_CYLINDER_LENGTH")
 
     def shape(self) -> TopoDS_Shape:
         if self._shape:
