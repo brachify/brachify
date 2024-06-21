@@ -1,19 +1,7 @@
 import numpy as np
 import math
-'''
-Not in current use, but were used for the Bezier method
-from OCC.Core.Geom import Geom_BezierCurve
-from OCC.Core.TColgp import TColgp_Array1OfPnt
-'''
 from OCC.Core.gp import gp_Pnt, gp_Ax2
 from OCC.Core.BRepPrimAPI import BRepPrimAPI_MakeCone, BRepPrimAPI_MakeSphere, BRepPrimAPI_MakeCylinder
-
-'''
-also for Bezier method
-from OCC.Core.BRepBuilderAPI import BRepBuilderAPI_MakeEdge, BRepBuilderAPI_MakeWire
-from OCC.Core.BRepPrimAPI import BRepPrimAPI_MakeCone, BRepPrimAPI_MakeSphere
-from OCC.Core.BRepOffsetAPI import BRepOffsetAPI_MakePipe
-'''
 from OCC.Core.BRepAlgoAPI import BRepAlgoAPI_Fuse
 from OCC.Core.TopoDS import TopoDS_Shape
 
@@ -30,15 +18,6 @@ class NeedleChannel:
 
     @staticmethod
     def default_diameter() -> float: return get_app().values.config_values.get("CONFIG_CHANNELS_DIAMETER")
-
-    #setChannel function is not currently in use.  It is left here in case it is needed in the future.
-    '''
-    def setChannel(self, height: float = 0.0, diameter: float = 3.0) -> None:
-        self._offset = height
-        self._diameter = diameter
-        self._shape = None
-        self.shape()
-    '''
 
     def get_diameter(self):
         return self._diameter
@@ -119,7 +98,7 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
     # offset points using z axis and cylinder's offset
     # and convert into a gp_Pnt
     # rounding/truncation is needed otherwise there can be a bug in pipe = BRepAlgoAPI_Fuse(cone, pipe).Shape() below.
-
+    window = get_app().window
     channel_points = np.array(channel_points)
     
     # apply the offset for the cylinder length
@@ -139,20 +118,74 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
     radius = diameter/2
 
     # generate starting point on top (cone)
+
+    #if there is a warning try again with radius = origional radius +0.01
+    #if there is still a warning try again with radius = origional raidus -0.01
+    #if there is still a warning try again 6 more times adjusting x, y, z, one at a time
+    #if it still fails try adding just the cylinder print warning
+    #if it still fails print error
     p1 = points[0]
     p2 = points[1]
-    length = helper.get_magnitude(p1, p2)
-    if length < TIP_LENGTH:
-        pipe = _cone_pipe(p1, p2, radius)
-    else:
-        vector = helper.get_vector(p1, p2, length=TIP_LENGTH) #gives normalized vector of p2-p1 *TIP_LENGTH
-        p_mid = gp_Pnt(p1.X() + vector.X(), p1.Y() +
-                        vector.Y(), p1.Z() + vector.Z())
-        cone = _cone_pipe(p1, p_mid, radius) #makes cone at end of needle
-        pipe = pipe_segment(p_mid, p2, radius)
-        pipe = BRepAlgoAPI_Fuse(cone, pipe).Shape()
-        
+    check = [0,1]
 
+    try:
+        check = create_point(p1, p2, radius)
+    except:
+        pass
+    
+    # will try shifting the x,y, and z value of each point
+    def tip_fix():
+        tests = [['p1.SetX(p1.X()+0.01)', 'p1.SetX(p1.X()-0.01)'],
+        ['p1.SetY(p1.Y()+0.01)', 'p1.SetY(p1.Y()-0.01)'],
+        ['p1.SetZ(p1.Z()+0.01)', 'p1.SetZ(p1.Z()-0.01)'],
+        ['p2.SetX(p2.X()+0.01)', 'p2.SetX(p2.X()-0.01)'],
+        ['p2.SetY(p2.Y()+0.01)', 'p2.SetY(p2.Y()-0.01)'],
+        ['p2.SetZ(p2.Z()+0.01)', 'p2.SetZ(p2.Z()-0.01)']]
+        for i, item in enumerate(tests):
+            eval(item[0])
+            try:
+                check = create_point(p1, p2, radius)
+            except:
+                pass
+            if(check[1]):
+                log.debug(str(i+4)+"th tip construction attempt failed")
+            else:
+                eval(item[1])
+                return check
+            eval(item[1])
+        return [0,1] # if program gets here there were warnings thrown in every attempt        
+                
+    
+    if(check[1]):
+        log.debug("1st tip construction attempt failed")
+        try:
+            check = create_point(p1, p2, radius+0.01)
+        except:
+            pass
+        
+        if(check[1]):
+            log.debug("2nd tip construction attempt failed")
+            try:
+                check = create_point(p1, p2, radius-0.01)
+            except:
+                pass
+            
+            if(check[1]):
+                log.debug("3rd tip construction attempt failed")
+                check = tip_fix()
+                if(check[1]):
+                    pipe = create_point(p1, p2, radius)[0] #all attempts fail just go with origional values
+                    log.warning("9th tip construction attemp failed\nError when creating tip of 3D model")
+                    #I do not give the user a pop up here because there seems to be an issue with 
+                    #every second channel, but the issue does not seem to be visible
+                else:
+                    pipe = check[0]
+            else:
+                pipe = check[0]
+        else:
+            pipe = check[0]
+    else:
+        pipe = check[0]
     # rest of the points
 
     def fix1(): #returns -1 if error, 0 if warning, 1 if success
@@ -235,8 +268,7 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
                         else:
                             printpoint(p1)
                             printpoint(p2)
-                            log.warning("Warning thrown while constructing channel")
-                            window = get_app().window
+                            log.warning("\n\n\n\n\n\n\n\n\n\nWarning thrown while constructing channel")
                             window.channel_display_warning()
                 
         except:
@@ -254,8 +286,7 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
                         else:
                             printpoint(p1)
                             printpoint(p2)
-                            log.warning("Warning sent while making 3d model of channel")
-                            window = get_app().window
+                            log.warning("\n\n\n\n\n\n\n\n\n\n\nWarning sent while making 3d model of channel")
                             window.channel_display_warning()
                 else:
                     fix = fix3()
@@ -264,14 +295,12 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
                         if(fix[0] ==0):
                             printpoint(p1)
                             printpoint(p2)
-                            log.warning("Warning sent while making 3d model of channel")
-                            window = get_app().window
+                            log.warning("\n\n\n\n\n\n\n\n\nWarning sent while making 3d model of channel")
                             window.channel_display_warning()
                     else:
                         printpoint(p1)
                         printpoint(p2)
-                        log.error("loading channel to 3d display failed")
-                        window = get_app().window
+                        log.error("\n\n\n\n\n\n\n\n\nloading channel to 3d display failed")
                         window.channel_display_error()
 
 
@@ -282,33 +311,23 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
             #BRepPrimAPI_MakeSphere makes a sphere centered at point and then makes it radius = radius
             temp = BRepAlgoAPI_Fuse(pipe, BRepPrimAPI_MakeSphere(point, radius).Shape())
             if(temp.HasWarnings):
-                temp = BRepAlgoAPI_Fuse(pipe, BRepPrimAPI_MakeSphere(point, radius+0.01).Shape())
-                if(temp.HasWarnings()):
-                    log.error("Error Constructing corner of a 3D channel")
-                    window = get_app().window
-                    window.channel_display_error()
+                if(temp.HasWarnings):
+                    temp = BRepAlgoAPI_Fuse(pipe, BRepPrimAPI_MakeSphere(point, radius-0.01).Shape())
+                    if(temp.HasWarnings()):
+                        log.error("\n\n\n\n\n\n\n\nError Constructing corner of a 3D channel")
+                        window.channel_display_error()
+                    else:
+                        pipe = temp.Shape()
                 else:
                     pipe = temp.Shape()
             else:
                 pipe = temp.Shape()
     except:
-        window = get_app().window
         window.channel_display_error()
 
     # if the points extend past z zero, don't extend
     if points[-1].Z() < 0:
         return pipe
-
-    '''
-    # previous method
-    # curve downwards
-    curve = _curved_end(points, radius)
-    pipe = BRepAlgoAPI_Fuse(pipe, curve).Shape()
-
-    # extend out of cylinder
-    face = helper.get_lowest_face(pipe)
-    extended_pipe = _extended_pipe(pipe)
-    '''
     # extend out of cylinder
     extension_for_pipe = down_to_end(points[-1], radius)
     extended_pipe = BRepAlgoAPI_Fuse(pipe, extension_for_pipe).Shape()
@@ -316,19 +335,14 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
     return extended_pipe
 
 def _cone_pipe(p1, p2, radius: float) -> TopoDS_Shape:
+    p2.SetX(p2.X()+0.01) # 0.01 makes it so that the cone will never be perfectly perpendicular to the cylinder coming after it
+                    # in the event the there is a perfectly vertical needle channel
+                    # (if 3 points are linearly related there seems to be an issue fusing cylinders together)
     length = helper.get_magnitude(p1, p2) #gives vector p2 - p1 and then get the norm
-    direction = helper.get_direction(p1, p2) #gives normalised p2-p1 vector 
-    axis = gp_Ax2(p1, direction) # creates coordinate system with an origin at p1, and z- axis pointed in "direction"
-    return BRepPrimAPI_MakeCone(axis, 0.0, radius, length).Shape() # Cone made with height = length, bottom radius = 0, top radius =radius, on the axis as defined in the previous line
-'''
+    direction = helper.get_direction(p2, p1) #gives normalised p1-p2 vector 
+    axis = gp_Ax2(p2, direction) # creates coordinate system with an origin at p1, and z- axis pointed in "direction"
+    return BRepPrimAPI_MakeCone(axis, radius, 0.001, length).Shape() # Cone made with height = length, bottom radius = 0, top radius =radius, on the axis as defined in the previous line
 
-def _straight_pipe(p1, p2, face) -> TopoDS_Shape:
-    edge = BRepBuilderAPI_MakeEdge(p1, p2).Edge()
-    make_wire = BRepBuilderAPI_MakeWire(edge)
-    make_wire.Build()
-    wire = make_wire.Wire()
-    return BRepOffsetAPI_MakePipe(wire, face).Shape()
-'''
 
 def down_to_end(p1: gp_Pnt, radius: float) -> TopoDS_Shape:
     window = get_app().window
@@ -402,62 +416,21 @@ def remove_collinear_points(points):
 
         return filtered_points
 
+
+def create_point(p1, p2, radius):
+    length = helper.get_magnitude(p1, p2)
+    if length < TIP_LENGTH:
+        pipe = _cone_pipe(p1, p2, radius)
+    else:
+        vector = helper.get_vector(p1, p2, length=TIP_LENGTH) #gives normalized vector of p2-p1 *TIP_LENGTH
+        p_mid = gp_Pnt(p1.X() + vector.X(), p1.Y() +
+                        vector.Y(), p1.Z() + vector.Z())
+        cone = _cone_pipe(p1, p_mid, radius) #makes cone at end of needle
+        pipe = pipe_segment(p_mid, p2, radius)
+        temp = BRepAlgoAPI_Fuse(cone, pipe)
+        pipe=temp.Shape()
+        return (pipe,temp.HasWarnings)
+
+
 def printpoint(p1: gp_Pnt):
     print("("+str(p1.X())+","+str(p1.Y())+","+str(p1.Z())+")")
-'''
-    Original methods
-    def _extended_pipe(shape: TopoDS_Shape) -> TopoDS_Shape:
-    location = None
-
-    lowest_face = helper.get_lowest_face(shape)
-    if helper.face_is_plane(lowest_face):
-        a_plane = helper.geom_plane_from_face(lowest_face)
-        location = a_plane.Location()
-
-    if location is None or location.Z() < 0:
-        return shape
-
-    extension = _straight_pipe(location, gp_Pnt(
-        location.X(), location.Y(), -0.1), lowest_face)
-    return BRepAlgoAPI_Fuse(shape, extension).Shape()
-
-
-def _curved_end(points: list[gp_Pnt], radius: float) -> TopoDS_Shape:
-    # add a curved pipe downwards using offset length and direction of last two points
-    length = helper.get_magnitude(points[-2], points[-1])
-    vector = helper.get_vector(points[-2], points[-1], length)
-    p1 = points[-1]  # last point in array
-    p2 = gp_Pnt(p1.X() + vector.X(), p1.Y() + vector.Y(),
-                p1.Z() + vector.Z())  # middle point for bcurve
-    # last point, lowered towards bottom
-    p3 = gp_Pnt(p2.X(), p2.Y(), p2.Z() - length)
-
-    # curve joining two straight paths
-    array = TColgp_Array1OfPnt(1, 3)
-    array.SetValue(1, p1)
-    array.SetValue(2, p2)
-    array.SetValue(3, p3)
-    bz_curve = Geom_BezierCurve(array)
-    bend_edge = BRepBuilderAPI_MakeEdge(bz_curve).Edge()
-
-    # assembling the path
-    wire = BRepBuilderAPI_MakeWire(bend_edge).Wire()
-
-    # profile
-    direction = helper.get_direction(p1, p2)
-    profile = helper.circle_profile(p1, direction, radius)
-
-    # shape using last face
-    return BRepOffsetAPI_MakePipe(wire, profile).Shape()
-
-
-def pipe_segment(p1: gp_Pnt, p2: gp_Pnt, radius: float) -> TopoDS_Shape:
-    direction = helper.get_direction(p1, p2)
-    profile = helper.circle_profile(p1, direction, radius)
-
-    guide_edge = BRepBuilderAPI_MakeEdge(p1, p2).Edge()
-    guide_wire = BRepBuilderAPI_MakeWire(guide_edge).Wire()
-
-    cylinder = BRepOffsetAPI_MakePipe(guide_wire, profile).Shape()
-    sphere = BRepPrimAPI_MakeSphere(p2, radius).Shape()
-'''
