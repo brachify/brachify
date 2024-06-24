@@ -52,22 +52,11 @@ class TandemModel(QObject):
         self.tandem_length = config_values.get("CONFIG_TANDEM_TIP_HEIGHT") + height_offset
         self.update()
 
-    def set_tandem(self,
-                   tandem_diameter: float, 
-                   stopper_diameter: float,
-                   tip_angle: float,
-                   bend_radius: float,
-                   tandem_length: float):
+    def set_tandem(self):
 
         log.debug(f"setting tandem")
         self.filepath = None
         self.is_shape_imported = False  # used to flag height offsets
-
-        self.tandem_diameter = tandem_diameter
-        self.stopper_diameter = stopper_diameter
-        self.tip_angle = tip_angle
-        self.bend_radius = bend_radius
-        self.tandem_length = tandem_length
 
         self._generate_tandem()
 

@@ -27,15 +27,16 @@ class TandemView(CustomView):
     def action_set_tandem(self):
         log.debug(f"action: generate a tandem")
 
+        # assign the tandemmodel attributes with the new values
         self.tandemmodel.threading_diameter = self.ui.sb_threading_diameter.value()
         self.tandemmodel.threading_depth = self.ui.sb_threading_depth.value()
-        self.tandemmodel.set_tandem(
-            tandem_diameter=self.ui.sp_channel_diameter.value(),
-            stopper_diameter=self.ui.sp_stopper_diameter.value(),
-            tip_angle=self.ui.sp_bend_angle.value(),
-            bend_radius= self.ui.sb_bend_radius.value(),
-            tandem_length= self.ui.sb_tandem_height.value()
-        )
+        self.tandemmodel.tandem_diameter = self.ui.sp_channel_diameter.value()
+        self.tandemmodel.stopper_diameter = self.ui.sp_stopper_diameter.value()
+        self.tandemmodel.tip_angle = self.ui.sp_bend_angle.value()
+        self.tandemmodel.bend_radius = self.ui.sb_bend_radius.value()
+        self.tandemmodel.tandem_length =  self.ui.sb_tandem_height.value()
+        # set the tandem with the new values
+        self.tandemmodel.set_tandem()
 
         #sets tandem rotation to the value in the box and then
         tan = get_app().window.tandemmodel
