@@ -31,19 +31,13 @@ class CylinderView(CustomView):
         length = self.ui.spinbox_length.value()
         add_base = self.ui.cb_add_base.isChecked()
 
-        #previous_cylinder_length = app.values.config_values.get("CONFIG_CYLINDER_LENGTH")
-
         # update the config_values dict
         app.values.config_values["CONFIG_CYLINDER_DIAMETER"] = diameter
         app.values.config_values["CONFIG_CYLINDER_LENGTH"] = length
 
         if cylinder.length != length:
-            # OR better way? calc offset here before reset cylinder.length
-            #offset = length - cylinder.length
             cylinder.length = length
-
             # send the new offset signal
-            #offset = length - previous_cylinder_length 
             # The offset is the amount that the cylinder has changed compared to the starting_length.
             # this is because the needle points and tandem are adjusted from their original location 
             # from when they were originally loaded.  The needle points are never modified.
