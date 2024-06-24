@@ -135,19 +135,6 @@ class ImportView(CustomView):
         Updates the config label on the Import view to display the file name of the current config file.
         If no config file was loaded, or if no values from it were used, then display "None".
         """
-        # create the text for the pop-up window label
-        text = "Config file currently loaded:\n"
-        # If the file was not found, or if the file did not contain any valid keys, then print None.
-
-        if len(app.values.config_keys_loaded[0]) < 1:
-            text += "None\n\n"
-        # If the file did contain at least 1 valid key, then print the file path.
-        else:
-            file_name = app.values.most_recently_opened_config_file
-            text += f"{file_name}"
-
-        self.ui.info_area.append(text)
-
         self.ui.info_area.append(app.values.loaded_message)
 
         #The tandems length should not be larger than the cylinder
