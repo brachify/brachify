@@ -81,7 +81,6 @@ class TandemView(CustomView):
         #sets tandem rotation to the value in the box and then updates the spin box
         tan = get_app().window.tandemmodel
         tan.change_tandem_rotation(self.ui.tandem_rotation.value())
-        self.ui.tandem_rotation.setValue(self.ui.tandem_rotation.value())
         self.ui.tandem_rotation_2.setValue(self.ui.tandem_rotation.value())
 
 
