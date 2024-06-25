@@ -251,7 +251,7 @@ def get_last_xy_points(needles):
     return last_xy_points
 
 
-def process_lengths_and_create_data(is_lengths, protrusion_lengths, label_list):
+def process_lengths_and_create_data(is_lengths, protrusion_lengths, label_list, number_list):
     needle_data = []
 
     for idx, (length_mm, protrusion_length) in enumerate(zip(is_lengths, protrusion_lengths), start=0):
@@ -261,7 +261,7 @@ def process_lengths_and_create_data(is_lengths, protrusion_lengths, label_list):
 
         # Create a tuple for needle_data with protrusion length in the third column
         needle_info = (
-            f"{label_list[idx]}", f"{length_cm} cm", f"{protrusion_length_cm} cm")
+            f"{label_list[idx]}", f"{number_list[idx]}", f"{length_cm} cm", f"{protrusion_length_cm} cm", "")
         needle_data.append(needle_info)
 
     return needle_data
@@ -394,6 +394,8 @@ def generate_pdf(
         tandem_rotation: float, 
         is_tandem_imported: bool):
 
+    app = get_app()
+
     # Get today's date in the format "Month Day, Year"
     today_date = datetime.today().strftime('%B %d, %Y')
 
@@ -443,13 +445,19 @@ def generate_pdf(
     
     protrusion_lengths = calculate_protrusion_lengths(needles, needle_length)
     # TODO: Add needle label and channel number instead of "Needle 1" etc.
-    length_label = "Protruding Length for " + str(needle_length) + "mm needle"
-    data = [["Channel", "Interstitial Length", length_label]]
+    #length_label = "Protruding Length for " + str(needle_length) + "mm needle"
+    data = [["Name","Channel Number", "Extension (Interstitial Length)", "Protrusion from Base", "Protrusion (measured)"]]
 
     label_list = [channel.label for channel in channels]
-    for needle_number, interstitial_length, protruding_length \
-    in process_lengths_and_create_data(interstitial_lengths, protrusion_lengths, label_list):
-        data.append([needle_number, interstitial_length, protruding_length])
+    number_list = [channel.channel_number for channel in channels]
+    for label, channel_number, interstitial_length, protruding_length, blank \
+    in process_lengths_and_create_data(interstitial_lengths, protrusion_lengths, label_list, number_list):
+        data.append([label, channel_number, interstitial_length, protruding_length, blank])
+
+    if has_tandem:
+        tandem_label = app.window.dicommodel.data.tandem_channel
+        tandem_channel_number = app.window.channelsmodel.get_tandem_channel().channel_number
+        data.append([tandem_label, tandem_channel_number, "N/A", "N/A", ""])
 
     table = Table(data)
     table_style = TableStyle([
