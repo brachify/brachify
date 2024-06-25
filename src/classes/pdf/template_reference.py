@@ -267,7 +267,7 @@ def process_lengths_and_create_data(is_lengths, protrusion_lengths, label_list, 
     return needle_data
 
 
-def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False, tandem_rotation=0.0,
+def save_points_diagram(points, number_list, circle_radius, output_filepath, has_tandem=False, tandem_rotation=0.0,
                         is_tandem_imported=False):
     config = get_app().values.config_values
     channel_diam = config.get("CONFIG_CHANNELS_DIAMETER")
@@ -312,21 +312,21 @@ def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False
     # if channel diameter >= circle_radius/12 there is ~enough room to write numbers inside of channels
     # There could be some distorting of the image if there needles are outside of the cylinder
     if(channel_diam >= circle_radius/12 and maxx<circle_radius and maxy<circle_radius):
-        for i, (x, y) in enumerate(points, start=1):
+        for i, (x, y) in enumerate(points):
             #checks to make sure that needles are within 5 cm of center
             if(((np.sqrt(x**2+y**2))/2)<limit):
                 ax.add_artist(plt.Circle((x, -y), channel_diam/2, color='black', fill=False, clip_on=False))
-                ax.text(x, -y, str(i), color='black', ha='center', va='center')
+                ax.text(x, -y, str(number_list[i]), color='black', ha='center', va='center')
     else:
-        for i, (x, y) in enumerate(points, start=1):
+        for i, (x, y) in enumerate(points):
             #checks to make sure that needles are within 5 cm of center
             if((np.sqrt(x**2+y**2)/2)<limit):
                 ax.add_artist(plt.Circle((x, -y), channel_diam/2, color='black', fill=False, clip_on=False))
                 #so that text will print outside of needle channel to the right if the channel is too thin
                 if(x<0):
-                    ax.text(x-(channel_diam/2), -y, str(i), color='black', ha='right', va='center')
+                    ax.text(x-(channel_diam/2), -y, str(number_list[i]), color='black', ha='right', va='center')
                 else:
-                    ax.text(x+(channel_diam/2), -y, str(i), color='black', ha='left', va='center')
+                    ax.text(x+(channel_diam/2), -y, str(number_list[i]), color='black', ha='left', va='center')
 
     if has_tandem:
         if(tandem_diam >= circle_radius/12 and maxx<circle_radius and maxy<circle_radius):
@@ -477,7 +477,7 @@ def generate_pdf(
     circle_radius = cylinder.diameter / 2
     last_xy_points = get_last_xy_points(needles) 
     
-    png_path = save_points_diagram(last_xy_points, circle_radius, pdf_output_dir, has_tandem=has_tandem,
+    png_path = save_points_diagram(last_xy_points, number_list, circle_radius, pdf_output_dir, has_tandem=has_tandem,
                                     tandem_rotation=tandem_rotation, is_tandem_imported=is_tandem_imported)
 
     #leaves margin of 25 pixels
