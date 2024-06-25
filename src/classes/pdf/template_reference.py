@@ -267,8 +267,13 @@ def process_lengths_and_create_data(is_lengths, protrusion_lengths, label_list, 
     return needle_data
 
 
-def save_points_diagram(points, number_list, circle_radius, output_filepath, has_tandem=False, tandem_rotation=0.0,
-                        is_tandem_imported=False):
+def save_points_diagram(points: list,
+                        number_list: list, 
+                        circle_radius: float, 
+                        output_filepath: Path, 
+                        has_tandem: bool=False, 
+                        tandem_rotation: float=0.0,
+                        is_tandem_imported: bool=False):
     config = get_app().values.config_values
     channel_diam = config.get("CONFIG_CHANNELS_DIAMETER")
     #tandem will show up at config tandem value even if it is imported
