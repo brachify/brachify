@@ -358,10 +358,10 @@ def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False
     tick_height = 1.0
     tick_color = 'black'
     tick_vert_offset = 0.5
-    if not has_tandem:
-        rect = plt.Rectangle((-tick_width / 2, circle_radius - tick_vert_offset -
-                                tick_height), tick_width, tick_height, color=tick_color, fill=True)
-        ax.add_artist(rect)
+    # add the notch
+    rect = plt.Rectangle((-tick_width / 2, circle_radius - tick_vert_offset -
+                            tick_height), tick_width, tick_height, color=tick_color, fill=True)
+    ax.add_artist(rect)
 
     # Remove axis markers and numbering
     ax.set_xticks([])
@@ -483,7 +483,13 @@ def generate_pdf(
     try:
         import os
         if os.name == 'nt':  # Check if on Windows
-            subprocess.Popen(['start', str(filepath)], shell=True)
+            try:
+                # try opening the pdf using os.startfile
+                os.startfile(str(filepath))
+                #subprocess.Popen(['start', str(filepath)], shell=False)
+            except:
+                # if os.startfile throws and exception, then try opening the pdf with subprocess.Popen
+                subprocess.Popen(['start', str(filepath)], shell=True)
         elif os.name == 'posix':  # Check if on macOS/Linux
             subprocess.Popen(['open', str(filepath)])
     except Exception as e:
