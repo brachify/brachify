@@ -59,6 +59,9 @@ class ImportView(CustomView):
         # update the config label on the import view to display the info from the loaded config file.   
         app.values.loaded_message = app.values.createConfigMessageText(file_name, isFromUserImport=True)
         self.action_update_import_label()
+        #The tandems length should not be larger than the cylinder
+        max_tandem_len = app.values.config_values.get('CONFIG_CYLINDER_LENGTH')
+        app.window.navigationmodel.views[3].ui.sb_tandem_height.setMaximum(max_tandem_len)
 
         # reset all the values in the spin boxes and in the views.
         resetAllValues(app.values.config_values)
@@ -100,6 +103,9 @@ class ImportView(CustomView):
         window.displaymodel.set_transparent(True)
 
         self.action_update_import_label()
+        #The tandems length should not be larger than the cylinder
+        max_tandem_len = app.values.config_values.get('CONFIG_CYLINDER_LENGTH')
+        app.window.navigationmodel.views[3].ui.sb_tandem_height.setMaximum(max_tandem_len)
         
         app.signals.viewChanged.emit(4)
         window.change_color_export()
