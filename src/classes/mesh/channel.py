@@ -118,12 +118,6 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
     radius = diameter/2
 
     # generate starting point on top (cone)
-
-    #if there is a warning try again with radius = origional radius +0.01
-    #if there is still a warning try again with radius = origional raidus -0.01
-    #if there is still a warning try again 6 more times adjusting x, y, z, one at a time
-    #if it still fails try adding just the cylinder print warning
-    #if it still fails print error
     p1 = points[0]
     p2 = points[1]
     check = [0,1]
@@ -132,61 +126,9 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
         check = create_point(p1, p2, radius)
     except:
         pass
-    
-    # will try shifting the x,y, and z value of each point
-    def tip_fix():
-        tests = [['p1.SetX(p1.X()+0.01)', 'p1.SetX(p1.X()-0.01)'],
-        ['p1.SetY(p1.Y()+0.01)', 'p1.SetY(p1.Y()-0.01)'],
-        ['p1.SetZ(p1.Z()+0.01)', 'p1.SetZ(p1.Z()-0.01)'],
-        ['p2.SetX(p2.X()+0.01)', 'p2.SetX(p2.X()-0.01)'],
-        ['p2.SetY(p2.Y()+0.01)', 'p2.SetY(p2.Y()-0.01)'],
-        ['p2.SetZ(p2.Z()+0.01)', 'p2.SetZ(p2.Z()-0.01)']]
-        for i, item in enumerate(tests):
-            eval(item[0])
-            try:
-                check = create_point(p1, p2, radius)
-            except:
-                pass
-            if(check[1]):
-                log.debug(str(i+4)+"th tip construction attempt failed")
-            else:
-                eval(item[1])
-                return check
-            eval(item[1])
-        return [0,1] # if program gets here there were warnings thrown in every attempt        
-                
-    
     if(check[1]):
-        log.debug("1st tip construction attempt failed")
-        try:
-            check = create_point(p1, p2, radius+0.01)
-        except:
-            pass
-        
-        if(check[1]):
-            log.debug("2nd tip construction attempt failed")
-            try:
-                check = create_point(p1, p2, radius-0.01)
-            except:
-                pass
-            
-            if(check[1]):
-                log.debug("3rd tip construction attempt failed")
-                check = tip_fix()
-                if(check[1]):
-                    pipe = create_point(p1, p2, radius)[0] #all attempts fail just go with origional values
-                    log.warning("9th tip construction attemp failed\nError when creating tip of 3D model")
-                    #I do not give the user a pop up here because there seems to be an issue with 
-                    #every second channel, but the issue does not seem to be visible
-                else:
-                    pipe = check[0]
-            else:
-                pipe = check[0]
-        else:
-            pipe = check[0]
-    else:
-        pipe = check[0]
-    # rest of the points
+        log.warning("warning thrown while constructing needle tips")
+    pipe = check[0]
 
     def fix1(): #returns -1 if error, 0 if warning, 1 if success
         # tries increasing the radius by an infinitesimal amount (0.001), then fusing.
