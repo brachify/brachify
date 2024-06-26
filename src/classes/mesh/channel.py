@@ -270,10 +270,12 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
     return extended_pipe
 
 def _cone_pipe(p1, p2, radius: float) -> TopoDS_Shape:
-    p2.SetX(p2.X()+0.01) # 0.01 is to make the fusing work, it is currently unknown why this was not working prefviously
-    #one potential reason this may cause an issue without the addition of the 0.01 is that the points p1,p_mid, and p2 
-    #will always be collinear which has caused issues in the past; however, attempts to remove the collinear point here
-    #seem to cause errors elsewhere 
+    p2.SetX(p2.X()+0.01) # 0.01 makes it so that the cone will never be perfectly perpendicular to the cylinder coming after it
+                    # in the event the there is a perfectly vertical needle channel
+                    # (if 3 points are linearly related there seems to be an issue fusing cylinders together)
+                    # in the event that p3 is collinear p_mid and p2 as defined created points
+                    # then that should be caught in fix3() when building the channel
+    length = helper.get_magnitude(p1, p2) #gives vector p2 - p1 and then get the norm
     direction = helper.get_direction(p2, p1) #gives normalised p1-p2 vector 
     axis = gp_Ax2(p2, direction) # creates coordinate system with an origin at p2, and z- axis pointed in "direction"
     return BRepPrimAPI_MakeCone(axis, radius, 0.001, length).Shape() # Cone made with height = length, bottom radius = 0, top radius =radius, on the axis as defined in the previous line
