@@ -38,9 +38,9 @@ class CylinderView(CustomView):
         if cylinder.length != length:
             cylinder.length = length
             # send the new offset signal
-            # The offset is the amount that the cylinder has changed compared to the starting_length.
-            # this is because the needle points and tandem are adjusted from their original location 
-            # from when they were originally loaded.  The needle points are never modified.
+            # The offset is the amount the cylinder has changed compared to the starting_length.
+            # the needle points and tandem are adjusted from their original location 
+            # (which is determined when they are originally loaded) and the needle points are never modified.
             offset = length - model.starting_length 
             app.signals.height_changed.emit(offset)
 
