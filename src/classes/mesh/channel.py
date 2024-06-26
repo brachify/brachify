@@ -221,7 +221,7 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
                         else:
                             printpoint(p1)
                             printpoint(p2)
-                            log.warning("\n\n\n\n\n\n\n\n\n\n\nWarning sent while making 3d model of channel")
+                            log.warning("Warning sent while making 3d model of channel")
                             window.channel_display_warning()
                 else:
                     fix = fix3()
@@ -230,12 +230,12 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
                         if(fix[0] ==0):
                             printpoint(p1)
                             printpoint(p2)
-                            log.warning("\n\n\n\n\n\n\n\n\nWarning sent while making 3d model of channel")
+                            log.warning("Warning sent while making 3d model of channel")
                             window.channel_display_warning()
                     else:
                         printpoint(p1)
                         printpoint(p2)
-                        log.error("\n\n\n\n\n\n\n\n\nloading channel to 3d display failed")
+                        log.error("loading channel to 3d display failed")
                         window.channel_display_error()
 
 
@@ -249,7 +249,7 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
                 if(temp.HasWarnings):
                     temp = BRepAlgoAPI_Fuse(pipe, BRepPrimAPI_MakeSphere(point, radius-0.01).Shape())
                     if(temp.HasWarnings()):
-                        log.error("\n\n\n\n\n\n\n\nError Constructing corner of a 3D channel")
+                        log.error("Error Constructing corner of a 3D channel")
                         window.channel_display_error()
                     else:
                         pipe = temp.Shape()
@@ -275,7 +275,7 @@ def _cone_pipe(p1, p2, radius: float) -> TopoDS_Shape:
                     # (if 3 points are linearly related there seems to be an issue fusing cylinders together)
     length = helper.get_magnitude(p1, p2) #gives vector p2 - p1 and then get the norm
     direction = helper.get_direction(p2, p1) #gives normalised p1-p2 vector 
-    axis = gp_Ax2(p2, direction) # creates coordinate system with an origin at p1, and z- axis pointed in "direction"
+    axis = gp_Ax2(p2, direction) # creates coordinate system with an origin at p2, and z- axis pointed in "direction"
     return BRepPrimAPI_MakeCone(axis, radius, 0.001, length).Shape() # Cone made with height = length, bottom radius = 0, top radius =radius, on the axis as defined in the previous line
 
 
