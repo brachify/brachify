@@ -270,10 +270,10 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
     return extended_pipe
 
 def _cone_pipe(p1, p2, radius: float) -> TopoDS_Shape:
-    p2.SetX(p2.X()+0.01) # 0.01 makes it so that the cone will never be perfectly perpendicular to the cylinder coming after it
-                    # in the event the there is a perfectly vertical needle channel
+    p2.SetX(p2.X()+0.01) # 0.01 makes it so the cone will never be perfectly perpendicular to the cylinder coming after it
+                    # in the event there is a perfectly vertical needle channel
                     # (if 3 points are linearly related there seems to be an issue fusing cylinders together)
-                    # in the event that p3 is collinear p_mid and p2 as defined created points
+                    # In the event p3 is collinear p_mid and p2 as defined by the create_point function
                     # then that should be caught in fix3() when building the channel
     length = helper.get_magnitude(p1, p2) #gives vector p2 - p1 and then get the norm
     direction = helper.get_direction(p2, p1) #gives normalised p1-p2 vector 
