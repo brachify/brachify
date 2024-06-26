@@ -143,10 +143,6 @@ class ImportView(CustomView):
         """
         self.ui.info_area.append(app.values.loaded_message)
 
-        #The tandems length should not be larger than the cylinder
-        max_tandem_len = app.values.config_values.get('CONFIG_CYLINDER_LENGTH')
-        app.window.navigationmodel.views[3].ui.sb_tandem_height.setMaximum(max_tandem_len)
-
     def action_update_config_label(self, file_name):
         print("")
 
