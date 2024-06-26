@@ -286,6 +286,9 @@ def save_points_diagram(points: list,
     circle = plt.Circle((0, 0), circle_radius, color='black', fill=False, clip_on=False)
     ax.add_artist(circle)
 
+    # include only needles that are within 5cm of the cylinder.
+    # (this is left here in case we choose to use it in the future.  Currently, all needles
+    # passed to this method are within the cylinder.)
     #gets max x, y value that is within 5cm of cylinders origin for determining plotting
     #area
     #limit refers to the 5cm distance around the perimater of the cylinder where needles are allowed
@@ -386,6 +389,21 @@ def save_points_diagram(points: list,
     plt.close()
     return png_path
 
+def channels_inside_cylinder(channels: list[NeedleChannel], diameter: float):
+    """
+    Returns the channels which go through the bottom of the cylinder.
+    """
+    radius = diameter / 2
+    needles = extract_points_from_channels(channels)
+    last_xy_points = get_last_xy_points(needles)
+    channels_inside = []
+    # if the last point of the channel is within the cylinder radius,
+    # then keep that channel.
+    for idx, point in enumerate(last_xy_points):
+        if np.sqrt(point[0]**2 + point[1]**2) <= radius:
+            channels_inside.append(channels[idx])
+
+    return channels_inside
 
 #######################################################
 # pdf generation
@@ -444,18 +462,22 @@ def generate_pdf(
     content.append(Paragraph("<br/>", centered_style))
 
     # Add table with needle data
-    needles = extract_points_from_channels(channels)
+    # use only the channels that are inside the cylinder
+    diameter = cylinder.diameter
+    channels_inside = channels_inside_cylinder(channels, diameter)
+    needles_inside = extract_points_from_channels(channels_inside)
+
     interstitial_lengths = get_all_interstitial_lengths(
         cylinder=cylinder,
-        needles=needles)
+        needles=needles_inside)
     
-    protrusion_lengths = calculate_protrusion_lengths(needles, needle_length)
+    protrusion_lengths = calculate_protrusion_lengths(needles_inside, needle_length)
     # TODO: Add needle label and channel number instead of "Needle 1" etc.
     #length_label = "Protruding Length for " + str(needle_length) + "mm needle"
     data = [["Name","Channel Number", "Extension (Interstitial Length)", "Protrusion from Base", "Protrusion (measured)"]]
 
-    label_list = [channel.label for channel in channels]
-    number_list = [channel.channel_number for channel in channels]
+    label_list = [channel.label for channel in channels_inside]
+    number_list = [channel.channel_number for channel in channels_inside]
     for label, channel_number, interstitial_length, protruding_length, blank \
     in process_lengths_and_create_data(interstitial_lengths, protrusion_lengths, label_list, number_list):
         data.append([label, channel_number, interstitial_length, protruding_length, blank])
@@ -481,7 +503,7 @@ def generate_pdf(
     # Adjust width and height as needed
     pdf_output_dir = filepath.parent
     circle_radius = cylinder.diameter / 2
-    last_xy_points = get_last_xy_points(needles) 
+    last_xy_points = get_last_xy_points(needles_inside) 
     
     png_path = save_points_diagram(last_xy_points, number_list, circle_radius, pdf_output_dir, has_tandem=has_tandem,
                                     tandem_rotation=tandem_rotation, is_tandem_imported=is_tandem_imported)
