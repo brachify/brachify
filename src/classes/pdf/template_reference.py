@@ -7,8 +7,9 @@ import subprocess
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib.units import inch
 from reportlab.pdfgen import canvas
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Image
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Image, Spacer
 
 from classes.dicom.data import DicomData
 from classes.logger import log
@@ -391,6 +392,10 @@ def save_points_diagram(points: list,
     png_path = output_filepath.joinpath('basemap.png')
     # Save the plot as a PNG file
     fig = plt.figure(1, dpi =1000000, clip_on=False)
+    # add a black border to the figure.
+    fig.patch.set_linewidth(1)
+    fig.patch.set_edgecolor('black')
+
     fig.savefig(png_path, format='png')
     plt.close()
     return png_path
@@ -514,8 +519,12 @@ def generate_pdf(
     png_path = save_points_diagram(last_xy_points, number_list, circle_radius, pdf_output_dir, has_tandem=has_tandem,
                                     tandem_rotation=tandem_rotation, is_tandem_imported=is_tandem_imported)
 
-    #leaves margin of 25 pixels
-    img = Image(str(png_path))
+    # build the image for pdf with specified width and height.
+    # kind='proportional' means keep the aspect ratio, so the width/height become max values.
+    img = Image(str(png_path), width=5.75*inch, height=10*inch, kind='proportional')
+    #img._restrictSize(7.5*inch, 10*inch) # an alternate possible way to size the image
+
+    content.append(Spacer(1, 0.25*inch))
     content.append(img)
 
     # Build and save the PDF document
