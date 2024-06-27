@@ -71,7 +71,7 @@ class TandemModel(QObject):
         self.rotation = rotation
         self.update_display()
 
-    def imported_tandem_rotation(self, rotation):
+    def change_tandem_rotation(self, rotation):
         self.rotation = rotation
         self._display_shape = rotate_shape(shape=self._base_shape, axis=gp.OZ(), angle=rotation)
         self.update()

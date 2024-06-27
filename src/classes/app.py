@@ -35,8 +35,8 @@ class RadiotherapyApp(QApplication):
             
             # update the config label on the import view to display the info from the loaded config file.            
             file_name = self.values.most_recently_opened_config_file
-            text = self.values.createConfigMessageText(file_name, isFromUserImport=False)
-            self.window.navigationmodel.views[0].action_update_config_label(file_name, text)
+            self.values.loaded_message = self.values.createConfigMessageText(file_name, isFromUserImport=False)
+            self.window.navigationmodel.views[0].action_update_import_label()
 
             return True
         
