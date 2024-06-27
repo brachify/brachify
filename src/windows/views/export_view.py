@@ -119,8 +119,9 @@ class Export_View(CustomView):
                 has_tandem = tandembool,
                 tandem_rotation=tandem_rotation, 
                 is_tandem_imported=is_tandem_imported)
-        except:
+        except Exception as e:
             log.error("PDF did not save")
+            print(str(e))
             get_app().window.pdf_save_error()
 
     def action_show_tandem(self, tandem_visible: bool):

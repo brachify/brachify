@@ -500,13 +500,28 @@ def generate_pdf(
 
     table = Table(data)
     table_style = TableStyle([
-        ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
-        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
-        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
-        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+        ('BACKGROUND', (0, 0), (-1, 0), colors.grey), # 1st row
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke), # 1st row
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'), # 1st row
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12), # 1st row
+        ('GRID', (0,0), (-1,-1), 1, colors.black), # entire table
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'), # entire table
+        ('BACKGROUND', (0, 1), (-1, -1), (10,190,212)) # values rows ((10,190,212)=blue color)
     ])
+    """
+    TableStyle([]):
+    - passing it a sequence of commands, each command is a tuple identified by its 
+        first element which is a string; the remaining elements of the command tuple 
+        represent the start and stop cell coordinates of the command and possibly 
+        thickness and colors, etc.
+    - see this link (see following sections for more info on TableStyle):
+    https://docs.reportlab.com/reportlab/userguide/ch7_tables/#tablesetstyletblstyle
+    - for example: 
+    ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke) = ('COMMAND', (column,row), (column,row), color)
+    - note: (column, row) is inclusive, 0 indexed, and negative values indicate to start from the end
+        (ex column = -1 means the farthest right column, row = -1 means the bottom row)
+    - 
+    """
     table.setStyle(table_style)
     content.append(table)
 
