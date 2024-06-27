@@ -506,7 +506,7 @@ def generate_pdf(
         ('BOTTOMPADDING', (0, 0), (-1, 0), 12), # 1st row
         ('GRID', (0,0), (-1,-1), 1, colors.black), # entire table
         ('ALIGN', (0, 0), (-1, -1), 'CENTER'), # entire table
-        ('BACKGROUND', (0, 1), (-1, -1), (10,190,212)) # values rows ((10,190,212)=blue color)
+        ('BACKGROUND', (0, 1), (-1, -1), colors.blue) # values rows ((10,190,212)=blue color)
     ])
     """
     TableStyle([]):
