@@ -91,6 +91,19 @@ class ChannelsModel(QObject):
         elif type(args[0] is type(str)):  # label of selected channel
             self.selected_channels = args
             self.update()
+            try:
+                log.warning("maybe")
+                lister = get_app().window.navigationmodel.views[2].ui.listwidget_channels
+                row = lister.row(lister.currentItem())
+                lister.scrollToItem(lister.item(row))
+                lister.item(row).setSelected(True)
+                lister.setFocus()
+                #lister.setStyleSheet("QListView::item:selected{background-color: rgb(205,232,255);}")
+                log.warning("\n\n\n\n\n\n\success\n\n\n\n\n\n\n")
+            except Exception as e:
+                log('\n\n\n')
+                log.error(e)
+                log('\n\n\n')
             return None
         
         else:

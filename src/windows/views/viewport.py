@@ -1,6 +1,7 @@
 from OCC.Core.Graphic3d import Graphic3d_NOM_TRANSPARENT
 from OCC.Core.Quantity import Quantity_Color, Quantity_TOC_RGB
 from OCC.Core.TopoDS import TopoDS_Shape
+from PySide6.QtWidgets import QAbstractItemView
 from OCC.Display import OCCViewer
 
 from PySide6 import QtCore, QtGui, QtWidgets
@@ -33,6 +34,18 @@ class qtBaseViewer(QtWidgets.QWidget):
         self._display.View.MustBeResized()
 
     def paintEngine(self):
+        try:
+            log.error("maybe")
+            log.error("\n\n\n\n\n\nless success\n\n\n\n\n\n\n")
+            lister = get_app().window.navigationmodel.views[2].ui.listwidget_channels
+            row = lister.row(lister.currentItem())
+            #lister.scrollToItem(lister.item(row))
+            lister.item(row).setSelected(True)
+            lister.setFocus()
+            #lister.setStyleSheet("QListView::item:selected{background-color: rgb(205,232,255);}")
+            log.error("\n\n\n\n\n\nsuccess\n\n\n\n\n\n\n")
+        except Exception as e:
+            log.error('\n\n\n'+str(e)+'\n\n\n')
         return None
 
 
@@ -127,6 +140,18 @@ class OrbitCameraViewer3d(qtBaseViewer):
             painter.setPen(QtGui.QPen(QtGui.QColor(0, 0, 0), 2))
             rect = QtCore.QRect(*self._drawbox)
             painter.drawRect(rect)
+
+        try:
+            log.error("maybe")
+            lister = get_app().window.navigationmodel.views[2].ui.listwidget_channels
+            row = lister.row(lister.currentItem())
+            #lister.scrollToItem(lister.item(row))
+            lister.item(row).setSelected(True)
+            lister.setFocus()
+            #lister.setStyleSheet("QListView::item:selected{background-color: rgb(205,232,255);}")
+            log.error("\n\n\n\n\n\n\success\n\n\n\n\n\n\n")
+        except Exception as e:
+            log.error('\n\n\n'+str(e)+'\n\n\n')
 
     def wheelEvent(self, event):
         delta = event.angleDelta().y()

@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QWidget, QListWidgetItem
+from PySide6.QtWidgets import QWidget, QListWidgetItem, QAbstractItemView
 
 from classes.app import get_app
 from classes.logger import log
@@ -26,7 +26,7 @@ class ChannelsView(CustomView):
         if type(item) is type(None): return None
         else: label = item.text()
 
-        log.debug(f"selecting {label} channel")
+        log.debug(f"selecting {label} channel")    
         try:
             self.channelsmodel.set_selected_channels(label)
         except Exception as error_message:
