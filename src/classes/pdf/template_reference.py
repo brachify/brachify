@@ -500,13 +500,13 @@ def generate_pdf(
 
     table = Table(data)
     table_style = TableStyle([
-        ('BACKGROUND', (0, 0), (-1, 0), colors.grey), # 1st row
-        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke), # 1st row
+        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor("#0ABED4")), # 1st row
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.black), # 1st row
         ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'), # 1st row
         ('BOTTOMPADDING', (0, 0), (-1, 0), 12), # 1st row
         ('GRID', (0,0), (-1,-1), 1, colors.black), # entire table
         ('ALIGN', (0, 0), (-1, -1), 'CENTER'), # entire table
-        ('BACKGROUND', (0, 1), (-1, -1), (10,190,212)) # values rows ((10,190,212)=blue color)
+        ('BACKGROUND', (0, 1), (-1, -1), colors.white) # values rows ((10,190,212)=blue color)
     ])
     """
     TableStyle([]):
