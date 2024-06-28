@@ -24,6 +24,7 @@ from classes.app import get_app
 
 class BrachyCylinder:
     
+    # returns the current config value of the cylinder (not currently in use.)
     @staticmethod
     def default_length() -> float: return get_app().values.config_values.get("CONFIG_CYLINDER_LENGTH")
 
