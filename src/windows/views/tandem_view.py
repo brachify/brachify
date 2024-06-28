@@ -38,10 +38,16 @@ class TandemView(CustomView):
         # set the tandem with the new values
         self.tandemmodel.set_tandem()
 
+        #sets tandem rotation to the value in the box and then updates the spin box
+        tan = get_app().window.tandemmodel
+        tan.change_tandem_rotation(self.ui.tandem_rotation_2.value())
+        self.ui.tandem_rotation.setValue(self.ui.tandem_rotation_2.value())
+        
         #updates the spin box value of rotation
         window = get_app().window
         rotation = window.tandemmodel.rotation
         window.navigationmodel.views[3].ui.tandem_rotation.setValue(rotation)
+        window.navigationmodel.views[3].ui.tandem_rotation_2.setValue(rotation)
         # update the config_values dict
         get_app().values.config_values = getCurrentValues()
 
@@ -63,7 +69,7 @@ class TandemView(CustomView):
         self.update_settings()
         #sets tandem rotation to the value in the box
         tan = get_app().window.tandemmodel
-        tan.imported_tandem_rotation(self.ui.tandem_rotation.value())
+        tan.change_tandem_rotation(self.ui.tandem_rotation_2.value())
 
     @display_action
     def action_set_import(self):
@@ -72,9 +78,10 @@ class TandemView(CustomView):
         # use the spin box value as the new height offset value
         self.tandemmodel.set_import_height_offset(offset)
 
-        #sets tandem rotation to the value in the box and then
+        #sets tandem rotation to the value in the box and then updates the spin box
         tan = get_app().window.tandemmodel
-        tan.imported_tandem_rotation(self.ui.tandem_rotation.value())
+        tan.change_tandem_rotation(self.ui.tandem_rotation.value())
+        self.ui.tandem_rotation_2.setValue(self.ui.tandem_rotation.value())
 
 
     def on_close(self):
@@ -114,6 +121,7 @@ class TandemView(CustomView):
 
         tandem_rotation = self.tandemmodel.rotation
         self.ui.tandem_rotation.setValue(tandem_rotation)
+        self.ui.tandem_rotation_2.setValue(tandem_rotation)
 
         tandem_threading_diameter = self.tandemmodel.threading_diameter
         tandem_threading_depth = self.tandemmodel.threading_depth
