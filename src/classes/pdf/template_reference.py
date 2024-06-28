@@ -10,6 +10,7 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import inch
 from reportlab.pdfgen import canvas
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Image, Spacer
+from classes.pdf.canvas import FooterCanvas
 
 from classes.dicom.data import DicomData
 from classes.logger import log
@@ -543,7 +544,7 @@ def generate_pdf(
     content.append(img)
 
     # Build and save the PDF document
-    pdf.build(content)
+    pdf.build(content, canvasmaker=FooterCanvas)
 
     # Open the generated PDF using the default PDF viewer
     try:
