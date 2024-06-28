@@ -36,6 +36,7 @@ class qtBaseViewer(QtWidgets.QWidget):
     def paintEngine(self):
         try:
             log.error("maybe")
+            lister.blockSignals(True)
             log.error("\n\n\n\n\n\nless success\n\n\n\n\n\n\n")
             lister = get_app().window.navigationmodel.views[2].ui.listwidget_channels
             row = lister.row(lister.currentItem())
@@ -44,6 +45,7 @@ class qtBaseViewer(QtWidgets.QWidget):
             lister.setFocus()
             #lister.setStyleSheet("QListView::item:selected{background-color: rgb(205,232,255);}")
             log.error("\n\n\n\n\n\nsuccess\n\n\n\n\n\n\n")
+            lister.blockSignals(False)
         except Exception as e:
             log.error('\n\n\n'+str(e)+'\n\n\n')
         return None
@@ -144,12 +146,14 @@ class OrbitCameraViewer3d(qtBaseViewer):
         try:
             log.error("maybe")
             lister = get_app().window.navigationmodel.views[2].ui.listwidget_channels
+            lister.blockSignals(True)
             row = lister.row(lister.currentItem())
-            #lister.scrollToItem(lister.item(row))
+            lister.scrollToItem(lister.item(row))
             lister.item(row).setSelected(True)
             lister.setFocus()
             #lister.setStyleSheet("QListView::item:selected{background-color: rgb(205,232,255);}")
             log.error("\n\n\n\n\n\n\success\n\n\n\n\n\n\n")
+            lister.blockSignals(False)
         except Exception as e:
             log.error('\n\n\n'+str(e)+'\n\n\n')
 
