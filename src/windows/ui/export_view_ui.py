@@ -16,38 +16,33 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QCheckBox, QFormLayout, QLabel,
-    QLayout, QPushButton, QSizePolicy, QSpacerItem,
-    QVBoxLayout, QWidget)
+    QPushButton, QSizePolicy, QSpacerItem, QVBoxLayout,
+    QWidget)
 
 class Ui_Export_View(object):
     def setupUi(self, Export_View):
         if not Export_View.objectName():
             Export_View.setObjectName(u"Export_View")
-        Export_View.resize(290, 5000)
-        Export_View.setStyleSheet(u"background-color: rgb(230, 235, 240);")
-        self.label_3 = QLabel(Export_View)
-        self.label_3.setObjectName(u"label_3")
-        self.label_3.setGeometry(QRect(0, 0, 290, 5000))
-        self.label_3.setMinimumSize(QSize(290, 0))
-        self.label_3.setMaximumSize(QSize(290, 5000))
-        self.label_3.setStyleSheet(u"background-color: rgb(240, 245, 250)")
-        self.verticalLayoutWidget = QWidget(Export_View)
-        self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
-        self.verticalLayoutWidget.setGeometry(QRect(0, 0, 290, 5000))
-        self.verticalLayout = QVBoxLayout(self.verticalLayoutWidget)
-        self.verticalLayout.setSpacing(10)
+        Export_View.resize(290, 290)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(Export_View.sizePolicy().hasHeightForWidth())
+        Export_View.setSizePolicy(sizePolicy)
+        Export_View.setMinimumSize(QSize(0, 290))
+        Export_View.setStyleSheet(u"")
+        self.verticalLayout = QVBoxLayout(Export_View)
+        self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalLayout.setSizeConstraint(QLayout.SetMaximumSize)
-        self.verticalLayout.setContentsMargins(10, 10, 10, 10)
         self.formLayout = QFormLayout()
         self.formLayout.setObjectName(u"formLayout")
-        self.label_2 = QLabel(self.verticalLayoutWidget)
+        self.label_2 = QLabel(Export_View)
         self.label_2.setObjectName(u"label_2")
         self.label_2.setStyleSheet(u"background-color: rgb(240, 245, 250);")
 
         self.formLayout.setWidget(0, QFormLayout.LabelRole, self.label_2)
 
-        self.cb_tandem_shown = QCheckBox(self.verticalLayoutWidget)
+        self.cb_tandem_shown = QCheckBox(Export_View)
         self.cb_tandem_shown.setObjectName(u"cb_tandem_shown")
         self.cb_tandem_shown.setLayoutDirection(Qt.RightToLeft)
         self.cb_tandem_shown.setStyleSheet(u"background-color: rgb(240, 245, 250);")
@@ -58,16 +53,11 @@ class Ui_Export_View(object):
 
         self.verticalLayout.addLayout(self.formLayout)
 
-        self.top_menu_bar = QWidget(self.verticalLayoutWidget)
-        self.top_menu_bar.setObjectName(u"top_menu_bar")
-        self.top_menu_bar.setMinimumSize(QSize(100, 80))
-        self.top_menu_bar.setMaximumSize(QSize(16777215, 135))
-        self.top_menu_bar.setStyleSheet(u"background-color: rgb(230, 235, 240)")
-        self.verticalLayout_2 = QVBoxLayout(self.top_menu_bar)
-        self.verticalLayout_2.setSpacing(0)
-        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.btn_export_mesh = QPushButton(self.top_menu_bar)
+        self.verticalSpacer_2 = QSpacerItem(20, 10, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
+
+        self.verticalLayout.addItem(self.verticalSpacer_2)
+
+        self.btn_export_mesh = QPushButton(Export_View)
         self.btn_export_mesh.setObjectName(u"btn_export_mesh")
         self.btn_export_mesh.setMinimumSize(QSize(240, 33))
         self.btn_export_mesh.setMaximumSize(QSize(16777215, 33))
@@ -85,9 +75,9 @@ class Ui_Export_View(object):
 "	background-color: rgb(28, 44, 81);\n"
 "}")
 
-        self.verticalLayout_2.addWidget(self.btn_export_mesh)
+        self.verticalLayout.addWidget(self.btn_export_mesh)
 
-        self.btn_export_template_reference = QPushButton(self.top_menu_bar)
+        self.btn_export_template_reference = QPushButton(Export_View)
         self.btn_export_template_reference.setObjectName(u"btn_export_template_reference")
         self.btn_export_template_reference.setMinimumSize(QSize(240, 33))
         self.btn_export_template_reference.setMaximumSize(QSize(16777215, 33))
@@ -105,9 +95,9 @@ class Ui_Export_View(object):
 "	background-color: rgb(28, 44, 81);\n"
 "}")
 
-        self.verticalLayout_2.addWidget(self.btn_export_template_reference)
+        self.verticalLayout.addWidget(self.btn_export_template_reference)
 
-        self.btn_export_shapes = QPushButton(self.top_menu_bar)
+        self.btn_export_shapes = QPushButton(Export_View)
         self.btn_export_shapes.setObjectName(u"btn_export_shapes")
         self.btn_export_shapes.setMinimumSize(QSize(240, 33))
         self.btn_export_shapes.setMaximumSize(QSize(16777215, 33))
@@ -125,9 +115,9 @@ class Ui_Export_View(object):
 "	background-color: rgb(28, 44, 81);\n"
 "}")
 
-        self.verticalLayout_2.addWidget(self.btn_export_shapes)
+        self.verticalLayout.addWidget(self.btn_export_shapes)
 
-        self.btn_export_current_config = QPushButton(self.top_menu_bar)
+        self.btn_export_current_config = QPushButton(Export_View)
         self.btn_export_current_config.setObjectName(u"btn_export_current_config")
         self.btn_export_current_config.setMinimumSize(QSize(240, 33))
         self.btn_export_current_config.setMaximumSize(QSize(16777215, 33))
@@ -145,12 +135,9 @@ class Ui_Export_View(object):
 "	background-color: rgb(28, 44, 81);\n"
 "}")
 
-        self.verticalLayout_2.addWidget(self.btn_export_current_config)
+        self.verticalLayout.addWidget(self.btn_export_current_config)
 
-
-        self.verticalLayout.addWidget(self.top_menu_bar)
-
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        self.verticalSpacer = QSpacerItem(267, 4338, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout.addItem(self.verticalSpacer)
 
@@ -163,8 +150,6 @@ class Ui_Export_View(object):
     def retranslateUi(self, Export_View):
         Export_View.setWindowTitle(QCoreApplication.translate("Export_View", u"Form", None))
         Export_View.setWindowFilePath("")
-        self.label_3.setText("")
-        self.verticalLayoutWidget.setStyleSheet(QCoreApplication.translate("Export_View", u"background-color: rgb(240, 245, 250);", None))
         self.label_2.setText(QCoreApplication.translate("Export_View", u"Show Tandem", None))
         self.cb_tandem_shown.setText("")
         self.btn_export_mesh.setText(QCoreApplication.translate("Export_View", u"Export Mesh", None))
