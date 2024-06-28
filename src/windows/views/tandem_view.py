@@ -5,7 +5,6 @@ from classes.logger import log
 from windows.models.shape_model import ShapeTypes
 from windows.ui.tandem_view_ui import Ui_Tandem_View
 from windows.views.custom_view import display_action, CustomView
-
 from settings.reset import getCurrentValues
 
 materials = {
@@ -54,6 +53,8 @@ class TandemView(CustomView):
 
     @display_action
     def action_import_tandem(self):
+        get_app().window.import_tandem_rotation_warning(self.tandemmodel.rotation)
+        
         log.debug(f"action: import a tandem")
         # file dialog to choose file
         filename = QFileDialog.getOpenFileName(

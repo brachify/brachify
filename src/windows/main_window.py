@@ -10,6 +10,7 @@ from windows.models.channels_model import ChannelsModel
 from windows.models.cylinder_model import CylinderModel
 from windows.models.tandem_model import TandemModel
 from windows.models.navigation_model import NavigationModel
+from PySide6.QtGui import QIcon
 
 from classes.info import USER_PATH
 import json
@@ -51,6 +52,15 @@ class MainWindow(QMainWindow):
 
         #app.signals.viewChanged.connect(self.ui.viewswidget.setCurrentIndex)
 
+        #For Testing all of the popups in the event they are updated
+        '''self.pdf_save_error()
+        self.channel_display_warning()
+        self.channel_display_error()
+        self.single_point_pop_up_Nucleatron()
+        self.single_point_pop_up_Varian()
+        self.tandem_import_wrong_filetype_error()
+        self.tandem_error('diam')
+        self.import_tandem_rotation_warning()'''
     def change_color_import(self):
         views = [self.ui.btn_import_view, self.ui.btn_cylinder_view, self.ui.btn_channels_view, self.ui.btn_tandem_view, self.ui.btn_export_view]
         for v in views:
@@ -221,6 +231,8 @@ class MainWindow(QMainWindow):
         dialog.setText("Your PDF was not saved, this may be because a pdf with the same name is open in another application. If this is the case please close the pdf and try exporting again.")
         dialog.setWindowTitle("PDF save error")
         dialog.setIcon(QMessageBox.Icon.Warning)
+        my_icon = QIcon("resources\\brachify_splash-ico.ico")
+        dialog.setWindowIcon(my_icon)
         dialog.exec()
 
 
@@ -229,6 +241,8 @@ class MainWindow(QMainWindow):
         dialog.setText("Warning thrown while constructing needle channels. Please inspect the export view to ensure the needle channels look the way they should. \nIf a needle does not look the way it should, check to ensure there is no mistake in the plan, or replace the points on the needle that are not displaying properly.")
         dialog.setWindowTitle("Warning")
         dialog.setIcon(QMessageBox.Icon.Warning)
+        my_icon = QIcon("resources\\brachify_splash-ico.ico")
+        dialog.setWindowIcon(my_icon)
         dialog.exec()
 
     def channel_display_error(self):
@@ -236,6 +250,8 @@ class MainWindow(QMainWindow):
         dialog.setText("Error thrown while constructing channels. This indicates that there is likely a mistake in the 3D construction of your plan so please inspect the export view to ensure the needle channels look the way they should. Check to ensure there is no mistake in the plan, or replace the points on the needle that are not displaying properly.")
         dialog.setWindowTitle("Warning")
         dialog.setIcon(QMessageBox.Icon.Critical)
+        my_icon = QIcon("resources\\brachify_splash-ico.ico")
+        dialog.setWindowIcon(my_icon)
         dialog.exec()
 
     def single_point_pop_up_Nucleatron(self):
@@ -244,6 +260,8 @@ class MainWindow(QMainWindow):
         dialog.setWindowTitle("Multiple Anchoring Points")
         dialog.setIcon(QMessageBox.Icon.Warning)
 
+        my_icon = QIcon("resources\\brachify_splash-ico.ico")
+        dialog.setWindowIcon(my_icon)
         dialog.exec()
 
     def single_point_pop_up_Varian(self):
@@ -252,6 +270,8 @@ class MainWindow(QMainWindow):
         dialog.setWindowTitle("Channel with Single Point Detected")
         dialog.setIcon(QMessageBox.Icon.Warning)
 
+        my_icon = QIcon("resources\\brachify_splash-ico.ico")
+        dialog.setWindowIcon(my_icon)
         dialog.exec()
         
     def tandem_import_wrong_filetype_error(self):
@@ -260,6 +280,8 @@ class MainWindow(QMainWindow):
         dialog.setWindowTitle("Tandem Import Error")
         dialog.setIcon(QMessageBox.Icon.Warning)
 
+        my_icon = QIcon("resources\\brachify_splash-ico.ico")
+        dialog.setWindowIcon(my_icon)
         dialog.exec()
         
     def save_file_paths(self):
@@ -318,5 +340,26 @@ class MainWindow(QMainWindow):
             dialog.setText("Error: The input for bend radius is too large or too small. Bend radius reset to previous value.")
             dialog.setWindowTitle("Tandem Bend Radius Error - Tandem Bend Radius Set to Previous Value")
         
+        my_icon = QIcon("resources\\brachify_splash-ico.ico")
+        dialog.setWindowIcon(my_icon)
         dialog.setIcon(QMessageBox.Icon.Warning)
         dialog.exec()
+
+    def import_tandem_rotation_warning(self, degrees=0):
+        miniwindow = QMessageBox()
+        miniwindow.setWindowTitle("Imported being rotated")
+        miniwindow.setText("Your imported tandem will be rotated "+str(degrees)+"° from the imported design, do you wish to proceed? (Press Cancel to set the rotation to 0)")
+        miniwindow.setIcon(QMessageBox.Icon.Information)
+        #connectButton = miniwindow.addButton(tr("Proceed"), QMessageBox.ActionRole)
+        #connectButton = miniwindow.addButton(tr("Set rotation to 0°"), QMessageBox.ActionRole)
+        miniwindow.setStandardButtons(QMessageBox.Yes | QMessageBox.Cancel)
+        miniwindow.setDefaultButton(QMessageBox.Yes)
+        my_icon = QIcon("resources\\brachify_splash-ico.ico")
+        miniwindow.setWindowIcon(my_icon)
+
+        answer = miniwindow.exec()
+
+        if(answer == QMessageBox.Yes):
+            pass
+        elif(answer == QMessageBox.Cancel):
+            self.tandemmodel.rotation=0
