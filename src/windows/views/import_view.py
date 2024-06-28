@@ -118,6 +118,7 @@ class ImportView(CustomView):
         window.displaymodel.set_transparent(True)
 
         self.action_update_import_label()
+        window.navigationmodel.views[2].create_channels_list()#updates channels list
         #The tandems length should not be larger than the cylinder
         max_tandem_len = app.values.config_values.get('CONFIG_CYLINDER_LENGTH')
         app.window.navigationmodel.views[3].ui.sb_tandem_height.setMaximum(max_tandem_len)
