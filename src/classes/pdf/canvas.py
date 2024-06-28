@@ -63,5 +63,4 @@ class FooterCanvas(canvas.Canvas):
         
         # Month dd, YYYY H:M:S (with month's fullname and 24-hour clock)
         dt_string = now.strftime("%B %d, %Y %H:%M:%S")
-        print("date and time =", dt_string)
         return dt_string
