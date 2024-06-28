@@ -85,16 +85,9 @@ class NeedleChannel:
         self._diameter = get_app().values.config_values.get("CONFIG_CHANNELS_DIAMETER")
 
 def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) -> TopoDS_Shape:
-    
     """
     If a needle channel has a long distance between the first and second point, this helps stub it
     """
-    ################################################
-    # if statement is currently double checking that there are no singletons, may be able to be removed in the future
-    ################################################
-    if len(channel_points) < 2:
-        log.error(F"Needle Channel Generation error! needs 2 or more points!")
-        return None
     # offset points using z axis and cylinder's offset
     # and convert into a gp_Pnt
     # rounding/truncation is needed otherwise there can be a bug in pipe = BRepAlgoAPI_Fuse(cone, pipe).Shape() below.
@@ -118,12 +111,6 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
     radius = diameter/2
 
     # generate starting point on top (cone)
-
-    #if there is a warning try again with radius = origional radius +0.01
-    #if there is still a warning try again with radius = origional raidus -0.01
-    #if there is still a warning try again 6 more times adjusting x, y, z, one at a time
-    #if it still fails try adding just the cylinder print warning
-    #if it still fails print error
     p1 = points[0]
     p2 = points[1]
     check = [0,1]
@@ -132,61 +119,9 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
         check = create_point(p1, p2, radius)
     except:
         pass
-    
-    # will try shifting the x,y, and z value of each point
-    def tip_fix():
-        tests = [['p1.SetX(p1.X()+0.01)', 'p1.SetX(p1.X()-0.01)'],
-        ['p1.SetY(p1.Y()+0.01)', 'p1.SetY(p1.Y()-0.01)'],
-        ['p1.SetZ(p1.Z()+0.01)', 'p1.SetZ(p1.Z()-0.01)'],
-        ['p2.SetX(p2.X()+0.01)', 'p2.SetX(p2.X()-0.01)'],
-        ['p2.SetY(p2.Y()+0.01)', 'p2.SetY(p2.Y()-0.01)'],
-        ['p2.SetZ(p2.Z()+0.01)', 'p2.SetZ(p2.Z()-0.01)']]
-        for i, item in enumerate(tests):
-            eval(item[0])
-            try:
-                check = create_point(p1, p2, radius)
-            except:
-                pass
-            if(check[1]):
-                log.debug(str(i+4)+"th tip construction attempt failed")
-            else:
-                eval(item[1])
-                return check
-            eval(item[1])
-        return [0,1] # if program gets here there were warnings thrown in every attempt        
-                
-    
     if(check[1]):
-        log.debug("1st tip construction attempt failed")
-        try:
-            check = create_point(p1, p2, radius+0.01)
-        except:
-            pass
-        
-        if(check[1]):
-            log.debug("2nd tip construction attempt failed")
-            try:
-                check = create_point(p1, p2, radius-0.01)
-            except:
-                pass
-            
-            if(check[1]):
-                log.debug("3rd tip construction attempt failed")
-                check = tip_fix()
-                if(check[1]):
-                    pipe = create_point(p1, p2, radius)[0] #all attempts fail just go with origional values
-                    log.warning("9th tip construction attemp failed\nError when creating tip of 3D model")
-                    #I do not give the user a pop up here because there seems to be an issue with 
-                    #every second channel, but the issue does not seem to be visible
-                else:
-                    pipe = check[0]
-            else:
-                pipe = check[0]
-        else:
-            pipe = check[0]
-    else:
-        pipe = check[0]
-    # rest of the points
+        log.warning("warning thrown while constructing needle tips")
+    pipe = check[0]
 
     def fix1(): #returns -1 if error, 0 if warning, 1 if success
         # tries increasing the radius by an infinitesimal amount (0.001), then fusing.
@@ -286,7 +221,7 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
                         else:
                             printpoint(p1)
                             printpoint(p2)
-                            log.warning("\n\n\n\n\n\n\n\n\n\n\nWarning sent while making 3d model of channel")
+                            log.warning("Warning sent while making 3d model of channel")
                             window.channel_display_warning()
                 else:
                     fix = fix3()
@@ -295,12 +230,12 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
                         if(fix[0] ==0):
                             printpoint(p1)
                             printpoint(p2)
-                            log.warning("\n\n\n\n\n\n\n\n\nWarning sent while making 3d model of channel")
+                            log.warning("Warning sent while making 3d model of channel")
                             window.channel_display_warning()
                     else:
                         printpoint(p1)
                         printpoint(p2)
-                        log.error("\n\n\n\n\n\n\n\n\nloading channel to 3d display failed")
+                        log.error("loading channel to 3d display failed")
                         window.channel_display_error()
 
 
@@ -314,7 +249,7 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
                 if(temp.HasWarnings):
                     temp = BRepAlgoAPI_Fuse(pipe, BRepPrimAPI_MakeSphere(point, radius-0.01).Shape())
                     if(temp.HasWarnings()):
-                        log.error("\n\n\n\n\n\n\n\nError Constructing corner of a 3D channel")
+                        log.error("Error Constructing corner of a 3D channel")
                         window.channel_display_error()
                     else:
                         pipe = temp.Shape()
@@ -335,12 +270,14 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
     return extended_pipe
 
 def _cone_pipe(p1, p2, radius: float) -> TopoDS_Shape:
-    p2.SetX(p2.X()+0.01) # 0.01 makes it so that the cone will never be perfectly perpendicular to the cylinder coming after it
-                    # in the event the there is a perfectly vertical needle channel
+    p2.SetX(p2.X()+0.01) # 0.01 makes it so the cone will never be perfectly perpendicular to the cylinder coming after it
+                    # in the event there is a perfectly vertical needle channel
                     # (if 3 points are linearly related there seems to be an issue fusing cylinders together)
+                    # In the event p3 is collinear p_mid and p2 as defined by the create_point function
+                    # then that should be caught in fix3() when building the channel
     length = helper.get_magnitude(p1, p2) #gives vector p2 - p1 and then get the norm
     direction = helper.get_direction(p2, p1) #gives normalised p1-p2 vector 
-    axis = gp_Ax2(p2, direction) # creates coordinate system with an origin at p1, and z- axis pointed in "direction"
+    axis = gp_Ax2(p2, direction) # creates coordinate system with an origin at p2, and z- axis pointed in "direction"
     return BRepPrimAPI_MakeCone(axis, radius, 0.001, length).Shape() # Cone made with height = length, bottom radius = 0, top radius =radius, on the axis as defined in the previous line
 
 
@@ -373,48 +310,48 @@ def pipe_segment(p1: gp_Pnt, p2: gp_Pnt, radius: float) -> TopoDS_Shape:
     return cylinder
 
 def remove_collinear_points(points):
-        def is_collinear(p1, p2, p3):
-            """Check if three points are collinear"""
-            # Create vectors
-            v1 = np.array(p2) - np.array(p1)
-            v2 = np.array(p3) - np.array(p2)
-            if np.all(v1 == v2):
-                return True
+    def is_collinear(p1, p2, p3):
+        """Check if three points are collinear"""
+        # Create vectors
+        v1 = np.array(p2) - np.array(p1)
+        v2 = np.array(p3) - np.array(p2)
+        if np.all(v1 == v2):
+            return True
 
-            # Calculate the dot product
-            dot_product = np.dot(v1, v2)
+        # Calculate the dot product
+        dot_product = np.dot(v1, v2)
 
-            # Calculate the magnitude of the vectors
-            magnitude_vector1 = np.linalg.norm(v1)
-            magnitude_vector2 = np.linalg.norm(v2)
-            
+        # Calculate the magnitude of the vectors
+        magnitude_vector1 = np.linalg.norm(v1)
+        magnitude_vector2 = np.linalg.norm(v2)
+        
 
-            # Calculate the cosine of the angle
-            cos_angle = dot_product / (magnitude_vector1 * magnitude_vector2)
+        # Calculate the cosine of the angle
+        cos_angle = dot_product / (magnitude_vector1 * magnitude_vector2)
 
-            # Calculate the angle in radians
-            angle_radians = np.arccos(cos_angle)
+        # Calculate the angle in radians
+        angle_radians = np.arccos(cos_angle)
 
-            # Convert to degrees, if needed
-            angle_degrees = np.degrees(angle_radians)
+        # Convert to degrees, if needed
+        angle_degrees = np.degrees(angle_radians)
 
-            parallel = angle_degrees < 0.02
-            # print(is_close)
-            return parallel
+        parallel = angle_degrees < 0.02
+        # print(is_close)
+        return parallel
 
-        # Handle lists with fewer than 3 points
-        if len(points) < 3:
-            return points
+    # Handle lists with fewer than 3 points
+    if len(points) < 3:
+        return points
 
-        filtered_points = [points[0]]
-        last_point = points[0]
-        for i in range(1, len(points) - 1):
-            if not is_collinear(last_point, points[i], points[i + 1]):
-                filtered_points.append(points[i])
-                last_point = points[i]
-        filtered_points.append(points[-1])
+    filtered_points = [points[0]]
+    last_point = points[0]
+    for i in range(1, len(points) - 1):
+        if not is_collinear(last_point, points[i], points[i + 1]):
+            filtered_points.append(points[i])
+            last_point = points[i]
+    filtered_points.append(points[-1])
 
-        return filtered_points
+    return filtered_points
 
 
 def create_point(p1, p2, radius):
