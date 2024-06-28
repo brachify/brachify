@@ -507,7 +507,7 @@ def generate_pdf(
         ('BOTTOMPADDING', (0, 0), (-1, 0), 12), # 1st row
         ('GRID', (0,0), (-1,-1), 1, colors.black), # entire table
         ('ALIGN', (0, 0), (-1, -1), 'CENTER'), # entire table
-        ('BACKGROUND', (0, 1), (-1, -1), colors.white) # values rows ((10,190,212)=blue color)
+        ('BACKGROUND', (0, 1), (-1, -1), colors.white) # the rows containing the data
     ])
     """
     TableStyle([]):
@@ -553,7 +553,6 @@ def generate_pdf(
             try:
                 # try opening the pdf using os.startfile
                 os.startfile(str(filepath))
-                #subprocess.Popen(['start', str(filepath)], shell=False)
             except:
                 # if os.startfile throws and exception, then try opening the pdf with subprocess.Popen
                 subprocess.Popen(['start', str(filepath)], shell=True)
