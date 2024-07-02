@@ -9,7 +9,7 @@ import settings.defaults
 
 DEFAULT_CONFIG_VALUES = settings.defaults.DEFAULT_CONFIG_VALUES
 
-
+global config_keys_loaded
 
 config_values = None
 
@@ -19,6 +19,7 @@ def load_config_file(file_name: str, alternate_dict: dict, num_configs_loaded_su
     # a list containing 2 lists:
     # [0] contains a list of all the keys/values that were successfully loaded from the config file
     # [1] contains a list of all the keys that did not exist in the config file
+    global config_keys_loaded
     config_keys_loaded = [[],[]]
 
     # file_name could be None during start up if either:

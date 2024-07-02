@@ -6,6 +6,7 @@ from windows.models.shape_model import ShapeTypes
 from windows.ui.tandem_view_ui import Ui_Tandem_View
 from windows.views.custom_view import display_action, CustomView
 from settings.reset import getCurrentValues
+from settings.load import config_keys_loaded
 
 materials = {
     ShapeTypes.CYLINDER: {"rgb": [0.8, 0.8, 0.8], "transparent": True},
@@ -24,36 +25,108 @@ class TandemView(CustomView):
 
     @display_action
     def action_set_tandem(self):
-        log.debug(f"action: generate a tandem")
-
+        window = get_app().window
         # assign the tandemmodel attributes with the new values
-        self.tandemmodel.threading_diameter = self.ui.sb_threading_diameter.value()
-        self.tandemmodel.threading_depth = self.ui.sb_threading_depth.value()
-        self.tandemmodel.tandem_diameter = self.ui.sp_channel_diameter.value()
-        self.tandemmodel.stopper_diameter = self.ui.sp_stopper_diameter.value()
-        self.tandemmodel.tip_angle = self.ui.sp_bend_angle.value()
-        self.tandemmodel.bend_radius = self.ui.sb_bend_radius.value()
-        self.tandemmodel.tandem_length =  self.ui.sb_tandem_height.value()
+        tan = self.tandemmodel
+        tan.threading_diameter = self.ui.sb_threading_diameter.value()
+        tan.threading_depth = self.ui.sb_threading_depth.value()
+        tan.tandem_diameter = self.ui.sp_channel_diameter.value()
+        tan.stopper_diameter = self.ui.sp_stopper_diameter.value()
+        tan.tip_angle = self.ui.sp_bend_angle.value()
+        tan.bend_radius = self.ui.sb_bend_radius.value()
+        tan.tandem_length =  self.ui.sb_tandem_height.value()
         # set the tandem with the new values
         self.tandemmodel.set_tandem()
 
         #sets tandem rotation to the value in the box and then updates the spin box
-        tan = get_app().window.tandemmodel
-        tan.change_tandem_rotation(self.ui.tandem_rotation_2.value())
-        self.ui.tandem_rotation.setValue(self.ui.tandem_rotation_2.value())
+        answer = True
+        # if no pop up has been generated for a generated tandem and
+        #   if rotation is deifferent from the rotation in the plan and
+        #       if tandem rotation was a loaded config value then 
+        #           present the pop up
+        # else
+        #   no pop up
+        if(not self.generatedPopUpPresented):
+            if(round(tan.rotation,2) != round(self.ui.tandem_rotation_2.value(),2)):
+                if "CONFIG_TANDEM_ROTATION" in config_keys_loaded[0]:
+                    # self.tandemmodel.rotation = plan rotation
+                    # self.ui.tandem_rotation_2.value() = new rotation
+                    answer = window.generated_tandem_rotation_warning(tan.rotation, self.ui.tandem_rotation_2.value())
+
+                    self.generatedPopUpPresented =True
+                else:
+                    self.importedPopUpPresented =True
         
-        #updates the spin box value of rotation
-        window = get_app().window
-        rotation = window.tandemmodel.rotation
-        window.navigationmodel.views[3].ui.tandem_rotation.setValue(rotation)
-        window.navigationmodel.views[3].ui.tandem_rotation_2.setValue(rotation)
-        # update the config_values dict
+        if(answer):
+            tan.change_tandem_rotation(self.ui.tandem_rotation_2.value())
+            self.ui.tandem_rotation.setValue(self.ui.tandem_rotation_2.value())
+        
+            #updates the spin box value of rotation
+            rotation = window.tandemmodel.rotation
+            window.navigationmodel.views[3].ui.tandem_rotation.setValue(rotation)
+            window.navigationmodel.views[3].ui.tandem_rotation_2.setValue(rotation)
+            # update the config_values dict
+        else:
+            # resets values back to what they were
+            rotation = tan.rotation
+            window.navigationmodel.views[3].ui.tandem_rotation.setValue(rotation)
+            window.navigationmodel.views[3].ui.tandem_rotation_2.setValue(rotation)
         get_app().values.config_values = getCurrentValues()
 
+    def reset(self):
+        tandemmodel = self.tandemmodel
+        # for an imported tandem:
+        # place the bottom of the original imported shape at the origin (0,0,0) (the base of the cylinder)
+        # reset the tandem height_offset to 0 when a new dicom file is loaded.
+        tandemmodel.height_offset = 0.0
+        # set the mesh_offset to 0 and reset the spin box to 0.
+        tandemmodel.mesh_offset = 0.0
+        # self = get_app().window.navigationmodel.views[3]
+        self.ui.sb_height_offset.setValue(0.0)
+
+        #make it so popups will reset
+        self.importedPopUpPresented = False 
+        self.generatedPopUpPresented = False
+
+        tandemmodel
+
+        ############################################################################
+        # ensures other values in the tandem model are set back to config values
+        ############################################################################
+        config_values = get_app().values.config_values
+        tandemmodel._base_shape = None  # base shape before extending due to height offset
+        tandemmodel._display_shape = None  # used to show tandem in export view
+        tandemmodel.rotation = config_values.get("CONFIG_TANDEM_ROTATION") 
+        tandemmodel.is_shape_imported = False
+        tandemmodel.threading_diameter = config_values.get("CONFIG_TANDEM_THREADING_DIAMETER")
+        tandemmodel.threading_depth = config_values.get("CONFIG_TANDEM_THREADING_DEPTH")
+
+        # cylinder settings
+        tandemmodel.cylinder_length = 0
+        tandemmodel.cylinder_radius = 0
+
+        # tandem settings
+        tandemmodel.tandem_diameter = config_values.get("CONFIG_TANDEM_CHANNEL_DIAMETER")
+        tandemmodel.stopper_diameter = config_values.get("CONFIG_TANDEM_STOPPER_DIAMETER")
+        tandemmodel.tandem_angle = config_values.get("CONFIG_TANDEM_TIP_ANGLE")
+        tandemmodel.bend_radius = config_values.get("CONFIG_TANDEM_BEND_RADIUS")
+        tandemmodel.tandem_length = config_values.get("CONFIG_TANDEM_TIP_HEIGHT")
+
+        # generated tandem settings
+        tandemmodel.tip_angle = config_values.get("CONFIG_TANDEM_TIP_ANGLE")
+        ####
+
+        self.ui.tandem_rotation.setValue(tandemmodel.rotation)
+        self.ui.tandem_rotation_2.setValue(tandemmodel.rotation)
 
     @display_action
     def action_import_tandem(self):
-        get_app().window.import_tandem_rotation_warning(self.tandemmodel.rotation)
+        if(not self.importedPopUpPresented):
+            get_app().window.import_tandem_rotation_warning(self.tandemmodel.rotation)
+            self.importedPopUpPresented =True
+        
+        log.debug(f"action: generate a tandem")
+        #get_app().window.import_tandem_rotation_warning(self.tandemmodel.rotation)
         
         log.debug(f"action: import a tandem")
         # file dialog to choose file
@@ -144,5 +217,7 @@ class TandemView(CustomView):
         self.ui.btn_import.pressed.connect(self.action_import_tandem)
         self.ui.btn_clear_import.pressed.connect(self.action_clear_tandem)     
         self.ui.btn_apply_import.pressed.connect(self.action_set_import)
+        self.importedPopUpPresented = False 
+        self.generatedPopUpPresented = False 
 
         self.update_settings()

@@ -348,10 +348,8 @@ class MainWindow(QMainWindow):
     def import_tandem_rotation_warning(self, degrees=0):
         miniwindow = QMessageBox()
         miniwindow.setWindowTitle("Imported being rotated")
-        miniwindow.setText("Your imported tandem will be rotated "+str(degrees)+"° from the imported design, do you wish to proceed? (Press Cancel to set the rotation to 0)")
-        miniwindow.setIcon(QMessageBox.Icon.Information)
-        #connectButton = miniwindow.addButton(tr("Proceed"), QMessageBox.ActionRole)
-        #connectButton = miniwindow.addButton(tr("Set rotation to 0°"), QMessageBox.ActionRole)
+        miniwindow.setText("Warning, your imported tandem is going to be rotated "+str(degrees)+"° from the imported design, do you wish to proceed? (Press Cancel to set the rotation to the same value as in your plan)")
+        miniwindow.setIcon(QMessageBox.Icon.Warning)
         miniwindow.setStandardButtons(QMessageBox.Yes | QMessageBox.Cancel)
         miniwindow.setDefaultButton(QMessageBox.Yes)
         my_icon = QIcon("resources\\brachify_splash-ico.ico")
@@ -363,3 +361,24 @@ class MainWindow(QMainWindow):
             pass
         elif(answer == QMessageBox.Cancel):
             self.tandemmodel.rotation=0
+
+
+    def generated_tandem_rotation_warning(self, fdegrees=0, ndegrees=0):
+        # fdegrees: former degree value
+        # ndegrees: new degrees value
+        miniwindow = QMessageBox()
+        miniwindow.setWindowTitle("Generated being rotated")
+        dif = fdegrees-ndegrees
+        miniwindow.setText("Warning your tandem is going to be rotated "+str(dif)+"° from the planned or Config value. Do you wish to proceed? (Press Cancel to set the rotation to the same value as in your plan)")
+        miniwindow.setIcon(QMessageBox.Icon.Warning)
+        miniwindow.setStandardButtons(QMessageBox.Yes | QMessageBox.Cancel)
+        miniwindow.setDefaultButton(QMessageBox.Yes)
+        my_icon = QIcon("resources\\brachify_splash-ico.ico")
+        miniwindow.setWindowIcon(my_icon)
+
+        answer = miniwindow.exec()
+
+        if(answer == QMessageBox.Yes):
+            pass
+        elif(answer == QMessageBox.Cancel):
+            pass #taken care of at the spot
