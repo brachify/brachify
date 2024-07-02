@@ -118,7 +118,7 @@ class ChannelsView(CustomView):
         is_tandem = self.channelsmodel.is_channel_tandem(label)
         lister = self.ui.listwidget_channels
         for i in range(lister.count()):
-            text = lister.item(i).text
+            text = lister.item(i).text()
             row = i
             if(text==label):
                 lister.scrollToItem(lister.item(row))

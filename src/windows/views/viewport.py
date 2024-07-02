@@ -1,7 +1,6 @@
 from OCC.Core.Graphic3d import Graphic3d_NOM_TRANSPARENT
 from OCC.Core.Quantity import Quantity_Color, Quantity_TOC_RGB
 from OCC.Core.TopoDS import TopoDS_Shape
-from PySide6.QtWidgets import QAbstractItemView
 from OCC.Display import OCCViewer
 
 from PySide6 import QtCore, QtGui, QtWidgets
