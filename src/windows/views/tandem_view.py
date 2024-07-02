@@ -47,11 +47,11 @@ class TandemView(CustomView):
         # else
         #   no pop up
         if(not self.generatedPopUpPresented):
-            if(round(tan.rotation,2) != round(self.ui.tandem_rotation_2.value(),2)):
+            if(round(tan.protation,2) != round(self.ui.tandem_rotation_2.value(),2)):
                 if "CONFIG_TANDEM_ROTATION" in config_keys_loaded[0]:
                     # self.tandemmodel.rotation = plan rotation
                     # self.ui.tandem_rotation_2.value() = new rotation
-                    answer = window.generated_tandem_rotation_warning(tan.rotation, self.ui.tandem_rotation_2.value())
+                    answer = window.generated_tandem_rotation_warning(tan.protation, self.ui.tandem_rotation_2.value())
 
                     self.generatedPopUpPresented =True
                 else:
@@ -68,7 +68,7 @@ class TandemView(CustomView):
             # update the config_values dict
         else:
             # resets values back to what they were
-            rotation = tan.rotation
+            rotation = tan.protation
             window.navigationmodel.views[3].ui.tandem_rotation.setValue(rotation)
             window.navigationmodel.views[3].ui.tandem_rotation_2.setValue(rotation)
         get_app().values.config_values = getCurrentValues()
@@ -143,7 +143,8 @@ class TandemView(CustomView):
         self.update_settings()
         #sets tandem rotation to the value in the box
         tan = get_app().window.tandemmodel
-        tan.change_tandem_rotation(self.ui.tandem_rotation_2.value())
+        tan.change_tandem_rotation(self.ui.tandem_rotation.value())
+        self.ui.tandem_rotation_2 = self.ui.tandem_rotation.value()
 
     @display_action
     def action_set_import(self):

@@ -348,7 +348,7 @@ class MainWindow(QMainWindow):
     def import_tandem_rotation_warning(self, degrees=0):
         miniwindow = QMessageBox()
         miniwindow.setWindowTitle("Imported being rotated")
-        miniwindow.setText("Warning, your imported tandem is going to be rotated "+str(degrees)+"° from the imported design, do you wish to proceed? (Press Cancel to set the rotation to the same value as in your plan)")
+        miniwindow.setText("Warning, your imported tandem is going to be rotated "+str(round(degrees,2))+"° from the imported design, do you wish to proceed? (Press Cancel to set the rotation to the same value as in your plan)")
         miniwindow.setIcon(QMessageBox.Icon.Warning)
         miniwindow.setStandardButtons(QMessageBox.Yes | QMessageBox.Cancel)
         miniwindow.setDefaultButton(QMessageBox.Yes)
@@ -361,6 +361,8 @@ class MainWindow(QMainWindow):
             pass
         elif(answer == QMessageBox.Cancel):
             self.tandemmodel.rotation=0
+            self.navigationmodel.views[3].ui.tandem_rotation.setValue(0)
+            self.navigationmodel.views[3].ui.tandem_rotation_2.setValue(0)
 
 
     def generated_tandem_rotation_warning(self, fdegrees=0, ndegrees=0):
@@ -369,7 +371,7 @@ class MainWindow(QMainWindow):
         miniwindow = QMessageBox()
         miniwindow.setWindowTitle("Generated being rotated")
         dif = fdegrees-ndegrees
-        miniwindow.setText("Warning your tandem is going to be rotated "+str(dif)+"° from the planned or Config value. Do you wish to proceed? (Press Cancel to set the rotation to the same value as in your plan)")
+        miniwindow.setText("Warning your tandem is going to be rotated "+str(round(dif,2))+"° from the planned or Config value. Do you wish to proceed? (Press Cancel to set the rotation to the same value as in your plan)")
         miniwindow.setIcon(QMessageBox.Icon.Warning)
         miniwindow.setStandardButtons(QMessageBox.Yes | QMessageBox.Cancel)
         miniwindow.setDefaultButton(QMessageBox.Yes)
