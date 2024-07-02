@@ -111,10 +111,10 @@ def extend_bottom_face(shape: TopoDS_Shape) -> TopoDS_Shape:
     face = lowest_face_by_normal(shape)
     z = face[2].Z()
     # ensures no erroronious z value
-    if(z!=0.000001):
-        direction = gp_Vec(0, 0, -z - 0.000001)
+    if(z!=0.0001):
+        direction = gp_Vec(0, 0, -z - 0.0001)
     else:
-        direction = gp_Vec(0, 0, -z - 0.000002)
+        direction = gp_Vec(0, 0, -z - 0.0002)
 
     extended_geometry = BRepPrimAPI_MakePrism(face[0], direction).Shape()
     return BRepAlgoAPI_Fuse(shape, extended_geometry).Shape()
