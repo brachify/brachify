@@ -486,7 +486,7 @@ def generate_pdf(
     protrusion_lengths = calculate_protrusion_lengths(needles_inside, needle_length)
     # TODO: Add needle label and channel number instead of "Needle 1" etc.
     #length_label = "Protruding Length for " + str(needle_length) + "mm needle"
-    data = [["Name","Channel Number", "Extension (Interstitial Length)", "Protrusion from Base", "Protrusion (measured)"]]
+    data = [["Name","Channel Number", "Extension\n(Interstitial Length)", "Protrusion from Base", "Protrusion\n(measured)"]]
 
     label_list = [channel.label for channel in channels_inside]
     number_list = [channel.channel_number for channel in channels_inside]
@@ -501,7 +501,7 @@ def generate_pdf(
 
     table = Table(data)
     table_style = TableStyle([
-        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor("#0ABED4")), # 1st row
+        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor("#ADD8E6")), # 1st row
         ('TEXTCOLOR', (0, 0), (-1, 0), colors.black), # 1st row
         ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'), # 1st row
         ('BOTTOMPADDING', (0, 0), (-1, 0), 12), # 1st row
