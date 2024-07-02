@@ -71,7 +71,7 @@ class TandemModel(QObject):
         self.rotation = rotation
         self.update_display()
 
-    def imported_tandem_rotation(self, rotation):
+    def change_tandem_rotation(self, rotation):
         self.rotation = rotation
         self._display_shape = rotate_shape(shape=self._base_shape, axis=gp.OZ(), angle=rotation)
         self.update()
@@ -154,6 +154,9 @@ class TandemModel(QObject):
         self.displaymodel.add_shape(shape_model)
 
     def update_height_offset(self, height_offset: float):
+        # here, height_offset refers to the amount that the tandem is adjusted vertically to remain
+        # aligned with the cylinder when the cylinder height changes.
+        # not to be confused with the height offset spin box (whose value is stored as self.mesh_offset)
         log.debug(f"updating tandem height offset to {height_offset}")
         self.height_offset = height_offset
         self.update()
@@ -273,10 +276,10 @@ class TandemModel(QObject):
         config_values = get_app().values.config_values
         self._base_shape = None  # base shape before extending due to height offset
         self._display_shape = None  # used to show tandem in export view
-        self.height_offset = 0.0
+        self.height_offset = 0.0 # amount adjusted when cylinder height is changed
         self.rotation = config_values.get("CONFIG_TANDEM_ROTATION") 
         self.filepath = None
-        self.mesh_offset = 0.0
+        self.mesh_offset = 0.0 # amount adjusted when user applies "height offset" spin box
         self.is_shape_imported = False
         self.threading_diameter = config_values.get("CONFIG_TANDEM_THREADING_DIAMETER")
         self.threading_depth = config_values.get("CONFIG_TANDEM_THREADING_DEPTH")
