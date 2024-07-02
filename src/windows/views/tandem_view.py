@@ -97,6 +97,7 @@ class TandemView(CustomView):
         tandemmodel._base_shape = None  # base shape before extending due to height offset
         tandemmodel._display_shape = None  # used to show tandem in export view
         tandemmodel.rotation = config_values.get("CONFIG_TANDEM_ROTATION") 
+        tandemmodel.protation = config_values.get("CONFIG_TANDEM_ROTATION") 
         tandemmodel.is_shape_imported = False
         tandemmodel.threading_diameter = config_values.get("CONFIG_TANDEM_THREADING_DIAMETER")
         tandemmodel.threading_depth = config_values.get("CONFIG_TANDEM_THREADING_DEPTH")
