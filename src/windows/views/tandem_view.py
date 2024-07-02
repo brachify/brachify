@@ -28,23 +28,31 @@ class TandemView(CustomView):
         log.debug(f"action: generate a tandem")
 
         # assign the tandemmodel attributes with the new values
-        self.tandemmodel.threading_diameter = self.ui.sb_threading_diameter.value()
-        self.tandemmodel.threading_depth = self.ui.sb_threading_depth.value()
-        self.tandemmodel.tandem_diameter = self.ui.sp_channel_diameter.value()
-        self.tandemmodel.stopper_diameter = self.ui.sp_stopper_diameter.value()
-        self.tandemmodel.tip_angle = self.ui.sp_bend_angle.value()
-        self.tandemmodel.bend_radius = self.ui.sb_bend_radius.value()
-        self.tandemmodel.tandem_length =  self.ui.sb_tandem_height.value()
+        tan = self.tandemmodel
+        tan.threading_diameter = self.ui.sb_threading_diameter.value()
+        tan.threading_depth = self.ui.sb_threading_depth.value()
+        tan.tandem_diameter = self.ui.sp_channel_diameter.value()
+        tan.stopper_diameter = self.ui.sp_stopper_diameter.value()
+        tan.tip_angle = self.ui.sp_bend_angle.value()
+        tan.bend_radius = self.ui.sb_bend_radius.value()
+        tan.tandem_length =  self.ui.sb_tandem_height.value()
         # set the tandem with the new values
-        self.tandemmodel.set_tandem()
+        tan.set_tandem()
 
         #sets tandem rotation to the value in the box and then updates the spin box
+        window = get_app().window
+        if(tan.hasTandem):
+            if(not self.hasShownRotationWarning):
+                if(round(tan.protation,2) != round(window.navigationmodel.views[3].ui.tandem_rotation_2.value(),2)):
+                    #will reset rotation value to rotation value in the plan
+                    self.hasShownRotationWarning=True
+                    window.tandem_rotation_warning()
+        
         tan = get_app().window.tandemmodel
         tan.change_tandem_rotation(self.ui.tandem_rotation_2.value())
         self.ui.tandem_rotation.setValue(self.ui.tandem_rotation_2.value())
         
         #updates the spin box value of rotation
-        window = get_app().window
         rotation = window.tandemmodel.rotation
         window.navigationmodel.views[3].ui.tandem_rotation.setValue(rotation)
         window.navigationmodel.views[3].ui.tandem_rotation_2.setValue(rotation)
@@ -66,9 +74,18 @@ class TandemView(CustomView):
         log.info(f"file {filename} has been selected")
 
         self.tandemmodel.import_tandem(filename)
-        self.update_settings()
+        
         #sets tandem rotation to the value in the box
-        tan = get_app().window.tandemmodel
+        window = get_app().window
+        tan = window.tandemmodel
+        if(tan.hasTandem):
+            if(not self.hasShownRotationWarning):
+                if(round(tan.protation,2) != round(window.navigationmodel.views[3].ui.tandem_rotation.value(),2)):
+                    self.hasShownRotationWarning=True
+                    window.tandem_rotation_warning()
+        
+        self.update_settings()
+        
         tan.change_tandem_rotation(self.ui.tandem_rotation_2.value())
 
     @display_action
@@ -79,7 +96,13 @@ class TandemView(CustomView):
         self.tandemmodel.set_import_height_offset(offset)
 
         #sets tandem rotation to the value in the box and then updates the spin box
-        tan = get_app().window.tandemmodel
+        window = get_app().window
+        tan = window.tandemmodel
+        if(tan.hasTandem):
+            if(not self.hasShownRotationWarning):
+                if(round(tan.protation,2) != round(window.navigationmodel.views[3].ui.tandem_rotation.value(),2)):
+                    self.hasShownRotationWarning=True
+                    window.tandem_rotation_warning()
         tan.change_tandem_rotation(self.ui.tandem_rotation.value())
         self.ui.tandem_rotation_2.setValue(self.ui.tandem_rotation.value())
 
@@ -136,6 +159,7 @@ class TandemView(CustomView):
         self.ui = Ui_Tandem_View()  # the converted python file from the ui file
         self.ui.setupUi(self)
         self.tandemmodel = get_app().window.tandemmodel
+        self.hasShownRotationWarning = False
 
         # signals and slots
         self.ui.btn_apply.pressed.connect(self.action_set_tandem)
