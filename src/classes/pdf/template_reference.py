@@ -381,10 +381,10 @@ def save_points_diagram(points: list,
     ax.set_yticklabels([])
 
     # add the words "Anterior" and "Posterior".
-    # Anterior is the +y-axis, Posterior is the -y-axis.
+    # Anterior is the -y-axis, Posterior is the +y-axis.
     # Position the words so that they are just outside the circle.
-    ax.text(0, -circle_radius-(circle_radius/10), "Anterior", color='black', ha='center', va='center')
-    ax.text(0, circle_radius+(circle_radius/10), "Posterior", color='black', ha='center', va='center')
+    ax.text(0, +circle_radius+(circle_radius/10), "Anterior", color='black', ha='center', va='center')
+    ax.text(0, -circle_radius-(circle_radius/10), "Posterior", color='black', ha='center', va='center')
 
     # Set axis aspect ratio to be equal
     ax.set_aspect('equal', adjustable='box')
@@ -515,7 +515,7 @@ def generate_pdf(
         first element which is a string; the remaining elements of the command tuple 
         represent the start and stop cell coordinates of the command and possibly 
         thickness and colors, etc.
-    - see this link (see following sections for more info on TableStyle):
+    - see this link for more info on TableStyle:
     https://docs.reportlab.com/reportlab/userguide/ch7_tables/#tablesetstyletblstyle
     - for example: 
     ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke) = ('COMMAND', (column,row), (column,row), color)
