@@ -92,7 +92,7 @@ class ChannelsModel(QObject):
             self.selected_channels = args
             self.update()
             try:
-                log.warning("maybe")
+                log.debug("start selecting row")
                 lister.blockSignals(True)
                 lister = get_app().window.navigationmodel.views[2].ui.listwidget_channels
                 row = lister.row(lister.currentItem())
@@ -100,12 +100,10 @@ class ChannelsModel(QObject):
                 lister.item(row).setSelected(True)
                 lister.setFocus()
                 #lister.setStyleSheet("QListView::item:selected{background-color: rgb(205,232,255);}")
-                log.warning("\n\n\n\n\n\n\success\n\n\n\n\n\n\n")
+                log.warning("row selected successfully")
                 lister.blockSignals(False)
             except Exception as e:
-                log('\n\n\n')
                 log.error(e)
-                log('\n\n\n')
             return None
         
         else:
