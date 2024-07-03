@@ -18,8 +18,8 @@ class CylinderNotch:
         return rotate_shape(shape=box, axis=gp.OZ(), angle=self.rotation, unite="deg")
     
     def __init__(self, diameter):
-        self.width = 1.0
-        self.length = 3.5
+        self.width = 0.5
+        self.length = 2.0
         self.height = 0.5
 
         self.rotation = 270.0
