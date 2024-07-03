@@ -76,8 +76,12 @@ class TandemModel(QObject):
 
     def change_tandem_rotation(self, rotation):
         self.rotation = rotation
-        self._display_shape = rotate_shape(shape=self._base_shape, axis=gp.OZ(), angle=rotation)
-        self.update()
+        #try and except added to ensure rotation and spin boxes are updated accuratly
+        try:
+            self._display_shape = rotate_shape(shape=self._base_shape, axis=gp.OZ(), angle=rotation)
+            self.update()
+        except:
+            pass
 
     def shape(self):
         if not self._base_shape:
