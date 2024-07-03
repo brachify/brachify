@@ -354,7 +354,7 @@ def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False
             # Line goes from (0,0) to (end_pt_x, end_pt_y)
             ax.add_artist(lines.Line2D(x_values, y_values,color='grey', linestyle='--'))
 
-    # Add a filled black rectangle at the top center of the big circle
+    # Add a filled grey rectangle at the top center of the big circle
     notch = app.window.cylindermodel.cylinder.notch
     tick_width = notch.width
     tick_height = notch.length
