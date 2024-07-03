@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QWidget, QListWidgetItem, QAbstractItemView
+from PySide6.QtWidgets import QWidget, QListWidgetItem
 
 from classes.app import get_app
 from classes.logger import log
