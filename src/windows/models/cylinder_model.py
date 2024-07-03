@@ -4,7 +4,6 @@ from classes.app import get_app
 from classes.dicom.data import DicomData
 from classes.mesh.cylinder import BrachyCylinder, get_brachy_cylinder
 from windows.models.shape_model import ShapeModel, ShapeTypes
-from classes.mesh.notch import CylinderNotch
 
 CYLINDER_LABEL = "cylinder"
 
