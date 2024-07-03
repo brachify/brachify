@@ -50,7 +50,7 @@ class TandemView(CustomView):
         
         tan = get_app().window.tandemmodel
         tan.change_tandem_rotation(self.ui.tandem_rotation_2.value())
-        
+
         #updates the spin box value of rotation
         rotation = window.tandemmodel.rotation
         self.ui.tandem_rotation.setValue(rotation)
@@ -83,10 +83,9 @@ class TandemView(CustomView):
                     self.hasShownRotationWarning=True
                     window.tandem_rotation_warning()
         
-        self.update_settings()
+        tan.change_tandem_rotation(self.ui.tandem_rotation.value())
         
-        tan.change_tandem_rotation(self.ui.tandem_rotation_2.value())
-        self.ui.tandem_rotation.setValue(self.ui.tandem_rotation_2.value())
+        self.update_settings()
 
     @display_action
     def action_set_import(self):
