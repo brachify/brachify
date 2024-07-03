@@ -504,7 +504,7 @@ def generate_pdf(
         ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor("#ADD8E6")), # 1st row
         ('TEXTCOLOR', (0, 0), (-1, 0), colors.black), # 1st row
         ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'), # 1st row
-        ('BOTTOMPADDING', (0, 0), (-1, 0), 12), # 1st row
+        ('VALIGN', (0,0), (-1, 0), 'MIDDLE'), # 1st row
         ('GRID', (0,0), (-1,-1), 1, colors.black), # entire table
         ('ALIGN', (0, 0), (-1, -1), 'CENTER'), # entire table
         ('BACKGROUND', (0, 1), (-1, -1), colors.white) # the rows containing the data
