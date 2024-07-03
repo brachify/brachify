@@ -71,7 +71,7 @@ class TandemModel(QObject):
         self.rotation = rotation
         if(channel.label.lower() == 'tandem'):
             self.protation = rotation
-            self.hasTandem = True # there is a channel labeled tandem
+            self.hasTandemInDICOM = True # if this happens there is a tandem in the plan
         self.update_display()
 
     def change_tandem_rotation(self, rotation):
@@ -301,7 +301,7 @@ class TandemModel(QObject):
         self.tandem_angle = config_values.get("CONFIG_TANDEM_TIP_ANGLE")
         self.bend_radius = config_values.get("CONFIG_TANDEM_BEND_RADIUS")
         self.tandem_length = config_values.get("CONFIG_TANDEM_TIP_HEIGHT")
-        self.hasTandem = False # this value will be set to True in the event there is a channel labeled tandem
+        self.hasTandemInDICOM = False # this value will be set to True in the event there is a channel labeled tandem
 
         # generated tandem settings
         self.tip_angle = config_values.get("CONFIG_TANDEM_TIP_ANGLE")

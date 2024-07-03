@@ -41,7 +41,7 @@ class TandemView(CustomView):
 
         #sets tandem rotation to the value in the box and then updates the spin box
         window = get_app().window
-        if(tan.hasTandem):
+        if(tan.hasTandemInDICOM):
             if(not self.hasShownRotationWarning):
                 if(round(tan.protation,2) != round(window.navigationmodel.views[3].ui.tandem_rotation_2.value(),2)):
                     #will reset rotation value to rotation value in the plan
@@ -77,7 +77,7 @@ class TandemView(CustomView):
         #sets tandem rotation to the value in the box
         window = get_app().window
         tan = window.tandemmodel
-        if(tan.hasTandem):
+        if(tan.hasTandemInDICOM):
             if(not self.hasShownRotationWarning):
                 if(round(tan.protation,2) != round(window.navigationmodel.views[3].ui.tandem_rotation.value(),2)):
                     self.hasShownRotationWarning=True
@@ -98,7 +98,7 @@ class TandemView(CustomView):
         #sets tandem rotation to the value in the box and then updates the spin box
         window = get_app().window
         tan = window.tandemmodel
-        if(tan.hasTandem):
+        if(tan.hasTandemInDICOM):
             if(not self.hasShownRotationWarning):
                 if(round(tan.protation,2) != round(window.navigationmodel.views[3].ui.tandem_rotation.value(),2)):
                     self.hasShownRotationWarning=True
