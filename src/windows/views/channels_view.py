@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QWidget, QListWidgetItem
+from PySide6.QtWidgets import QWidget, QListWidgetItem, QMessageBox
 
 from classes.app import get_app
 from classes.logger import log
@@ -67,12 +67,21 @@ class ChannelsView(CustomView):
         channel_label = model.get_selected_channel()
 
         # set or clear the tandem channel
-        label = None
-        if channel_label != data.tandem_channel: label = channel_label
-        model.set_tandem(label)
+        answer = QMessageBox.Yes
+        window = get_app().window
+        tan = window.tandemmodel
+        if(tan.hasTandemInDICOM):
+            if(not window.navigationmodel.views[3].hasShownRotationWarning):
+                if(round(tan.protation,2) != round(window.navigationmodel.views[3].ui.tandem_rotation.value(),2)):
+                    window.navigationmodel.views[3].hasShownRotationWarning=True
+                    answer = window.tandem_rotation_warning()
+        #If the user wishes to proceed then do this, if not then do not
+        if(answer == QMessageBox.Yes):
+            label = None
+            if channel_label != data.tandem_channel: label = channel_label
+            model.set_tandem(label)
 
         #updates the spin box value of rotation
-        window = get_app().window
         rotation = window.tandemmodel.rotation
         window.navigationmodel.views[3].ui.tandem_rotation.setValue(rotation)
         window.navigationmodel.views[3].ui.tandem_rotation_2.setValue(rotation)
