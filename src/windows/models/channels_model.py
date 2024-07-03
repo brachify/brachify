@@ -93,8 +93,8 @@ class ChannelsModel(QObject):
             self.update()
             try:
                 log.debug("start selecting row")
-                lister.blockSignals(True)
                 lister = get_app().window.navigationmodel.views[2].ui.listwidget_channels
+                lister.blockSignals(True)
                 row = lister.row(lister.currentItem())
                 lister.scrollToItem(lister.item(row))
                 lister.item(row).setSelected(True)
