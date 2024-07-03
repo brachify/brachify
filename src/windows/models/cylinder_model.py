@@ -25,10 +25,6 @@ class CylinderModel(QObject):
 
     # from CylinderView -> action_apply_settings
     def update_cylinder(self, cylinder: BrachyCylinder):
-        # update the notch placement to the cylinder
-        notch = CylinderNotch()
-        cylinder = cylinder.add_notch(cylinder, notch)
-
         self.cylinder = cylinder
         self.update()
 
