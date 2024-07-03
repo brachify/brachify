@@ -10,26 +10,15 @@ from OCC.Core.Geom2d import Geom2d_Circle, Geom2d_Line
 from OCC.Core.Geom2dAPI import Geom2dAPI_InterCurveCurve
 from OCC.Core.gp import *
 from OCC.Core.TopoDS import TopoDS_Shape
+#from OCC.Core.TopoDS import TopoDS_Compound, TopoDS_Shape              # for testing
+#from OCC.Core.BRep import BRep_Builder                                 # for testing
+#from OCC.Extend.DataExchange import write_step_file, read_step_file    # for testing 
+from classes.app import get_app                                         # must be commented out for testing
 
 # TODO create a step file that shows the points and measurements here to visualize what is being done
 
 
 class Tandem():
-    cylinder_height: float = 160.0
-    cylinder_diameter: float = 15
-    tandem_height: float = 129.0  # default
-    tandem_diameter: float = 8.0
-    tandem_angle: float = 60.0
-    bend_radius: float = 35.0
-    tandem_length: float = 8.0
-    height_offset = 10.0
-
-    stopper_enabled = True
-    stopper_length = 8.0
-    stopper_diameter = 12.0
-
-    bend_end = gp_Pnt(0, 0, 0)
-    bend_direction = gp_Dir(0, 0, 1)
 
     def cylinder_offset_shape(self) -> TopoDS_Shape:
         radius = self.cylinder_diameter / 2 + self.height_offset
@@ -68,7 +57,6 @@ class Tandem():
     def stopper_shape(self) -> TopoDS_Shape:
         # create a slanted circle and extrude it upwards
         max_height = self.cylinder_height + self.height_offset
-        stopper_depth = self.stopper_length
         stopper_radius = self.stopper_diameter / 2
         stopper_start = self.bend_end
 
@@ -146,7 +134,6 @@ class Tandem():
         #########################################################################################
         # 2D points
         #########################################################################################
-        origin = gp_Pnt2d(0, 0)
         # circle origin for the top arc
         top_circle_origin = gp_Pnt(0, 0, max_height - cylinder_radius)
         bend_start = gp_Pnt2d(0, tandem_height)
@@ -268,8 +255,23 @@ class Tandem():
         #########################################################################################
         # Shapes
         #########################################################################################
-        shape_channel = BRepPrimAPI_MakeCylinder(
-            tandem_radius, max_height).Shape()
+        # this makes the cylinder for the bottom of the tandem
+        # if threading diameter or threading depth = 0 then do not create threading channel
+        # else create threading channel
+        if(self.threading_diameter == 0 or self.threading_depth == 0):
+            shape_channel = BRepPrimAPI_MakeCylinder(
+                tandem_radius, max_height).Shape()
+        else:
+            threading_channel =  BRepPrimAPI_MakeCylinder(self.threading_diameter/2, self.threading_depth).Shape()
+            
+            up_direction = gp_Dir(0,0,1)                 # direction of up for axis
+            orig = gp_Pnt(0,0,self.threading_depth-0.1)  # origin point for axis, -0.1 so that the 2 cylinders fuse without issue
+            ax = gp_Ax2(orig, up_direction)
+            remaining_channel = BRepPrimAPI_MakeCylinder(ax,tandem_radius, max_height-self.threading_depth+0.1).Shape()
+
+
+            shape_channel  = BRepAlgoAPI_Fuse(threading_channel, remaining_channel).Shape()
+
 
         bend_profile = BRepBuilderAPI_MakeWire(
             BRepBuilderAPI_MakeEdge(
@@ -297,7 +299,7 @@ class Tandem():
             pass  # TODO
 
         # variables used
-        tandem_radius = self.tandem_diameter / 2 - 0.1
+        tandem_radius = self.tandem_diameter / 2 
         tandem_height = self.tandem_height
         bend_radius = self.bend_radius
 
@@ -368,7 +370,46 @@ class Tandem():
         return fuse_shapes([pipe.Shape(), cylinder])
 
     def __init__(self, *args, **kwargs):
-        pass
+
+        try:
+            values = get_app().values.config_values
+        except:#this allows for easy testing of the tandem without running all of Brachify
+            values = {
+                    "CONFIG_CYLINDER_DIAMETER": 30.0,
+                    "CONFIG_CYLINDER_LENGTH": 160.0,
+                    "CONFIG_CHANNELS_DIAMETER": 3.0,
+                    "CONFIG_NEEDLE_LENGTH": 200.0,
+                    "CONFIG_TANDEM_TIP_HEIGHT": 140.0,
+                    "CONFIG_TANDEM_CHANNEL_DIAMETER": 2.0,
+                    "CONFIG_TANDEM_STOPPER_DIAMETER": 10.0,
+                    "CONFIG_TANDEM_TIP_ANGLE": 40.0,
+                    "CONFIG_TANDEM_BEND_RADIUS": 40.0,
+                    "CONFIG_THREADING_DEPTH": 0.0,
+                    "CONFIG_THREADING_DIAMETER": 0.0,
+                    "CONFIG_TANDEM_ROTATION": 0.0,
+                    "CONFIG_TANDEM_THREADING_DEPTH": 0.0,
+                    "CONFIG_TANDEM_THREADING_DIAMETER": 0.0
+                    }
+        #indicated values########################
+        self.cylinder_height: float = values.get('CONFIG_CYLINDER_LENGTH')
+        self.cylinder_diameter: float = values.get('CONFIG_CYLINDER_DIAMETER')
+        self.tandem_height: float = values.get('CONFIG_TANDEM_TIP_HEIGHT')
+        self.tandem_diameter: float = values.get('CONFIG_TANDEM_CHANNEL_DIAMETER')
+        self.tandem_angle: float = values.get('CONFIG_TANDEM_TIP_ANGLE')
+        self.bend_radius: float = values.get('CONFIG_TANDEM_BEND_RADIUS')
+        self.tandem_length: float = 8.0
+        self.height_offset = 10.0
+        self.threading_diameter = values.get('CONFIG_TANDEM_THREADING_DIAMETER')
+        self.threading_depth = values.get('CONFIG_TANDEM_THREADING_DEPTH')
+        #########################################
+
+        #self.stopper_enabled = True # unused
+        #self.stopper_length = 8.0 # unused
+        self.stopper_diameter = values.get('CONFIG_TANDEM_STOPPER_DIAMETER')
+
+        self.bend_end = gp_Pnt(0, 0, 0)
+        self.bend_direction = gp_Dir(0, 0, 1)
+
 
 
 def fuse_shapes(shapes: []):
@@ -500,12 +541,26 @@ if __name__ == "__main__":
     display, start_display, add_menu, add_function_to_menu = init_display()
 
     tandem = Tandem()  # object to hold the tandem settings
-    tandem.tandem_angle = 0.0  # manually change a setting
+    
+    #The code below is used to test how the step file is exported
+    #compound = TopoDS_Compound()  # houses all the shapes
+    #shape_tool = BRep_Builder()  # add shapes to the compound
+    #shape_tool.MakeCompound(compound)
 
+    #tandem = Tandem()
+    #shape_tool.Add(TopoDS_Shape(compound), tandem.generate_shape())
+
+    #display.DisplayColoredShape(compound, "BLUE")
+
+    #write_step_file(filename= "C:\Users\user_name\Downloads\straight_from_tandem.step", a_shape= compound)
+
+    #display.DisplayColoredShape(tandem.generate_shape(), "BLUE")
+
+    
+    # saved_tandem = read_step_file(r"C:\Users\user_name\Downloads\straight_from_tandem.step")
     display.DisplayColoredShape(tandem.generate_shape(), "BLUE")
+
     # generate a stopper
     # display.DisplayColoredShape(tandem.stopper_shape(), "ORANGE")
 
-    # generate and show the tandem
-    # display.DisplayShape(tandem.cylinder_offset_shape())
     start_display()

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>947</width>
-    <height>631</height>
+    <width>912</width>
+    <height>607</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -43,7 +43,7 @@
        <number>0</number>
       </property>
       <property name="sizeConstraint">
-       <enum>QLayout::SetDefaultConstraint</enum>
+       <enum>QLayout::SetMinimumSize</enum>
       </property>
       <property name="leftMargin">
        <number>0</number>
@@ -53,10 +53,16 @@
       </property>
       <item>
        <widget class="QWidget" name="display_view_widget" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
-          <width>642</width>
-          <height>585</height>
+          <width>425</width>
+          <height>470</height>
          </size>
         </property>
         <property name="maximumSize">
@@ -320,10 +326,19 @@ QPushButton:pressed {
           <height>16777215</height>
          </size>
         </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgba(240, 245, 250);
+
+selection-background-color: rgb(0, 0, 255);
+background-color: rgb(240, 245, 250);</string>
+        </property>
         <property name="currentIndex">
          <number>1</number>
         </property>
         <widget class="QWidget" name="page_import">
+         <property name="styleSheet">
+          <string notr="true">color: rgba(240, 245, 250);</string>
+         </property>
          <layout class="QVBoxLayout" name="verticalLayout_32">
           <property name="spacing">
            <number>0</number>
@@ -343,6 +358,9 @@ QPushButton:pressed {
          </layout>
         </widget>
         <widget class="QWidget" name="page_cylinder">
+         <property name="styleSheet">
+          <string notr="true">color: rgba(240, 245, 250);</string>
+         </property>
          <layout class="QVBoxLayout" name="verticalLayout_33">
           <property name="leftMargin">
            <number>0</number>
@@ -359,6 +377,9 @@ QPushButton:pressed {
          </layout>
         </widget>
         <widget class="QWidget" name="page_channels">
+         <property name="styleSheet">
+          <string notr="true">color: rgba(240, 245, 250);</string>
+         </property>
          <layout class="QVBoxLayout" name="verticalLayout_35">
           <property name="leftMargin">
            <number>0</number>
@@ -375,6 +396,9 @@ QPushButton:pressed {
          </layout>
         </widget>
         <widget class="QWidget" name="page_tandem">
+         <property name="styleSheet">
+          <string notr="true">color: rgba(240, 245, 250);</string>
+         </property>
          <layout class="QVBoxLayout" name="verticalLayout_36">
           <property name="leftMargin">
            <number>0</number>
@@ -391,6 +415,9 @@ QPushButton:pressed {
          </layout>
         </widget>
         <widget class="QWidget" name="page_export">
+         <property name="styleSheet">
+          <string notr="true">color: rgba(240, 245, 250);</string>
+         </property>
          <layout class="QVBoxLayout" name="verticalLayout_37">
           <property name="leftMargin">
            <number>0</number>

@@ -65,11 +65,6 @@ def get_faces_axis(shape: TopoDS_Shape) -> list:
 def lowest_face_by_normal(shape: TopoDS_Shape) -> TopoDS_Face:
     faces = get_faces_axis(shape)
 
-    # check for a negative normal direction
-    for face in faces:
-        if face[1].Direction().Z() < 0.0:
-            return face
-
     # check for the lowest face
     def sortByZ(elem):
         return elem[2].Z()
@@ -97,7 +92,7 @@ def get_vector(p1: gp_Pnt, p2: gp_Pnt, length: float = 1.0) -> gp_Vec:
 def get_magnitude(p1: gp_Pnt, p2: gp_Pnt) -> float:
     vector = np.array([p2.X(), p2.Y(), p2.Z()]) \
         - np.array([p1.X(), p1.Y(), p1.Z()])
-    return np.linalg.norm(vector)#np.linalg.norm (defaults to 2-norm)
+    return np.linalg.norm(vector) # (defaults to 2-norm)
 
 
 def get_direction(p1: gp_Pnt, p2: gp_Pnt) -> gp_Dir:
@@ -115,7 +110,12 @@ def get_vector_from_angle(v1: gp_Vec = gp_Vec(1, 0, 0), angle: float = 0.0, leng
 def extend_bottom_face(shape: TopoDS_Shape) -> TopoDS_Shape:
     face = lowest_face_by_normal(shape)
     z = face[2].Z()
-    direction = gp_Vec(0, 0, -z - 0.1)
+    # ensures no erroronious z value
+    if(z!=0.0001):
+        direction = gp_Vec(0, 0, -z - 0.0001)
+    else:
+        direction = gp_Vec(0, 0, -z - 0.0002)
+
     extended_geometry = BRepPrimAPI_MakePrism(face[0], direction).Shape()
     return BRepAlgoAPI_Fuse(shape, extended_geometry).Shape()
 

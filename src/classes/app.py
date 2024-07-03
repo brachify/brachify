@@ -5,6 +5,7 @@ from classes.signals import AppSignals
 
 from settings.values import Values
 
+from PySide6.QtGui import QIcon
 
 def get_app():
     """ Returns the current QApplication instance """
@@ -27,13 +28,15 @@ class RadiotherapyApp(QApplication):
             self.window.initModels()
             self.window.initViews()
 
+            my_icon = QIcon("resources\\brachify_splash-ico.ico")
+            self.window.setWindowIcon(my_icon)
+
             # TODO process args like autoloading a file or project
             
-            # create the text that is printed to the pop-up window
-            text = self.values.createConfigMessageText()
-
-            # call the pop-up window
-            self.window.configLoadMessageBox(text=text)
+            # update the config label on the import view to display the info from the loaded config file.            
+            file_name = self.values.most_recently_opened_config_file
+            self.values.loaded_message = self.values.createConfigMessageText(file_name, isFromUserImport=False)
+            self.window.navigationmodel.views[0].action_update_import_label()
 
             return True
         

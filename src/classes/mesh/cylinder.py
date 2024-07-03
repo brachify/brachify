@@ -21,25 +21,12 @@ from classes.mesh.notch import CylinderNotch
 
 from classes.app import get_app
 
-# get config cylinder length from config file.  If can't read from dictionary, set to 160.0 and print a message to log.
-config_values = get_app().values.config_values
-CONFIG_CYLINDER_LENGTH = config_values.get("CONFIG_CYLINDER_LENGTH") 
-if CONFIG_CYLINDER_LENGTH == None:
-    log.debug(
-        "Couldn't read CONFIG_CYLINDER_LENGTH from current config values.  Using default value 160.0 instead.")
-    CONFIG_CYLINDER_LENGTH = 160.0
-
-# get config cylinder diameter from config file.  If can't read from dictionary, set to 30.0 and print a message to log.
-CONFIG_CYLINDER_DIAMETER = config_values.get("CONFIG_CYLINDER_DIAMETER") 
-if CONFIG_CYLINDER_DIAMETER == None:
-    log.debug(
-        "Couldn't read CONFIG_CYLINDER_DIAMETER from current config values.  Using default value 30.0 instead.")
-    CONFIG_CYLINDER_DIAMETER = 30.0
 
 class BrachyCylinder:
     
+    # returns the current config value of the cylinder (not currently in use.)
     @staticmethod
-    def default_length() -> float: return CONFIG_CYLINDER_LENGTH
+    def default_length() -> float: return get_app().values.config_values.get("CONFIG_CYLINDER_LENGTH")
 
     def shape(self) -> TopoDS_Shape:
         if self._shape:
@@ -98,8 +85,8 @@ class BrachyCylinder:
         self._shape = None
         self._shape = self.shape()
 
-    def __init__(self, diameter: float = CONFIG_CYLINDER_DIAMETER, expand_base: bool = False): 
-        self.length = CONFIG_CYLINDER_LENGTH
+    def __init__(self, diameter: float = get_app().values.config_values.get("CONFIG_CYLINDER_DIAMETER"), expand_base: bool = False): 
+        self.length = get_app().values.config_values.get("CONFIG_CYLINDER_LENGTH")
         self.diameter = diameter
         self.expand_base = expand_base
         self._shape = None
@@ -119,8 +106,8 @@ def get_brachy_cylinder(data: DicomData) -> BrachyCylinder:
         log.debug(f"Cylinder results: \n Diameter: {diameter}")
     # if cylinder contour is not provided, then set to default value
     except Exception as error_message: 
-        diameter = CONFIG_CYLINDER_DIAMETER
-        log.debug(f"No Cylinder surface contour, or error reading:\nDiameter set to default:"+str(CONFIG_CYLINDER_DIAMETER))
+        diameter = get_app().values.config_values.get("CONFIG_CYLINDER_DIAMETER")
+        log.debug(f"No Cylinder surface contour, or error reading:\nDiameter set to default:"+str(diameter))
 
     return BrachyCylinder(diameter=diameter)
 

@@ -4,10 +4,13 @@ from PySide6.QtGui import QFont
 from classes.app import get_app
 from classes.logger import log
 from classes.dicom.fileio import read_dicom_folder
-from classes.dicom.data import DicomData
 from windows.models.shape_model import ShapeTypes
 from windows.ui.import_view_ui import Ui_Import_View
 from windows.views.custom_view import display_action, CustomView
+
+from settings.load import load_config_file
+from settings.reset import resetAllValues
+
 
 materials = {
     ShapeTypes.CYLINDER: {"rgb": [0.2, 0.55, 0.55], "transparent": True},
@@ -19,21 +22,92 @@ materials = {
 
 class ImportView(CustomView):
 
+    def action_import_config_file(self):
+
+        file_name = QFileDialog.getOpenFileName(
+            self, "Open config file", "", "(*.json)")[0]
+        
+        # if no .json file is selected, then return (cancel the import)
+        if file_name == "": 
+            """
+              NOTE: the other action_import_* methods below return '' if user presses cancel, since they are 
+              expecting a string.  This is why if not foldername: works for those, but it doesn't for here.
+            """
+            log.info("no valid filename selected for importing")
+            return
+
+        # if a .json file has been selected
+        log.info(f"file {file_name} has been selected")
+
+
+        app = get_app()
+        # get the current values in use.
+        alternate_dict = app.values.config_values
+        # read in the file and store the values.
+        # read the default settings from the .json file, as a dictionary,
+        # and store it in an attribtue called config_values so it can be accessed later.
+        load_config_file_tuple = load_config_file(file_name=file_name, 
+                                                  alternate_dict=alternate_dict,
+                                                  num_configs_loaded_successfully=app.values.num_configs_loaded_successfully)
+        app.values.config_values = load_config_file_tuple[0]
+        # store the list of which config values were successfully loaded or not.
+        app.values.config_keys_loaded = load_config_file_tuple[1]
+        # store the count of how many config files were "successful".
+        # "successful" means 1 or more values were loaded from it.
+        app.values.num_configs_loaded_successfully = load_config_file_tuple[2]
+
+        # update the config label on the import view to display the info from the loaded config file.   
+        app.values.loaded_message = app.values.createConfigMessageText(file_name, isFromUserImport=True)
+        self.action_update_import_label()
+        #The tandems length should not be larger than the cylinder
+        max_tandem_len = app.values.config_values.get('CONFIG_CYLINDER_LENGTH')
+        app.window.navigationmodel.views[3].ui.sb_tandem_height.setMaximum(max_tandem_len)
+
+        # reset all the values in the spin boxes and in the views.
+        resetAllValues(app.values.config_values)
+
+        app.values.most_recently_opened_config_file = file_name
+
+        log.info("Successfully reset all the values and views.")
+
+
     def action_import_dicom_folder(self):
         foldername = QFileDialog.getExistingDirectoryUrl(
             self, "Open patient folder").toLocalFile()
         
+        self.folder_name = foldername
+
         if not foldername:  # no folder selected?
             log.info("no valid filename selected for importing")
             return
 
+        app = get_app()
+        window = app.window
+
         log.info(f"file {foldername} has been selected")
 
+        # record the current cylinder length.
+        # This value is always compared against when the cylinder length changes.
+        cylindermodel = app.window.cylindermodel
+        cylindermodel.starting_length = app.values.config_values.get("CONFIG_CYLINDER_LENGTH")
+        
+        # for an imported tandem:
+        # place the bottom of the original imported shape at the origin (0,0,0) (the base of the cylinder)
+        # reset the tandem height_offset to 0 when a new dicom file is loaded.
+        tandemmodel = app.window.tandemmodel
+        tandemmodel.height_offset = 0.0
+        # set the mesh_offset to 0 and reset the spin box to 0.
+        tandemmodel.mesh_offset = 0.0
+        window.navigationmodel.views[3].ui.sb_height_offset.setValue(0.0)
+
+        try:
+            data = window.dicommodel.data.reset() # resets all the data in the dicom 
+            window.displaymodel.reset() # resets all the data in the display
+        except:
+            log.error("Error: Unable to reset screen properly")
         data = read_dicom_folder(foldername)
 
         # Add patient and plan info to window
-        app = get_app()
-        window = app.window
         
         #if dicom file has been opened then the export tap can open and the button will change color
         #else the button will not change color, see main (not related to not being able to go to the
@@ -42,33 +116,50 @@ class ImportView(CustomView):
 
         window.dicommodel.update(data)
         window.displaymodel.set_transparent(True)
+
+        self.action_update_import_label()
+        #The tandems length should not be larger than the cylinder
+        max_tandem_len = app.values.config_values.get('CONFIG_CYLINDER_LENGTH')
+        app.window.navigationmodel.views[3].ui.sb_tandem_height.setMaximum(max_tandem_len)
         
         app.signals.viewChanged.emit(4)
         window.change_color_export()
 
-    def action_update_import_label(self, data:DicomData):
-        
-        alldata="Patient and Plan Info\n"
-        a = ("Patient ID:      \t\t")          + str(data.patient_id)+ "\n"
-        b = ("Patient Name:    \t\t")          + str(data.patient_name)+ "\n"
-        c = ("Plan ID:         \t\t")          + str(data.plan_label)+ "\n"
-        d = ("Approval Status: \t\t")          + str(data.approval_status) + "\n"
-        e = ("Operator:        \t\t")          + str(data.operator) + "\n\n"
-        f = ("Channels Info")                  + "\n"
-        for i in range(len(data.channels_labels)):
-            f = f+(str(data.channels_labels[i]))+ ",  Channel: "+str(data.channel_numbers[i])+"\n"
-        
-        #line below has not yet been tested, remove is there is an issue
-        tandem = get_app().window.channelsmodel.tandem_channel
-        g = ("Tandem Label:  ")+str(tandem)
-        
-        
-        alldata = alldata+a+b+c+d+e+f+g
-        #last = data.toString()
-        #font = QFontDatabase().font("fira Mono", "no Italic", 9)
-        #font = QFont("Consolas", 9)
-        #self.ui.label_file_info.setFont(font)
-        self.ui.label_file_info.setText(alldata)
+    def action_update_import_label(self):
+        self.ui.info_area.clear()
+
+        app = get_app()
+
+        if(app.window.dicommodel.data.patient_id):
+            data = get_app().window.dicommodel.data
+            alldata= "Folder: "+self.folder_name+"\n\nPatient and Plan Info\n"
+            a = ("Patient ID:         \t")          + str(data.patient_id)+ "\n"
+            b = ("Patient Name:    \t")          + str(data.patient_name)+ "\n"
+            c = ("Plan ID:                \t")          + str(data.plan_label)+ "\n"
+            d = ("Approval Status: \t")          + str(data.approval_status) + "\n"
+            e = ("Operator:           \t")          + str(data.operator) + "\n\n"
+            f = ("Channels Info")                  + "\n"
+            for i in range(len(data.channels_labels)):
+                f = f+(str(data.channels_labels[i]))+ ",  Channel: "+str(data.channel_numbers[i])+"\n"
+            
+
+            tandem = data.tandem_channel
+            g = ("Tandem Label:  ")+str(tandem)
+            
+            alldata = alldata+a+b+c+d+e+f+g+'\n\n'
+
+            #self.ui.info_area.append(alldata)
+            self.ui.info_area.append(alldata)
+
+
+        """
+        Updates the config label on the Import view to display the file name of the current config file.
+        If no config file was loaded, or if no values from it were used, then display "None".
+        """
+        self.ui.info_area.append(app.values.loaded_message)
+
+    def action_update_config_label(self, file_name):
+        print("")
 
     @display_action
     def on_open(self):
@@ -77,6 +168,7 @@ class ImportView(CustomView):
         displaymodel.set_materials(materials)
 
     def __init__(self):
+        self.folder_name = ""
         self.dicom_file_opened = False
         super().__init__()
         self.ui = Ui_Import_View()
@@ -84,7 +176,4 @@ class ImportView(CustomView):
 
         # signals and slots
         self.ui.btn_import_folder.pressed.connect(self.action_import_dicom_folder)
-        
-        window = get_app().window
-        window.dicommodel.values_changed.connect(self.action_update_import_label)
-
+        self.ui.btn_config_file.pressed.connect(self.action_import_config_file)

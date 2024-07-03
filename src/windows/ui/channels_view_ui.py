@@ -15,51 +15,122 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QDoubleSpinBox, QFrame, QGridLayout,
-    QGroupBox, QHBoxLayout, QLabel, QListWidget,
-    QListWidgetItem, QPushButton, QSizePolicy, QSpacerItem,
-    QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QDoubleSpinBox, QFormLayout, QLabel,
+    QLayout, QListWidget, QListWidgetItem, QPushButton,
+    QSizePolicy, QVBoxLayout, QWidget)
 
 class Ui_Channels_View(object):
     def setupUi(self, Channels_View):
         if not Channels_View.objectName():
             Channels_View.setObjectName(u"Channels_View")
-        Channels_View.resize(290, 4092)
-        Channels_View.setStyleSheet(u"background-color: rgb(240, 245, 250);")
+        Channels_View.resize(290, 290)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(Channels_View.sizePolicy().hasHeightForWidth())
+        Channels_View.setSizePolicy(sizePolicy)
+        Channels_View.setMinimumSize(QSize(290, 290))
+        Channels_View.setMaximumSize(QSize(290, 16777215))
+        Channels_View.setStyleSheet(u"")
         self.verticalLayout = QVBoxLayout(Channels_View)
-        self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.groupBox_3 = QGroupBox(Channels_View)
-        self.groupBox_3.setObjectName(u"groupBox_3")
-        self.groupBox_3.setMinimumSize(QSize(290, 411))
-        self.groupBox_3.setMaximumSize(QSize(290, 16777215))
-        self.groupBox_3.setStyleSheet(u"background-color: rgb(240, 245, 250);")
-        self.gridLayout = QGridLayout(self.groupBox_3)
-        self.gridLayout.setObjectName(u"gridLayout")
-        self.listwidget_channels = QListWidget(self.groupBox_3)
-        self.listwidget_channels.setObjectName(u"listwidget_channels")
-        self.listwidget_channels.setMinimumSize(QSize(251, 230))
-        self.listwidget_channels.setMaximumSize(QSize(16777215, 16777215))
-        self.listwidget_channels.setStyleSheet(u"background-color: rgb(240, 245, 250);")
+        self.verticalLayout.setContentsMargins(10, 10, 10, 10)
+        self.formLayout = QFormLayout()
+        self.formLayout.setObjectName(u"formLayout")
+        self.label_4 = QLabel(Channels_View)
+        self.label_4.setObjectName(u"label_4")
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.label_4.sizePolicy().hasHeightForWidth())
+        self.label_4.setSizePolicy(sizePolicy1)
+        self.label_4.setMinimumSize(QSize(108, 18))
+        self.label_4.setMaximumSize(QSize(16777215, 18))
+        self.label_4.setStyleSheet(u"background-color: rgb(240, 245, 250);")
 
-        self.gridLayout.addWidget(self.listwidget_channels, 4, 0, 1, 1)
+        self.formLayout.setWidget(0, QFormLayout.LabelRole, self.label_4)
 
-        self.label_10 = QLabel(self.groupBox_3)
-        self.label_10.setObjectName(u"label_10")
+        self.spinbox_diameter = QDoubleSpinBox(Channels_View)
+        self.spinbox_diameter.setObjectName(u"spinbox_diameter")
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.spinbox_diameter.sizePolicy().hasHeightForWidth())
+        self.spinbox_diameter.setSizePolicy(sizePolicy2)
+        self.spinbox_diameter.setMinimumSize(QSize(20, 0))
+        self.spinbox_diameter.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+        self.spinbox_diameter.setMinimum(0.300000000000000)
 
-        self.gridLayout.addWidget(self.label_10, 3, 0, 1, 1)
+        self.formLayout.setWidget(0, QFormLayout.FieldRole, self.spinbox_diameter)
 
-        self.top_menu_bar = QWidget(self.groupBox_3)
-        self.top_menu_bar.setObjectName(u"top_menu_bar")
-        self.top_menu_bar.setMinimumSize(QSize(270, 70))
-        self.top_menu_bar.setMaximumSize(QSize(16777215, 70))
-        self.top_menu_bar.setStyleSheet(u"background-color: rgb(240, 245, 250);")
-        self.btn_enable = QPushButton(self.top_menu_bar)
-        self.btn_enable.setObjectName(u"btn_enable")
-        self.btn_enable.setGeometry(QRect(0, 0, 271, 33))
-        self.btn_enable.setMinimumSize(QSize(240, 33))
-        self.btn_enable.setStyleSheet(u"QPushButton {\n"
+        self.label = QLabel(Channels_View)
+        self.label.setObjectName(u"label")
+        sizePolicy1.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
+        self.label.setSizePolicy(sizePolicy1)
+        self.label.setMinimumSize(QSize(0, 18))
+        self.label.setMaximumSize(QSize(16777215, 18))
+        self.label.setStyleSheet(u"background-color: rgb(240, 245, 250);")
+
+        self.formLayout.setWidget(1, QFormLayout.LabelRole, self.label)
+
+        self.sb_needle_length = QDoubleSpinBox(Channels_View)
+        self.sb_needle_length.setObjectName(u"sb_needle_length")
+        sizePolicy2.setHeightForWidth(self.sb_needle_length.sizePolicy().hasHeightForWidth())
+        self.sb_needle_length.setSizePolicy(sizePolicy2)
+        self.sb_needle_length.setMinimumSize(QSize(20, 0))
+        self.sb_needle_length.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+        self.sb_needle_length.setMaximum(350.000000000000000)
+
+        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.sb_needle_length)
+
+        self.label_2 = QLabel(Channels_View)
+        self.label_2.setObjectName(u"label_2")
+        sizePolicy1.setHeightForWidth(self.label_2.sizePolicy().hasHeightForWidth())
+        self.label_2.setSizePolicy(sizePolicy1)
+        self.label_2.setMinimumSize(QSize(0, 18))
+        self.label_2.setMaximumSize(QSize(16777215, 18))
+        self.label_2.setStyleSheet(u"background-color: rgb(240, 245, 250);")
+
+        self.formLayout.setWidget(2, QFormLayout.LabelRole, self.label_2)
+
+        self.sb_threading_dept = QDoubleSpinBox(Channels_View)
+        self.sb_threading_dept.setObjectName(u"sb_threading_dept")
+        sizePolicy2.setHeightForWidth(self.sb_threading_dept.sizePolicy().hasHeightForWidth())
+        self.sb_threading_dept.setSizePolicy(sizePolicy2)
+        self.sb_threading_dept.setMinimumSize(QSize(20, 0))
+        self.sb_threading_dept.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+        self.sb_threading_dept.setMaximum(350.000000000000000)
+
+        self.formLayout.setWidget(2, QFormLayout.FieldRole, self.sb_threading_dept)
+
+        self.label_3 = QLabel(Channels_View)
+        self.label_3.setObjectName(u"label_3")
+        sizePolicy1.setHeightForWidth(self.label_3.sizePolicy().hasHeightForWidth())
+        self.label_3.setSizePolicy(sizePolicy1)
+        self.label_3.setMinimumSize(QSize(0, 18))
+        self.label_3.setMaximumSize(QSize(16777215, 18))
+        self.label_3.setStyleSheet(u"background-color: rgb(240, 245, 250);")
+
+        self.formLayout.setWidget(3, QFormLayout.LabelRole, self.label_3)
+
+        self.sb_threading_diameter = QDoubleSpinBox(Channels_View)
+        self.sb_threading_diameter.setObjectName(u"sb_threading_diameter")
+        sizePolicy2.setHeightForWidth(self.sb_threading_diameter.sizePolicy().hasHeightForWidth())
+        self.sb_threading_diameter.setSizePolicy(sizePolicy2)
+        self.sb_threading_diameter.setMinimumSize(QSize(20, 0))
+        self.sb_threading_diameter.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+        self.sb_threading_diameter.setMaximum(350.000000000000000)
+
+        self.formLayout.setWidget(3, QFormLayout.FieldRole, self.sb_threading_diameter)
+
+
+        self.verticalLayout.addLayout(self.formLayout)
+
+        self.btn_apply_settings = QPushButton(Channels_View)
+        self.btn_apply_settings.setObjectName(u"btn_apply_settings")
+        self.btn_apply_settings.setMinimumSize(QSize(20, 33))
+        self.btn_apply_settings.setMaximumSize(QSize(16777215, 16777215))
+        self.btn_apply_settings.setStyleSheet(u"QPushButton {\n"
 "	color: rgb(0, 0, 0);\n"
 "	background-color: rgb(199, 219, 237);\n"
 "	border: 0px solid;\n"
@@ -72,9 +143,47 @@ class Ui_Channels_View(object):
 "	color: rgb(250,250,250);\n"
 "	background-color: rgb(28, 44, 81);\n"
 "}")
-        self.btn_set_tandem = QPushButton(self.top_menu_bar)
+
+        self.verticalLayout.addWidget(self.btn_apply_settings)
+
+        self.label_5 = QLabel(Channels_View)
+        self.label_5.setObjectName(u"label_5")
+        sizePolicy1.setHeightForWidth(self.label_5.sizePolicy().hasHeightForWidth())
+        self.label_5.setSizePolicy(sizePolicy1)
+        self.label_5.setMinimumSize(QSize(10, 13))
+        self.label_5.setMaximumSize(QSize(270, 13))
+
+        self.verticalLayout.addWidget(self.label_5)
+
+        self.listwidget_channels = QListWidget(Channels_View)
+        self.listwidget_channels.setObjectName(u"listwidget_channels")
+        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Expanding)
+        sizePolicy3.setHorizontalStretch(0)
+        sizePolicy3.setVerticalStretch(0)
+        sizePolicy3.setHeightForWidth(self.listwidget_channels.sizePolicy().hasHeightForWidth())
+        self.listwidget_channels.setSizePolicy(sizePolicy3)
+        self.listwidget_channels.setMinimumSize(QSize(251, 50))
+        self.listwidget_channels.setMaximumSize(QSize(16777215, 16777215))
+        font = QFont()
+        font.setFamilies([u"MS Shell Dlg 2"])
+        font.setPointSize(8)
+        self.listwidget_channels.setFont(font)
+        self.listwidget_channels.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+        self.listwidget_channels.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+
+        self.verticalLayout.addWidget(self.listwidget_channels)
+
+        self.verticalLayout_4 = QVBoxLayout()
+        self.verticalLayout_4.setSpacing(0)
+        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+        self.verticalLayout_4.setSizeConstraint(QLayout.SetFixedSize)
+        self.btn_set_tandem = QPushButton(Channels_View)
         self.btn_set_tandem.setObjectName(u"btn_set_tandem")
-        self.btn_set_tandem.setGeometry(QRect(0, 30, 271, 33))
+        sizePolicy4 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Maximum)
+        sizePolicy4.setHorizontalStretch(0)
+        sizePolicy4.setVerticalStretch(0)
+        sizePolicy4.setHeightForWidth(self.btn_set_tandem.sizePolicy().hasHeightForWidth())
+        self.btn_set_tandem.setSizePolicy(sizePolicy4)
         self.btn_set_tandem.setMinimumSize(QSize(240, 33))
         self.btn_set_tandem.setStyleSheet(u"QPushButton {\n"
 "	color: rgb(0, 0, 0);\n"
@@ -90,39 +199,14 @@ class Ui_Channels_View(object):
 "	background-color: rgb(28, 44, 81);\n"
 "}")
 
-        self.gridLayout.addWidget(self.top_menu_bar, 5, 0, 1, 1)
+        self.verticalLayout_4.addWidget(self.btn_set_tandem)
 
-        self.verticalSpacer = QSpacerItem(228, 400000000, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Preferred)
-
-        self.gridLayout.addItem(self.verticalSpacer, 6, 0, 1, 1)
-
-        self.frame = QFrame(self.groupBox_3)
-        self.frame.setObjectName(u"frame")
-        self.frame.setFrameShape(QFrame.StyledPanel)
-        self.frame.setFrameShadow(QFrame.Raised)
-        self.horizontalLayout = QHBoxLayout(self.frame)
-        self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-        self.label_9 = QLabel(self.frame)
-        self.label_9.setObjectName(u"label_9")
-        self.label_9.setMinimumSize(QSize(108, 0))
-        self.label_9.setMaximumSize(QSize(16777215, 16777215))
-        self.label_9.setStyleSheet(u"background-color: rgb(240, 245, 250);")
-
-        self.horizontalLayout.addWidget(self.label_9)
-
-        self.spinbox_diameter = QDoubleSpinBox(self.frame)
-        self.spinbox_diameter.setObjectName(u"spinbox_diameter")
-        self.spinbox_diameter.setMinimumSize(QSize(20, 0))
-        self.spinbox_diameter.setStyleSheet(u"background-color: rgb(255, 255, 255);")
-
-        self.horizontalLayout.addWidget(self.spinbox_diameter)
-
-        self.btn_apply_settings = QPushButton(self.frame)
-        self.btn_apply_settings.setObjectName(u"btn_apply_settings")
-        self.btn_apply_settings.setMinimumSize(QSize(45, 20))
-        self.btn_apply_settings.setMaximumSize(QSize(45, 16777215))
-        self.btn_apply_settings.setStyleSheet(u"QPushButton {\n"
+        self.btn_enable = QPushButton(Channels_View)
+        self.btn_enable.setObjectName(u"btn_enable")
+        sizePolicy4.setHeightForWidth(self.btn_enable.sizePolicy().hasHeightForWidth())
+        self.btn_enable.setSizePolicy(sizePolicy4)
+        self.btn_enable.setMinimumSize(QSize(240, 33))
+        self.btn_enable.setStyleSheet(u"QPushButton {\n"
 "	color: rgb(0, 0, 0);\n"
 "	background-color: rgb(199, 219, 237);\n"
 "	border: 0px solid;\n"
@@ -136,34 +220,10 @@ class Ui_Channels_View(object):
 "	background-color: rgb(28, 44, 81);\n"
 "}")
 
-        self.horizontalLayout.addWidget(self.btn_apply_settings)
+        self.verticalLayout_4.addWidget(self.btn_enable)
 
 
-        self.gridLayout.addWidget(self.frame, 0, 0, 1, 1)
-
-        self.horizontalLayout_3 = QHBoxLayout()
-        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.label = QLabel(self.groupBox_3)
-        self.label.setObjectName(u"label")
-        self.label.setMinimumSize(QSize(0, 25))
-        self.label.setMaximumSize(QSize(16777215, 25))
-        self.label.setStyleSheet(u"background-color: rgb(240, 245, 250);")
-
-        self.horizontalLayout_3.addWidget(self.label)
-
-        self.sb_needle_length = QDoubleSpinBox(self.groupBox_3)
-        self.sb_needle_length.setObjectName(u"sb_needle_length")
-        self.sb_needle_length.setMinimumSize(QSize(135, 18))
-        self.sb_needle_length.setStyleSheet(u"background-color: rgb(255, 255, 255);")
-        self.sb_needle_length.setMaximum(350.000000000000000)
-
-        self.horizontalLayout_3.addWidget(self.sb_needle_length)
-
-
-        self.gridLayout.addLayout(self.horizontalLayout_3, 1, 0, 1, 1)
-
-
-        self.verticalLayout.addWidget(self.groupBox_3)
+        self.verticalLayout.addLayout(self.verticalLayout_4)
 
 
         self.retranslateUi(Channels_View)
@@ -173,13 +233,17 @@ class Ui_Channels_View(object):
 
     def retranslateUi(self, Channels_View):
         Channels_View.setWindowTitle(QCoreApplication.translate("Channels_View", u"Form", None))
-        self.groupBox_3.setTitle("")
-        self.label_10.setText(QCoreApplication.translate("Channels_View", u"Channels", None))
-        self.btn_enable.setText(QCoreApplication.translate("Channels_View", u"Disable", None))
-        self.btn_set_tandem.setText(QCoreApplication.translate("Channels_View", u"Set as Tandem", None))
-        self.label_9.setText(QCoreApplication.translate("Channels_View", u"Channels Diameter", None))
-        self.btn_apply_settings.setText(QCoreApplication.translate("Channels_View", u"Apply", None))
+        self.label_4.setText(QCoreApplication.translate("Channels_View", u"Channels Diameter", None))
+        self.spinbox_diameter.setSuffix(QCoreApplication.translate("Channels_View", u" mm", None))
         self.label.setText(QCoreApplication.translate("Channels_View", u"Needle Length", None))
         self.sb_needle_length.setSuffix(QCoreApplication.translate("Channels_View", u" mm", None))
+        self.label_2.setText(QCoreApplication.translate("Channels_View", u"Threading Depth", None))
+        self.sb_threading_dept.setSuffix(QCoreApplication.translate("Channels_View", u" mm", None))
+        self.label_3.setText(QCoreApplication.translate("Channels_View", u"Threading diameter", None))
+        self.sb_threading_diameter.setSuffix(QCoreApplication.translate("Channels_View", u" mm", None))
+        self.btn_apply_settings.setText(QCoreApplication.translate("Channels_View", u"Apply", None))
+        self.label_5.setText(QCoreApplication.translate("Channels_View", u"Channels", None))
+        self.btn_set_tandem.setText(QCoreApplication.translate("Channels_View", u"Set as Tandem", None))
+        self.btn_enable.setText(QCoreApplication.translate("Channels_View", u"Disable", None))
     # retranslateUi
 
