@@ -2,18 +2,20 @@ from OCC.Core.BRepPrimAPI import BRepPrimAPI_MakeBox
 from OCC.Core.gp import gp_Pnt, gp
 from OCC.Core.TopoDS import TopoDS_Shape
 from OCC.Extend.ShapeFactory import rotate_shape
+from classes.app import get_app
 
 class CylinderNotch:
     """
     A small shape at Z0 to be used to mark the cylinder
     """
 
-    width = 1.0
-    length = 3.5
-    height = 0.5
+    #width = 1.0
+    #length = 3.5
+    #height = 0.5
 
-    rotation = 270.0
-    radius = 15.0
+    #rotation = 270.0
+    #radius = 15.0
+    #radius = app.window.cylindermodel.cylinder.diameter
 
     def shape(self) -> TopoDS_Shape:
         # make the box shape
@@ -23,3 +25,14 @@ class CylinderNotch:
 
         # rotate the box along 0, 0, 1
         return rotate_shape(shape=box, axis=gp.OZ(), angle=self.rotation, unite="deg")
+    
+    def __init__(self):
+        self.width = 1.0
+        self.length = 3.5
+        self.height = 0.5
+
+        self.rotation = 270.0
+        #self.radius = 15.0
+        app = get_app()
+        self.radius = app.window.cylindermodel.cylinder.diameter
+

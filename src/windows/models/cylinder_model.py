@@ -4,6 +4,7 @@ from classes.app import get_app
 from classes.dicom.data import DicomData
 from classes.mesh.cylinder import BrachyCylinder, get_brachy_cylinder
 from windows.models.shape_model import ShapeModel, ShapeTypes
+from classes.mesh.notch import CylinderNotch
 
 CYLINDER_LABEL = "cylinder"
 
@@ -24,6 +25,10 @@ class CylinderModel(QObject):
 
     # from CylinderView -> action_apply_settings
     def update_cylinder(self, cylinder: BrachyCylinder):
+        # update the notch placement to the cylinder
+        notch = CylinderNotch()
+        cylinder = cylinder.add_notch(cylinder, notch)
+
         self.cylinder = cylinder
         self.update()
 
