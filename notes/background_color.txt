@@ -1,0 +1,18 @@
+How to change the background of the display:
+1. Create the .png you want for the background.
+	- if you want a solid for the background, then create a .png of that solid color.
+		- ex. use Microsoft Paint to make a solid fill .png.
+2. Save the .png to brachify\resources folder.
+	- this is the same location as the spash icon, ex,
+		resources\brachify_splash-ico.ico
+		resources\brachify_splash.png
+3. Add the following code:
+
+src\windows\main_window.py	
+def initViews(self):
+	#... some lines above ...
+        self.display = self.canvas._display
+        self.display.SetBackgroundImage('resources\\background.png') # add this line
+        self.display.Repaint() # add this line
+        self.display.display_triedron()
+	# ... some lines below ...
