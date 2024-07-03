@@ -281,10 +281,12 @@ class TandemModel(QObject):
         self._display_shape = None  # used to show tandem in export view
         self.height_offset = 0.0 # amount adjusted when cylinder height is changed
         self.rotation = config_values.get("CONFIG_TANDEM_ROTATION") 
-        self.protation = config_values.get("CONFIG_TANDEM_ROTATION") # this value is used in the event there
-        # is a tandem in the plan and will store the angle of that tandem if no tandem is in the plan then 
-        # this value will store the unchanged origional value in the config file
-        # TODO could be used later to add a reset tandem to plan button
+        self.protation = config_values.get("CONFIG_TANDEM_ROTATION") # "plan rotation"
+        # This value is used when the user tries to generate or import a tandem using a (applied) spin box value
+        # that does not equal the rotation value from their DICOM file or the config file.
+        # If there is a channel labeled "tandem" in the DICOM file, this stores the rotation from that channel.
+        # If there is no channel labeled "tandem" in the DICOM file, this stores the config value for rotation.
+        # TODO this could be used to add a "reset tandem to plan" button.
         self.filepath = None
         self.mesh_offset = 0.0 # amount adjusted when user applies "height offset" spin box
         self.is_shape_imported = False
