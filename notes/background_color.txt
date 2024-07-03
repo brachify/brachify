@@ -11,8 +11,8 @@ How to change the background of the display:
 src\windows\main_window.py	
 def initViews(self):
 	#... some lines above ...
-        self.display = self.canvas._display
+        self.display = self.canvas._display # this line already exists
         self.display.SetBackgroundImage('resources\\background.png') # add this line
         self.display.Repaint() # add this line
-        self.display.display_triedron()
+        self.display.display_triedron() # this line already exists
 	# ... some lines below ...
