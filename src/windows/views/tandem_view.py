@@ -50,12 +50,11 @@ class TandemView(CustomView):
         
         tan = get_app().window.tandemmodel
         tan.change_tandem_rotation(self.ui.tandem_rotation_2.value())
-        self.ui.tandem_rotation.setValue(self.ui.tandem_rotation_2.value())
         
         #updates the spin box value of rotation
         rotation = window.tandemmodel.rotation
-        window.navigationmodel.views[3].ui.tandem_rotation.setValue(rotation)
-        window.navigationmodel.views[3].ui.tandem_rotation_2.setValue(rotation)
+        self.ui.tandem_rotation.setValue(rotation)
+        self.ui.tandem_rotation_2.setValue(rotation)
         # update the config_values dict
         get_app().values.config_values = getCurrentValues()
 
@@ -87,6 +86,7 @@ class TandemView(CustomView):
         self.update_settings()
         
         tan.change_tandem_rotation(self.ui.tandem_rotation_2.value())
+        self.ui.tandem_rotation.setValue(self.ui.tandem_rotation_2.value())
 
     @display_action
     def action_set_import(self):

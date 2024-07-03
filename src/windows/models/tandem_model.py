@@ -71,7 +71,7 @@ class TandemModel(QObject):
         self.rotation = rotation
         if(channel.label.lower() == 'tandem'):
             self.protation = rotation
-            self.hasTandem = True # if this happens there is a tandem in the plan
+            self.hasTandem = True # there is a channel labeled tandem
         self.update_display()
 
     def change_tandem_rotation(self, rotation):

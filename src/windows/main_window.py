@@ -324,7 +324,7 @@ class MainWindow(QMainWindow):
 
     def tandem_rotation_warning(self):
         miniwindow = QMessageBox()
-        miniwindow.setWindowTitle("Rotation is being Chnaged")
+        miniwindow.setWindowTitle("Rotation Changed from DICOM value")
         miniwindow.setText("The selected tandem rotation angle is different than the imported tandem rotation angle in the treatment plan. Do you wish to continue?")
         miniwindow.setIcon(QMessageBox.Icon.Warning)
         miniwindow.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
