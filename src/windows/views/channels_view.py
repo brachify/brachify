@@ -88,9 +88,7 @@ class ChannelsView(CustomView):
         #If the user wishes to proceed then do this, if not then do not
         if(answer == QMessageBox.No):
             label = None
-            if channel_label != data.tandem_channel: 
-                label = channel_label
-                model.set_tandem(temp_label)
+            model.set_tandem(temp_label)
 
 
         #updates the spin box value of rotation

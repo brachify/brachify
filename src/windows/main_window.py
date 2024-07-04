@@ -340,3 +340,4 @@ class MainWindow(QMainWindow):
             self.tandemmodel.rotation=self.tandemmodel.protation
             self.navigationmodel.views[3].ui.tandem_rotation.setValue(self.tandemmodel.protation)
             self.navigationmodel.views[3].ui.tandem_rotation_2.setValue(self.tandemmodel.protation)
+            return QMessageBox.No
