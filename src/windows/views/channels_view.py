@@ -61,25 +61,37 @@ class ChannelsView(CustomView):
     @display_action
     def action_set_tandem(self):
         data = get_app().window.dicommodel.data
+        window = get_app().window
+        tan = window.tandemmodel
         log.debug(f"setting channel's tandem status")
 
         model = get_app().window.channelsmodel
         channel_label = model.get_selected_channel()
 
         # set or clear the tandem channel
+        
+        #stores old tandem label in canse user desides they want to 
+        #revert to plan value when prompted
+        temp_label=data.tandem_channel
+
+        label = None
+        if channel_label != data.tandem_channel: 
+            label = channel_label
+            model.set_tandem(label)
+        
         answer = QMessageBox.Yes
-        window = get_app().window
-        tan = window.tandemmodel
         if(tan.hasTandemInDICOM):
             if(not window.navigationmodel.views[3].hasShownRotationWarning):
-                if(round(tan.protation,2) != round(window.navigationmodel.views[3].ui.tandem_rotation.value(),2)):
+                if(round(tan.protation,2) != round(window.tandemmodel.rotation,2)):
                     window.navigationmodel.views[3].hasShownRotationWarning=True
                     answer = window.tandem_rotation_warning()
         #If the user wishes to proceed then do this, if not then do not
-        if(answer == QMessageBox.Yes):
+        if(answer == QMessageBox.No):
             label = None
-            if channel_label != data.tandem_channel: label = channel_label
-            model.set_tandem(label)
+            if channel_label != data.tandem_channel: 
+                label = channel_label
+                model.set_tandem(temp_label)
+
 
         #updates the spin box value of rotation
         rotation = window.tandemmodel.rotation
