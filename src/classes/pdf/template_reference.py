@@ -7,8 +7,10 @@ import subprocess
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib.units import inch
 from reportlab.pdfgen import canvas
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Image
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Image, Spacer
+from classes.pdf.canvas import FooterCanvas
 
 from classes.dicom.data import DicomData
 from classes.logger import log
@@ -251,7 +253,7 @@ def get_last_xy_points(needles):
     return last_xy_points
 
 
-def process_lengths_and_create_data(is_lengths, protrusion_lengths, label_list):
+def process_lengths_and_create_data(is_lengths, protrusion_lengths, label_list, number_list):
     needle_data = []
 
     for idx, (length_mm, protrusion_length) in enumerate(zip(is_lengths, protrusion_lengths), start=0):
@@ -261,14 +263,19 @@ def process_lengths_and_create_data(is_lengths, protrusion_lengths, label_list):
 
         # Create a tuple for needle_data with protrusion length in the third column
         needle_info = (
-            f"{label_list[idx]}", f"{length_cm} cm", f"{protrusion_length_cm} cm")
+            f"{label_list[idx]}", f"{number_list[idx]}", f"{length_cm} cm", f"{protrusion_length_cm} cm", "")
         needle_data.append(needle_info)
 
     return needle_data
 
 
-def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False, tandem_rotation=0.0,
-                        is_tandem_imported=False):
+def save_points_diagram(points: list,
+                        number_list: list, 
+                        circle_radius: float, 
+                        output_filepath: Path, 
+                        has_tandem: bool=False, 
+                        tandem_rotation: float=0.0,
+                        is_tandem_imported: bool=False):
     app = get_app()
     config = app.values.config_values
     channel_diam = config.get("CONFIG_CHANNELS_DIAMETER")
@@ -282,6 +289,9 @@ def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False
     circle = plt.Circle((0, 0), circle_radius, color='black', fill=False, clip_on=False)
     ax.add_artist(circle)
 
+    # include only needles that are within 5cm of the cylinder.
+    # (this is left here in case we choose to use it in the future.  Currently, all needles
+    # passed to this method are within the cylinder.)
     #gets max x, y value that is within 5cm of cylinders origin for determining plotting
     #area
     #limit refers to the 5cm distance around the perimater of the cylinder where needles are allowed
@@ -313,29 +323,30 @@ def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False
     # if channel diameter >= circle_radius/12 there is ~enough room to write numbers inside of channels
     # There could be some distorting of the image if there needles are outside of the cylinder
     if(channel_diam >= circle_radius/12 and maxx<circle_radius and maxy<circle_radius):
-        for i, (x, y) in enumerate(points, start=1):
+        for i, (x, y) in enumerate(points):
             #checks to make sure that needles are within 5 cm of center
             if(((np.sqrt(x**2+y**2))/2)<limit):
                 ax.add_artist(plt.Circle((x, -y), channel_diam/2, color='black', fill=False, clip_on=False))
-                ax.text(x, -y, str(i), color='black', ha='center', va='center')
+                ax.text(x, -y, str(number_list[i]), color='black', ha='center', va='center')
     else:
-        for i, (x, y) in enumerate(points, start=1):
+        for i, (x, y) in enumerate(points):
             #checks to make sure that needles are within 5 cm of center
             if((np.sqrt(x**2+y**2)/2)<limit):
                 ax.add_artist(plt.Circle((x, -y), channel_diam/2, color='black', fill=False, clip_on=False))
                 #so that text will print outside of needle channel to the right if the channel is too thin
                 if(x<0):
-                    ax.text(x-(channel_diam/2), -y, str(i), color='black', ha='right', va='center')
+                    ax.text(x-(channel_diam/2), -y, str(number_list[i]), color='black', ha='right', va='center')
                 else:
-                    ax.text(x+(channel_diam/2), -y, str(i), color='black', ha='left', va='center')
+                    ax.text(x+(channel_diam/2), -y, str(number_list[i]), color='black', ha='left', va='center')
 
     if has_tandem:
+        tandem_channel_number = get_app().window.channelsmodel.get_tandem_channel().channel_number
         if(tandem_diam >= circle_radius/12 and maxx<circle_radius and maxy<circle_radius):
             ax.add_artist(plt.Circle((0.0, 0.0), tandem_diam/2, color='black', fill=False))
-            ax.text(0.0, 0.0, 'T', color='black', ha='center', va='center')
+            ax.text(0.0, 0.0, f'{tandem_channel_number}T', color='black', ha='center', va='center')
         else:
             ax.add_artist(plt.Circle((0.0, 0.0), tandem_diam/2, color='black', fill=False))
-            ax.text((channel_diam/2), 0.0, 'T', color='black', ha='left', va='center')
+            ax.text((channel_diam/2), 0.0, f'{tandem_channel_number}T', color='black', ha='left', va='center')
 
         # if the tandem was generated, then display a dotted line on the pdf.
         if not is_tandem_imported:
@@ -359,16 +370,22 @@ def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False
     tick_width = notch.width
     tick_height = notch.length
     tick_color = 'grey'
-    if not has_tandem:
-        rect = plt.Rectangle((-tick_width / 2, circle_radius - tick_height), # location of bottom left corner
-                              tick_width, tick_height, color=tick_color, fill=True, alpha=0.5)
-        ax.add_artist(rect)
+    # add the notch
+    rect = plt.Rectangle((-tick_width / 2, circle_radius - tick_height), # location of bottom left corner
+                          tick_width, tick_height, color=tick_color, fill=True, alpha=0.5)
+    ax.add_artist(rect)
 
     # Remove axis markers and numbering
     ax.set_xticks([])
     ax.set_yticks([])
     ax.set_xticklabels([])
     ax.set_yticklabels([])
+
+    # add the words "Anterior" and "Posterior".
+    # Anterior is the -y-axis, Posterior is the +y-axis.
+    # Position the words so that they are just outside the circle.
+    ax.text(0, +circle_radius+(circle_radius/10), "Anterior", color='black', ha='center', va='center')
+    ax.text(0, -circle_radius-(circle_radius/10), "Posterior", color='black', ha='center', va='center')
 
     # Set axis aspect ratio to be equal
     ax.set_aspect('equal', adjustable='box')
@@ -377,10 +394,29 @@ def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False
     png_path = output_filepath.joinpath('basemap.png')
     # Save the plot as a PNG file
     fig = plt.figure(1, dpi =1000000, clip_on=False)
+    # add a black border to the figure.
+    fig.patch.set_linewidth(1)
+    fig.patch.set_edgecolor('black')
+
     fig.savefig(png_path, format='png')
     plt.close()
     return png_path
 
+def channels_inside_cylinder(channels: list[NeedleChannel], diameter: float):
+    """
+    Returns the channels which go through the bottom of the cylinder.
+    """
+    radius = diameter / 2
+    needles = extract_points_from_channels(channels)
+    last_xy_points = get_last_xy_points(needles)
+    channels_inside = []
+    # if the last point of the channel is within the cylinder radius,
+    # then keep that channel.
+    for idx, point in enumerate(last_xy_points):
+        if np.sqrt(point[0]**2 + point[1]**2) <= radius:
+            channels_inside.append(channels[idx])
+
+    return channels_inside
 
 #######################################################
 # pdf generation
@@ -394,6 +430,8 @@ def generate_pdf(
         has_tandem: bool, 
         tandem_rotation: float, 
         is_tandem_imported: bool):
+
+    app = get_app()
 
     # Get today's date in the format "Month Day, Year"
     today_date = datetime.today().strftime('%B %d, %Y')
@@ -437,30 +475,55 @@ def generate_pdf(
     content.append(Paragraph("<br/>", centered_style))
 
     # Add table with needle data
-    needles = extract_points_from_channels(channels)
+    # use only the channels that are inside the cylinder
+    diameter = cylinder.diameter
+    channels_inside = channels_inside_cylinder(channels, diameter)
+    needles_inside = extract_points_from_channels(channels_inside)
+
     interstitial_lengths = get_all_interstitial_lengths(
         cylinder=cylinder,
-        needles=needles)
+        needles=needles_inside)
     
-    protrusion_lengths = calculate_protrusion_lengths(needles, needle_length)
+    protrusion_lengths = calculate_protrusion_lengths(needles_inside, needle_length)
     # TODO: Add needle label and channel number instead of "Needle 1" etc.
-    length_label = "Protruding Length for " + str(needle_length) + "mm needle"
-    data = [["Channel", "Interstitial Length", length_label]]
+    #length_label = "Protruding Length for " + str(needle_length) + "mm needle"
+    data = [["Name","Channel Number", "Extension\n(Interstitial Length)", "Protrusion from Base", "Protrusion\n(measured)"]]
 
-    label_list = [channel.label for channel in channels]
-    for needle_number, interstitial_length, protruding_length \
-    in process_lengths_and_create_data(interstitial_lengths, protrusion_lengths, label_list):
-        data.append([needle_number, interstitial_length, protruding_length])
+    label_list = [channel.label for channel in channels_inside]
+    number_list = [channel.channel_number for channel in channels_inside]
+    for label, channel_number, interstitial_length, protruding_length, blank \
+    in process_lengths_and_create_data(interstitial_lengths, protrusion_lengths, label_list, number_list):
+        data.append([label, channel_number, interstitial_length, protruding_length, blank])
+
+    if has_tandem:
+        tandem_label = app.window.dicommodel.data.tandem_channel
+        tandem_channel_number = app.window.channelsmodel.get_tandem_channel().channel_number
+        data.append([tandem_label, tandem_channel_number, "N/A", "N/A", ""])
 
     table = Table(data)
     table_style = TableStyle([
-        ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
-        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
-        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
-        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor("#ADD8E6")), # 1st row
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.black), # 1st row
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'), # 1st row
+        ('VALIGN', (0,0), (-1, 0), 'MIDDLE'), # 1st row
+        ('GRID', (0,0), (-1,-1), 1, colors.black), # entire table
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'), # entire table
+        ('BACKGROUND', (0, 1), (-1, -1), colors.white) # the rows containing the data
     ])
+    """
+    TableStyle([]):
+    - passing it a sequence of commands, each command is a tuple identified by its 
+        first element which is a string; the remaining elements of the command tuple 
+        represent the start and stop cell coordinates of the command and possibly 
+        thickness and colors, etc.
+    - see this link for more info on TableStyle:
+    https://docs.reportlab.com/reportlab/userguide/ch7_tables/#tablesetstyletblstyle
+    - for example: 
+    ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke) = ('COMMAND', (column,row), (column,row), color)
+    - note: (column, row) is inclusive, 0 indexed, and negative values indicate to start from the end
+        (ex column = -1 means the farthest right column, row = -1 means the bottom row)
+    - 
+    """
     table.setStyle(table_style)
     content.append(table)
 
@@ -468,23 +531,32 @@ def generate_pdf(
     # Adjust width and height as needed
     pdf_output_dir = filepath.parent
     circle_radius = cylinder.diameter / 2
-    last_xy_points = get_last_xy_points(needles) 
+    last_xy_points = get_last_xy_points(needles_inside) 
     
-    png_path = save_points_diagram(last_xy_points, circle_radius, pdf_output_dir, has_tandem=has_tandem,
+    png_path = save_points_diagram(last_xy_points, number_list, circle_radius, pdf_output_dir, has_tandem=has_tandem,
                                     tandem_rotation=tandem_rotation, is_tandem_imported=is_tandem_imported)
 
-    #leaves margin of 25 pixels
-    img = Image(str(png_path))
+    # build the image for pdf with specified width and height.
+    # kind='proportional' means keep the aspect ratio, so the width/height become max values.
+    img = Image(str(png_path), width=5.75*inch, height=10*inch, kind='proportional')
+    #img._restrictSize(7.5*inch, 10*inch) # an alternate possible way to size the image
+
+    content.append(Spacer(1, 0.25*inch))
     content.append(img)
 
     # Build and save the PDF document
-    pdf.build(content)
+    pdf.build(content, canvasmaker=FooterCanvas)
 
     # Open the generated PDF using the default PDF viewer
     try:
         import os
         if os.name == 'nt':  # Check if on Windows
-            subprocess.Popen(['start', str(filepath)], shell=True)
+            try:
+                # try opening the pdf using os.startfile
+                os.startfile(str(filepath))
+            except:
+                # if os.startfile throws and exception, then try opening the pdf with subprocess.Popen
+                subprocess.Popen(['start', str(filepath)], shell=True)
         elif os.name == 'posix':  # Check if on macOS/Linux
             subprocess.Popen(['open', str(filepath)])
     except Exception as e:
