@@ -26,7 +26,7 @@ class ChannelsView(CustomView):
         if type(item) is type(None): return None
         else: label = item.text()
 
-        log.debug(f"selecting {label} channel")
+        log.debug(f"selecting {label} channel")    
         try:
             self.channelsmodel.set_selected_channels(label)
         except Exception as error_message:
@@ -103,14 +103,7 @@ class ChannelsView(CustomView):
         channel_label = model.get_selected_channel()   
         model.toggle_channel_enabled(channel_label)
 
-    def action_update_settings(self):
-        log.debug(f"updating channels view")
-        
-        # diameter spin box
-        self.ui.spinbox_diameter.setValue(self.channelsmodel.diameter)
-        # needle channels spin box
-        self.ui.sb_needle_length.setValue(get_app().values.config_values.get("CONFIG_NEEDLE_LENGTH"))
-
+    def create_channels_list(self):
         # channels list
         selected_channel = self.channelsmodel.get_selected_channel()
         self.ui.listwidget_channels.blockSignals(True)  # prevents accidently emitting signals
@@ -123,7 +116,16 @@ class ChannelsView(CustomView):
                selected_channel == channel.label:
                 self.ui.listwidget_channels.setCurrentRow(row)
         self.ui.listwidget_channels.blockSignals(False)
+    
+    def action_update_settings(self):
+        log.debug(f"updating channels view")
+        
+        # diameter spin box
+        self.ui.spinbox_diameter.setValue(self.channelsmodel.diameter)
+        # needle channels spin box
+        self.ui.sb_needle_length.setValue(get_app().values.config_values.get("CONFIG_NEEDLE_LENGTH"))
 
+        selected_channel = self.channelsmodel.get_selected_channel()
         # selected channel
         # enable/disable buttons if any channel is selected
         any_selected = selected_channel != None
@@ -133,7 +135,13 @@ class ChannelsView(CustomView):
         label = self.channelsmodel.get_selected_channel()
         is_disabled = self.channelsmodel.is_channel_disabled(label)
         is_tandem = self.channelsmodel.is_channel_tandem(label)
-
+        lister = self.ui.listwidget_channels
+        for i in range(lister.count()):
+            text = lister.item(i).text()
+            row = i
+            if(text==label):
+                lister.scrollToItem(lister.item(row))
+                lister.item(row).setSelected(True)
         if is_disabled: self.ui.btn_enable.setText("Enable")
         else: self.ui.btn_enable.setText("Disable")
 
