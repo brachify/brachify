@@ -2,7 +2,7 @@ import numpy as np
 import math
 from OCC.Core.gp import gp_Pnt, gp_Ax2
 from OCC.Core.BRepPrimAPI import BRepPrimAPI_MakeCone, BRepPrimAPI_MakeSphere, BRepPrimAPI_MakeCylinder
-from OCC.Core.BRepAlgoAPI import BRepAlgoAPI_Fuse, BRepAlgoAPI_Cut, BRepAlgoAPI_BooleanOperation
+from OCC.Core.BRepAlgoAPI import BRepAlgoAPI_Fuse
 from OCC.Core.TopoDS import TopoDS_Shape
 
 import classes.mesh.helper as helper
