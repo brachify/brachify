@@ -5,15 +5,8 @@ from OCC.Extend.ShapeFactory import rotate_shape
 
 class CylinderNotch:
     """
-    A small shape at Z0 to be used to mark the cylinder
+    A small shape at Z=0 to be used to mark the cylinder
     """
-
-    width = 1.0
-    length = 3.5
-    height = 0.5
-
-    rotation = 270.0
-    radius = 15.0
 
     def shape(self) -> TopoDS_Shape:
         # make the box shape
@@ -23,3 +16,12 @@ class CylinderNotch:
 
         # rotate the box along 0, 0, 1
         return rotate_shape(shape=box, axis=gp.OZ(), angle=self.rotation, unite="deg")
+    
+    def __init__(self, diameter):
+        self.width = 1.0
+        self.length = 3.5
+        self.height = 0.5
+
+        self.rotation = 270.0
+        self.radius = diameter / 2
+

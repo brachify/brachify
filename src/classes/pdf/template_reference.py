@@ -269,7 +269,8 @@ def process_lengths_and_create_data(is_lengths, protrusion_lengths, label_list):
 
 def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False, tandem_rotation=0.0,
                         is_tandem_imported=False):
-    config = get_app().values.config_values
+    app = get_app()
+    config = app.values.config_values
     channel_diam = config.get("CONFIG_CHANNELS_DIAMETER")
     #tandem will show up at config tandem value even if it is imported
     tandem_diam = config.get("CONFIG_TANDEM_CHANNEL_DIAMETER")
@@ -353,14 +354,14 @@ def save_points_diagram(points, circle_radius, output_filepath, has_tandem=False
             # Line goes from (0,0) to (end_pt_x, end_pt_y)
             ax.add_artist(lines.Line2D(x_values, y_values,color='grey', linestyle='--'))
 
-    # Add a filled black rectangle at the top center of the big circle
-    tick_width = 0.2
-    tick_height = 1.0
-    tick_color = 'black'
-    tick_vert_offset = 0.5
+    # Add a filled grey rectangle at the top center of the big circle
+    notch = app.window.cylindermodel.cylinder.notch
+    tick_width = notch.width
+    tick_height = notch.length
+    tick_color = 'grey'
     if not has_tandem:
-        rect = plt.Rectangle((-tick_width / 2, circle_radius - tick_vert_offset -
-                                tick_height), tick_width, tick_height, color=tick_color, fill=True)
+        rect = plt.Rectangle((-tick_width / 2, circle_radius - tick_height), # location of bottom left corner
+                              tick_width, tick_height, color=tick_color, fill=True, alpha=0.5)
         ax.add_artist(rect)
 
     # Remove axis markers and numbering
