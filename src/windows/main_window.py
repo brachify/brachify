@@ -10,6 +10,7 @@ from windows.models.channels_model import ChannelsModel
 from windows.models.cylinder_model import CylinderModel
 from windows.models.tandem_model import TandemModel
 from windows.models.navigation_model import NavigationModel
+from PySide6.QtGui import QIcon
 
 from classes.info import USER_PATH
 import json
@@ -320,3 +321,23 @@ class MainWindow(QMainWindow):
         
         dialog.setIcon(QMessageBox.Icon.Warning)
         dialog.exec()
+
+    def tandem_rotation_warning(self):
+        miniwindow = QMessageBox()
+        miniwindow.setWindowTitle("Rotation Changed from DICOM value")
+        miniwindow.setText("The inputted tandem rotation angle is different than the imported DICOM file tandem rotation angle.\nDo you wish to continue?")
+        miniwindow.setIcon(QMessageBox.Icon.Warning)
+        miniwindow.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        miniwindow.setDefaultButton(QMessageBox.Yes)
+        my_icon = QIcon("resources\\brachify_splash-ico.ico")
+        miniwindow.setWindowIcon(my_icon)
+
+        answer = miniwindow.exec()
+
+        if(answer == QMessageBox.Yes):
+            pass
+        elif(answer == QMessageBox.No):
+            self.tandemmodel.rotation=self.tandemmodel.protation
+            self.navigationmodel.views[3].ui.tandem_rotation.setValue(self.tandemmodel.protation)
+            self.navigationmodel.views[3].ui.tandem_rotation_2.setValue(self.tandemmodel.protation)
+            return QMessageBox.No

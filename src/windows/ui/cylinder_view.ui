@@ -43,7 +43,7 @@
         <string notr="true">background-color: rgb(240, 245, 250);</string>
        </property>
        <property name="text">
-        <string>Cylinder diameter</string>
+        <string>Cylinder Diameter</string>
        </property>
        <property name="buddy">
         <cstring>spinbox_diameter</cstring>
@@ -78,7 +78,7 @@
         <string notr="true">background-color: rgb(240, 245, 250);</string>
        </property>
        <property name="text">
-        <string>Cylinder length</string>
+        <string>Cylinder Length</string>
        </property>
        <property name="buddy">
         <cstring>spinbox_length</cstring>

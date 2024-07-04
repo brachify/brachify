@@ -99,6 +99,9 @@ class ImportView(CustomView):
         # set the mesh_offset to 0 and reset the spin box to 0.
         tandemmodel.mesh_offset = 0.0
         window.navigationmodel.views[3].ui.sb_height_offset.setValue(0.0)
+        #sets the fact a tandem is in the plan to False
+        window.navigationmodel.views[3].hasShownRotationWarning = False
+        tandemmodel.hasTandemInDICOM = False
 
         try:
             data = window.dicommodel.data.reset() # resets all the data in the dicom 
