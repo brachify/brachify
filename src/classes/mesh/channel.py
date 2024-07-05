@@ -201,12 +201,12 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
                 #(my)y + by=z(y)
                 #solve for bx and by using p1 then solve for x and y when z is 0
                 if(p1.X()!=p2.X()):
-                    runx = math.sqrt(p1.X()-p2.X())
+                    runx = p1.X()-p2.X()
                     mx = rize/runx
                     bx = p1.Z()-mx*p1.X()
                     xsol = -bx/mx
                 if(p1.Y()!=p2.Y()):
-                    runy = math.sqrt(p1.Y()-p2.Y())
+                    runy = p1.Y()-p2.Y()
                     my = rize/runy
                     by = p1.Z()-my*p1.Y()
                     ysol = -by/my
@@ -317,12 +317,12 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
                 #(my)y + by=z(y)
                 #solve for bx and by using p1 then solve for x and y when z is 0
                 if(p1.X()!=p2.X()):
-                    runx = math.sqrt(p1.X()-p2.X())
+                    runx = p1.X()-p2.X()
                     mx = rize/runx
                     bx = p1.Z()-mx*p1.X()
                     xsol = -bx/mx
                 if(p1.Y()!=p2.Y()):
-                    runy = math.sqrt(p1.Y()-p2.Y())
+                    runy = p1.Y()-p2.Y()
                     my = rize/runy
                     by = p1.Z()-my*p1.Y()
                     ysol = -by/my
