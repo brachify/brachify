@@ -69,12 +69,19 @@ class TandemModel(QObject):
         if channel:
             rotation = channel.get_rotation()
         self.rotation = rotation
+        if(channel.label.lower() == 'tandem'):
+            self.protation = rotation
+            self.hasTandemInDICOM = True # if this happens there is a tandem in the plan
         self.update_display()
 
     def change_tandem_rotation(self, rotation):
         self.rotation = rotation
-        self._display_shape = rotate_shape(shape=self._base_shape, axis=gp.OZ(), angle=rotation)
-        self.update()
+        #try and except added to ensure rotation and spin boxes are updated accuratly
+        try:
+            self._display_shape = rotate_shape(shape=self._base_shape, axis=gp.OZ(), angle=rotation)
+            self.update()
+        except:
+            pass
 
     def shape(self):
         if not self._base_shape:
@@ -278,6 +285,12 @@ class TandemModel(QObject):
         self._display_shape = None  # used to show tandem in export view
         self.height_offset = 0.0 # amount adjusted when cylinder height is changed
         self.rotation = config_values.get("CONFIG_TANDEM_ROTATION") 
+        self.protation = config_values.get("CONFIG_TANDEM_ROTATION") # "plan rotation"
+        # This value is used when the user tries to generate or import a tandem using a (applied) spin box value
+        # that does not equal the rotation value from their DICOM file or the config file.
+        # If there is a channel labeled "tandem" in the DICOM file, this stores the rotation from that channel.
+        # If there is no channel labeled "tandem" in the DICOM file, this stores the config value for rotation.
+        # TODO this could be used to add a "reset tandem to plan" button.
         self.filepath = None
         self.mesh_offset = 0.0 # amount adjusted when user applies "height offset" spin box
         self.is_shape_imported = False
@@ -294,6 +307,7 @@ class TandemModel(QObject):
         self.tandem_angle = config_values.get("CONFIG_TANDEM_TIP_ANGLE")
         self.bend_radius = config_values.get("CONFIG_TANDEM_BEND_RADIUS")
         self.tandem_length = config_values.get("CONFIG_TANDEM_TIP_HEIGHT")
+        self.hasTandemInDICOM = False # this value will be set to True in the event there is a channel labeled tandem
 
         # generated tandem settings
         self.tip_angle = config_values.get("CONFIG_TANDEM_TIP_ANGLE")

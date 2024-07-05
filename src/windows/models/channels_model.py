@@ -47,8 +47,9 @@ class ChannelsModel(QObject):
         log.debug("### Importing RP Data ###")
 
         for i in range(len(data.channels_rois)):
-            channel_number = f"{data.channels_rois[i]}"
+            roi_number = f"{data.channels_rois[i]}"
             channel_id = f"{data.channels_labels[i]}"
+            channel_number = f"{data.channel_numbers[i]}"
             points = data.channel_paths[i]
 
             # to print the list of points without quotes
@@ -56,7 +57,8 @@ class ChannelsModel(QObject):
             log.debug(points_list.replace("'", ""))
 
             needle = NeedleChannel(
-                number=channel_number, 
+                roi_number=roi_number,
+                channel_number=channel_number,
                 label=channel_id,
                 points=points)
             self.channels[needle.label]= needle

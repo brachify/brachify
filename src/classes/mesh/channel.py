@@ -74,8 +74,9 @@ class NeedleChannel:
         
         return self._shape
     
-    def __init__(self, number: str, label: str, points):
-        self.number = number
+    def __init__(self, roi_number: str, channel_number: str, label: str, points):
+        self.roi_number = roi_number
+        self.channel_number = channel_number
         self.label = label
         self.points = points
         self.points_raw = points
