@@ -239,7 +239,7 @@ class Ui_Channels_View(object):
         self.sb_needle_length.setSuffix(QCoreApplication.translate("Channels_View", u" mm", None))
         self.label_2.setText(QCoreApplication.translate("Channels_View", u"Threading Depth", None))
         self.sb_threading_dept.setSuffix(QCoreApplication.translate("Channels_View", u" mm", None))
-        self.label_3.setText(QCoreApplication.translate("Channels_View", u"Threading diameter", None))
+        self.label_3.setText(QCoreApplication.translate("Channels_View", u"Threading Diameter", None))
         self.sb_threading_diameter.setSuffix(QCoreApplication.translate("Channels_View", u" mm", None))
         self.btn_apply_settings.setText(QCoreApplication.translate("Channels_View", u"Apply", None))
         self.label_5.setText(QCoreApplication.translate("Channels_View", u"Channels", None))

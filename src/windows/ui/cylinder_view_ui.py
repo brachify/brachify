@@ -121,9 +121,9 @@ class Ui_Cylinder_View(object):
 
     def retranslateUi(self, Cylinder_View):
         Cylinder_View.setWindowTitle(QCoreApplication.translate("Cylinder_View", u"Form", None))
-        self.label.setText(QCoreApplication.translate("Cylinder_View", u"Cylinder diameter", None))
+        self.label.setText(QCoreApplication.translate("Cylinder_View", u"Cylinder Diameter", None))
         self.spinbox_diameter.setSuffix(QCoreApplication.translate("Cylinder_View", u" mm", None))
-        self.label_2.setText(QCoreApplication.translate("Cylinder_View", u"Cylinder length", None))
+        self.label_2.setText(QCoreApplication.translate("Cylinder_View", u"Cylinder Length", None))
         self.spinbox_length.setSuffix(QCoreApplication.translate("Cylinder_View", u" mm", None))
         self.label_3.setText(QCoreApplication.translate("Cylinder_View", u"Add Base", None))
         self.cb_add_base.setText("")
