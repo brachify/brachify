@@ -303,7 +303,6 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
     if points[-1].Z() < 0:
         #if length == 2 and the last point in points has a Z value < 2 the for loop above will not have run and so there will be no threading added
         if(len(points)==2):
-            config = get_app().values.config_values
             threading_depth = config.get("CONFIG_CHANNELS_THREADING_DEPTH")
             threading_radius = config.get("CONFIG_CHANNELS_THREADING_DIAMETER")/2
             p1 = points[0]
