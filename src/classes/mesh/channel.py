@@ -182,9 +182,9 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
             except:
                 eval(item[1])
         return [max_attempt_value, tempfuse]
-
-    threading_depth = window.navigationmodel.views[2].ui.sb_threading_dept.value()
-    threading_radius = window.navigationmodel.views[2].ui.sb_threading_diameter.value()/2
+    config = get_app().values.config_values
+    threading_depth = config.get("CONFIG_CHANNELS_THREADING_DEPTH")
+    threading_radius = config.get("CONFIG_CHANNELS_THREADING_DIAMETER")/2
     for i in range(1, len(points) - 1):
         p1 = points[i]
         p2 = points[i + 1]
@@ -303,8 +303,9 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
     if points[-1].Z() < 0:
         #if length == 2 and the last point in points has a Z value < 2 the for loop above will not have run and so there will be no threading added
         if(len(points)==2):
-            threading_depth = window.navigationmodel.views[2].ui.sb_threading_dept.value()
-            threading_radius = window.navigationmodel.views[2].ui.sb_threading_diameter.value()/2
+            config = get_app().values.config_values
+            threading_depth = config.get("CONFIG_CHANNELS_THREADING_DEPTH")
+            threading_radius = config.get("CONFIG_CHANNELS_THREADING_DIAMETER")/2
             p1 = points[0]
             p2 = points[1]
             if(threading_depth !=0 and threading_radius !=0):
@@ -360,9 +361,9 @@ def _cone_pipe(p1, p2, radius: float) -> TopoDS_Shape:
 
 
 def down_to_end(p1: gp_Pnt, radius: float) -> TopoDS_Shape:
-    window = get_app().window
-    threading_depth = window.navigationmodel.views[2].ui.sb_threading_dept.value()
-    threading_radius = window.navigationmodel.views[2].ui.sb_threading_diameter.value()/2
+    config = get_app().values.config_values
+    threading_depth = config.get("CONFIG_CHANNELS_THREADING_DEPTH")
+    threading_radius = config.get("CONFIG_CHANNELS_THREADING_DIAMETER")/2
     #if threading_radius or threading_depth = 0 then just generate end of needle as normal, else make channel
     if(threading_depth !=0 and threading_radius !=0):
         p2 = gp_Pnt(p1.X(), p1.Y(), threading_depth)#p2 will be placed at a z-value of threading_depth which will be the end of the channel going down to the base of the cylinder

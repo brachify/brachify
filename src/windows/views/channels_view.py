@@ -47,12 +47,12 @@ class ChannelsView(CustomView):
            app.window.channelsmodel.threading_depth != threading_depth or \
             app.window.channelsmodel.threading_diamenter != threading_diameter):
             log.debug(f"setting channel diameters to: {diameter}")
-            app.values.config_values["CONFIG_CHANNELS_DIAMETER"] = diameter
-            self.channelsmodel.set_diameter(diameter)
             app.window.channelsmodel.threading_depth =  threading_depth
             app.window.channelsmodel.threading_diamenter = threading_diameter
             app.values.config_values["CONFIG_CHANNELS_THREADING_DEPTH"] = app.window.channelsmodel.threading_depth
             app.values.config_values["CONFIG_CHANNELS_THREADING_DIAMETER"] = app.window.channelsmodel.threading_diamenter
+            app.values.config_values["CONFIG_CHANNELS_DIAMETER"] = diameter
+            self.channelsmodel.set_diameter(diameter)
         
     @display_action
     def action_set_selected_shapes(self, *args, **kwargs):
