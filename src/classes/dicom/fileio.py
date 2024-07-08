@@ -406,7 +406,6 @@ def load_nucletron_dicom_data(rp_file: str, rs_file: str) -> DicomData:
     data = DicomData()
     global method_found
     method_found = False # method_found is redefined as false here so if 2 dicom folders are loaded in a row, then this value is reset to False each time
-    # Central Axis data
     # oncentraflag = False
     # if rp_dataset.Manufacturer == "Nucletron":
         # oncentraflag = True
