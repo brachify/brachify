@@ -195,11 +195,7 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
                 rize = p1.Z()-p2.Z()
                 xsol = p1.X()
                 ysol = p1.Y()
-                #idea:
                 #if the x or y value of the 2 points is not matching
-                #(mx)x + bx=z(x)
-                #(my)y + by=z(y)
-                #solve for bx and by using p1 then solve for x and y when z is 0
                 if(p1.X()!=p2.X()):
                     runx = p1.X()-p2.X()
                     mx = rize/runx
@@ -311,11 +307,7 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
                 rize = p1.Z()-p2.Z()
                 xsol = p1.X()
                 ysol = p1.Y()
-                #idea:
                 #if the x or y value of the 2 points is not matching
-                #(mx)x + bx=z(x)
-                #(my)y + by=z(y)
-                #solve for bx and by using p1 then solve for x and y when z is 0
                 if(p1.X()!=p2.X()):
                     runx = p1.X()-p2.X()
                     mx = rize/runx
