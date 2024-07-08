@@ -344,7 +344,7 @@ class MainWindow(QMainWindow):
 
     def no_central_axis_or_cylinder_outline(self):
         dialog = QMessageBox()
-        dialog.setText("Error: Brachify could not find a central axis, please check over your model and ensure there is a central axis.")
+        dialog.setText("Error: Brachify could not find a central axis, please check over your model and ensure there is a channel labeled \"central axis\". for more information see the Brachify User Manual.")
         dialog.setWindowTitle("Central Axis Missing")
         dialog.setIcon(QMessageBox.Icon.Warning)
 
