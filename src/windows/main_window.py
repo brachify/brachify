@@ -344,7 +344,7 @@ class MainWindow(QMainWindow):
 
     def no_central_axis_or_cylinder_outline(self):
         dialog = QMessageBox()
-        dialog.setText("Error: No central axis found. Please ensure your model has a channel labeled \"central axis\".  For more information, see the Brachify User Manual.")
+        dialog.setText("Error: No central axis found. Please ensure your model has a channel labeled \"central axis\".  For more information, see the Brachify User Manual.\n(DICOM model failed to load. Display not updated.)")
         dialog.setWindowTitle("Central Axis Missing")
         dialog.setIcon(QMessageBox.Icon.Warning)
 
