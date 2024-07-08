@@ -7,7 +7,6 @@ from classes.dicom.fileio import read_dicom_folder
 from windows.models.shape_model import ShapeTypes
 from windows.ui.import_view_ui import Ui_Import_View
 from windows.views.custom_view import display_action, CustomView
-from classes.dicom.fileio import method_found
 
 from settings.load import load_config_file
 from settings.reset import resetAllValues
