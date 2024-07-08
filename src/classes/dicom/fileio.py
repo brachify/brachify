@@ -480,6 +480,7 @@ def load_nucletron_dicom_data(rp_file: str, rs_file: str) -> DicomData:
                 load_central_axis_nucletron(data, rp_dataset)
             else:  # use a surface contour for the cylinder
                 load_cylinder_contour(data, rs_dataset)
+                method_found=True
         except Exception as error_message:
             log.error(f"Loading RS Dicom surface struct or no central axis identified! {rs_file}\n{error_message}")
         
