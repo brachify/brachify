@@ -485,8 +485,11 @@ def load_nucletron_dicom_data(rp_file: str, rs_file: str) -> DicomData:
             log.error(f"Loading RS Dicom surface struct or no central axis identified! {rs_file}\n{error_message}")
         
         # channels info
-        if data.channels_rois:
-            load_channels_nucletron(data, rp_dataset, center_index)
+        if(method_found):
+            if data.channels_rois:
+                load_channels_nucletron(data, rp_dataset, center_index)
+        else:
+            get_app().window.no_central_axis_or_cylinder_outline()
     except Exception as error_message:
         log.error(f"Loading RS Dicom file failed! {rs_file}\n{error_message}")
 
