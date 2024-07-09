@@ -2,20 +2,28 @@ from OCC.Core.BRepPrimAPI import BRepPrimAPI_MakeBox
 from OCC.Core.gp import gp_Pnt, gp
 from OCC.Core.TopoDS import TopoDS_Shape
 from OCC.Extend.ShapeFactory import rotate_shape
+from OCC.Core.BRepAlgoAPI import BRepAlgoAPI_Fuse
 
 class CylinderNotch:
     """
-    A small shape at Z=0 to be used to mark the cylinder
+    A small 'L' shape at Z=0 to be used to mark the cylinder
     """
 
     def shape(self) -> TopoDS_Shape:
-        # make the box shape
-        start_x = self.radius - self.length
-        point = gp_Pnt(start_x, 0.0, 0.0)
-        box = BRepPrimAPI_MakeBox(point, self.length, self.width, self.height).Shape()
+        # the horizontal box
+        start_x_1 = self.radius - self.length
+        point1 = gp_Pnt(start_x_1, 0.0, 0.0)
+        box1 = BRepPrimAPI_MakeBox(point1, self.length, self.width, self.height).Shape()
+        # the vertical box (swap height and length)
+        start_x_2 = self.radius - self.height
+        point2 = gp_Pnt(start_x_2, 0, 0)
+        box2 = BRepPrimAPI_MakeBox(point2, self.height, self.width, self.length).Shape()
 
-        # rotate the box along 0, 0, 1
-        return rotate_shape(shape=box, axis=gp.OZ(), angle=self.rotation, unite="deg")
+        # fuse the boxes to make an 'L' shape
+        notch = BRepAlgoAPI_Fuse(box1, box2).Shape()
+
+        # rotate the notch along 0, 0, 1
+        return rotate_shape(shape=notch, axis=gp.OZ(), angle=self.rotation, unite="deg")
     
     def __init__(self, diameter):
         self.width = 1.0
