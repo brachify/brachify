@@ -26,13 +26,13 @@
      <number>0</number>
     </property>
     <property name="topMargin">
-     <number>10</number>
+     <number>0</number>
     </property>
     <property name="rightMargin">
-     <number>10</number>
+     <number>0</number>
     </property>
     <property name="bottomMargin">
-     <number>5</number>
+     <number>0</number>
     </property>
     <property name="spacing">
      <number>0</number>
@@ -49,7 +49,7 @@
        <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>5</number>
+       <number>0</number>
       </property>
       <item>
        <widget class="QWidget" name="display_view_widget" native="true">
@@ -87,6 +87,9 @@
          <property name="bottomMargin">
           <number>0</number>
          </property>
+         <property name="spacing">
+          <number>0</number>
+         </property>
         </layout>
        </widget>
       </item>
@@ -107,7 +110,7 @@
        <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>5</number>
+       <number>0</number>
       </property>
       <item>
        <widget class="QWidget" name="top_menu_bar" native="true">

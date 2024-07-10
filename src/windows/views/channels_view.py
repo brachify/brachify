@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QWidget, QListWidgetItem
+from PySide6.QtWidgets import QWidget, QListWidgetItem, QMessageBox
 
 from classes.app import get_app
 from classes.logger import log
@@ -26,7 +26,7 @@ class ChannelsView(CustomView):
         if type(item) is type(None): return None
         else: label = item.text()
 
-        log.debug(f"selecting {label} channel")
+        log.debug(f"selecting {label} channel")    
         try:
             self.channelsmodel.set_selected_channels(label)
         except Exception as error_message:
@@ -47,12 +47,12 @@ class ChannelsView(CustomView):
            app.window.channelsmodel.threading_depth != threading_depth or \
             app.window.channelsmodel.threading_diamenter != threading_diameter):
             log.debug(f"setting channel diameters to: {diameter}")
-            app.values.config_values["CONFIG_CHANNELS_DIAMETER"] = diameter
-            self.channelsmodel.set_diameter(diameter)
             app.window.channelsmodel.threading_depth =  threading_depth
             app.window.channelsmodel.threading_diamenter = threading_diameter
             app.values.config_values["CONFIG_CHANNELS_THREADING_DEPTH"] = app.window.channelsmodel.threading_depth
             app.values.config_values["CONFIG_CHANNELS_THREADING_DIAMETER"] = app.window.channelsmodel.threading_diamenter
+            app.values.config_values["CONFIG_CHANNELS_DIAMETER"] = diameter
+            self.channelsmodel.set_diameter(diameter)
         
     @display_action
     def action_set_selected_shapes(self, *args, **kwargs):
@@ -61,18 +61,37 @@ class ChannelsView(CustomView):
     @display_action
     def action_set_tandem(self):
         data = get_app().window.dicommodel.data
+        window = get_app().window
+        tan = window.tandemmodel
         log.debug(f"setting channel's tandem status")
 
         model = get_app().window.channelsmodel
         channel_label = model.get_selected_channel()
 
         # set or clear the tandem channel
+        
+        #stores old tandem label in canse user desides they want to 
+        #revert to plan value when prompted
+        temp_label=data.tandem_channel
+
         label = None
-        if channel_label != data.tandem_channel: label = channel_label
-        model.set_tandem(label)
+        if channel_label != data.tandem_channel: 
+            label = channel_label
+            model.set_tandem(label)
+        
+        answer = QMessageBox.Yes
+        if(tan.hasTandemInDICOM):
+            if(not window.navigationmodel.views[3].hasShownRotationWarning):
+                if(round(tan.protation,2) != round(window.tandemmodel.rotation,2)):
+                    window.navigationmodel.views[3].hasShownRotationWarning=True
+                    answer = window.tandem_rotation_warning()
+        #If the user wishes to proceed then do this, if not then do not
+        if(answer == QMessageBox.No):
+            label = None
+            model.set_tandem(temp_label)
+
 
         #updates the spin box value of rotation
-        window = get_app().window
         rotation = window.tandemmodel.rotation
         window.navigationmodel.views[3].ui.tandem_rotation.setValue(rotation)
         window.navigationmodel.views[3].ui.tandem_rotation_2.setValue(rotation)
@@ -84,14 +103,7 @@ class ChannelsView(CustomView):
         channel_label = model.get_selected_channel()   
         model.toggle_channel_enabled(channel_label)
 
-    def action_update_settings(self):
-        log.debug(f"updating channels view")
-        
-        # diameter spin box
-        self.ui.spinbox_diameter.setValue(self.channelsmodel.diameter)
-        # needle channels spin box
-        self.ui.sb_needle_length.setValue(get_app().values.config_values.get("CONFIG_NEEDLE_LENGTH"))
-
+    def create_channels_list(self):
         # channels list
         selected_channel = self.channelsmodel.get_selected_channel()
         self.ui.listwidget_channels.blockSignals(True)  # prevents accidently emitting signals
@@ -104,7 +116,16 @@ class ChannelsView(CustomView):
                selected_channel == channel.label:
                 self.ui.listwidget_channels.setCurrentRow(row)
         self.ui.listwidget_channels.blockSignals(False)
+    
+    def action_update_settings(self):
+        log.debug(f"updating channels view")
+        
+        # diameter spin box
+        self.ui.spinbox_diameter.setValue(self.channelsmodel.diameter)
+        # needle channels spin box
+        self.ui.sb_needle_length.setValue(get_app().values.config_values.get("CONFIG_NEEDLE_LENGTH"))
 
+        selected_channel = self.channelsmodel.get_selected_channel()
         # selected channel
         # enable/disable buttons if any channel is selected
         any_selected = selected_channel != None
@@ -114,7 +135,13 @@ class ChannelsView(CustomView):
         label = self.channelsmodel.get_selected_channel()
         is_disabled = self.channelsmodel.is_channel_disabled(label)
         is_tandem = self.channelsmodel.is_channel_tandem(label)
-
+        lister = self.ui.listwidget_channels
+        for i in range(lister.count()):
+            text = lister.item(i).text()
+            row = i
+            if(text==label):
+                lister.scrollToItem(lister.item(row))
+                lister.item(row).setSelected(True)
         if is_disabled: self.ui.btn_enable.setText("Enable")
         else: self.ui.btn_enable.setText("Disable")
 

@@ -47,8 +47,9 @@ class ChannelsModel(QObject):
         log.debug("### Importing RP Data ###")
 
         for i in range(len(data.channels_rois)):
-            channel_number = f"{data.channels_rois[i]}"
+            roi_number = f"{data.channels_rois[i]}"
             channel_id = f"{data.channels_labels[i]}"
+            channel_number = f"{data.channel_numbers[i]}"
             points = data.channel_paths[i]
 
             # to print the list of points without quotes
@@ -56,7 +57,8 @@ class ChannelsModel(QObject):
             log.debug(points_list.replace("'", ""))
 
             needle = NeedleChannel(
-                number=channel_number, 
+                roi_number=roi_number,
+                channel_number=channel_number,
                 label=channel_id,
                 points=points)
             self.channels[needle.label]= needle
@@ -91,6 +93,19 @@ class ChannelsModel(QObject):
         elif type(args[0] is type(str)):  # label of selected channel
             self.selected_channels = args
             self.update()
+            try:
+                log.debug("start selecting row")
+                lister = get_app().window.navigationmodel.views[2].ui.listwidget_channels
+                lister.blockSignals(True)
+                row = lister.row(lister.currentItem())
+                lister.scrollToItem(lister.item(row))
+                lister.item(row).setSelected(True)
+                lister.setFocus()
+                #lister.setStyleSheet("QListView::item:selected{background-color: rgb(205,232,255);}")
+                log.warning("row selected successfully")
+                lister.blockSignals(False)
+            except Exception as e:
+                log.error(e)
             return None
         
         else:

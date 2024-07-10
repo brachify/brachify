@@ -92,11 +92,25 @@ def load_central_axis_nucletron(data: DicomData, rp_dataset):
 def load_channels_varian(data: DicomData, rs_dataset):
     channel_contours = list(filter(lambda sequence: (sequence.ReferencedROINumber in data.channels_rois),
                                     rs_dataset.ROIContourSequence))
+    # Note: the above list has the points in order of ascending ROI number.
+    # In contrast, the data.channels_rois, data.channel_numbers, and data.channels_labels lists have the 
+    # data stored in order of ascending channel number.
+    # Hence, the channel_contours list does not align with the other 3 data.channels_* lists; it is out of order.
+    # The below for loop fixes this so that all the lists are aligned.
+
+    ordered_channel_contours = []
+    # Align the channels_counters data so the ROIs match the order in data.channels_rois
+    for item in data.channels_rois:
+        roi = int(item)
+        for i, channel in enumerate(channel_contours):
+            if int(channel.ReferencedROINumber) == roi:
+                ordered_channel_contours.append(channel)
+
 
     # channel points are a single array dividable by 3
     # so for each channel, take those three points and put them into a small 3 list
     channel_contour_points = []
-    for channel in channel_contours:
+    for channel in ordered_channel_contours:
         points = [[
             channel.ContourSequence[0].ContourData[i],
             channel.ContourSequence[0].ContourData[i + 1],
@@ -312,6 +326,9 @@ def load_varian_dicom_data(rp_file: str, rs_file: str) -> DicomData:
         data.channel_numbers = [
             number.ChannelNumber for number in  rp_dataset.ApplicationSetupSequence[0].ChannelSequence
         ]
+        # Note: the above 3 lists are all read in, in order of ascending channel number.
+        # The order of the above 3 is all correct and corresponds correctly to each other.
+
         data.patient_name = rp_dataset.PatientName.family_name
         data.patient_id = rp_dataset.PatientID
         data.plan_label = rp_dataset.RTPlanLabel

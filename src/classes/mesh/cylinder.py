@@ -64,9 +64,9 @@ class BrachyCylinder:
         if self.expand_base:
             cylinder = add_base(
                 shape=cylinder, radius1=self.diameter / 2, radius2=12.0)
-            
-        if self.notch:
-            cylinder = add_notch(cylinder, self.notch)
+        
+        self.notch = CylinderNotch(self.diameter)
+        cylinder = add_notch(cylinder, self.notch)
 
         return cylinder
 
@@ -90,7 +90,7 @@ class BrachyCylinder:
         self.diameter = diameter
         self.expand_base = expand_base
         self._shape = None
-        self.notch = CylinderNotch()
+        self.notch = CylinderNotch(diameter)
 
 
 def get_brachy_cylinder(data: DicomData) -> BrachyCylinder:

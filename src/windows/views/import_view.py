@@ -99,6 +99,9 @@ class ImportView(CustomView):
         # set the mesh_offset to 0 and reset the spin box to 0.
         tandemmodel.mesh_offset = 0.0
         window.navigationmodel.views[3].ui.sb_height_offset.setValue(0.0)
+        #sets the fact a tandem is in the plan to False
+        window.navigationmodel.views[3].hasShownRotationWarning = False
+        tandemmodel.hasTandemInDICOM = False
 
         try:
             data = window.dicommodel.data.reset() # resets all the data in the dicom 
@@ -118,6 +121,7 @@ class ImportView(CustomView):
         window.displaymodel.set_transparent(True)
 
         self.action_update_import_label()
+        window.navigationmodel.views[2].create_channels_list()#updates channels list
         #The tandems length should not be larger than the cylinder
         max_tandem_len = app.values.config_values.get('CONFIG_CYLINDER_LENGTH')
         app.window.navigationmodel.views[3].ui.sb_tandem_height.setMaximum(max_tandem_len)
