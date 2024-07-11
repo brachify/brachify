@@ -7,7 +7,8 @@ from classes.mesh.cylinder import BrachyCylinder
 from classes.mesh.channel import NeedleChannel
 import classes.mesh.helper as helper
 from classes.app import get_app
-
+global method_found
+method_found = False
 
 def get_cylinder_from_dicom(data: DicomData) -> BrachyCylinder: 
     diameter = data.cylinder_diameter
@@ -345,7 +346,8 @@ def load_varian_dicom_data(rp_file: str, rs_file: str) -> DicomData:
     except Exception as error_message:
         log.error("did not find Operators Name")
     
-
+    global method_found
+    method_found = False # method_found is redefined as false here so if 2 dicom folders are loaded in a row, then this value is reset to False each time
     # Central Axis data
     try:
         # CHECK IF A CENTRAL AXIS NEEDLE IS LABELED/USED
@@ -359,6 +361,7 @@ def load_varian_dicom_data(rp_file: str, rs_file: str) -> DicomData:
                     break
             if centralaxisrefROINumber: 
                 log.debug(f"Found central axis at ROI {centralaxisrefROINumber}")
+                method_found = True
                 break
     except Exception as error_message:
         log.error(f"Error locating central axis: {error_message}")    
@@ -382,12 +385,16 @@ def load_varian_dicom_data(rp_file: str, rs_file: str) -> DicomData:
                 load_central_axis_varian(data, rs_dataset)
             else:  # use a surface contour for the cylinder
                 load_cylinder_contour(data, rs_dataset)
+                method_found = True
         except Exception as error_message:
             log.error(f"Loading RS Dicom surface struct or no central axis identified! {rs_file}\n{error_message}")
         
-        # channels info
-        if data.channels_rois:
-            load_channels_varian(data, rs_dataset)
+        if(method_found):
+            # channels info
+            if data.channels_rois:
+                load_channels_varian(data, rs_dataset)
+        else:
+            get_app().window.no_central_axis_or_cylinder_outline()
     except Exception as error_message:
         log.error(f"Loading RS Dicom file failed! {rs_file}\n{error_message}")
 
@@ -397,6 +404,8 @@ def load_varian_dicom_data(rp_file: str, rs_file: str) -> DicomData:
 
 def load_nucletron_dicom_data(rp_file: str, rs_file: str) -> DicomData:
     data = DicomData()
+    global method_found
+    method_found = False # method_found is redefined as false here so if 2 dicom folders are loaded in a row, then this value is reset to False each time
     # oncentraflag = False
     # if rp_dataset.Manufacturer == "Nucletron":
         # oncentraflag = True
@@ -444,6 +453,7 @@ def load_nucletron_dicom_data(rp_file: str, rs_file: str) -> DicomData:
                 pass
             if data.central_channel_roi is not None: 
                 log.debug(f"Found central axis at channel {data.central_channel_roi}")
+                method_found=True
                 break
 
 
@@ -470,12 +480,16 @@ def load_nucletron_dicom_data(rp_file: str, rs_file: str) -> DicomData:
                 load_central_axis_nucletron(data, rp_dataset)
             else:  # use a surface contour for the cylinder
                 load_cylinder_contour(data, rs_dataset)
+                method_found=True
         except Exception as error_message:
             log.error(f"Loading RS Dicom surface struct or no central axis identified! {rs_file}\n{error_message}")
         
         # channels info
-        if data.channels_rois:
-            load_channels_nucletron(data, rp_dataset, center_index)
+        if(method_found):
+            if data.channels_rois:
+                load_channels_nucletron(data, rp_dataset, center_index)
+        else:
+            get_app().window.no_central_axis_or_cylinder_outline()
     except Exception as error_message:
         log.error(f"Loading RS Dicom file failed! {rs_file}\n{error_message}")
 

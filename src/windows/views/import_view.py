@@ -117,17 +117,21 @@ class ImportView(CustomView):
         #export tab before importing a file, only for button color)
         self.dicom_file_opened = True
 
-        window.dicommodel.update(data)
-        window.displaymodel.set_transparent(True)
+        #this must be imported here rather than at the top with the other imports or the import will be called prior to method_found being determined and the wrong value will be used
+        from classes.dicom.fileio import method_found
 
-        self.action_update_import_label()
-        window.navigationmodel.views[2].create_channels_list()#updates channels list
-        #The tandems length should not be larger than the cylinder
-        max_tandem_len = app.values.config_values.get('CONFIG_CYLINDER_LENGTH')
-        app.window.navigationmodel.views[3].ui.sb_tandem_height.setMaximum(max_tandem_len)
-        
-        app.signals.viewChanged.emit(4)
-        window.change_color_export()
+        if(method_found):
+            window.dicommodel.update(data)
+            window.displaymodel.set_transparent(True)
+
+            self.action_update_import_label()
+            window.navigationmodel.views[2].create_channels_list()#updates channels list
+            #The tandems length should not be larger than the cylinder
+            max_tandem_len = app.values.config_values.get('CONFIG_CYLINDER_LENGTH')
+            app.window.navigationmodel.views[3].ui.sb_tandem_height.setMaximum(max_tandem_len)
+            
+            app.signals.viewChanged.emit(4)
+            window.change_color_export()
 
     def action_update_import_label(self):
         self.ui.info_area.clear()

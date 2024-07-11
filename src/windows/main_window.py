@@ -341,3 +341,11 @@ class MainWindow(QMainWindow):
             self.navigationmodel.views[3].ui.tandem_rotation.setValue(self.tandemmodel.protation)
             self.navigationmodel.views[3].ui.tandem_rotation_2.setValue(self.tandemmodel.protation)
             return QMessageBox.No
+
+    def no_central_axis_or_cylinder_outline(self):
+        dialog = QMessageBox()
+        dialog.setText("Error: No central axis found. Please ensure your model has a channel labeled \"central axis\".  For more information, see the Brachify User Manual.\n(DICOM model failed to load. Display not updated.)")
+        dialog.setWindowTitle("Central Axis Missing")
+        dialog.setIcon(QMessageBox.Icon.Warning)
+
+        dialog.exec()
