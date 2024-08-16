@@ -531,7 +531,40 @@ def generate_pdf(
     # Adjust width and height as needed
     pdf_output_dir = filepath.parent
     circle_radius = cylinder.diameter / 2
-    last_xy_points = get_last_xy_points(needles_inside) 
+
+    # below is based on get_last_xy_points, but uses logic from how channel needles are 
+    # threaded to make sure that if the needle extrends below the bottom of the cylinder
+    # the refference sheet still has the correct x,y coordinate
+    last_xy_points = []
+    for needle in needles_inside:
+        # Check if the needle list is not empty and has at least 2 coordinates
+        if needle[-1][2]<0: # if this is the case the needle is extended straight downwards
+            xsol = needle[-1][0]
+            ysol = needle[-1][1]
+        else:
+            for i in range(0, len(needle) - 2):
+                p1 = needle[i]
+                p2 = needle[i + 1]
+                if(p1[2]>0 and p2[2]<0): # if we found the end of the needle then
+                    # calculate the position x and y should be between them
+                    rize = p1[2]-p2[2]
+                    xsol = p1[0]
+                    ysol = p1[1]
+                    #if the x or y value of the 2 points is not matching
+                    if(p1[0]!=p2[0]):
+                        runx = p1[0]-p2[0]
+                        mx = rize/runx
+                        bx = p1[2]-mx*p1[0]
+                        xsol = -bx/mx
+                    if(p1[1]!=p2[1]):
+                        runy = p1[1]-p2[1]
+                        my = rize/runy
+                        by = p1[2]-my*p1[1]
+                        ysol = -by/my
+            
+        # Take only the first two coordinates (x and y)
+        last_point = (xsol,ysol)
+        last_xy_points.append(last_point)
     
     png_path = save_points_diagram(last_xy_points, number_list, circle_radius, pdf_output_dir, has_tandem=has_tandem,
                                     tandem_rotation=tandem_rotation, is_tandem_imported=is_tandem_imported)
