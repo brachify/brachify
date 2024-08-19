@@ -98,7 +98,12 @@ def extract_points_from_channels2(channels: list):
 
     channels_down_to_z0 = []
     for channel in channels:
-        channel_pts = channel.points
+        channel_pts = [] # The needle points are always stored with heights relative to the original cylinder height, and this is never changed.
+        for point in channel.points:
+            height_adjusted_point = point.copy()
+            height_adjusted_point[2] += channel._offset # Adjust the height of the point so it is accurate for the current cylinder height.
+            channel_pts.append(height_adjusted_point)
+        
         for i, pt in enumerate(channel_pts):
             if pt[2] == 0: # if this point is exactly at z=0 then it is what we're looking for.
                 channels_down_to_z0.append(channel.copy())
