@@ -25,6 +25,7 @@ import matplotlib.lines as lines
 
 
 def calculate_protrusion_lengths(needles: list, needle_length: float):
+    # This needs to have the needles so that the last point of each needle is at z=0.
     def calculate_cumulative_lengths(needles):
         cumulative_lengths = []
 
@@ -67,19 +68,77 @@ def extract_points_from_channels(channels: list):
         channel_list = channel.get_points()
 
         # Filter out points where the z value is less than 0.
-        filtered_channel_list = [point for point in channel_list if point[2] > 0]
+        # filtered_channel_list = [point for point in channel_list if point[2] > 0]
+        reshape_channel_list = [point for point in channel_list]
         
         # Error Checks: We ignore all points below zero (below the bottom of the cylinder)
         # Find the index of the element just before the first instance in channel_list where the third element of the tuple is less than 0
-        last_pos_index = index_before_negative_point(filtered_channel_list)
+        # last_pos_index = index_before_negative_point(filtered_channel_list)
 
         # Append last point at x,y,0 because channel.get_points() doesn't include the point at the base for some reason.
-        final_point = channel_list[last_pos_index][:]
-        final_point[2] = 0.0
-        channel_list.append(final_point)
-        channels_list.append(channel_list)
+        # final_point = channel_list[last_pos_index][:]
+        # final_point[2] = 0.0
+        # channel_list.append(final_point)
+        channels_list.append(reshape_channel_list)
 
     return channels_list
+
+def extract_points_from_channels2(channels: list):
+    """
+    Retreives the points from NeedleChannels
+    1. if the last point(s) are below 0 on the needle, then it interpolates what the needle value is at the z=0 plane,
+    deletes all the points with z<0, and appends the z=0 point on the end, so that the needle is truncated at z=0.
+    2. if the last point on the needle is above the z=0 plane, then it creates a new point directly below the last point,
+    but this one has z=0 to be on the z=0 plane, and appends that point to the needle so that the needle extends to the plane.
+    3. If the needle stops at exactly z=0, then it does not modify it at all.
+
+    Returns:
+        [ [x, y, z], [x, y, z], ...]
+    """
+
+    channels_down_to_z0 = []
+    for channel in channels:
+        channel_pts = [] # The needle points are always stored with heights relative to the original cylinder height, and this is never changed.
+        for point in channel.points:
+            height_adjusted_point = point.copy()
+            height_adjusted_point[2] += channel._offset # Adjust the height of the point so it is accurate for the current cylinder height.
+            channel_pts.append(height_adjusted_point)
+        
+        for i, pt in enumerate(channel_pts):
+            if pt[2] == 0: # if this point is exactly at z=0 then it is what we're looking for.
+                channels_down_to_z0.append(channel.copy())
+                break # do not modify the channel at all.
+            elif i >= len(channel_pts)-1: 
+                # if we have reached the last point in the needle and the z>0 still, then "drop" a point down to z=0 with the same x,y values
+                temp_channel = channel_pts.copy()
+                temp_channel.append([pt[0], pt[1], 0])
+                channels_down_to_z0.append(temp_channel)
+                break # go to the next needle
+            else: # This means the bottom point is below 0, so find it and interpolate the z value when the needle passes through the z=0 plane
+                next_pt = channel_pts[i+1]
+                if (pt[2]>0 and next_pt[2]<0):
+                    # calculate the position x and y should be between them
+                    rize = pt[2]-next_pt[2]
+                    xsol = pt[0]
+                    ysol = pt[1]
+                    #if the x or y value of the 2 points is not matching
+                    if(pt[0]!=next_pt[0]):
+                        runx = pt[0]-next_pt[0]
+                        mx = rize/runx
+                        bx = pt[2]-mx*pt[0]
+                        xsol = -bx/mx
+                    if(pt[1]!=next_pt[1]):
+                        runy = pt[1]-next_pt[1]
+                        my = rize/runy
+                        by = pt[2]-my*pt[1]
+                        ysol = -by/my
+                    temp_channel = channel_pts[0:i+1].copy() # get all the points that are above 0
+                    temp_channel.append([xsol, ysol, 0])
+                    channels_down_to_z0.append(temp_channel)
+                    break
+    
+    
+    return channels_down_to_z0
 
 
 def get_all_interstitial_lengths(cylinder: BrachyCylinder, needles: list, spacing: float = 0.1) -> list[float]:
@@ -252,6 +311,37 @@ def get_last_xy_points(needles):
 
     return last_xy_points
 
+def get_point_at_z0(needles):
+    z0points = []
+    for needle in needles:
+        for i, pt in needle:
+            if i >= len(needle)-1: 
+                # if we have reached the last point in the needle and the z>0 still, then "drop" a point down to z=0 with the same x,y values
+                z0points.append([pt[0], pt[1], 0])
+                break # go to the next needle
+            elif pt[2] == 0: # if this point is exactly at z=0 then it is what we're looking for.
+                z0points.append([pt[0], pt[1], pt[2]])
+            else: # This means the bottom point is below 0, so find it and interpolate the z value when the needle passes through the z=0 plane
+                next_pt = needle[i+1]
+                if (pt[2]>0 and next_pt[2]<0):
+                    # calculate the position x and y should be between them
+                    rize = pt[2]-next_pt[2]
+                    xsol = pt[0]
+                    ysol = pt[1]
+                    #if the x or y value of the 2 points is not matching
+                    if(pt[0]!=next_pt[0]):
+                        runx = pt[0]-next_pt[0]
+                        mx = rize/runx
+                        bx = pt[2]-mx*pt[0]
+                        xsol = -bx/mx
+                    if(pt[1]!=next_pt[1]):
+                        runy = pt[1]-next_pt[1]
+                        my = rize/runy
+                        by = pt[2]-my*pt[1]
+                        ysol = -by/my
+                    z0points.append([xsol, ysol, 0])
+    return z0points
+
 
 def process_lengths_and_create_data(is_lengths, protrusion_lengths, label_list, number_list):
     needle_data = []
@@ -300,7 +390,7 @@ def save_points_diagram(points: list,
     min_y = 0
     max_x = 0
     max_y = 0
-    for (x, y) in points:
+    for (x, y, z) in points:
         if(x>max_x and x <limit):
             max_x=x
         if(y>max_y and y <limit):
@@ -323,13 +413,13 @@ def save_points_diagram(points: list,
     # if channel diameter >= circle_radius/12 there is ~enough room to write numbers inside of channels
     # There could be some distorting of the image if there needles are outside of the cylinder
     if(channel_diam >= circle_radius/12 and maxx<circle_radius and maxy<circle_radius):
-        for i, (x, y) in enumerate(points):
+        for i, (x, y, z) in enumerate(points):
             #checks to make sure that needles are within 5 cm of center
             if(((np.sqrt(x**2+y**2))/2)<limit):
                 ax.add_artist(plt.Circle((x, -y), channel_diam/2, color='black', fill=False, clip_on=False))
                 ax.text(x, -y, str(number_list[i]), color='black', ha='center', va='center')
     else:
-        for i, (x, y) in enumerate(points):
+        for i, (x, y, z) in enumerate(points):
             #checks to make sure that needles are within 5 cm of center
             if((np.sqrt(x**2+y**2)/2)<limit):
                 ax.add_artist(plt.Circle((x, -y), channel_diam/2, color='black', fill=False, clip_on=False))
@@ -407,12 +497,12 @@ def channels_inside_cylinder(channels: list[NeedleChannel], diameter: float):
     Returns the channels which go through the bottom of the cylinder.
     """
     radius = diameter / 2
-    needles = extract_points_from_channels(channels)
-    last_xy_points = get_last_xy_points(needles)
+    needles = extract_points_from_channels2(channels)
+    z0points = [needle[-1] for needle in needles]
     channels_inside = []
     # if the last point of the channel is within the cylinder radius,
     # then keep that channel.
-    for idx, point in enumerate(last_xy_points):
+    for idx, point in enumerate(z0points):
         if np.sqrt(point[0]**2 + point[1]**2) <= radius:
             channels_inside.append(channels[idx])
 
@@ -478,7 +568,7 @@ def generate_pdf(
     # use only the channels that are inside the cylinder
     diameter = cylinder.diameter
     channels_inside = channels_inside_cylinder(channels, diameter)
-    needles_inside = extract_points_from_channels(channels_inside)
+    needles_inside = extract_points_from_channels2(channels_inside)
 
     interstitial_lengths = get_all_interstitial_lengths(
         cylinder=cylinder,
@@ -531,7 +621,9 @@ def generate_pdf(
     # Adjust width and height as needed
     pdf_output_dir = filepath.parent
     circle_radius = cylinder.diameter / 2
-    last_xy_points = get_last_xy_points(needles_inside) 
+
+
+    last_xy_points = [needle[-1] for needle in needles_inside]
     
     png_path = save_points_diagram(last_xy_points, number_list, circle_radius, pdf_output_dir, has_tandem=has_tandem,
                                     tandem_rotation=tandem_rotation, is_tandem_imported=is_tandem_imported)
