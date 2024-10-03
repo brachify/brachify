@@ -105,7 +105,9 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
     # Truncate without rounding
     channel_points = np.floor(channel_points * 10**decimals) / 10**decimals
 
-    channel_points = remove_collinear_points(channel_points)
+    channel_points = remove_identical_points(channel_points)
+
+    channel_points = remove_collinear_points(channel_points) 
     
     points = [gp_Pnt(point[0], point[1], point[2]) for point in channel_points]
 
@@ -126,8 +128,8 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
 
     def fix1(): #returns -1 if error, 0 if warning, 1 if success
         # tries increasing the radius by an infinitesimal amount (0.001), then fusing.
-        cylinder = pipe_segment(p1, p2, radius+0.001)
         try:
+            cylinder = pipe_segment(p1, p2, radius+0.001)
             tempfuse = BRepAlgoAPI_Fuse(pipe, cylinder)
             if tempfuse.HasWarnings():
                 return [0,tempfuse]
@@ -182,6 +184,7 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
             except:
                 eval(item[1])
         return [max_attempt_value, tempfuse]
+    
     config = get_app().values.config_values
     threading_depth = config.get("CONFIG_CHANNELS_THREADING_DEPTH")
     threading_radius = config.get("CONFIG_CHANNELS_THREADING_DIAMETER")/2
@@ -382,6 +385,15 @@ def pipe_segment(p1: gp_Pnt, p2: gp_Pnt, radius: float) -> TopoDS_Shape:
     length = helper.get_magnitude(p1,p2)
     cylinder = BRepPrimAPI_MakeCylinder(gp_Ax2(p1, direction), radius, length).Shape()
     return cylinder
+
+def remove_identical_points(points):
+    """Removes identical points from the list."""
+    unique_points = []
+    for point in points:
+        if not unique_points or not np.allclose(point, unique_points[-1]):
+            unique_points.append(point)
+    return unique_points
+
 
 def remove_collinear_points(points):
     def is_collinear(p1, p2, p3):
