@@ -19,10 +19,12 @@ def main():
     from classes.app import RadiotherapyApp
 
     argv = [sys.argv[0]]
+    print("len of sys.argv = ", len(sys.argv))
 
-    if len(sys.argv) > 1:
+    filepath_to_open_to = None
+    if len(sys.argv) > 1: # This indicates brachify was launched from brachify-optimization
         print("Wow!!")
-
+        filepath_to_open_to = str(sys.argv[1])
 
     try:
         app = RadiotherapyApp(argv)
@@ -45,6 +47,8 @@ def main():
         except:
             pass
 
+        if filepath_to_open_to is not None: # if we want to open to a filepath immediately
+            app.window.navigationmodel.views[0].action_import_dicom_folder(filepath_to_open_to)
         sys.exit(app.exec())
 
 
