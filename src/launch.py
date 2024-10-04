@@ -23,7 +23,6 @@ def main():
 
     filepath_to_open_to = None
     if len(sys.argv) > 1: # This indicates brachify was launched from brachify-optimization
-        print("Wow!!")
         filepath_to_open_to = str(sys.argv[1])
 
     try:

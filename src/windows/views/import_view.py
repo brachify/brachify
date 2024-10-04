@@ -77,7 +77,7 @@ class ImportView(CustomView):
                 self, "Open patient folder").toLocalFile()
         else: # if a folder is specified to open to
             foldername = QFileDialog.getExistingDirectory(
-                self, "Open patient folder2222",
+                self, "Open patient folder",
                 dir=folder)
 
         self.folder_name = foldername
