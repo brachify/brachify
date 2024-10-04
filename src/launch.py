@@ -20,6 +20,10 @@ def main():
 
     argv = [sys.argv[0]]
 
+    if len(sys.argv) > 1:
+        print("Wow!!")
+
+
     try:
         app = RadiotherapyApp(argv)
     except Exception:
