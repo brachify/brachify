@@ -113,7 +113,11 @@ class ImportView(CustomView):
             window.displaymodel.reset() # resets all the data in the display
         except:
             log.error("Error: Unable to reset screen properly")
-        data = read_dicom_folder(foldername)
+        try:
+            data = read_dicom_folder(foldername)
+        except:
+            log.error("Empty folder selected.")
+            return
 
         # Add patient and plan info to window
         

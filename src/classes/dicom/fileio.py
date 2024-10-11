@@ -511,7 +511,7 @@ def read_dicom_folder(folder_path: str):
                 break
 
         if not rp_file:  # if none of the files within the folder are a rp file
-            log.info(f"No rs files where found at {folder_path}")
+            log.info(f"No rp file was found at {folder_path}")
 
         # looking for the structure file
         rs_file = None
