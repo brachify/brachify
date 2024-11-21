@@ -378,7 +378,7 @@ class Tandem():
                     "CONFIG_CYLINDER_DIAMETER": 30.0,
                     "CONFIG_CYLINDER_LENGTH": 160.0,
                     "CONFIG_CHANNELS_DIAMETER": 3.0,
-                    "CONFIG_NEEDLE_LENGTH": 200.0,
+                    "CONFIG_NEEDLE_LENGTH": 294.0,
                     "CONFIG_TANDEM_TIP_HEIGHT": 140.0,
                     "CONFIG_TANDEM_CHANNEL_DIAMETER": 2.0,
                     "CONFIG_TANDEM_STOPPER_DIAMETER": 10.0,

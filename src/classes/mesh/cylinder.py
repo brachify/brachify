@@ -126,4 +126,5 @@ def add_base(shape: TopoDS_Solid, radius1: float, radius2: float):
 def add_notch(shape: TopoDS_Shape, notch: CylinderNotch):
     if not notch: return shape
 
-    return BRepAlgoAPI_Cut(shape, notch.shape()).Shape()
+    # return BRepAlgoAPI_Cut(shape, notch.shape()).Shape()
+    return BRepAlgoAPI_Fuse(shape, notch.shape()).Shape()
