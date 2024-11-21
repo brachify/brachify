@@ -71,10 +71,15 @@ class ImportView(CustomView):
         log.info("Successfully reset all the values and views.")
 
 
-    def action_import_dicom_folder(self):
-        foldername = QFileDialog.getExistingDirectoryUrl(
-            self, "Open patient folder").toLocalFile()
-        
+    def action_import_dicom_folder(self, folder=None):
+        if folder==None:
+            foldername = QFileDialog.getExistingDirectoryUrl(
+                self, "Open patient folder").toLocalFile()
+        else: # if a folder is specified to open to
+            foldername = QFileDialog.getExistingDirectory(
+                self, "Open patient folder",
+                dir=folder)
+
         self.folder_name = foldername
 
         if not foldername:  # no folder selected?
@@ -108,7 +113,11 @@ class ImportView(CustomView):
             window.displaymodel.reset() # resets all the data in the display
         except:
             log.error("Error: Unable to reset screen properly")
-        data = read_dicom_folder(foldername)
+        try:
+            data = read_dicom_folder(foldername)
+        except:
+            log.error("Empty folder selected.")
+            return
 
         # Add patient and plan info to window
         
