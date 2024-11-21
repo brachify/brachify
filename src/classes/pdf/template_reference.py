@@ -577,18 +577,18 @@ def generate_pdf(
     protrusion_lengths = calculate_protrusion_lengths(needles_inside, needle_length)
     # TODO: Add needle label and channel number instead of "Needle 1" etc.
     #length_label = "Protruding Length for " + str(needle_length) + "mm needle"
-    data = [["Name","Channel Number", "Extension\n(Interstitial Length)", "Protrusion from Base", "Protrusion\n(measured)"]]
+    data = [["Name","Channel Number", "Extension\n(Interstitial Length)"]]
 
     label_list = [channel.label for channel in channels_inside]
     number_list = [channel.channel_number for channel in channels_inside]
     for label, channel_number, interstitial_length, protruding_length, blank \
     in process_lengths_and_create_data(interstitial_lengths, protrusion_lengths, label_list, number_list):
-        data.append([label, channel_number, interstitial_length, protruding_length, blank])
+        data.append([label, channel_number, interstitial_length])
 
     if has_tandem:
         tandem_label = app.window.dicommodel.data.tandem_channel
         tandem_channel_number = app.window.channelsmodel.get_tandem_channel().channel_number
-        data.append([tandem_label, tandem_channel_number, "N/A", "N/A", ""])
+        data.append([tandem_label, tandem_channel_number, "N/A"])
 
     table = Table(data)
     table_style = TableStyle([
