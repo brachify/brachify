@@ -17,7 +17,7 @@ class CylinderNotch:
         # the box box on the cylinder edge (swap height and length)
         # start_x_2 = self.radius - self.height
         start_x_2 = self.radius
-        point2 = gp_Pnt(start_x_2, 0, -self.height)
+        point2 = gp_Pnt(start_x_2, 0, 0)
         notch = BRepPrimAPI_MakeBox(point2, self.height, self.width, self.length+self.height).Shape()
 
         # fuse the boxes to make an 'L' shape
