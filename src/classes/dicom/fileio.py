@@ -313,6 +313,19 @@ def explore_rp_rs(rp_dataset, rs_dataset):
     return
 
 
+# def get_dead_spaces(rp, rs, data): # This will and does not work. Varian does not store the dead spaces. If you export and re-import there will be no dead space.
+#     RelativePositions = []
+#     DwellAbsPositions = []
+
+#     for ChannelSequence in rp.ApplicationSetupSequence[0].ChannelSequence:
+#         if int(ChannelSequence.ReferencedROINumber in data.channels_rois):
+#             RelativePositions.append(ChannelSequence.BrachyControlPointSequence[0].ControlPointRelativePosition)
+#             DwellAbsPositions.append(ChannelSequence.BrachyControlPointSequence[0].ControlPoint3DPosition)
+    
+#     contours_first_points = [contour[0] for contour in data.channel_contours]
+#     disp = np.array(DwellAbsPositions) - np.array(contours_first_points)
+#     # data.dead_spaces = np.sqrt(np.einsum('ij,ij->i', disp, disp)) #this is not the dead space actually, this is just the dist from tip to center dwell. The dead space should be added to this. 
+
 def load_varian_dicom_data(rp_file: str, rs_file: str) -> DicomData:
     data = DicomData()
 
@@ -397,6 +410,13 @@ def load_varian_dicom_data(rp_file: str, rs_file: str) -> DicomData:
             get_app().window.no_central_axis_or_cylinder_outline()
     except Exception as error_message:
         log.error(f"Loading RS Dicom file failed! {rs_file}\n{error_message}")
+
+    # # Get Default Needle Offset Value
+    # try:
+    #     get_dead_spaces(rp_dataset, rs_dataset, data)
+    # except:
+    #     pass
+
 
     log.debug(f"{data.toString()}")
     return data
