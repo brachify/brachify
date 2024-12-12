@@ -29,7 +29,7 @@ class CylinderNotch:
     def __init__(self, diameter):
         self.width = 1.0
         self.length = 10
-        self.height = 0.5
+        self.height = 1
 
         self.rotation = 270.0
         self.radius = diameter / 2

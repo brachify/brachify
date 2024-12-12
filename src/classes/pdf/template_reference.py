@@ -373,7 +373,7 @@ def save_points_diagram(points: list,
     tandem_diam = config.get("CONFIG_TANDEM_CHANNEL_DIAMETER")
 
     # Create a figure and axis
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(6, 6))
 
     # Plot the circle
     circle = plt.Circle((0, 0), circle_radius, color='black', fill=False, clip_on=False)
@@ -386,6 +386,7 @@ def save_points_diagram(points: list,
     #area
     #limit refers to the 5cm distance around the perimater of the cylinder where needles are allowed
     limit = 50+circle_radius
+    plots_limit = circle_radius+2
     min_x = 0
     min_y = 0
     max_x = 0
@@ -404,8 +405,8 @@ def save_points_diagram(points: list,
     maxy = max(abs(max_y), abs(min_y))
 
     # Set axis limits to fit points inside a square with a border
-    ax.set_xlim(min(min_x, -circle_radius), max(max_x, circle_radius))
-    ax.set_ylim(min(min_y, -circle_radius), max(max_y, circle_radius))
+    ax.set_xlim(min(min_x, -plots_limit), max(max_x, plots_limit))
+    ax.set_ylim(min(min_y, -plots_limit), max(max_y, plots_limit))
     #makes frame invisible
     ax.set_frame_on(False)
 
@@ -458,11 +459,11 @@ def save_points_diagram(points: list,
     # Add a filled grey rectangle at the top center of the big circle
     notch = app.window.cylindermodel.cylinder.notch
     tick_width = notch.width
-    tick_height = notch.length
-    tick_color = 'grey'
+    tick_height = notch.height
+    tick_color = 'black'
     # add the notch
-    rect = plt.Rectangle((-tick_width / 2, circle_radius - tick_height), # location of bottom left corner
-                          tick_width, tick_height, color=tick_color, fill=True, alpha=0.5)
+    rect = plt.Rectangle((-tick_width / 2, circle_radius-0.05), # location of bottom left corner
+                          tick_width, tick_height, color=tick_color, fill=False)
     ax.add_artist(rect)
 
     # Remove axis markers and numbering
@@ -474,11 +475,20 @@ def save_points_diagram(points: list,
     # add the words "Anterior" and "Posterior".
     # Anterior is the -y-axis, Posterior is the +y-axis.
     # Position the words so that they are just outside the circle.
-    ax.text(0, +circle_radius+(circle_radius/10), "Anterior", color='black', ha='center', va='center')
-    ax.text(0, -circle_radius-(circle_radius/10), "Posterior", color='black', ha='center', va='center')
+    ax.text(0, +circle_radius + (circle_radius / 10), 
+        "Anterior", color='black', ha='center', va='center', 
+        fontsize=14, weight='bold')  # Adjust fontsize and weight
+
+    ax.text(0, -circle_radius - (circle_radius / 10), 
+            "Posterior", color='black', ha='center', va='center', 
+            fontsize=14, weight='bold')  # Adjust fontsize and weight
+  
 
     # Set axis aspect ratio to be equal
     ax.set_aspect('equal', adjustable='box')
+    # Automatically adjust margins to fit the text
+    fig.tight_layout(pad=1.0)  # pad: Padding around the elements in figure units
+
 
     # Set the Basemap Filepath
     png_path = output_filepath.joinpath('basemap.png')
@@ -586,8 +596,8 @@ def generate_pdf(
         data.append([label, channel_number, interstitial_length])
 
     if has_tandem:
-        tandem_label = app.window.dicommodel.data.tandem_channel
-        tandem_channel_number = app.window.channelsmodel.get_tandem_channel().channel_number
+        tandem_label = app.window.dicommodel.data.tandem_channel #there isn't anything here if tandem is manually added without a tandem channel imported?
+        tandem_channel_number = app.window.channelsmodel.get_tandem_channel().channel_number #there isn't anything here if tandem is manually added without a tandem channel imported?
         data.append([tandem_label, tandem_channel_number, "N/A"])
 
     table = Table(data)
