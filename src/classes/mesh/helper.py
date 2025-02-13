@@ -86,6 +86,10 @@ def get_vector(p1: gp_Pnt, p2: gp_Pnt, length: float = 1.0) -> gp_Vec:
         p2.X() - p1.X(),
         p2.Y() - p1.Y(),
         p2.Z() - p1.Z())
+    try:
+        vn = vector.Normalized()
+    except:
+        print("Error: vector is zero")
     return vector.Normalized() * length
 
 
