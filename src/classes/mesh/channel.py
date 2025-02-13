@@ -369,7 +369,7 @@ def down_to_end(p1: gp_Pnt, radius: float) -> TopoDS_Shape:
             cylinder = BRepAlgoAPI_Fuse(cylinder1, cylinder2).Shape()
             return cylinder# adds cylinder an sphere together
         else:
-            direction = helper.get_direction(p1, gp_Pnt(p1.X(), p1.Y(),0)) #gives normalised (p1.X(), p1.Y(),0)-p1 vector
+            direction = helper.get_direction(p1, gp_Pnt(p1.X(), p1.Y(),-0.0001)) #gives normalised (p1.X(), p1.Y(),0)-p1 vector
             cylinder2 = BRepPrimAPI_MakeCylinder(gp_Ax2(p2, direction), threading_radius, threading_depth+1).Shape()#extends the threading 1 past the end of the cylinder so to help with merging
             return cylinder2
     else:
