@@ -22,7 +22,7 @@ def get_cylinder_from_dicom(data: DicomData) -> BrachyCylinder:
 def is_rp_file(filepath: str) -> bool:
     """Checks if a file is a RTPLAN DICOM file and if it contains the data for needle channels"""
     try:
-        dataset = pydicom.read_file(filepath)
+        dataset = pydicom.dcmread(filepath)
 
         if dataset.Modality != 'RTPLAN': return False
 
@@ -40,7 +40,7 @@ def is_rp_file(filepath: str) -> bool:
 def is_rs_file(filepath: str) -> bool:
     """Checks if a file is a RTSTRUCT DICOM file and if it contains the data to make a cylinder"""
     try:
-        dataset = pydicom.read_file(filepath)
+        dataset = pydicom.dcmread(filepath)
 
         if dataset.Modality != 'RTSTRUCT': return False
 
@@ -332,7 +332,7 @@ def load_varian_dicom_data(rp_file: str, rs_file: str) -> DicomData:
     # Channel ROI Numbers
     try:
         # we use the Planning file to get the channel ROI numbers
-        rp_dataset = pydicom.read_file(rp_file)
+        rp_dataset = pydicom.dcmread(rp_file)
         data.channels_rois = [
             roi.ReferencedROINumber for roi in rp_dataset.ApplicationSetupSequence[0].ChannelSequence]
         data.channels_labels = [
@@ -390,7 +390,7 @@ def load_varian_dicom_data(rp_file: str, rs_file: str) -> DicomData:
     try:
         # We use the RS file to get the Applicator's ROI and contour data
         # We also use it to get the channel ROI data if we have their ROIS
-        rs_dataset = pydicom.read_file(rs_file)
+        rs_dataset = pydicom.dcmread(rs_file)
 
         # cylinder from contour
         try:
@@ -432,7 +432,7 @@ def load_nucletron_dicom_data(rp_file: str, rs_file: str) -> DicomData:
     # Channel ROI Numbers
     try:
         # we use the Planning file to get the channel ROI numbers
-        rp_dataset = pydicom.read_file(rp_file)
+        rp_dataset = pydicom.dcmread(rp_file)
         data.channels_rois = [int(channel_label.ROINumber) for channel_label in rp_dataset[0x300f,0x1000][0].StructureSetROISequence] 
         data.channels_labels = [
             roi.SourceApplicatorID for roi in rp_dataset.ApplicationSetupSequence[0].ChannelSequence] #not needed?
@@ -491,7 +491,7 @@ def load_nucletron_dicom_data(rp_file: str, rs_file: str) -> DicomData:
     try:
         # We use the RS file to get the Applicator's ROI and contour data
         # We also use it to get the channel ROI data if we have their ROIS
-        rs_dataset = pydicom.read_file(rs_file) #not using, since elekta stores their channels in the rp file. or do they?
+        rs_dataset = pydicom.dcmread(rs_file) #not using, since elekta stores their channels in the rp file. or do they?
         # explore_rp_rs(rp_dataset, rs_dataset)
 
         # cylinder from contour
@@ -548,7 +548,7 @@ def read_dicom_folder(folder_path: str):
         log.debug(f"Structure file is: {rs_file}")
 
         # Determine the TPS
-        rp_dataset = pydicom.read_file(rp_file)
+        rp_dataset = pydicom.dcmread(rp_file)
         manufacturer = rp_dataset.Manufacturer
         if manufacturer == "Varian Medical Systems":
             data = load_varian_dicom_data(rp_file, rs_file)
