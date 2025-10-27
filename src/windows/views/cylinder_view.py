@@ -8,6 +8,7 @@ from windows.ui.cylinder_view_ui import Ui_Cylinder_View
 from windows.views.custom_view import display_action, CustomView
 
 from settings.reset import getCurrentValues
+from OCC.Core.gp import gp_Dir, gp_Ax2, gp_Pnt
 
 materials = {
     ShapeTypes.CYLINDER: {"rgb": [0.2, 0.55, 0.55], "transparent": True},
@@ -34,17 +35,17 @@ class CylinderView(CustomView):
         # update the config_values dict
         app.values.config_values["CONFIG_CYLINDER_DIAMETER"] = diameter
         app.values.config_values["CONFIG_CYLINDER_LENGTH"] = length
+        self.diameter = diameter
+        self.length = length 
+        cylinder = BrachyCylinder(diameter=diameter)
+       
+        # send the new offset signal
+        # The offset is the amount the cylinder has changed compared to the starting_length.
+        # The needle points and tandem are adjusted from their original location 
+        # (which is determined when they are originally loaded) and the needle points are never modified.
+        offset = length - model.starting_length 
+        app.signals.height_changed.emit(offset)
 
-        if cylinder.length != length:
-            cylinder.length = length
-            # send the new offset signal
-            # The offset is the amount the cylinder has changed compared to the starting_length.
-            # The needle points and tandem are adjusted from their original location 
-            # (which is determined when they are originally loaded) and the needle points are never modified.
-            offset = length - model.starting_length 
-            app.signals.height_changed.emit(offset)
-
-        cylinder.diameter = diameter
         cylinder.enableBase(add_base)  # this will force the cylinder's shape to be recalculated
 
         model.update_cylinder(cylinder)
