@@ -92,6 +92,10 @@ def resetAllValues(values_dict: dict):
             # apply the config settings
             app.window.navigationmodel.views[3].action_set_tandem()
     
+    # Notch View Values
+    notch_length = values_dict.get("CONFIG_NOTCH_LENGTH")
+    notch_height = values_dict.get("CONFIG_NOTCH_HEIGHT")
+
 def getCurrentValues():
     """ 
     Collects all the currently set values and returns them as a dict.
@@ -101,6 +105,8 @@ def getCurrentValues():
     # 1. cylinder data
     default_cylinder_diameter = app.window.cylindermodel.cylinder.diameter
     default_length = app.window.cylindermodel.cylinder.length
+    default_notch_length = app.window.cylindermodel.cylinder.notch.length
+    default_notch_height = app.window.cylindermodel.cylinder.notch.height
     # 2. channels data
     default_diameter = app.window.channelsmodel.diameter
     threading_depth = app.window.channelsmodel.threading_depth
@@ -134,7 +140,10 @@ def getCurrentValues():
         "CONFIG_CHANNELS_THREADING_DIAMETER": threading_diamenter,
         "CONFIG_TANDEM_ROTATION": tandem_rotation,
         "CONFIG_TANDEM_THREADING_DEPTH": tandem_threading_depth,
-        "CONFIG_TANDEM_THREADING_DIAMETER": tandem_threading_diameter
+        "CONFIG_TANDEM_THREADING_DIAMETER": tandem_threading_diameter,
+        "CONFIG_TANDEM_THREADING_DIAMETER": tandem_threading_diameter,
+        "CONFIG_NOTCH_LENGTH": default_notch_length,
+        "CONFIG_NOTCH_HEIGHT": default_notch_height
     }
 
     return current_values
