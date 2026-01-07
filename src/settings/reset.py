@@ -119,6 +119,11 @@ def getCurrentValues():
     # 4. needle data - pulls the current value in the spin box
     default_needle_length = app.window.navigationmodel.views[2].ui.sb_needle_length.value() 
 
+    # 5. collet data - pulls the current values in the spin boxes (Does not exist yet)
+    needle_collet_outer_diameter = 5.0 # Placeholder default value
+    collet_outer_diameter_inner = 5.0 # Placeholder default value
+    collet_outer_diameter_outer = 8.0 # Placeholder default value
+
     # Create a dictionary containing the data.
     current_values = {
         "CONFIG_CYLINDER_DIAMETER": default_cylinder_diameter,
@@ -134,7 +139,10 @@ def getCurrentValues():
         "CONFIG_CHANNELS_THREADING_DIAMETER": threading_diamenter,
         "CONFIG_TANDEM_ROTATION": tandem_rotation,
         "CONFIG_TANDEM_THREADING_DEPTH": tandem_threading_depth,
-        "CONFIG_TANDEM_THREADING_DIAMETER": tandem_threading_diameter
+        "CONFIG_TANDEM_THREADING_DIAMETER": tandem_threading_diameter,
+        "CONFIG_NEEDLE_COLLET_OUTER_DIAMETER": needle_collet_outer_diameter,
+        "CONFIG_TANDEM_COLLET_OUTER_DIAMETER_INNER": collet_outer_diameter_inner,
+        "CONFIG_TANDEM_COLLET_OUTER_DIAMETER_OUTER": collet_outer_diameter_outer
     }
 
     return current_values
