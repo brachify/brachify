@@ -150,6 +150,22 @@ QPushButton:pressed {
     </widget>
    </item>
    <item>
+    <widget class="QCheckBox" name="cb_collet_preview_reference_sheet">
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(230, 238, 246);</string>
+     </property>
+     <property name="text">
+      <string>Include collet preview </string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QPushButton" name="btn_export_shapes">
      <property name="minimumSize">
       <size>

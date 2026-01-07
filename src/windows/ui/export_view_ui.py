@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'export_view.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.7.0
+## Created by: Qt User Interface Compiler version 6.5.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -24,7 +24,7 @@ class Ui_Export_View(object):
         if not Export_View.objectName():
             Export_View.setObjectName(u"Export_View")
         Export_View.resize(290, 290)
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Minimum)
+        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(Export_View.sizePolicy().hasHeightForWidth())
@@ -53,7 +53,7 @@ class Ui_Export_View(object):
 
         self.verticalLayout.addLayout(self.formLayout)
 
-        self.verticalSpacer_2 = QSpacerItem(20, 10, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
+        self.verticalSpacer_2 = QSpacerItem(20, 10, QSizePolicy.Minimum, QSizePolicy.Fixed)
 
         self.verticalLayout.addItem(self.verticalSpacer_2)
 
@@ -97,6 +97,14 @@ class Ui_Export_View(object):
 
         self.verticalLayout.addWidget(self.btn_export_template_reference)
 
+        self.cb_collet_preview_reference_sheet = QCheckBox(Export_View)
+        self.cb_collet_preview_reference_sheet.setObjectName(u"cb_collet_preview_reference_sheet")
+        self.cb_collet_preview_reference_sheet.setAutoFillBackground(False)
+        self.cb_collet_preview_reference_sheet.setStyleSheet(u"background-color: rgb(230, 238, 246);")
+        self.cb_collet_preview_reference_sheet.setChecked(True)
+
+        self.verticalLayout.addWidget(self.cb_collet_preview_reference_sheet)
+
         self.btn_export_shapes = QPushButton(Export_View)
         self.btn_export_shapes.setObjectName(u"btn_export_shapes")
         self.btn_export_shapes.setMinimumSize(QSize(240, 33))
@@ -137,7 +145,7 @@ class Ui_Export_View(object):
 
         self.verticalLayout.addWidget(self.btn_export_current_config)
 
-        self.verticalSpacer = QSpacerItem(267, 4338, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        self.verticalSpacer = QSpacerItem(267, 4338, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
         self.verticalLayout.addItem(self.verticalSpacer)
 
@@ -154,6 +162,7 @@ class Ui_Export_View(object):
         self.cb_tandem_shown.setText("")
         self.btn_export_mesh.setText(QCoreApplication.translate("Export_View", u"Export Mesh", None))
         self.btn_export_template_reference.setText(QCoreApplication.translate("Export_View", u"Export Reference Sheet", None))
+        self.cb_collet_preview_reference_sheet.setText(QCoreApplication.translate("Export_View", u"Include collet preview ", None))
         self.btn_export_shapes.setText(QCoreApplication.translate("Export_View", u"Export Shape(s)", None))
         self.btn_export_current_config.setText(QCoreApplication.translate("Export_View", u"Export Current Settings as Config", None))
     # retranslateUi
