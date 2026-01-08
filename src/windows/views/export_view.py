@@ -109,6 +109,9 @@ class Export_View(CustomView):
         tandem_rotation = window.tandemmodel.rotation
         is_tandem_imported = window.tandemmodel.is_shape_imported
 
+        # colett preview (to show dotted line in Reference Sheet)
+        Include_colett_preview = self.ui.cb_collet_preview_reference_sheet.isChecked()
+
         try:
             template_reference.generate_pdf(
                 dicom=window.dicommodel.data,
@@ -118,7 +121,8 @@ class Export_View(CustomView):
                 needle_length=needle_length, 
                 has_tandem = tandembool,
                 tandem_rotation=tandem_rotation, 
-                is_tandem_imported=is_tandem_imported)
+                is_tandem_imported=is_tandem_imported,
+                include_collet_preview=Include_colett_preview)
         except:
             log.error("PDF did not save")
             get_app().window.pdf_save_error()

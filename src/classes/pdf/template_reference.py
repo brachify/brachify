@@ -365,7 +365,8 @@ def save_points_diagram(points: list,
                         output_filepath: Path, 
                         has_tandem: bool=False, 
                         tandem_rotation: float=0.0,
-                        is_tandem_imported: bool=False):
+                        is_tandem_imported: bool=False,
+                        include_collet_preview: bool=False):
     app = get_app()
     config = app.values.config_values
     channel_diam = config.get("CONFIG_CHANNELS_DIAMETER")
@@ -455,6 +456,69 @@ def save_points_diagram(points: list,
             y_values = [0, end_pt_y]
             # Line goes from (0,0) to (end_pt_x, end_pt_y)
             ax.add_artist(lines.Line2D(x_values, y_values,color='grey', linestyle='--'))
+    # Include collet preview rings if selected
+    if include_collet_preview:
+        config = get_app().values.config_values
+
+        needle_od = config.get("CONFIG_NEEDLE_COLLET_OUTER_DIAMETER")
+        tandem_od_inner = config.get("CONFIG_TANDEM_COLLET_OUTER_DIAMETER_INNER")
+        tandem_od_outer = config.get("CONFIG_TANDEM_COLLET_OUTER_DIAMETER_OUTER")
+
+        centers = []
+        radii = []
+
+        # Needle collet ring around each needle channel circle
+        if needle_od:
+            r_needle = float(needle_od) / 2.0
+            for (x, y, z) in points:
+                # match your same filter used when drawing channels
+                if (np.sqrt(x**2 + y**2) / 2) < limit:
+                    centers.append((float(x), -float(y)))   # MUST match your plotting: (x, -y)
+                    radii.append(r_needle)
+
+        # Tandem rings: BOTH inner + outer (same center as tandem channel: origin)
+        if has_tandem:
+            if tandem_od_outer:
+                centers.append((0.0, 0.0))
+                radii.append(float(tandem_od_outer) / 2.0)
+            if tandem_od_inner:
+                centers.append((0.0, 0.0))
+                radii.append(float(tandem_od_inner) / 2.0)
+
+        def ring_intersects_any(i):
+            x1, y1 = centers[i]
+            r1 = radii[i]
+            for j in range(len(centers)):
+                if i == j:
+                    continue
+                x2, y2 = centers[j]
+                r2 = radii[j]
+
+                # ignore concentric rings at the same center (tandem inner vs outer)
+                if abs(x1 - x2) < 1e-6 and abs(y1 - y2) < 1e-6:
+                    continue
+
+                dx = x1 - x2
+                dy = y1 - y2
+                if (dx*dx + dy*dy) < (r1 + r2) * (r1 + r2):
+                    return True
+            return False
+
+        for i in range(len(centers)):
+            col = "red" if ring_intersects_any(i) else "green"
+            ax.add_artist(
+                plt.Circle(
+                    centers[i],
+                    radii[i],
+                    fill=False,
+                    linestyle="--",
+                    color=col,
+                    linewidth=1.5,
+                    clip_on=False,
+                )
+            )
+    # -------------------------------------------------------------------------------
+
 
     # Add a filled grey rectangle at the top center of the big circle
     notch = app.window.cylindermodel.cylinder.notch
@@ -529,7 +593,8 @@ def generate_pdf(
         needle_length: float,
         has_tandem: bool, 
         tandem_rotation: float, 
-        is_tandem_imported: bool):
+        is_tandem_imported: bool,
+        include_collet_preview: bool=False):
 
     app = get_app()
 
@@ -636,7 +701,7 @@ def generate_pdf(
     last_xy_points = [needle[-1] for needle in needles_inside]
     
     png_path = save_points_diagram(last_xy_points, number_list, circle_radius, pdf_output_dir, has_tandem=has_tandem,
-                                    tandem_rotation=tandem_rotation, is_tandem_imported=is_tandem_imported)
+                                    tandem_rotation=tandem_rotation, is_tandem_imported=is_tandem_imported, include_collet_preview=include_collet_preview)
 
     # build the image for pdf with specified width and height.
     # kind='proportional' means keep the aspect ratio, so the width/height become max values.
