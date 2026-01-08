@@ -27,9 +27,9 @@ class CylinderNotch:
         return rotate_shape(shape=notch, axis=gp.OZ(), angle=self.rotation, unite="deg")
     
     def __init__(self, diameter):
-        self.width = 1.0
+        self.width = 2.0
         self.length = 10
-        self.height = 1
+        self.height = 2.0
 
         self.rotation = 270.0
         self.radius = diameter / 2
