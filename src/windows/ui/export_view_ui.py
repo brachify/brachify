@@ -15,9 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QCheckBox, QFormLayout, QLabel,
-    QPushButton, QSizePolicy, QSpacerItem, QVBoxLayout,
-    QWidget)
+from PySide6.QtWidgets import (QApplication, QCheckBox, QDoubleSpinBox, QFormLayout,
+    QLabel, QPushButton, QSizePolicy, QSpacerItem,
+    QVBoxLayout, QWidget)
 
 class Ui_Export_View(object):
     def setupUi(self, Export_View):
@@ -50,8 +50,58 @@ class Ui_Export_View(object):
 
         self.formLayout.setWidget(0, QFormLayout.FieldRole, self.cb_tandem_shown)
 
+        self.label = QLabel(Export_View)
+        self.label.setObjectName(u"label")
+
+        self.formLayout.setWidget(1, QFormLayout.LabelRole, self.label)
+
+        self.cb_collet_preview_reference_sheet = QCheckBox(Export_View)
+        self.cb_collet_preview_reference_sheet.setObjectName(u"cb_collet_preview_reference_sheet")
+        self.cb_collet_preview_reference_sheet.setLayoutDirection(Qt.RightToLeft)
+        self.cb_collet_preview_reference_sheet.setAutoFillBackground(False)
+        self.cb_collet_preview_reference_sheet.setStyleSheet(u"background-color: rgb(230, 238, 246);")
+        self.cb_collet_preview_reference_sheet.setChecked(True)
+
+        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.cb_collet_preview_reference_sheet)
+
 
         self.verticalLayout.addLayout(self.formLayout)
+
+        self.formLayout_2 = QFormLayout()
+        self.formLayout_2.setObjectName(u"formLayout_2")
+        self.formLayout_2.setContentsMargins(43, -1, 0, 0)
+        self.label_3 = QLabel(Export_View)
+        self.label_3.setObjectName(u"label_3")
+
+        self.formLayout_2.setWidget(0, QFormLayout.LabelRole, self.label_3)
+
+        self.sb_needle_collet_od = QDoubleSpinBox(Export_View)
+        self.sb_needle_collet_od.setObjectName(u"sb_needle_collet_od")
+
+        self.formLayout_2.setWidget(0, QFormLayout.FieldRole, self.sb_needle_collet_od)
+
+        self.label_4 = QLabel(Export_View)
+        self.label_4.setObjectName(u"label_4")
+
+        self.formLayout_2.setWidget(1, QFormLayout.LabelRole, self.label_4)
+
+        self.label_5 = QLabel(Export_View)
+        self.label_5.setObjectName(u"label_5")
+
+        self.formLayout_2.setWidget(2, QFormLayout.LabelRole, self.label_5)
+
+        self.sb_tandem_collet_inner_od = QDoubleSpinBox(Export_View)
+        self.sb_tandem_collet_inner_od.setObjectName(u"sb_tandem_collet_inner_od")
+
+        self.formLayout_2.setWidget(2, QFormLayout.FieldRole, self.sb_tandem_collet_inner_od)
+
+        self.sb_tandem_collet_outer_od = QDoubleSpinBox(Export_View)
+        self.sb_tandem_collet_outer_od.setObjectName(u"sb_tandem_collet_outer_od")
+
+        self.formLayout_2.setWidget(1, QFormLayout.FieldRole, self.sb_tandem_collet_outer_od)
+
+
+        self.verticalLayout.addLayout(self.formLayout_2)
 
         self.verticalSpacer_2 = QSpacerItem(20, 10, QSizePolicy.Minimum, QSizePolicy.Fixed)
 
@@ -97,14 +147,6 @@ class Ui_Export_View(object):
 
         self.verticalLayout.addWidget(self.btn_export_template_reference)
 
-        self.cb_collet_preview_reference_sheet = QCheckBox(Export_View)
-        self.cb_collet_preview_reference_sheet.setObjectName(u"cb_collet_preview_reference_sheet")
-        self.cb_collet_preview_reference_sheet.setAutoFillBackground(False)
-        self.cb_collet_preview_reference_sheet.setStyleSheet(u"background-color: rgb(230, 238, 246);")
-        self.cb_collet_preview_reference_sheet.setChecked(True)
-
-        self.verticalLayout.addWidget(self.cb_collet_preview_reference_sheet)
-
         self.btn_export_shapes = QPushButton(Export_View)
         self.btn_export_shapes.setObjectName(u"btn_export_shapes")
         self.btn_export_shapes.setMinimumSize(QSize(240, 33))
@@ -124,6 +166,10 @@ class Ui_Export_View(object):
 "}")
 
         self.verticalLayout.addWidget(self.btn_export_shapes)
+
+        self.verticalSpacer = QSpacerItem(267, 4338, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout.addItem(self.verticalSpacer)
 
         self.btn_export_current_config = QPushButton(Export_View)
         self.btn_export_current_config.setObjectName(u"btn_export_current_config")
@@ -145,10 +191,6 @@ class Ui_Export_View(object):
 
         self.verticalLayout.addWidget(self.btn_export_current_config)
 
-        self.verticalSpacer = QSpacerItem(267, 4338, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.verticalLayout.addItem(self.verticalSpacer)
-
 
         self.retranslateUi(Export_View)
 
@@ -160,9 +202,13 @@ class Ui_Export_View(object):
         Export_View.setWindowFilePath("")
         self.label_2.setText(QCoreApplication.translate("Export_View", u"Show Tandem", None))
         self.cb_tandem_shown.setText("")
+        self.label.setText(QCoreApplication.translate("Export_View", u"Include Collet In Reference Sheet ", None))
+        self.cb_collet_preview_reference_sheet.setText("")
+        self.label_3.setText(QCoreApplication.translate("Export_View", u"Needle Collet", None))
+        self.label_4.setText(QCoreApplication.translate("Export_View", u"Tandem Outer Collet", None))
+        self.label_5.setText(QCoreApplication.translate("Export_View", u"Tandem Inner Collet", None))
         self.btn_export_mesh.setText(QCoreApplication.translate("Export_View", u"Export Mesh", None))
         self.btn_export_template_reference.setText(QCoreApplication.translate("Export_View", u"Export Reference Sheet", None))
-        self.cb_collet_preview_reference_sheet.setText(QCoreApplication.translate("Export_View", u"Include collet preview ", None))
         self.btn_export_shapes.setText(QCoreApplication.translate("Export_View", u"Export Shape(s)", None))
         self.btn_export_current_config.setText(QCoreApplication.translate("Export_View", u"Export Current Settings as Config", None))
     # retranslateUi

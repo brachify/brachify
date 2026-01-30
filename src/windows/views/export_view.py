@@ -112,6 +112,8 @@ class Export_View(CustomView):
         # colett preview (to show dotted line in Reference Sheet)
         Include_colett_preview = self.ui.cb_collet_preview_reference_sheet.isChecked()
 
+        self.action_apply_collet_settings()  # ensure config values are up to date
+
         try:
             template_reference.generate_pdf(
                 dicom=window.dicommodel.data,
@@ -137,6 +139,9 @@ class Export_View(CustomView):
     def on_open(self):
 
         log.debug(f"on open")
+
+        # Ensure Export UI reflects stored config values (important after DICOM import)
+        self.load_collet_settings_into_ui()
 
         # if tandem exists
         if self.window.tandemmodel.shape():
@@ -189,6 +194,11 @@ class Export_View(CustomView):
         
         self.ui.cb_tandem_shown.stateChanged.connect(self.action_show_tandem)
 
+        # Collet spinboxes should persist by updating config_values whenever edited
+        self.ui.sb_needle_collet_od.valueChanged.connect(self.action_apply_collet_settings)
+        self.ui.sb_tandem_collet_outer_od.valueChanged.connect(self.action_apply_collet_settings)
+        self.ui.sb_tandem_collet_inner_od.valueChanged.connect(self.action_apply_collet_settings)
+
     def _final_mesh(self) -> TopoDS_Shape:
         shape = self.window.cylindermodel.cylinder.shape()
 
@@ -219,3 +229,35 @@ class Export_View(CustomView):
 
         shape_tool.Add(compound, channels_compound)
         return compound
+    
+    def action_apply_collet_settings(self, *args):
+        """Push Export UI -> app.values.config_values (like other views do with Apply Settings)."""
+        config = get_app().values.config_values
+        config["CONFIG_NEEDLE_COLLET_OUTER_DIAMETER"] = self.ui.sb_needle_collet_od.value()
+        config["CONFIG_TANDEM_COLLET_OUTER_DIAMETER_OUTER"] = self.ui.sb_tandem_collet_outer_od.value()
+        config["CONFIG_TANDEM_COLLET_OUTER_DIAMETER_INNER"] = self.ui.sb_tandem_collet_inner_od.value()
+
+    def load_collet_settings_into_ui(self):
+        """Pull app.values.config_values -> Export UI (like resetAllValues does for other views)."""
+        config = get_app().values.config_values
+
+        needle_od = config.get("CONFIG_NEEDLE_COLLET_OUTER_DIAMETER")
+        tandem_outer = config.get("CONFIG_TANDEM_COLLET_OUTER_DIAMETER_OUTER")
+        tandem_inner = config.get("CONFIG_TANDEM_COLLET_OUTER_DIAMETER_INNER")
+
+        # Avoid triggering valueChanged -> apply while loading
+        self.ui.sb_needle_collet_od.blockSignals(True)
+        self.ui.sb_tandem_collet_outer_od.blockSignals(True)
+        self.ui.sb_tandem_collet_inner_od.blockSignals(True)
+
+        try:
+            if needle_od is not None:
+                self.ui.sb_needle_collet_od.setValue(float(needle_od))
+            if tandem_outer is not None:
+                self.ui.sb_tandem_collet_outer_od.setValue(float(tandem_outer))
+            if tandem_inner is not None:
+                self.ui.sb_tandem_collet_inner_od.setValue(float(tandem_inner))
+        finally:
+            self.ui.sb_needle_collet_od.blockSignals(False)
+            self.ui.sb_tandem_collet_outer_od.blockSignals(False)
+            self.ui.sb_tandem_collet_inner_od.blockSignals(False)

@@ -91,7 +91,21 @@ def resetAllValues(values_dict: dict):
         if not app.window.tandemmodel.is_shape_imported:
             # apply the config settings
             app.window.navigationmodel.views[3].action_set_tandem()
-    
+
+    #Collet Preview Values
+    export_ui = app.window.navigationmodel.views[4].ui
+
+    needle_collet_od = values_dict.get("CONFIG_NEEDLE_COLLET_OUTER_DIAMETER")
+    tandem_collet_od_outer = values_dict.get("CONFIG_TANDEM_COLLET_OUTER_DIAMETER_OUTER")
+    tandem_collet_od_inner = values_dict.get("CONFIG_TANDEM_COLLET_OUTER_DIAMETER_INNER")
+
+    # Only set if keys exist (prevents None issues)
+    if needle_collet_od is not None:
+        export_ui.sb_needle_collet_od.setValue(needle_collet_od)
+    if tandem_collet_od_outer is not None:
+        export_ui.sb_tandem_collet_outer_od.setValue(tandem_collet_od_outer)
+    if tandem_collet_od_inner is not None:
+        export_ui.sb_tandem_collet_inner_od.setValue(tandem_collet_od_inner)
 def getCurrentValues():
     """ 
     Collects all the currently set values and returns them as a dict.
@@ -119,10 +133,11 @@ def getCurrentValues():
     # 4. needle data - pulls the current value in the spin box
     default_needle_length = app.window.navigationmodel.views[2].ui.sb_needle_length.value() 
 
-    # 5. collet data - pulls the current values in the spin boxes (Does not exist yet)
-    needle_collet_outer_diameter = 5.0 # Placeholder default value
-    collet_outer_diameter_inner = 5.0 # Placeholder default value
-    collet_outer_diameter_outer = 8.0 # Placeholder default value
+    # 5. collet data - pulls the current values in the spin boxes
+    export_ui = app.window.navigationmodel.views[4].ui
+    needle_collet_outer_diameter = export_ui.sb_needle_collet_od.value()
+    collet_outer_diameter_outer = export_ui.sb_tandem_collet_outer_od.value()
+    collet_outer_diameter_inner = export_ui.sb_tandem_collet_inner_od.value()
 
     # Create a dictionary containing the data.
     current_values = {
