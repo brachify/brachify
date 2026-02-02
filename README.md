@@ -19,7 +19,9 @@ brachify uses the pythonocc library. Easiest setup is to use [Anaconda3](https:/
 
 - Open Anaconda prompt with Administrator rights
 - optional: create and activate a virtual environment
-- install pyside 6 ```conda install PySide6``` 
+- Current python tested version is 3.10.19
+- See requirements.txt for package versions:
+- - install pyside 6 ```conda install PySide6``` 
 - install pythonocc using ```conda install conda-forge::pythonocc-core```
 - ```conda install matplotlib```
 - ```conda install reportlab```
