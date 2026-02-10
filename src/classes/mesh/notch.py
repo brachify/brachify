@@ -16,9 +16,9 @@ class CylinderNotch:
         # box1 = BRepPrimAPI_MakeBox(point1, self.length, self.width, -self.height).Shape()
         # the box box on the cylinder edge (swap height and length)
         # start_x_2 = self.radius - self.height
-        start_x_2 = self.radius
-        point2 = gp_Pnt(start_x_2, 0, 0)
-        notch = BRepPrimAPI_MakeBox(point2, self.height, self.width, self.length+self.height).Shape()
+        start_x_2 = self.radius-0.2
+        point2 = gp_Pnt(start_x_2, -self.width/2, 0)
+        notch = BRepPrimAPI_MakeBox(point2, self.height, self.width, self.length).Shape()
 
         # fuse the boxes to make an 'L' shape
         # notch = BRepAlgoAPI_Fuse(box1, box2).Shape()
@@ -26,9 +26,9 @@ class CylinderNotch:
         # rotate the notch along 0, 0, 1
         return rotate_shape(shape=notch, axis=gp.OZ(), angle=self.rotation, unite="deg")
     
-    def __init__(self, diameter):
+    def __init__(self, diameter, length=10):
         self.width = 2.0
-        self.length = 10
+        self.length = length
         self.height = 2.0
 
         self.rotation = 270.0
