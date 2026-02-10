@@ -61,14 +61,26 @@ class BrachyCylinder:
             fillet.Add(self.diameter / 2, e)
         fillet.Build()
         cylinder = fillet.Shape()
-        if self.expand_base:
+
+        base_height = float(get_app().values.config_values.get("CONFIG_BASE_HEIGHT", 0.0))
+        base_thickness = float(get_app().values.config_values.get("CONFIG_BASE_THICKNESS", 0.0))
+
+        z_notch_offset = 0.0
+        if self.expand_base and base_height > 0 and base_thickness > 0:
             cylinder = add_base(
-                shape=cylinder, radius1=self.diameter / 2, radius2=12.0)
-        
+                shape=cylinder,
+                radius1=self.diameter / 2,
+                base_thickness=base_thickness,
+                base_height=base_height
+            )
+            # notch should sit on top of the collar
+            z_notch_offset = base_height
+
         self.notch = CylinderNotch(self.diameter)
-        cylinder = add_notch(cylinder, self.notch)
+        cylinder = add_notch(cylinder, self.notch, z_offset=z_notch_offset)
 
         return cylinder
+
 
     def setDiameter(self, diameter: float) -> None:
         self.diameter = diameter
@@ -112,19 +124,39 @@ def get_brachy_cylinder(data: DicomData) -> BrachyCylinder:
     return BrachyCylinder(diameter=diameter)
 
 
-def add_base(shape: TopoDS_Solid, radius1: float, radius2: float):
+#def add_base(shape: TopoDS_Solid, radius1: float, radius2: float):
     # cylinder references
-    cylinder_axis = gp_Dir(0, 0, 1)
-    cylinder_vector = gp_Ax2(gp_Pnt(0, 0, 0), cylinder_axis)
-    cylinder = BRepPrimAPI_MakeCylinder(
-        cylinder_vector, radius1+radius2, radius2).Shape()
-    torus = BRepPrimAPI_MakeTorus(radius1 + radius2, radius2).Shape()
-    torus = translate_shp(torus, gp_Vec(0.0, 0.0, radius2))
-    result = BRepAlgoAPI_Cut(cylinder, torus).Shape()
-    return BRepAlgoAPI_Fuse(shape, result).Shape()
+        # cylinder_axis = gp_Dir(0, 0, 1)
+        # cylinder_vector = gp_Ax2(gp_Pnt(0, 0, 0), cylinder_axis)
+        # cylinder = BRepPrimAPI_MakeCylinder(
+        #     cylinder_vector, radius1+radius2, radius2).Shape()
+        # torus = BRepPrimAPI_MakeTorus(radius1 + radius2, radius2).Shape()
+        # torus = translate_shp(torus, gp_Vec(0.0, 0.0, radius2))
+        # result = BRepAlgoAPI_Cut(cylinder, torus).Shape()
+        # return BRepAlgoAPI_Fuse(shape, result).Shape()
+def add_base(shape: TopoDS_Solid, radius1: float, base_thickness: float, base_height: float):
+    base_thickness = float(base_thickness)
+    base_height = float(base_height)
+    
+    if base_height <= 0 or base_thickness <= 0:
+        return shape  # consistent safe-guard
 
-def add_notch(shape: TopoDS_Shape, notch: CylinderNotch):
-    if not notch: return shape
+    axis = gp_Ax2(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1))
 
-    # return BRepAlgoAPI_Cut(shape, notch.shape()).Shape()
-    return BRepAlgoAPI_Fuse(shape, notch.shape()).Shape()
+    outer_radius = radius1 + base_thickness
+
+    outer = BRepPrimAPI_MakeCylinder(axis, outer_radius, base_height).Shape()
+    inner = BRepPrimAPI_MakeCylinder(axis, radius1, base_height).Shape()
+
+    collar = BRepAlgoAPI_Cut(outer, inner).Shape()
+    return BRepAlgoAPI_Fuse(shape, collar).Shape()
+
+def add_notch(shape: TopoDS_Shape, notch: CylinderNotch, z_offset: float = 0.0):
+    if not notch:
+        return shape
+
+    notch_shape = notch.shape()
+    if z_offset and z_offset != 0.0:
+        notch_shape = translate_shp(notch_shape, gp_Vec(0.0, 0.0, float(z_offset)))
+
+    return BRepAlgoAPI_Fuse(shape, notch_shape).Shape()
