@@ -3,7 +3,7 @@ from PySide6.QtWidgets import QWidget
 from classes.app import get_app
 from classes.logger import log
 from classes.mesh.cylinder import BrachyCylinder
-from src.classes import app
+
 from windows.models.shape_model import ShapeTypes
 from windows.ui.cylinder_view_ui import Ui_Cylinder_View
 from windows.views.custom_view import display_action, CustomView
