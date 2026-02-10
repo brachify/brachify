@@ -23,7 +23,7 @@ class Ui_Cylinder_View(object):
     def setupUi(self, Cylinder_View):
         if not Cylinder_View.objectName():
             Cylinder_View.setObjectName(u"Cylinder_View")
-        Cylinder_View.resize(290, 290)
+        Cylinder_View.resize(293, 426)
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -93,11 +93,13 @@ class Ui_Cylinder_View(object):
 
         self.label_4 = QLabel(Cylinder_View)
         self.label_4.setObjectName(u"label_4")
+        self.label_4.setStyleSheet(u"background-color: rgb(240, 245, 250);")
 
         self.formLayout.setWidget(2, QFormLayout.LabelRole, self.label_4)
 
         self.label_5 = QLabel(Cylinder_View)
         self.label_5.setObjectName(u"label_5")
+        self.label_5.setStyleSheet(u"background-color: rgb(240, 245, 250);")
 
         self.formLayout.setWidget(3, QFormLayout.LabelRole, self.label_5)
 

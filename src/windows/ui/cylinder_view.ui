@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>290</width>
-    <height>290</height>
+    <width>293</width>
+    <height>426</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -159,6 +159,9 @@
      </item>
      <item row="2" column="0">
       <widget class="QLabel" name="label_4">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(240, 245, 250);</string>
+       </property>
        <property name="text">
         <string>Base Thickness</string>
        </property>
@@ -166,6 +169,9 @@
      </item>
      <item row="3" column="0">
       <widget class="QLabel" name="label_5">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(240, 245, 250);</string>
+       </property>
        <property name="text">
         <string>Base Height</string>
        </property>
