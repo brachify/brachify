@@ -345,7 +345,7 @@ class Ui_Tandem_View(object):
         self.sb_threading_depth.setSuffix(QCoreApplication.translate("Tandem_View", u" mm", None))
         self.sb_threading_diameter.setSuffix(QCoreApplication.translate("Tandem_View", u" mm", None))
         self.label_9.setText(QCoreApplication.translate("Tandem_View", u"Threading Depth", None))
-        self.label_10.setText(QCoreApplication.translate("Tandem_View", u"Threading diameter", None))
+        self.label_10.setText(QCoreApplication.translate("Tandem_View", u"Threading Diameter", None))
         self.label_3.setText(QCoreApplication.translate("Tandem_View", u"Rotation", None))
         self.tandem_rotation_2.setSuffix(QCoreApplication.translate("Tandem_View", u"\u00b0", None))
         self.btn_apply.setText(QCoreApplication.translate("Tandem_View", u"Generate Tandem", None))
