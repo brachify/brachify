@@ -700,8 +700,6 @@ def generate_pdf(
         cylinder=cylinder,
         needles=needles_for_calc
 )
-    # If any interstitial lengths are below the minimum, set them to the minimum to ensure needle fit.
-    interstitial_lengths = force_min_interstitial(interstitial_lengths, min_deadspace=6.0)
 
     protrusion_lengths = calculate_protrusion_lengths(needles_inside, needle_length)
     # TODO: Add needle label and channel number instead of "Needle 1" etc.
