@@ -582,6 +582,41 @@ def channels_inside_cylinder(channels: list[NeedleChannel], diameter: float):
 
     return channels_inside
 
+# Add Deadspace
+def add_deadspace(needles: list, deadspace_mm: float) -> list:
+    """
+    Returns a NEW needles list where the needle TIP (needle[0]) is extended outward
+    by deadspace_mm along the direction from needle[1] -> needle[0].
+    """
+    deadspace_mm = float(deadspace_mm)
+    extended_interstitial_length = []
+
+    for needle in needles:
+        pts = [p[:] for p in needle]  # copy point lists so originals are not modified
+
+        if deadspace_mm <= 0 or len(pts) < 2:
+            extended_interstitial_length.append(pts)
+            continue
+
+        tip = np.array(pts[0], dtype=float)
+        nxt = np.array(pts[1], dtype=float)
+
+        d = tip - nxt
+        n = np.linalg.norm(d)
+
+        # If the needle has zero length or if no deadspace is requested, keep it as is.
+        if n == 0:
+            extended_interstitial_length.append(pts)
+            continue
+
+        u = d / n
+        new_tip = tip + u * deadspace_mm
+
+        pts[0] = [float(new_tip[0]), float(new_tip[1]), float(new_tip[2])]
+        extended_interstitial_length.append(pts)
+
+    return extended_interstitial_length
+
 #######################################################
 # pdf generation
 #######################################################
@@ -645,14 +680,18 @@ def generate_pdf(
     channels_inside = channels_inside_cylinder(channels, diameter)
     needles_inside = extract_points_from_channels2(channels_inside)
 
-    interstitial_lengths = get_all_interstitial_lengths(
-        cylinder=cylinder,
-        needles=needles_inside)
-
+    # Read deadspace from config (defaults to 6mm)
     config = get_app().values.config_values
     deadspace_mm = float(config.get("CONFIG_DEADSPACE", 6.0))
 
-    
+    # Extend a COPY of the needles for calculation only (do not change originals)
+    needles_for_calc = add_deadspace(needles_inside, deadspace_mm)
+
+    # Use the extended needles for interstitial length calculation
+    interstitial_lengths = get_all_interstitial_lengths(
+        cylinder=cylinder,
+        needles=needles_for_calc
+)
     protrusion_lengths = calculate_protrusion_lengths(needles_inside, needle_length)
     # TODO: Add needle label and channel number instead of "Needle 1" etc.
     #length_label = "Protruding Length for " + str(needle_length) + "mm needle"
