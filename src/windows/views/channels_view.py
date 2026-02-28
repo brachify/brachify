@@ -38,8 +38,8 @@ class ChannelsView(CustomView):
         app = get_app()
         # update config_values dict for needles
         needles_length = self.ui.sb_needle_length.value()
-        if(needles_length != app.values.config_values["CONFIG_NEEDLE_LENGTH"]):
-            app.values.config_values["CONFIG_NEEDLE_LENGTH"] = needles_length
+        if(needles_length != app.values.config_values["CONFIG_DEADSPACE"]):
+            app.values.config_values["CONFIG_DEADSPACE"] = needles_length
         diameter = self.ui.spinbox_diameter.value()
         threading_depth = self.ui.sb_threading_dept.value()
         threading_diameter= self.ui.sb_threading_diameter.value()
@@ -123,7 +123,7 @@ class ChannelsView(CustomView):
         # diameter spin box
         self.ui.spinbox_diameter.setValue(self.channelsmodel.diameter)
         # needle channels spin box
-        self.ui.sb_needle_length.setValue(get_app().values.config_values.get("CONFIG_NEEDLE_LENGTH"))
+        self.ui.sb_needle_length.setValue(get_app().values.config_values.get("CONFIG_DEADSPACE"))
 
         selected_channel = self.channelsmodel.get_selected_channel()
         # selected channel
@@ -181,7 +181,7 @@ class ChannelsView(CustomView):
 
         #sets default needle length
         config_values = get_app().values.config_values
-        self.ui.sb_needle_length.setValue(config_values.get("CONFIG_NEEDLE_LENGTH"))
+        self.ui.sb_needle_length.setValue(config_values.get("CONFIG_DEADSPACE"))
         self.ui.sb_threading_dept.setValue(config_values.get("CONFIG_CHANNELS_THREADING_DEPTH"))
         self.ui.sb_threading_diameter.setValue(config_values.get("CONFIG_CHANNELS_THREADING_DIAMETER"))
 

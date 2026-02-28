@@ -26,7 +26,7 @@ def resetAllValues(values_dict: dict):
 
     # Channels View values
     channels_diameter = values_dict.get("CONFIG_CHANNELS_DIAMETER")
-    needle_length = values_dict.get("CONFIG_NEEDLE_LENGTH")
+    needle_length = values_dict.get("CONFIG_DEADSPACE")
     threading_depth = values_dict.get("CONFIG_CHANNELS_THREADING_DEPTH")
     threading_radius = values_dict.get("CONFIG_CHANNELS_THREADING_DIAMETER")
     app.window.navigationmodel.views[2].ui.spinbox_diameter.setValue(channels_diameter)
@@ -144,7 +144,7 @@ def getCurrentValues():
         "CONFIG_CYLINDER_DIAMETER": default_cylinder_diameter,
         "CONFIG_CYLINDER_LENGTH": default_length,
         "CONFIG_CHANNELS_DIAMETER": default_diameter,
-        "CONFIG_NEEDLE_LENGTH": default_needle_length,
+        "CONFIG_DEADSPACE": default_needle_length,
         "CONFIG_TANDEM_TIP_HEIGHT": tandem_length, # tandem_length may not actually be Tandem_Tip_Height_Default
         "CONFIG_TANDEM_CHANNEL_DIAMETER": tandem_channel_diameter_default, 
         "CONFIG_TANDEM_STOPPER_DIAMETER": tandem_stopper_diameter_default,
