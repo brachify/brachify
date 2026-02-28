@@ -106,7 +106,7 @@ def extract_points_from_channels2(channels: list):
         
         for i, pt in enumerate(channel_pts):
             if pt[2] == 0: # if this point is exactly at z=0 then it is what we're looking for.
-                channels_down_to_z0.append(channel.copy())
+                channels_down_to_z0.append(channel_pts.copy())
                 break # do not modify the channel at all.
             elif i >= len(channel_pts)-1: 
                 # if we have reached the last point in the needle and the z>0 still, then "drop" a point down to z=0 with the same x,y values
