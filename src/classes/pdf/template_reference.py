@@ -585,16 +585,15 @@ def channels_inside_cylinder(channels: list[NeedleChannel], diameter: float):
 # Add Deadspace
 def add_deadspace(needles: list, deadspace_mm: float) -> list:
     """
-    Returns a NEW needles list where the needle TIP (needle[0]) is extended outward
-    by deadspace_mm along the direction from needle[1] -> needle[0].
+    Returns new needles with added deadspace from point in the cylinder [1] and point outside [2].
     """
     deadspace_mm = float(deadspace_mm)
     extended_interstitial_length = []
 
     for needle in needles:
-        pts = [p[:] for p in needle]  # copy point lists so originals are not modified
+        pts = [p[:] for p in needle]  # copies points for each needle in needles list
 
-        if deadspace_mm <= 0 or len(pts) < 2:
+        if deadspace_mm <= 0 or len(pts) < 2:   # If no deadspace is requested or if their not 2 points inside and outside continue
             extended_interstitial_length.append(pts)
             continue
 
@@ -617,6 +616,12 @@ def add_deadspace(needles: list, deadspace_mm: float) -> list:
 
     return extended_interstitial_length
 
+#Minimum Deadspace Calculation
+def force_min_interstitial(interstitial_lengths: list, min_deadspace: float = 6.0) -> list:
+    """
+    If any intersitial length is below the surface of the cylinder use the cylinder surface cloud to calculate the necessary deadspace to add and use that instead. 
+    """
+   
 #######################################################
 # pdf generation
 #######################################################
@@ -680,6 +685,9 @@ def generate_pdf(
     channels_inside = channels_inside_cylinder(channels, diameter)
     needles_inside = extract_points_from_channels2(channels_inside)
 
+    """
+    Use deadspace calculations to extend needles for interstitial length calculation.
+    """
     # Read deadspace from config (defaults to 6mm)
     config = get_app().values.config_values
     deadspace_mm = float(config.get("CONFIG_DEADSPACE", 6.0))
@@ -692,6 +700,9 @@ def generate_pdf(
         cylinder=cylinder,
         needles=needles_for_calc
 )
+    # If any interstitial lengths are below the minimum, set them to the minimum to ensure needle fit.
+    interstitial_lengths = force_min_interstitial(interstitial_lengths, min_deadspace=6.0)
+
     protrusion_lengths = calculate_protrusion_lengths(needles_inside, needle_length)
     # TODO: Add needle label and channel number instead of "Needle 1" etc.
     #length_label = "Protruding Length for " + str(needle_length) + "mm needle"
