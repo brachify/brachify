@@ -652,8 +652,6 @@ def generate_pdf(
     config = get_app().values.config_values
     deadspace_mm = float(config.get("CONFIG_DEADSPACE", 6.0))
 
-    # Add deadspace to the interstitial lengths for printing on the reference sheet
-    interstitial_lengths = [float(L) + deadspace_mm for L in interstitial_lengths]
     
     protrusion_lengths = calculate_protrusion_lengths(needles_inside, needle_length)
     # TODO: Add needle label and channel number instead of "Needle 1" etc.
