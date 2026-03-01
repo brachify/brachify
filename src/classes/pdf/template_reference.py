@@ -585,7 +585,7 @@ def channels_inside_cylinder(channels: list[NeedleChannel], diameter: float):
 # Add Deadspace
 def add_deadspace(needles: list, deadspace_mm: float) -> list:
     """
-    Returns new needles with added deadspace from point in the cylinder [1] and point outside [2].
+    Returns new needles with added deadspace from tip [0] to next point [1].
     """
     deadspace_mm = float(deadspace_mm)
     extended_interstitial_length = []
