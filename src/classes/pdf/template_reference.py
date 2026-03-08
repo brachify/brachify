@@ -617,10 +617,10 @@ def add_deadspace(needles: list, deadspace_mm: float) -> list:
     return extended_interstitial_length
 
 #Minimum Deadspace Calculation
-def force_min_interstitial(interstitial_lengths: list, min_deadspace: float = 6.0) -> list:
-    """
-    If any intersitial length is below the surface of the cylinder use the cylinder surface cloud to calculate the necessary deadspace to add and use that instead. 
-    """
+# def force_min_interstitial(interstitial_lengths: list, min_deadspace: float = 6.0) -> list:
+#     """
+#     If any intersitial length is below the surface of the cylinder use the cylinder surface cloud to calculate the necessary deadspace to add and use that instead. 
+#     """
    
 #######################################################
 # pdf generation

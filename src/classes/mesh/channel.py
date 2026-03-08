@@ -85,6 +85,26 @@ class NeedleChannel:
         self._offset = 0.0
         self._diameter = get_app().values.config_values.get("CONFIG_CHANNELS_DIAMETER")
 
+def apply_deadspace_to_points(channel_points, deadspace_mm: float):
+    pts = np.array(channel_points, dtype=float).copy()
+
+    if deadspace_mm <= 0 or len(pts) < 2:
+        return pts
+
+    tip = pts[0]
+    nxt = pts[1]
+
+    d = tip - nxt
+    n = np.linalg.norm(d)
+
+    if n == 0:
+        return pts
+
+    u = d / n
+    pts[0] = tip + u * deadspace_mm
+
+    return pts
+
 def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) -> TopoDS_Shape:
     """
     If a needle channel has a long distance between the first and second point, this helps stub it
@@ -95,6 +115,10 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
     window = get_app().window
     channel_points = np.array(channel_points)
     
+    config = get_app().values.config_values
+    deadspace_mm = float(config.get("CONFIG_DEADSPACE", 6.0))
+    channel_points = apply_deadspace_to_points(channel_points, deadspace_mm)
+
     # apply the offset for the cylinder length
     # all rows column 3
     channel_points[:,2] += offset
