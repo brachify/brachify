@@ -117,6 +117,13 @@ def get_interstitial_length(cylinder_points, linepoints):
     return length
 
 def apply_minimum_deadspace(channel_points):
+    """
+    Make sure needle tips reach the surface of the cylinder.
+
+    Function checks if tip of needle is still inside cylinder. If it is, tip is extended outward along needle direction by the minimum required distance to reach cylinder surface.
+
+    This is because applying a fixed user entered deadspace alone may not be sufficient for all needles to reach cylinder surface.
+    """
 
     cylinder = get_app().window.cylindermodel.cylinder
 
