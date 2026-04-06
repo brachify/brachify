@@ -127,25 +127,18 @@ def apply_minimum_deadspace(channel_points):
 
     cylinder = get_app().window.cylindermodel.cylinder
 
-    cylinder_cloud = generate_cylinder_points(cylinder, 0.1)
+    # use diameter → convert to radius
+    radius = cylinder.diameter / 2  
 
     pts = np.array(channel_points).copy()
 
     if len(pts) < 2:
         return pts
 
-    first_line_segment = np.vstack([pts[1], pts[0]])
-
-    interstitial_length = get_interstitial_length(cylinder_cloud, first_line_segment)
-
-    if interstitial_length >= 0:
-        return pts
-
-    extra_deadspace = abs(interstitial_length)
-
     tip = pts[0]
     nxt = pts[1]
 
+    # direction INTO the needle
     d = tip - nxt
     n = np.linalg.norm(d)
 
@@ -154,7 +147,32 @@ def apply_minimum_deadspace(channel_points):
 
     u = d / n
 
-    pts[0] = tip + u * extra_deadspace
+    # line-cylinder intersection (x^2 + y^2 = R^2)
+    x0, y0, _ = tip
+    ux, uy, _ = u
+
+    a = ux**2 + uy**2
+    b = 2 * (x0 * ux + y0 * uy)
+    c = x0**2 + y0**2 - radius**2
+
+    discriminant= b*b - 4*a*c
+
+    if discriminant < 0 or a == 0:
+        return pts
+
+    t1 = (-b + np.sqrt(discriminant)) / (2*a)
+    t2 = (-b - np.sqrt(discriminant)) / (2*a)
+
+    # choose forward direction
+    t = max(t1, t2)
+
+    if t <= 0:
+        return pts
+
+    # ensure channel actually exits for cutting
+    penetration = 1.0
+
+    pts[0] = tip + u * (t + penetration)
 
     return pts
 
