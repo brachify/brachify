@@ -116,66 +116,6 @@ def get_interstitial_length(cylinder_points, linepoints):
 
     return length
 
-# def apply_minimum_deadspace(channel_points):
-#     """
-#     Make sure needle tips reach the surface of the cylinder.
-
-#     Function checks if tip of needle is still inside cylinder. If it is, tip is extended outward along needle direction by the minimum required distance to reach cylinder surface.
-
-#     This is because applying a fixed user entered deadspace alone may not be sufficient for all needles to reach cylinder surface.
-#     """
-
-#     cylinder = get_app().window.cylindermodel.cylinder
-
-#     # use diameter → convert to radius
-#     radius = cylinder.diameter / 2  
-
-#     pts = np.array(channel_points).copy()
-
-#     if len(pts) < 2:
-#         return pts
-
-#     tip = pts[0]
-#     nxt = pts[1]
-
-#     # direction INTO the needle
-#     d = tip - nxt
-#     n = np.linalg.norm(d)
-
-#     if n == 0:
-#         return pts
-
-#     u = d / n
-
-#     # line-cylinder intersection (x^2 + y^2 = R^2)
-#     x0, y0, _ = tip
-#     ux, uy, _ = u
-
-#     a = ux**2 + uy**2
-#     b = 2 * (x0 * ux + y0 * uy)
-#     c = x0**2 + y0**2 - radius**2
-
-#     discriminant= b*b - 4*a*c
-
-#     if discriminant < 0 or a == 0:
-#         return pts
-
-#     t1 = (-b + np.sqrt(discriminant)) / (2*a)
-#     t2 = (-b - np.sqrt(discriminant)) / (2*a)
-
-#     # choose forward direction
-#     t = max(t1, t2)
-
-#     if t <= 0:
-#         return pts
-
-#     # ensure channel actually exits for cutting
-#     penetration = 1.0
-
-#     pts[0] = tip + u * (t + penetration)
-
-#     return pts
-
 class NeedleChannel:
 
     @staticmethod
@@ -280,8 +220,6 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
     config = get_app().values.config_values
     deadspace_mm = float(config.get("CONFIG_DEADSPACE", 6.0))
     channel_points = apply_deadspace_to_points(channel_points, deadspace_mm)
-
-    # channel_points = apply_minimum_deadspace(channel_points)
 
     # apply the offset for the cylinder length
     # all rows column 3
