@@ -588,12 +588,16 @@ def add_deadspace(needles: list, deadspace_mm: float) -> list:
     Returns new needles with added deadspace from tip [0] to next point [1].
     """
     deadspace_mm = float(deadspace_mm)
+
+    if deadspace_mm <= 0:  # If no deadspace is requested, return the original needles
+        return [[p[:] for p in needle] for needle in needles]  # Return a copy of the original needles
+     
     extended_interstitial_length = []
 
     for needle in needles:
         pts = [p[:] for p in needle]  # copies points for each needle in needles list
 
-        if deadspace_mm <= 0 or len(pts) < 2:   # If no deadspace is requested or if their not 2 points inside and outside continue
+        if len(pts) < 2:
             extended_interstitial_length.append(pts)
             continue
 
