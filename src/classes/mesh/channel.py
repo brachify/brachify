@@ -247,15 +247,17 @@ class NeedleChannel:
         self._offset = 0.0
         self._diameter = get_app().values.config_values.get("CONFIG_CHANNELS_DIAMETER")
 
-def apply_deadspace_to_points(channel_points, deadspace_mm: float):
-    pts = np.array(channel_points, dtype=float).copy()
+def apply_deadspace_to_points(channel_points, deadspace_mm):
 
-    if deadspace_mm <= 0 or len(pts) < 2:
+    pts = np.array(channel_points).copy()
+
+    if len(pts) < 2:
         return pts
 
     tip = pts[0]
     nxt = pts[1]
 
+    # original direction 
     d = tip - nxt
     n = np.linalg.norm(d)
 
@@ -263,7 +265,34 @@ def apply_deadspace_to_points(channel_points, deadspace_mm: float):
         return pts
 
     u = d / n
-    pts[0] = tip + u * deadspace_mm
+
+    # Step 1: build a long line in the direction of the needle channel
+    far_point = tip + u * 500
+    line = np.vstack([tip, far_point])
+
+    # Step 2: get cylinder cloud
+    cylinder = get_app().window.cylindermodel.cylinder
+    cylinder_cloud = generate_cylinder_points(cylinder, 0.1)
+
+    # Step 3: use interstitial logic to find correct direction target
+    intersection = get_surface_intersection(cylinder_cloud, line)
+
+    if intersection is None:
+        # use original direction
+        final_direction = u
+    else:
+        # new direction toward surface
+        intersection_point = intersection[0]
+        new_vec = np.array(intersection_point) - tip    
+        new_norm = np.linalg.norm(new_vec)
+
+        if new_norm == 0:
+            final_direction = u
+        else:
+            final_direction = new_vec / new_norm
+
+    # Step 4: apply fixed deadspace along THIS direction
+    pts[0] = tip + final_direction * deadspace_mm
 
     return pts
 
