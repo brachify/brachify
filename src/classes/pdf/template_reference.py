@@ -85,7 +85,7 @@ def extract_points_from_channels(channels: list):
 
 def extract_points_from_channels2(channels: list):
     """
-    Retreives the points from NeedleChannels
+    Retrieves the points from NeedleChannels
     1. if the last point(s) are below 0 on the needle, then it interpolates what the needle value is at the z=0 plane,
     deletes all the points with z<0, and appends the z=0 point on the end, so that the needle is truncated at z=0.
     2. if the last point on the needle is above the z=0 plane, then it creates a new point directly below the last point,
@@ -698,7 +698,7 @@ def generate_pdf(
     config = get_app().values.config_values
     deadspace_mm = float(config.get("CONFIG_DEADSPACE", 6.0))
 
-    # Extend a COPY of the needles for calculation only (do not change originals)
+    # Extend a copy of the needles for calculation only (do not change originals)
     needles_for_calc = add_deadspace(needles_inside, deadspace_mm)
 
     # Use the extended needles for interstitial length calculation
