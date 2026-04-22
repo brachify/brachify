@@ -17,16 +17,17 @@ https://github.com/brachify/brachify-release/blob/main/user_guide/Brachify%20Use
 - download git
 brachify uses the pythonocc library. Easiest setup is to use [Anaconda3](https://www.anaconda.com/download) as your python interpreter. Some modules take significant time to install using conda install. For those which seem to take time, try to use pip install instead (pip is included in conda)
 
+- download code (clone git repository to your local machiene)
 - Open Anaconda prompt with Administrator rights
 - optional: create and activate a virtual environment
 - Current python tested version is 3.10.19
 - See requirements.txt for package versions:
-- - install pyside 6 ```conda install PySide6``` 
+- - install pyside 6 using pip ```pip install PySide6``` 
 - install pythonocc using ```conda install conda-forge::pythonocc-core```
 - ```conda install matplotlib```
 - ```conda install reportlab```
 - ```conda install pydicom```
-- download code (clone git repository to your local machiene)
+
 - run launch.py to use the application
 
 To build .exe make sure your working directory is the brachify directory then run the following command in the command line
