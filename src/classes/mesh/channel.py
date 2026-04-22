@@ -14,6 +14,108 @@ from classes.app import get_app
 TIP_LENGTH = 2.5
 
 
+def generate_cylinder_points(cylinder, spacing: float):
+
+    length = cylinder.length
+    base = np.array([0, 0, 0])
+    tip = np.array([0, 0, length])
+    radius = cylinder.diameter / 2 
+
+    vec = np.array(tip-base)
+    vec_normalized = vec / \
+        np.sqrt(vec[0] ** 2 + vec[1] ** 2 + vec[2] ** 2)
+    len_straight = length-radius
+    NumStepsStraight = int(np.ceil(len_straight / spacing))
+    end_straight_section = base + vec_normalized * len_straight
+    CenterLineStraight = np.linspace(
+        base, end_straight_section, NumStepsStraight, endpoint=False)
+    num_thetas = int(np.ceil(2*np.pi*radius/spacing))
+    thetas = np.linspace(0, 2*np.pi, num_thetas, endpoint=False)
+
+    CylinderRing = np.ones((num_thetas, 3))
+    CylinderRing[:, 0] = CylinderRing[:, 0] * radius * np.sin(thetas)
+    CylinderRing[:, 1] = CylinderRing[:, 1] * radius * np.cos(thetas)
+    CylinderStraight = np.ones((NumStepsStraight, num_thetas, 3))
+    CylinderStraight[:] = CylinderRing
+    CylinderStraight[:, :, 2] = CylinderStraight[:, :, 2]*CenterLineStraight[:, 2, np.newaxis]
+
+    num_phis = int(np.ceil(np.pi/2*radius/spacing))
+    phis = np.linspace(0, np.pi/2, num_phis)
+    dome_radii = np.cos(phis)*radius
+
+    dome_pts = np.ones((num_phis, num_thetas, 3))
+    dome_pts[:, :, 0] = dome_pts[:, :, 0] * \
+        np.sin(thetas) * dome_radii[:, np.newaxis]
+    dome_pts[:, :, 1] = dome_pts[:, :, 1] * \
+        np.cos(thetas) * dome_radii[:, np.newaxis]
+    dome_pts[:, :, 2] = dome_pts[:, :, 2] * \
+        np.sin(phis)[:, np.newaxis] * radius + len_straight
+
+    cylinder_points = np.append(CylinderStraight, dome_pts)
+    cylinder_points = np.reshape(
+        cylinder_points, (NumStepsStraight*num_thetas+num_phis*num_thetas, 3))
+
+    cylinder_points = cylinder_points[0:-num_thetas + 1]
+
+    return cylinder_points
+
+def get_surface_intersection(surface_cloud, line_points, tol_mm=0.25):
+
+    surface_cloud = np.array(surface_cloud)
+    line_points = np.array(line_points)
+
+    if surface_cloud.shape[1] != 3 or line_points.shape[1] != 3:
+        raise ValueError("Input arrays must have shape (n, 3)")
+
+    line_displacement = line_points[1] - line_points[0]
+    line_displacement = line_displacement.astype(float)
+    line_direction = line_displacement/np.linalg.norm(line_displacement)
+
+    vector_to_points = surface_cloud - line_points[0]
+
+    projection_onto_line = np.dot(vector_to_points, line_direction)
+
+    closest_points_on_line = line_points[0] + \
+        projection_onto_line[:, np.newaxis] * line_direction
+
+    within_line_segment_bounds = np.logical_and(
+        0 <= projection_onto_line, projection_onto_line <= np.linalg.norm(line_displacement))
+
+    closest_points_on_line = closest_points_on_line[within_line_segment_bounds]
+
+    if len(closest_points_on_line) == 0:
+        return None
+
+    distances = np.linalg.norm(
+        surface_cloud[within_line_segment_bounds] - closest_points_on_line, axis=1)
+
+    if np.min(distances) > tol_mm:
+        return None
+
+    min_distance_index = np.argmin(distances)
+
+    return closest_points_on_line[min_distance_index], surface_cloud[within_line_segment_bounds][min_distance_index]
+
+def get_interstitial_length(cylinder_points, linepoints):
+
+    result = get_surface_intersection(cylinder_points, linepoints)
+
+    if result != None:
+
+        exit_point = result[0]
+        end_point = linepoints[1]
+
+        disp = end_point - exit_point
+        length = np.linalg.norm(disp)
+
+    else:
+
+        tip = linepoints[1]
+        distances = np.linalg.norm(cylinder_points - tip, axis=1)
+        length = -np.min(distances)
+
+    return length
+
 class NeedleChannel:
 
     @staticmethod
@@ -85,6 +187,26 @@ class NeedleChannel:
         self._offset = 0.0
         self._diameter = get_app().values.config_values.get("CONFIG_CHANNELS_DIAMETER")
 
+def apply_deadspace_to_points(channel_points, deadspace_mm):
+    pts = np.array(channel_points).copy()
+
+    if deadspace_mm <= 0 or len(pts) < 2:
+        return pts
+
+    tip = pts[0]
+    nxt = pts[1]
+
+    d = tip - nxt
+    n = np.linalg.norm(d)
+
+    if n == 0:
+        return pts
+
+    u = d / n
+    pts[0] = tip + u * deadspace_mm
+
+    return pts
+
 def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) -> TopoDS_Shape:
     """
     If a needle channel has a long distance between the first and second point, this helps stub it
@@ -95,6 +217,10 @@ def rounded_channel(channel_points, offset: float = 0.0, diameter: float = 3.0) 
     window = get_app().window
     channel_points = np.array(channel_points)
     
+    config = get_app().values.config_values
+    deadspace_mm = float(config.get("CONFIG_DEADSPACE", 6.0))
+    channel_points = apply_deadspace_to_points(channel_points, deadspace_mm)
+
     # apply the offset for the cylinder length
     # all rows column 3
     channel_points[:,2] += offset

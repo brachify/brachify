@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'channels_view.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.7.0
+## Created by: Qt User Interface Compiler version 6.5.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -24,7 +24,7 @@ class Ui_Channels_View(object):
         if not Channels_View.objectName():
             Channels_View.setObjectName(u"Channels_View")
         Channels_View.resize(290, 290)
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum)
+        sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(Channels_View.sizePolicy().hasHeightForWidth())
@@ -39,7 +39,7 @@ class Ui_Channels_View(object):
         self.formLayout.setObjectName(u"formLayout")
         self.label_4 = QLabel(Channels_View)
         self.label_4.setObjectName(u"label_4")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.label_4.sizePolicy().hasHeightForWidth())
@@ -52,7 +52,7 @@ class Ui_Channels_View(object):
 
         self.spinbox_diameter = QDoubleSpinBox(Channels_View)
         self.spinbox_diameter.setObjectName(u"spinbox_diameter")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy2.setHorizontalStretch(0)
         sizePolicy2.setVerticalStretch(0)
         sizePolicy2.setHeightForWidth(self.spinbox_diameter.sizePolicy().hasHeightForWidth())
@@ -157,7 +157,7 @@ class Ui_Channels_View(object):
 
         self.listwidget_channels = QListWidget(Channels_View)
         self.listwidget_channels.setObjectName(u"listwidget_channels")
-        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Expanding)
+        sizePolicy3 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
         sizePolicy3.setHorizontalStretch(0)
         sizePolicy3.setVerticalStretch(0)
         sizePolicy3.setHeightForWidth(self.listwidget_channels.sizePolicy().hasHeightForWidth())
@@ -179,7 +179,7 @@ class Ui_Channels_View(object):
         self.verticalLayout_4.setSizeConstraint(QLayout.SetFixedSize)
         self.btn_set_tandem = QPushButton(Channels_View)
         self.btn_set_tandem.setObjectName(u"btn_set_tandem")
-        sizePolicy4 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Maximum)
+        sizePolicy4 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Maximum)
         sizePolicy4.setHorizontalStretch(0)
         sizePolicy4.setVerticalStretch(0)
         sizePolicy4.setHeightForWidth(self.btn_set_tandem.sizePolicy().hasHeightForWidth())
@@ -235,7 +235,7 @@ class Ui_Channels_View(object):
         Channels_View.setWindowTitle(QCoreApplication.translate("Channels_View", u"Form", None))
         self.label_4.setText(QCoreApplication.translate("Channels_View", u"Channels Diameter", None))
         self.spinbox_diameter.setSuffix(QCoreApplication.translate("Channels_View", u" mm", None))
-        self.label.setText(QCoreApplication.translate("Channels_View", u"Needle Length", None))
+        self.label.setText(QCoreApplication.translate("Channels_View", u"Dead Space", None))
         self.sb_needle_length.setSuffix(QCoreApplication.translate("Channels_View", u" mm", None))
         self.label_2.setText(QCoreApplication.translate("Channels_View", u"Threading Depth", None))
         self.sb_threading_dept.setSuffix(QCoreApplication.translate("Channels_View", u" mm", None))
