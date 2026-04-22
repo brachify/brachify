@@ -85,7 +85,7 @@ def extract_points_from_channels(channels: list):
 
 def extract_points_from_channels2(channels: list):
     """
-    Retreives the points from NeedleChannels
+    Retrieves the points from NeedleChannels
     1. if the last point(s) are below 0 on the needle, then it interpolates what the needle value is at the z=0 plane,
     deletes all the points with z<0, and appends the z=0 point on the end, so that the needle is truncated at z=0.
     2. if the last point on the needle is above the z=0 plane, then it creates a new point directly below the last point,
@@ -106,7 +106,7 @@ def extract_points_from_channels2(channels: list):
         
         for i, pt in enumerate(channel_pts):
             if pt[2] == 0: # if this point is exactly at z=0 then it is what we're looking for.
-                channels_down_to_z0.append(channel.copy())
+                channels_down_to_z0.append(channel_pts.copy())
                 break # do not modify the channel at all.
             elif i >= len(channel_pts)-1: 
                 # if we have reached the last point in the needle and the z>0 still, then "drop" a point down to z=0 with the same x,y values
@@ -365,7 +365,8 @@ def save_points_diagram(points: list,
                         output_filepath: Path, 
                         has_tandem: bool=False, 
                         tandem_rotation: float=0.0,
-                        is_tandem_imported: bool=False):
+                        is_tandem_imported: bool=False,
+                        include_collet_preview: bool=False):
     app = get_app()
     config = app.values.config_values
     channel_diam = config.get("CONFIG_CHANNELS_DIAMETER")
@@ -455,6 +456,69 @@ def save_points_diagram(points: list,
             y_values = [0, end_pt_y]
             # Line goes from (0,0) to (end_pt_x, end_pt_y)
             ax.add_artist(lines.Line2D(x_values, y_values,color='grey', linestyle='--'))
+    # Include collet preview rings if selected
+    if include_collet_preview:
+        config = get_app().values.config_values
+
+        needle_od = config.get("CONFIG_NEEDLE_COLLET_OUTER_DIAMETER")
+        tandem_od_inner = config.get("CONFIG_TANDEM_COLLET_OUTER_DIAMETER_INNER")
+        tandem_od_outer = config.get("CONFIG_TANDEM_COLLET_OUTER_DIAMETER_OUTER")
+
+        centers = []
+        radii = []
+
+        # Needle collet ring around each needle channel circle
+        if needle_od:
+            r_needle = float(needle_od) / 2.0
+            for (x, y, z) in points:
+                # match your same filter used when drawing channels
+                if (np.sqrt(x**2 + y**2) / 2) < limit:
+                    centers.append((float(x), -float(y)))   # MUST match your plotting: (x, -y)
+                    radii.append(r_needle)
+
+        # Tandem rings: BOTH inner + outer (same center as tandem channel: origin)
+        if has_tandem:
+            if tandem_od_outer:
+                centers.append((0.0, 0.0))
+                radii.append(float(tandem_od_outer) / 2.0)
+            if tandem_od_inner:
+                centers.append((0.0, 0.0))
+                radii.append(float(tandem_od_inner) / 2.0)
+
+        def ring_intersects_any(i):
+            x1, y1 = centers[i]
+            r1 = radii[i]
+            for j in range(len(centers)):
+                if i == j:
+                    continue
+                x2, y2 = centers[j]
+                r2 = radii[j]
+
+                # ignore concentric rings at the same center (tandem inner vs outer)
+                if abs(x1 - x2) < 1e-6 and abs(y1 - y2) < 1e-6:
+                    continue
+
+                dx = x1 - x2
+                dy = y1 - y2
+                if (dx*dx + dy*dy) < (r1 + r2) * (r1 + r2):
+                    return True
+            return False
+
+        for i in range(len(centers)):
+            col = "red" if ring_intersects_any(i) else "green"
+            ax.add_artist(
+                plt.Circle(
+                    centers[i],
+                    radii[i],
+                    fill=False,
+                    linestyle="--",
+                    color=col,
+                    linewidth=1.5,
+                    clip_on=False,
+                )
+            )
+    # -------------------------------------------------------------------------------
+
 
     # Add a filled grey rectangle at the top center of the big circle
     notch = app.window.cylindermodel.cylinder.notch
@@ -518,6 +582,52 @@ def channels_inside_cylinder(channels: list[NeedleChannel], diameter: float):
 
     return channels_inside
 
+# Add Deadspace
+def add_deadspace(needles: list, deadspace_mm: float) -> list:
+    """
+    Returns new needles with added deadspace from tip [0] to next point [1].
+    """
+    deadspace_mm = float(deadspace_mm)
+
+    if deadspace_mm <= 0:  # If no deadspace is requested, return the original needles
+        return [[p[:] for p in needle] for needle in needles]  # Return a copy of the original needles
+     
+    extended_interstitial_length = []
+
+    for needle in needles:
+        pts = [p[:] for p in needle]  # copies points for each needle in needles list
+
+        if len(pts) < 2:
+            extended_interstitial_length.append(pts)
+            continue
+
+        tip = np.array(pts[0], dtype=float)
+        nxt = np.array(pts[1], dtype=float)
+
+        d = tip - nxt
+        n = np.linalg.norm(d)
+
+        # If the needle has zero length or if no deadspace is requested, keep it as is.
+        if n == 0:
+            log.warning("Deadspace not applied: zero-length first segment for a needle") ## Temporary Log warning, will add an error message in Ui 
+            get_app().window.channel_display_warning()
+            extended_interstitial_length.append(pts)
+            continue
+
+        u = d / n
+        new_tip = tip + u * deadspace_mm
+
+        pts[0] = [float(new_tip[0]), float(new_tip[1]), float(new_tip[2])]
+        extended_interstitial_length.append(pts)
+
+    return extended_interstitial_length
+
+#Minimum Deadspace Calculation
+# def force_min_interstitial(interstitial_lengths: list, min_deadspace: float = 6.0) -> list:
+#     """
+#     If any intersitial length is below the surface of the cylinder use the cylinder surface cloud to calculate the necessary deadspace to add and use that instead. 
+#     """
+   
 #######################################################
 # pdf generation
 #######################################################
@@ -529,7 +639,8 @@ def generate_pdf(
         needle_length: float,
         has_tandem: bool, 
         tandem_rotation: float, 
-        is_tandem_imported: bool):
+        is_tandem_imported: bool,
+        include_collet_preview: bool=False):
 
     app = get_app()
 
@@ -580,10 +691,22 @@ def generate_pdf(
     channels_inside = channels_inside_cylinder(channels, diameter)
     needles_inside = extract_points_from_channels2(channels_inside)
 
+    """
+    Use deadspace calculations to extend needles for interstitial length calculation.
+    """
+    # Read deadspace from config (defaults to 6mm)
+    config = get_app().values.config_values
+    deadspace_mm = float(config.get("CONFIG_DEADSPACE", 6.0))
+
+    # Extend a copy of the needles for calculation only (do not change originals)
+    needles_for_calc = add_deadspace(needles_inside, deadspace_mm)
+
+    # Use the extended needles for interstitial length calculation
     interstitial_lengths = get_all_interstitial_lengths(
         cylinder=cylinder,
-        needles=needles_inside)
-    
+        needles=needles_for_calc
+)
+
     protrusion_lengths = calculate_protrusion_lengths(needles_inside, needle_length)
     # TODO: Add needle label and channel number instead of "Needle 1" etc.
     #length_label = "Protruding Length for " + str(needle_length) + "mm needle"
@@ -636,7 +759,7 @@ def generate_pdf(
     last_xy_points = [needle[-1] for needle in needles_inside]
     
     png_path = save_points_diagram(last_xy_points, number_list, circle_radius, pdf_output_dir, has_tandem=has_tandem,
-                                    tandem_rotation=tandem_rotation, is_tandem_imported=is_tandem_imported)
+                                    tandem_rotation=tandem_rotation, is_tandem_imported=is_tandem_imported, include_collet_preview=include_collet_preview)
 
     # build the image for pdf with specified width and height.
     # kind='proportional' means keep the aspect ratio, so the width/height become max values.

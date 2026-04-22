@@ -479,7 +479,7 @@ QPushButton:pressed {
             <string notr="true">background-color: rgb(240, 245, 250);</string>
            </property>
            <property name="text">
-            <string>Threading diameter</string>
+            <string>Threading Diameter</string>
            </property>
           </widget>
          </item>

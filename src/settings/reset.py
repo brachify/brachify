@@ -26,7 +26,7 @@ def resetAllValues(values_dict: dict):
 
     # Channels View values
     channels_diameter = values_dict.get("CONFIG_CHANNELS_DIAMETER")
-    needle_length = values_dict.get("CONFIG_NEEDLE_LENGTH")
+    needle_length = values_dict.get("CONFIG_DEADSPACE")
     threading_depth = values_dict.get("CONFIG_CHANNELS_THREADING_DEPTH")
     threading_radius = values_dict.get("CONFIG_CHANNELS_THREADING_DIAMETER")
     app.window.navigationmodel.views[2].ui.spinbox_diameter.setValue(channels_diameter)
@@ -91,7 +91,21 @@ def resetAllValues(values_dict: dict):
         if not app.window.tandemmodel.is_shape_imported:
             # apply the config settings
             app.window.navigationmodel.views[3].action_set_tandem()
-    
+
+    #Collet Preview Values
+    export_ui = app.window.navigationmodel.views[4].ui
+
+    needle_collet_od = values_dict.get("CONFIG_NEEDLE_COLLET_OUTER_DIAMETER")
+    tandem_collet_od_outer = values_dict.get("CONFIG_TANDEM_COLLET_OUTER_DIAMETER_OUTER")
+    tandem_collet_od_inner = values_dict.get("CONFIG_TANDEM_COLLET_OUTER_DIAMETER_INNER")
+
+    # Only set if keys exist (prevents None issues)
+    if needle_collet_od is not None:
+        export_ui.sb_needle_collet_od.setValue(needle_collet_od)
+    if tandem_collet_od_outer is not None:
+        export_ui.sb_tandem_collet_outer_od.setValue(tandem_collet_od_outer)
+    if tandem_collet_od_inner is not None:
+        export_ui.sb_tandem_collet_inner_od.setValue(tandem_collet_od_inner)
 def getCurrentValues():
     """ 
     Collects all the currently set values and returns them as a dict.
@@ -119,12 +133,18 @@ def getCurrentValues():
     # 4. needle data - pulls the current value in the spin box
     default_needle_length = app.window.navigationmodel.views[2].ui.sb_needle_length.value() 
 
+    # 5. collet data - pulls the current values in the spin boxes
+    export_ui = app.window.navigationmodel.views[4].ui
+    needle_collet_outer_diameter = export_ui.sb_needle_collet_od.value()
+    collet_outer_diameter_outer = export_ui.sb_tandem_collet_outer_od.value()
+    collet_outer_diameter_inner = export_ui.sb_tandem_collet_inner_od.value()
+
     # Create a dictionary containing the data.
     current_values = {
         "CONFIG_CYLINDER_DIAMETER": default_cylinder_diameter,
         "CONFIG_CYLINDER_LENGTH": default_length,
         "CONFIG_CHANNELS_DIAMETER": default_diameter,
-        "CONFIG_NEEDLE_LENGTH": default_needle_length,
+        "CONFIG_DEADSPACE": default_needle_length,
         "CONFIG_TANDEM_TIP_HEIGHT": tandem_length, # tandem_length may not actually be Tandem_Tip_Height_Default
         "CONFIG_TANDEM_CHANNEL_DIAMETER": tandem_channel_diameter_default, 
         "CONFIG_TANDEM_STOPPER_DIAMETER": tandem_stopper_diameter_default,
@@ -134,7 +154,10 @@ def getCurrentValues():
         "CONFIG_CHANNELS_THREADING_DIAMETER": threading_diamenter,
         "CONFIG_TANDEM_ROTATION": tandem_rotation,
         "CONFIG_TANDEM_THREADING_DEPTH": tandem_threading_depth,
-        "CONFIG_TANDEM_THREADING_DIAMETER": tandem_threading_diameter
+        "CONFIG_TANDEM_THREADING_DIAMETER": tandem_threading_diameter,
+        "CONFIG_NEEDLE_COLLET_OUTER_DIAMETER": needle_collet_outer_diameter,
+        "CONFIG_TANDEM_COLLET_OUTER_DIAMETER_INNER": collet_outer_diameter_inner,
+        "CONFIG_TANDEM_COLLET_OUTER_DIAMETER_OUTER": collet_outer_diameter_outer
     }
 
     return current_values

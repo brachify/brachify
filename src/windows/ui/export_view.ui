@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>290</width>
-    <height>290</height>
+    <height>312</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -60,6 +60,74 @@
        </property>
        <property name="checked">
         <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(240, 245, 250);</string>
+       </property>
+       <property name="text">
+        <string>Show Collet Spacings</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(240, 245, 250);</string>
+       </property>
+       <property name="text">
+        <string>Needle Collet Spacing Tol.</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(240, 245, 250);</string>
+       </property>
+       <property name="text">
+        <string>Tandem Outer Spacing Tol.</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="label_5">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(240, 245, 250);</string>
+       </property>
+       <property name="text">
+        <string>Tandem Inner Spacing Tol.</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QDoubleSpinBox" name="sb_tandem_collet_inner_od"/>
+     </item>
+     <item row="4" column="1">
+      <widget class="QDoubleSpinBox" name="sb_tandem_collet_outer_od"/>
+     </item>
+     <item row="3" column="1">
+      <widget class="QDoubleSpinBox" name="sb_needle_collet_od"/>
+     </item>
+     <item row="1" column="1">
+      <widget class="QCheckBox" name="cb_collet_preview_reference_sheet">
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(240, 245, 250);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -184,6 +252,19 @@ QPushButton:pressed {
     </widget>
    </item>
    <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>267</width>
+       <height>4338</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
     <widget class="QPushButton" name="btn_export_current_config">
      <property name="minimumSize">
       <size>
@@ -216,19 +297,6 @@ QPushButton:pressed {
       <string>Export Current Settings as Config</string>
      </property>
     </widget>
-   </item>
-   <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>267</width>
-       <height>4338</height>
-      </size>
-     </property>
-    </spacer>
    </item>
   </layout>
  </widget>

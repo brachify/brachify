@@ -3,11 +3,13 @@ from PySide6.QtWidgets import QWidget
 from classes.app import get_app
 from classes.logger import log
 from classes.mesh.cylinder import BrachyCylinder
+
 from windows.models.shape_model import ShapeTypes
 from windows.ui.cylinder_view_ui import Ui_Cylinder_View
 from windows.views.custom_view import display_action, CustomView
 
 from settings.reset import getCurrentValues
+from OCC.Core.gp import gp_Dir, gp_Ax2, gp_Pnt
 
 materials = {
     ShapeTypes.CYLINDER: {"rgb": [0.2, 0.55, 0.55], "transparent": True},
@@ -31,20 +33,26 @@ class CylinderView(CustomView):
         length = self.ui.spinbox_length.value()
         add_base = self.ui.cb_add_base.isChecked()
 
+        base_thickness = self.ui.spinbox_base_thickness.value()
+        base_height = self.ui.spinbox_base_height.value()
+        
         # update the config_values dict
         app.values.config_values["CONFIG_CYLINDER_DIAMETER"] = diameter
         app.values.config_values["CONFIG_CYLINDER_LENGTH"] = length
+        app.values.config_values["CONFIG_BASE_THICKNESS"] = base_thickness
+        app.values.config_values["CONFIG_BASE_HEIGHT"] = base_height
 
-        if cylinder.length != length:
-            cylinder.length = length
-            # send the new offset signal
-            # The offset is the amount the cylinder has changed compared to the starting_length.
-            # The needle points and tandem are adjusted from their original location 
-            # (which is determined when they are originally loaded) and the needle points are never modified.
-            offset = length - model.starting_length 
-            app.signals.height_changed.emit(offset)
+        self.diameter = diameter
+        self.length = length 
+        cylinder = BrachyCylinder(diameter=diameter)
+       
+        # send the new offset signal
+        # The offset is the amount the cylinder has changed compared to the starting_length.
+        # The needle points and tandem are adjusted from their original location 
+        # (which is determined when they are originally loaded) and the needle points are never modified.
+        offset = length - model.starting_length 
+        app.signals.height_changed.emit(offset)
 
-        cylinder.diameter = diameter
         cylinder.enableBase(add_base)  # this will force the cylinder's shape to be recalculated
 
         model.update_cylinder(cylinder)
@@ -66,6 +74,9 @@ class CylinderView(CustomView):
         self.ui.spinbox_length.setValue(length)
         self.ui.cb_add_base.setChecked(add_base)
 
+        self.ui.spinbox_base_thickness.setValue(get_app().values.config_values.get("CONFIG_BASE_THICKNESS", 0.0))
+        self.ui.spinbox_base_height.setValue(get_app().values.config_values.get("CONFIG_BASE_HEIGHT", 0.0))
+
     @display_action
     def on_open(self):
         log.debug(f"view open")
@@ -80,6 +91,8 @@ class CylinderView(CustomView):
         # Set the spin box values
         self.ui.spinbox_length.setValue(get_app().values.config_values.get("CONFIG_CYLINDER_LENGTH"))
         self.ui.spinbox_diameter.setValue(get_app().values.config_values.get("CONFIG_CYLINDER_DIAMETER"))
+        self.ui.spinbox_base_thickness.setValue(get_app().values.config_values.get("CONFIG_BASE_THICKNESS", 0.0))
+        self.ui.spinbox_base_height.setValue(get_app().values.config_values.get("CONFIG_BASE_HEIGHT", 0.0))
 
         # signals and slots
         self.ui.btn_apply_settings.pressed.connect(self.action_apply_settings)
