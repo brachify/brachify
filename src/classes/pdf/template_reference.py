@@ -234,10 +234,19 @@ def get_all_interstitial_lengths(cylinder: BrachyCylinder, needles: list, spacin
         line_direction = line_displacement/np.linalg.norm(line_displacement)
 
         # Calculate the vector from one point on the line to each point in the point cloud
+        # Filter the surface cloud to only points that are not above or below the line segment (ie: only points that are within the z values of the line segment) to speed up calculations and avoid issues with points that are above or below the line.
+        z_values = surface_cloud[:, 2]
+        z_min = np.min(line_points[:, 2])
+        z_max = np.max(line_points[:, 2])
+        mask = np.logical_and(z_values >= z_min, z_values <= z_max)
+        surface_cloud = surface_cloud[mask]
+
         vector_to_points = surface_cloud - line_points[0]
 
         # Project the vectors onto the line direction
+
         projection_onto_line = np.dot(vector_to_points, line_direction)
+
 
         # Calculate the closest points on the line to each point in the cloud
         closest_points_on_line = line_points[0] + \
