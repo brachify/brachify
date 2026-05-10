@@ -16,7 +16,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QGridLayout, QLayout, QMainWindow,
-    QPushButton, QSizePolicy, QStackedWidget, QVBoxLayout,
+    QPushButton, QSizePolicy, QSplitter, QStackedWidget, QVBoxLayout,
     QWidget)
 
 class Ui_MainWindow(object):
@@ -34,14 +34,9 @@ class Ui_MainWindow(object):
         self.gridLayout_2.setSpacing(0)
         self.gridLayout_2.setObjectName(u"gridLayout_2")
         self.gridLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_2 = QVBoxLayout()
-        self.verticalLayout_2.setSpacing(0)
-        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.verticalLayout_2.setSizeConstraint(QLayout.SetMinimumSize)
-        self.verticalLayout_2.setContentsMargins(0, -1, -1, 0)
         self.display_view_widget = QWidget(self.centralwidget)
         self.display_view_widget.setObjectName(u"display_view_widget")
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.display_view_widget.sizePolicy().hasHeightForWidth())
@@ -54,28 +49,31 @@ class Ui_MainWindow(object):
         self.gridLayout_3.setSizeConstraint(QLayout.SetMaximumSize)
         self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
 
-        self.verticalLayout_2.addWidget(self.display_view_widget)
-
-
-        self.gridLayout_2.addLayout(self.verticalLayout_2, 0, 1, 1, 1)
-
-        self.verticalLayout = QVBoxLayout()
+        self.sidebar_widget = QWidget(self.centralwidget)
+        self.sidebar_widget.setObjectName(u"sidebar_widget")
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        self.sidebar_widget.setSizePolicy(sizePolicy)
+        self.sidebar_widget.setMinimumSize(QSize(220, 220))
+        self.sidebar_widget.setMaximumSize(QSize(16777215, 16777215))
+        self.verticalLayout = QVBoxLayout(self.sidebar_widget)
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setSizeConstraint(QLayout.SetDefaultConstraint)
-        self.verticalLayout.setContentsMargins(0, 0, -1, 0)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.top_menu_bar = QWidget(self.centralwidget)
         self.top_menu_bar.setObjectName(u"top_menu_bar")
-        self.top_menu_bar.setMinimumSize(QSize(290, 220))
-        self.top_menu_bar.setMaximumSize(QSize(290, 16777215))
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        self.top_menu_bar.setSizePolicy(sizePolicy)
+        self.top_menu_bar.setMinimumSize(QSize(220, 220))
+        self.top_menu_bar.setMaximumSize(QSize(16777215, 16777215))
         self.verticalLayout_31 = QVBoxLayout(self.top_menu_bar)
         self.verticalLayout_31.setSpacing(0)
         self.verticalLayout_31.setObjectName(u"verticalLayout_31")
-        self.verticalLayout_31.setContentsMargins(0, 0, 0, 20)
+        self.verticalLayout_31.setContentsMargins(0, 0, 0, 0)
         self.btn_import_view = QPushButton(self.top_menu_bar)
         self.btn_import_view.setObjectName(u"btn_import_view")
-        self.btn_import_view.setMinimumSize(QSize(290, 33))
-        self.btn_import_view.setMaximumSize(QSize(290, 33))
+        self.btn_import_view.setMinimumSize(QSize(0, 33))
+        self.btn_import_view.setMaximumSize(QSize(16777215, 33))
         self.btn_import_view.setStyleSheet(u"QPushButton {\n"
 "	color: rgb(250,250,250);\n"
 "	background-color: rgb(28, 44, 81);\n"
@@ -94,8 +92,8 @@ class Ui_MainWindow(object):
 
         self.btn_cylinder_view = QPushButton(self.top_menu_bar)
         self.btn_cylinder_view.setObjectName(u"btn_cylinder_view")
-        self.btn_cylinder_view.setMinimumSize(QSize(290, 33))
-        self.btn_cylinder_view.setMaximumSize(QSize(290, 33))
+        self.btn_cylinder_view.setMinimumSize(QSize(0, 33))
+        self.btn_cylinder_view.setMaximumSize(QSize(16777215, 33))
         self.btn_cylinder_view.setStyleSheet(u"QPushButton {\n"
 "	color: rgb(0, 0, 0);\n"
 "	background-color: rgb(199, 219, 237);\n"
@@ -114,8 +112,8 @@ class Ui_MainWindow(object):
 
         self.btn_channels_view = QPushButton(self.top_menu_bar)
         self.btn_channels_view.setObjectName(u"btn_channels_view")
-        self.btn_channels_view.setMinimumSize(QSize(290, 33))
-        self.btn_channels_view.setMaximumSize(QSize(290, 33))
+        self.btn_channels_view.setMinimumSize(QSize(0, 33))
+        self.btn_channels_view.setMaximumSize(QSize(16777215, 33))
         self.btn_channels_view.setStyleSheet(u"QPushButton {\n"
 "	color: rgb(0, 0, 0);\n"
 "	background-color: rgb(199, 219, 237);\n"
@@ -134,8 +132,8 @@ class Ui_MainWindow(object):
 
         self.btn_tandem_view = QPushButton(self.top_menu_bar)
         self.btn_tandem_view.setObjectName(u"btn_tandem_view")
-        self.btn_tandem_view.setMinimumSize(QSize(290, 33))
-        self.btn_tandem_view.setMaximumSize(QSize(290, 33))
+        self.btn_tandem_view.setMinimumSize(QSize(0, 33))
+        self.btn_tandem_view.setMaximumSize(QSize(16777215, 33))
         self.btn_tandem_view.setStyleSheet(u"QPushButton {\n"
 "	color: rgb(0, 0, 0);\n"
 "	background-color: rgb(199, 219, 237);\n"
@@ -154,8 +152,8 @@ class Ui_MainWindow(object):
 
         self.btn_export_view = QPushButton(self.top_menu_bar)
         self.btn_export_view.setObjectName(u"btn_export_view")
-        self.btn_export_view.setMinimumSize(QSize(290, 33))
-        self.btn_export_view.setMaximumSize(QSize(290, 33))
+        self.btn_export_view.setMinimumSize(QSize(0, 33))
+        self.btn_export_view.setMaximumSize(QSize(16777215, 33))
         self.btn_export_view.setStyleSheet(u"QPushButton {\n"
 "	color: rgb(0, 0, 0);\n"
 "	background-color: rgb(199, 219, 237);\n"
@@ -177,8 +175,10 @@ class Ui_MainWindow(object):
 
         self.viewswidget = QStackedWidget(self.centralwidget)
         self.viewswidget.setObjectName(u"viewswidget")
-        self.viewswidget.setMinimumSize(QSize(290, 100))
-        self.viewswidget.setMaximumSize(QSize(290, 16777215))
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        self.viewswidget.setSizePolicy(sizePolicy)
+        self.viewswidget.setMinimumSize(QSize(220, 100))
+        self.viewswidget.setMaximumSize(QSize(16777215, 16777215))
         self.viewswidget.setStyleSheet(u"color: rgba(240, 245, 250);\n"
 "\n"
 "selection-background-color: rgb(0, 0, 255);\n"
@@ -222,8 +222,15 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addWidget(self.viewswidget)
 
+        self.splitter = QSplitter(self.centralwidget)
+        self.splitter.setObjectName(u"splitter")
+        self.splitter.setOrientation(Qt.Horizontal)
+        self.splitter.setChildrenCollapsible(False)
+        self.splitter.addWidget(self.sidebar_widget)
+        self.splitter.addWidget(self.display_view_widget)
+        self.splitter.setSizes([240, 672])
 
-        self.gridLayout_2.addLayout(self.verticalLayout, 0, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.splitter, 0, 0, 1, 1)
 
         MainWindow.setCentralWidget(self.centralwidget)
 
