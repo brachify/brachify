@@ -73,7 +73,7 @@
         </property>
         <layout class="QGridLayout" name="gridLayout_3">
          <property name="sizeConstraint">
-          <enum>QLayout::SetMaximumSize</enum>
+          <enum>QLayout::SetMinimumSize</enum>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -101,16 +101,19 @@
        <number>0</number>
       </property>
       <property name="sizeConstraint">
-       <enum>QLayout::SetDefaultConstraint</enum>
+       <enum>QLayout::SetMaximumSize</enum>
       </property>
       <property name="leftMargin">
-       <number>0</number>
+       <number>2</number>
       </property>
       <property name="topMargin">
-       <number>0</number>
+       <number>2</number>
+      </property>
+      <property name="rightMargin">
+       <number>2</number>
       </property>
       <property name="bottomMargin">
-       <number>0</number>
+       <number>2</number>
       </property>
       <item>
        <widget class="QWidget" name="top_menu_bar" native="true">
@@ -120,15 +123,12 @@
           <height>180</height>
          </size>
         </property>
-        <property name="maximumSize">
-         <size>
-          <width>290</width>
-          <height>180</height>
-         </size>
-        </property>
         <layout class="QVBoxLayout" name="verticalLayout_31">
          <property name="spacing">
           <number>0</number>
+         </property>
+         <property name="sizeConstraint">
+          <enum>QLayout::SetNoConstraint</enum>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -317,6 +317,12 @@ QPushButton:pressed {
       </item>
       <item>
        <widget class="QStackedWidget" name="viewswidget">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
           <width>290</width>

@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'main_window.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.7.0
+## Created by: Qt User Interface Compiler version 6.9.3
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -25,7 +25,7 @@ class Ui_MainWindow(object):
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(912, 607)
         icon = QIcon()
-        icon.addFile(u":/Icon/Icon/brachify_splash-ico.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u":/Icon/Icon/brachify_splash-ico.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         MainWindow.setWindowIcon(icon)
         MainWindow.setStyleSheet(u"background-color: rgb(155,189,220);")
         self.centralwidget = QWidget(MainWindow)
@@ -51,7 +51,7 @@ class Ui_MainWindow(object):
         self.gridLayout_3 = QGridLayout(self.display_view_widget)
         self.gridLayout_3.setSpacing(0)
         self.gridLayout_3.setObjectName(u"gridLayout_3")
-        self.gridLayout_3.setSizeConstraint(QLayout.SetMaximumSize)
+        self.gridLayout_3.setSizeConstraint(QLayout.SetMinimumSize)
         self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
 
         self.verticalLayout_2.addWidget(self.display_view_widget)
@@ -62,15 +62,15 @@ class Ui_MainWindow(object):
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalLayout.setSizeConstraint(QLayout.SetDefaultConstraint)
-        self.verticalLayout.setContentsMargins(0, 0, -1, 0)
+        self.verticalLayout.setSizeConstraint(QLayout.SetMaximumSize)
+        self.verticalLayout.setContentsMargins(2, 2, 2, 2)
         self.top_menu_bar = QWidget(self.centralwidget)
         self.top_menu_bar.setObjectName(u"top_menu_bar")
         self.top_menu_bar.setMinimumSize(QSize(290, 180))
-        self.top_menu_bar.setMaximumSize(QSize(290, 180))
         self.verticalLayout_31 = QVBoxLayout(self.top_menu_bar)
         self.verticalLayout_31.setSpacing(0)
         self.verticalLayout_31.setObjectName(u"verticalLayout_31")
+        self.verticalLayout_31.setSizeConstraint(QLayout.SetNoConstraint)
         self.verticalLayout_31.setContentsMargins(0, 0, 0, 20)
         self.btn_import_view = QPushButton(self.top_menu_bar)
         self.btn_import_view.setObjectName(u"btn_import_view")
@@ -177,6 +177,11 @@ class Ui_MainWindow(object):
 
         self.viewswidget = QStackedWidget(self.centralwidget)
         self.viewswidget.setObjectName(u"viewswidget")
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.viewswidget.sizePolicy().hasHeightForWidth())
+        self.viewswidget.setSizePolicy(sizePolicy1)
         self.viewswidget.setMinimumSize(QSize(290, 100))
         self.viewswidget.setMaximumSize(QSize(290, 16777215))
         self.viewswidget.setStyleSheet(u"color: rgba(240, 245, 250);\n"

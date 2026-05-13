@@ -286,8 +286,23 @@ QPushButton:pressed {
        </property>
        <item>
         <layout class="QFormLayout" name="formLayout_2">
+         <property name="sizeConstraint">
+          <enum>QLayout::SetNoConstraint</enum>
+         </property>
          <property name="verticalSpacing">
           <number>6</number>
+         </property>
+         <property name="leftMargin">
+          <number>2</number>
+         </property>
+         <property name="topMargin">
+          <number>2</number>
+         </property>
+         <property name="rightMargin">
+          <number>2</number>
+         </property>
+         <property name="bottomMargin">
+          <number>2</number>
          </property>
          <item row="0" column="1">
           <widget class="QDoubleSpinBox" name="sb_tandem_height">

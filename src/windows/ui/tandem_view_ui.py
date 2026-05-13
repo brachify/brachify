@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'tandem_view.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.7.0
+## Created by: Qt User Interface Compiler version 6.9.3
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -16,8 +16,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QDoubleSpinBox, QFormLayout, QLabel,
-    QPushButton, QSizePolicy, QSpacerItem, QTabWidget,
-    QVBoxLayout, QWidget)
+    QLayout, QPushButton, QSizePolicy, QSpacerItem,
+    QTabWidget, QVBoxLayout, QWidget)
 
 class Ui_Tandem_View(object):
     def setupUi(self, Tandem_View):
@@ -86,7 +86,7 @@ class Ui_Tandem_View(object):
         self.label_2.setObjectName(u"label_2")
         self.label_2.setMaximumSize(QSize(70, 25))
 
-        self.formLayout.setWidget(0, QFormLayout.LabelRole, self.label_2)
+        self.formLayout.setWidget(0, QFormLayout.ItemRole.LabelRole, self.label_2)
 
         self.sb_height_offset = QDoubleSpinBox(self.Import)
         self.sb_height_offset.setObjectName(u"sb_height_offset")
@@ -95,12 +95,12 @@ class Ui_Tandem_View(object):
         self.sb_height_offset.setMinimum(-100.000000000000000)
         self.sb_height_offset.setMaximum(100.000000000000000)
 
-        self.formLayout.setWidget(0, QFormLayout.FieldRole, self.sb_height_offset)
+        self.formLayout.setWidget(0, QFormLayout.ItemRole.FieldRole, self.sb_height_offset)
 
         self.label = QLabel(self.Import)
         self.label.setObjectName(u"label")
 
-        self.formLayout.setWidget(1, QFormLayout.LabelRole, self.label)
+        self.formLayout.setWidget(1, QFormLayout.ItemRole.LabelRole, self.label)
 
         self.tandem_rotation = QDoubleSpinBox(self.Import)
         self.tandem_rotation.setObjectName(u"tandem_rotation")
@@ -108,7 +108,7 @@ class Ui_Tandem_View(object):
         self.tandem_rotation.setMinimum(-360.000000000000000)
         self.tandem_rotation.setMaximum(360.000000000000000)
 
-        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.tandem_rotation)
+        self.formLayout.setWidget(1, QFormLayout.ItemRole.FieldRole, self.tandem_rotation)
 
 
         self.verticalLayout_3.addLayout(self.formLayout)
@@ -152,7 +152,9 @@ class Ui_Tandem_View(object):
         self.verticalLayout_6.setContentsMargins(10, 10, 10, 10)
         self.formLayout_2 = QFormLayout()
         self.formLayout_2.setObjectName(u"formLayout_2")
+        self.formLayout_2.setSizeConstraint(QLayout.SetNoConstraint)
         self.formLayout_2.setVerticalSpacing(6)
+        self.formLayout_2.setContentsMargins(2, 2, 2, 2)
         self.sb_tandem_height = QDoubleSpinBox(self.Generate)
         self.sb_tandem_height.setObjectName(u"sb_tandem_height")
         self.sb_tandem_height.setStyleSheet(u"background-color: rgb(255, 255, 250)")
@@ -160,7 +162,7 @@ class Ui_Tandem_View(object):
         self.sb_tandem_height.setMaximum(500.000000000000000)
         self.sb_tandem_height.setValue(10.000000000000000)
 
-        self.formLayout_2.setWidget(0, QFormLayout.FieldRole, self.sb_tandem_height)
+        self.formLayout_2.setWidget(0, QFormLayout.ItemRole.FieldRole, self.sb_tandem_height)
 
         self.sp_channel_diameter = QDoubleSpinBox(self.Generate)
         self.sp_channel_diameter.setObjectName(u"sp_channel_diameter")
@@ -168,20 +170,20 @@ class Ui_Tandem_View(object):
         self.sp_channel_diameter.setStyleSheet(u"background-color: rgb(255, 255, 250)")
         self.sp_channel_diameter.setMinimum(0.500000000000000)
 
-        self.formLayout_2.setWidget(1, QFormLayout.FieldRole, self.sp_channel_diameter)
+        self.formLayout_2.setWidget(1, QFormLayout.ItemRole.FieldRole, self.sp_channel_diameter)
 
         self.sp_stopper_diameter = QDoubleSpinBox(self.Generate)
         self.sp_stopper_diameter.setObjectName(u"sp_stopper_diameter")
         self.sp_stopper_diameter.setStyleSheet(u"background-color: rgb(255, 255, 250)")
         self.sp_stopper_diameter.setMinimum(0.500000000000000)
 
-        self.formLayout_2.setWidget(2, QFormLayout.FieldRole, self.sp_stopper_diameter)
+        self.formLayout_2.setWidget(2, QFormLayout.ItemRole.FieldRole, self.sp_stopper_diameter)
 
         self.sp_bend_angle = QDoubleSpinBox(self.Generate)
         self.sp_bend_angle.setObjectName(u"sp_bend_angle")
         self.sp_bend_angle.setStyleSheet(u"background-color: rgb(255, 255, 250)")
 
-        self.formLayout_2.setWidget(3, QFormLayout.FieldRole, self.sp_bend_angle)
+        self.formLayout_2.setWidget(3, QFormLayout.ItemRole.FieldRole, self.sp_bend_angle)
 
         self.sb_bend_radius = QDoubleSpinBox(self.Generate)
         self.sb_bend_radius.setObjectName(u"sb_bend_radius")
@@ -189,32 +191,32 @@ class Ui_Tandem_View(object):
         self.sb_bend_radius.setMinimum(10.000000000000000)
         self.sb_bend_radius.setMaximum(1000.000000000000000)
 
-        self.formLayout_2.setWidget(4, QFormLayout.FieldRole, self.sb_bend_radius)
+        self.formLayout_2.setWidget(4, QFormLayout.ItemRole.FieldRole, self.sb_bend_radius)
 
         self.label_7 = QLabel(self.Generate)
         self.label_7.setObjectName(u"label_7")
 
-        self.formLayout_2.setWidget(0, QFormLayout.LabelRole, self.label_7)
+        self.formLayout_2.setWidget(0, QFormLayout.ItemRole.LabelRole, self.label_7)
 
         self.label_8 = QLabel(self.Generate)
         self.label_8.setObjectName(u"label_8")
 
-        self.formLayout_2.setWidget(1, QFormLayout.LabelRole, self.label_8)
+        self.formLayout_2.setWidget(1, QFormLayout.ItemRole.LabelRole, self.label_8)
 
         self.label_4 = QLabel(self.Generate)
         self.label_4.setObjectName(u"label_4")
 
-        self.formLayout_2.setWidget(2, QFormLayout.LabelRole, self.label_4)
+        self.formLayout_2.setWidget(2, QFormLayout.ItemRole.LabelRole, self.label_4)
 
         self.label_12 = QLabel(self.Generate)
         self.label_12.setObjectName(u"label_12")
 
-        self.formLayout_2.setWidget(3, QFormLayout.LabelRole, self.label_12)
+        self.formLayout_2.setWidget(3, QFormLayout.ItemRole.LabelRole, self.label_12)
 
         self.label_6 = QLabel(self.Generate)
         self.label_6.setObjectName(u"label_6")
 
-        self.formLayout_2.setWidget(4, QFormLayout.LabelRole, self.label_6)
+        self.formLayout_2.setWidget(4, QFormLayout.ItemRole.LabelRole, self.label_6)
 
         self.sb_threading_depth = QDoubleSpinBox(self.Generate)
         self.sb_threading_depth.setObjectName(u"sb_threading_depth")
@@ -222,7 +224,7 @@ class Ui_Tandem_View(object):
         self.sb_threading_depth.setStyleSheet(u"background-color: rgb(255, 255, 255);")
         self.sb_threading_depth.setMaximum(350.000000000000000)
 
-        self.formLayout_2.setWidget(5, QFormLayout.FieldRole, self.sb_threading_depth)
+        self.formLayout_2.setWidget(5, QFormLayout.ItemRole.FieldRole, self.sb_threading_depth)
 
         self.sb_threading_diameter = QDoubleSpinBox(self.Generate)
         self.sb_threading_diameter.setObjectName(u"sb_threading_diameter")
@@ -230,7 +232,7 @@ class Ui_Tandem_View(object):
         self.sb_threading_diameter.setStyleSheet(u"background-color: rgb(255, 255, 255);")
         self.sb_threading_diameter.setMaximum(350.000000000000000)
 
-        self.formLayout_2.setWidget(6, QFormLayout.FieldRole, self.sb_threading_diameter)
+        self.formLayout_2.setWidget(6, QFormLayout.ItemRole.FieldRole, self.sb_threading_diameter)
 
         self.label_9 = QLabel(self.Generate)
         self.label_9.setObjectName(u"label_9")
@@ -238,7 +240,7 @@ class Ui_Tandem_View(object):
         self.label_9.setMaximumSize(QSize(16777215, 18))
         self.label_9.setStyleSheet(u"background-color: rgb(240, 245, 250);")
 
-        self.formLayout_2.setWidget(5, QFormLayout.LabelRole, self.label_9)
+        self.formLayout_2.setWidget(5, QFormLayout.ItemRole.LabelRole, self.label_9)
 
         self.label_10 = QLabel(self.Generate)
         self.label_10.setObjectName(u"label_10")
@@ -246,12 +248,12 @@ class Ui_Tandem_View(object):
         self.label_10.setMaximumSize(QSize(16777215, 18))
         self.label_10.setStyleSheet(u"background-color: rgb(240, 245, 250);")
 
-        self.formLayout_2.setWidget(6, QFormLayout.LabelRole, self.label_10)
+        self.formLayout_2.setWidget(6, QFormLayout.ItemRole.LabelRole, self.label_10)
 
         self.label_3 = QLabel(self.Generate)
         self.label_3.setObjectName(u"label_3")
 
-        self.formLayout_2.setWidget(7, QFormLayout.LabelRole, self.label_3)
+        self.formLayout_2.setWidget(7, QFormLayout.ItemRole.LabelRole, self.label_3)
 
         self.tandem_rotation_2 = QDoubleSpinBox(self.Generate)
         self.tandem_rotation_2.setObjectName(u"tandem_rotation_2")
@@ -259,7 +261,7 @@ class Ui_Tandem_View(object):
         self.tandem_rotation_2.setMinimum(-360.000000000000000)
         self.tandem_rotation_2.setMaximum(360.000000000000000)
 
-        self.formLayout_2.setWidget(7, QFormLayout.FieldRole, self.tandem_rotation_2)
+        self.formLayout_2.setWidget(7, QFormLayout.ItemRole.FieldRole, self.tandem_rotation_2)
 
 
         self.verticalLayout_6.addLayout(self.formLayout_2)

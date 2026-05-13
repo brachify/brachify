@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'channels_view.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.5.2
+## Created by: Qt User Interface Compiler version 6.9.3
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -24,7 +24,7 @@ class Ui_Channels_View(object):
         if not Channels_View.objectName():
             Channels_View.setObjectName(u"Channels_View")
         Channels_View.resize(290, 290)
-        sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(Channels_View.sizePolicy().hasHeightForWidth())
@@ -37,9 +37,11 @@ class Ui_Channels_View(object):
         self.verticalLayout.setContentsMargins(10, 10, 10, 10)
         self.formLayout = QFormLayout()
         self.formLayout.setObjectName(u"formLayout")
+        self.formLayout.setSizeConstraint(QLayout.SetNoConstraint)
+        self.formLayout.setContentsMargins(2, 2, 2, 2)
         self.label_4 = QLabel(Channels_View)
         self.label_4.setObjectName(u"label_4")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.label_4.sizePolicy().hasHeightForWidth())
@@ -48,11 +50,11 @@ class Ui_Channels_View(object):
         self.label_4.setMaximumSize(QSize(16777215, 18))
         self.label_4.setStyleSheet(u"background-color: rgb(240, 245, 250);")
 
-        self.formLayout.setWidget(0, QFormLayout.LabelRole, self.label_4)
+        self.formLayout.setWidget(0, QFormLayout.ItemRole.LabelRole, self.label_4)
 
         self.spinbox_diameter = QDoubleSpinBox(Channels_View)
         self.spinbox_diameter.setObjectName(u"spinbox_diameter")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
         sizePolicy2.setHorizontalStretch(0)
         sizePolicy2.setVerticalStretch(0)
         sizePolicy2.setHeightForWidth(self.spinbox_diameter.sizePolicy().hasHeightForWidth())
@@ -61,7 +63,7 @@ class Ui_Channels_View(object):
         self.spinbox_diameter.setStyleSheet(u"background-color: rgb(255, 255, 255);")
         self.spinbox_diameter.setMinimum(0.300000000000000)
 
-        self.formLayout.setWidget(0, QFormLayout.FieldRole, self.spinbox_diameter)
+        self.formLayout.setWidget(0, QFormLayout.ItemRole.FieldRole, self.spinbox_diameter)
 
         self.label = QLabel(Channels_View)
         self.label.setObjectName(u"label")
@@ -71,7 +73,7 @@ class Ui_Channels_View(object):
         self.label.setMaximumSize(QSize(16777215, 18))
         self.label.setStyleSheet(u"background-color: rgb(240, 245, 250);")
 
-        self.formLayout.setWidget(1, QFormLayout.LabelRole, self.label)
+        self.formLayout.setWidget(1, QFormLayout.ItemRole.LabelRole, self.label)
 
         self.sb_needle_length = QDoubleSpinBox(Channels_View)
         self.sb_needle_length.setObjectName(u"sb_needle_length")
@@ -81,7 +83,7 @@ class Ui_Channels_View(object):
         self.sb_needle_length.setStyleSheet(u"background-color: rgb(255, 255, 255);")
         self.sb_needle_length.setMaximum(350.000000000000000)
 
-        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.sb_needle_length)
+        self.formLayout.setWidget(1, QFormLayout.ItemRole.FieldRole, self.sb_needle_length)
 
         self.label_2 = QLabel(Channels_View)
         self.label_2.setObjectName(u"label_2")
@@ -91,7 +93,7 @@ class Ui_Channels_View(object):
         self.label_2.setMaximumSize(QSize(16777215, 18))
         self.label_2.setStyleSheet(u"background-color: rgb(240, 245, 250);")
 
-        self.formLayout.setWidget(2, QFormLayout.LabelRole, self.label_2)
+        self.formLayout.setWidget(2, QFormLayout.ItemRole.LabelRole, self.label_2)
 
         self.sb_threading_dept = QDoubleSpinBox(Channels_View)
         self.sb_threading_dept.setObjectName(u"sb_threading_dept")
@@ -101,7 +103,7 @@ class Ui_Channels_View(object):
         self.sb_threading_dept.setStyleSheet(u"background-color: rgb(255, 255, 255);")
         self.sb_threading_dept.setMaximum(350.000000000000000)
 
-        self.formLayout.setWidget(2, QFormLayout.FieldRole, self.sb_threading_dept)
+        self.formLayout.setWidget(2, QFormLayout.ItemRole.FieldRole, self.sb_threading_dept)
 
         self.label_3 = QLabel(Channels_View)
         self.label_3.setObjectName(u"label_3")
@@ -111,7 +113,7 @@ class Ui_Channels_View(object):
         self.label_3.setMaximumSize(QSize(16777215, 18))
         self.label_3.setStyleSheet(u"background-color: rgb(240, 245, 250);")
 
-        self.formLayout.setWidget(3, QFormLayout.LabelRole, self.label_3)
+        self.formLayout.setWidget(3, QFormLayout.ItemRole.LabelRole, self.label_3)
 
         self.sb_threading_diameter = QDoubleSpinBox(Channels_View)
         self.sb_threading_diameter.setObjectName(u"sb_threading_diameter")
@@ -121,7 +123,7 @@ class Ui_Channels_View(object):
         self.sb_threading_diameter.setStyleSheet(u"background-color: rgb(255, 255, 255);")
         self.sb_threading_diameter.setMaximum(350.000000000000000)
 
-        self.formLayout.setWidget(3, QFormLayout.FieldRole, self.sb_threading_diameter)
+        self.formLayout.setWidget(3, QFormLayout.ItemRole.FieldRole, self.sb_threading_diameter)
 
 
         self.verticalLayout.addLayout(self.formLayout)
@@ -157,7 +159,7 @@ class Ui_Channels_View(object):
 
         self.listwidget_channels = QListWidget(Channels_View)
         self.listwidget_channels.setObjectName(u"listwidget_channels")
-        sizePolicy3 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
+        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Expanding)
         sizePolicy3.setHorizontalStretch(0)
         sizePolicy3.setVerticalStretch(0)
         sizePolicy3.setHeightForWidth(self.listwidget_channels.sizePolicy().hasHeightForWidth())
@@ -179,7 +181,7 @@ class Ui_Channels_View(object):
         self.verticalLayout_4.setSizeConstraint(QLayout.SetFixedSize)
         self.btn_set_tandem = QPushButton(Channels_View)
         self.btn_set_tandem.setObjectName(u"btn_set_tandem")
-        sizePolicy4 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Maximum)
+        sizePolicy4 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Maximum)
         sizePolicy4.setHorizontalStretch(0)
         sizePolicy4.setVerticalStretch(0)
         sizePolicy4.setHeightForWidth(self.btn_set_tandem.sizePolicy().hasHeightForWidth())
