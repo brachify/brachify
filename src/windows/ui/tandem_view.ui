@@ -53,10 +53,11 @@
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(240, 245, 250);</string>
+      <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(240, 245, 250);</string>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="Import">
       <attribute name="title">
@@ -153,6 +154,10 @@ QPushButton:pressed {
              <height>25</height>
             </size>
            </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(240, 245, 250);</string>
+           </property>
            <property name="text">
             <string>Height Offset</string>
            </property>
@@ -167,7 +172,10 @@ QPushButton:pressed {
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255)</string>
+            <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);
+selection-background-color: rgb(199, 219, 237);
+selection-color: rgb(0, 0, 0);</string>
            </property>
            <property name="suffix">
             <string> mm</string>
@@ -182,6 +190,10 @@ QPushButton:pressed {
          </item>
          <item row="1" column="0">
           <widget class="QLabel" name="label">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(240, 245, 250);</string>
+           </property>
            <property name="text">
             <string>Rotation</string>
            </property>
@@ -190,7 +202,10 @@ QPushButton:pressed {
          <item row="1" column="1">
           <widget class="QDoubleSpinBox" name="tandem_rotation">
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255)</string>
+            <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);
+selection-background-color: rgb(199, 219, 237);
+selection-color: rgb(0, 0, 0);</string>
            </property>
            <property name="suffix">
             <string>°</string>
@@ -244,6 +259,9 @@ QPushButton:pressed {
        </item>
        <item>
         <widget class="QLabel" name="label_5">
+         <property name="styleSheet">
+          <string notr="true">color: rgb(0, 0, 0)</string>
+         </property>
          <property name="text">
           <string>Model Filepath: None</string>
          </property>
@@ -292,7 +310,10 @@ QPushButton:pressed {
          <item row="0" column="1">
           <widget class="QDoubleSpinBox" name="sb_tandem_height">
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 250)</string>
+            <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);
+selection-background-color: rgb(199, 219, 237);
+selection-color: rgb(0, 0, 0);</string>
            </property>
            <property name="suffix">
             <string> mm</string>
@@ -317,7 +338,10 @@ QPushButton:pressed {
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 250)</string>
+            <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);
+selection-background-color: rgb(199, 219, 237);
+selection-color: rgb(0, 0, 0);</string>
            </property>
            <property name="suffix">
             <string> mm</string>
@@ -330,7 +354,10 @@ QPushButton:pressed {
          <item row="2" column="1">
           <widget class="QDoubleSpinBox" name="sp_stopper_diameter">
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 250)</string>
+            <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);
+selection-background-color: rgb(199, 219, 237);
+selection-color: rgb(0, 0, 0);</string>
            </property>
            <property name="suffix">
             <string> mm</string>
@@ -343,7 +370,10 @@ QPushButton:pressed {
          <item row="3" column="1">
           <widget class="QDoubleSpinBox" name="sp_bend_angle">
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 250)</string>
+            <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);
+selection-background-color: rgb(199, 219, 237);
+selection-color: rgb(0, 0, 0);</string>
            </property>
            <property name="suffix">
             <string>°</string>
@@ -353,7 +383,10 @@ QPushButton:pressed {
          <item row="4" column="1">
           <widget class="QDoubleSpinBox" name="sb_bend_radius">
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 250)</string>
+            <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);
+selection-background-color: rgb(199, 219, 237);
+selection-color: rgb(0, 0, 0);</string>
            </property>
            <property name="suffix">
             <string> mm</string>
@@ -368,6 +401,10 @@ QPushButton:pressed {
          </item>
          <item row="0" column="0">
           <widget class="QLabel" name="label_7">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(240, 245, 250);</string>
+           </property>
            <property name="text">
             <string>Tandem Height</string>
            </property>
@@ -375,6 +412,10 @@ QPushButton:pressed {
          </item>
          <item row="1" column="0">
           <widget class="QLabel" name="label_8">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(240, 245, 250);</string>
+           </property>
            <property name="text">
             <string>Channel Diameter</string>
            </property>
@@ -382,6 +423,10 @@ QPushButton:pressed {
          </item>
          <item row="2" column="0">
           <widget class="QLabel" name="label_4">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(240, 245, 250);</string>
+           </property>
            <property name="text">
             <string>Stopper Diameter</string>
            </property>
@@ -389,6 +434,10 @@ QPushButton:pressed {
          </item>
          <item row="3" column="0">
           <widget class="QLabel" name="label_12">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(240, 245, 250);</string>
+           </property>
            <property name="text">
             <string>Bend Angle</string>
            </property>
@@ -396,6 +445,10 @@ QPushButton:pressed {
          </item>
          <item row="4" column="0">
           <widget class="QLabel" name="label_6">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(240, 245, 250);</string>
+           </property>
            <property name="text">
             <string>Bend Radius</string>
            </property>
@@ -410,7 +463,10 @@ QPushButton:pressed {
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
+            <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);
+selection-background-color: rgb(199, 219, 237);
+selection-color: rgb(0, 0, 0);</string>
            </property>
            <property name="suffix">
             <string> mm</string>
@@ -429,7 +485,10 @@ QPushButton:pressed {
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
+            <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);
+selection-background-color: rgb(199, 219, 237);
+selection-color: rgb(0, 0, 0);</string>
            </property>
            <property name="suffix">
             <string> mm</string>
@@ -454,7 +513,8 @@ QPushButton:pressed {
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(240, 245, 250);</string>
+            <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(240, 245, 250);</string>
            </property>
            <property name="text">
             <string>Threading Depth</string>
@@ -476,7 +536,8 @@ QPushButton:pressed {
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(240, 245, 250);</string>
+            <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(240, 245, 250);</string>
            </property>
            <property name="text">
             <string>Threading Diameter</string>
@@ -485,6 +546,10 @@ QPushButton:pressed {
          </item>
          <item row="7" column="0">
           <widget class="QLabel" name="label_3">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(240, 245, 250);</string>
+           </property>
            <property name="text">
             <string>Rotation</string>
            </property>
@@ -493,7 +558,10 @@ QPushButton:pressed {
          <item row="7" column="1">
           <widget class="QDoubleSpinBox" name="tandem_rotation_2">
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255)</string>
+            <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);
+selection-background-color: rgb(199, 219, 237);
+selection-color: rgb(0, 0, 0);</string>
            </property>
            <property name="suffix">
             <string>°</string>

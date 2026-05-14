@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'export_view.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.5.2
+## Created by: Qt User Interface Compiler version 6.9.3
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -24,7 +24,7 @@ class Ui_Export_View(object):
         if not Export_View.objectName():
             Export_View.setObjectName(u"Export_View")
         Export_View.resize(290, 312)
-        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(Export_View.sizePolicy().hasHeightForWidth())
@@ -38,70 +38,93 @@ class Ui_Export_View(object):
         self.formLayout.setObjectName(u"formLayout")
         self.label_2 = QLabel(Export_View)
         self.label_2.setObjectName(u"label_2")
-        self.label_2.setStyleSheet(u"background-color: rgb(240, 245, 250);")
+        self.label_2.setStyleSheet(u"color: rgb(0, 0, 0);\n"
+"background-color: rgb(240, 245, 250);")
 
-        self.formLayout.setWidget(0, QFormLayout.LabelRole, self.label_2)
+        self.formLayout.setWidget(0, QFormLayout.ItemRole.LabelRole, self.label_2)
 
         self.cb_tandem_shown = QCheckBox(Export_View)
         self.cb_tandem_shown.setObjectName(u"cb_tandem_shown")
         self.cb_tandem_shown.setLayoutDirection(Qt.RightToLeft)
-        self.cb_tandem_shown.setStyleSheet(u"background-color: rgb(240, 245, 250);")
+        self.cb_tandem_shown.setStyleSheet(u"QCheckBox {\n"
+"    color: rgb(0, 0, 0);\n"
+"    background-color: rgb(240, 245, 250);\n"
+"}")
         self.cb_tandem_shown.setChecked(False)
 
-        self.formLayout.setWidget(0, QFormLayout.FieldRole, self.cb_tandem_shown)
+        self.formLayout.setWidget(0, QFormLayout.ItemRole.FieldRole, self.cb_tandem_shown)
 
         self.label = QLabel(Export_View)
         self.label.setObjectName(u"label")
-        self.label.setStyleSheet(u"background-color: rgb(240, 245, 250);")
+        self.label.setStyleSheet(u"color: rgb(0, 0, 0);\n"
+"background-color: rgb(240, 245, 250);")
 
-        self.formLayout.setWidget(1, QFormLayout.LabelRole, self.label)
+        self.formLayout.setWidget(1, QFormLayout.ItemRole.LabelRole, self.label)
 
         self.label_3 = QLabel(Export_View)
         self.label_3.setObjectName(u"label_3")
-        self.label_3.setStyleSheet(u"background-color: rgb(240, 245, 250);")
+        self.label_3.setStyleSheet(u"color: rgb(0, 0, 0);\n"
+"background-color: rgb(240, 245, 250);")
 
-        self.formLayout.setWidget(3, QFormLayout.LabelRole, self.label_3)
+        self.formLayout.setWidget(3, QFormLayout.ItemRole.LabelRole, self.label_3)
 
         self.label_4 = QLabel(Export_View)
         self.label_4.setObjectName(u"label_4")
-        self.label_4.setStyleSheet(u"background-color: rgb(240, 245, 250);")
+        self.label_4.setStyleSheet(u"color: rgb(0, 0, 0);\n"
+"background-color: rgb(240, 245, 250);")
 
-        self.formLayout.setWidget(4, QFormLayout.LabelRole, self.label_4)
+        self.formLayout.setWidget(4, QFormLayout.ItemRole.LabelRole, self.label_4)
 
         self.label_5 = QLabel(Export_View)
         self.label_5.setObjectName(u"label_5")
-        self.label_5.setStyleSheet(u"background-color: rgb(240, 245, 250);")
+        self.label_5.setStyleSheet(u"color: rgb(0, 0, 0);\n"
+"background-color: rgb(240, 245, 250);")
 
-        self.formLayout.setWidget(5, QFormLayout.LabelRole, self.label_5)
+        self.formLayout.setWidget(5, QFormLayout.ItemRole.LabelRole, self.label_5)
 
         self.sb_tandem_collet_inner_od = QDoubleSpinBox(Export_View)
         self.sb_tandem_collet_inner_od.setObjectName(u"sb_tandem_collet_inner_od")
+        self.sb_tandem_collet_inner_od.setStyleSheet(u"color: rgb(0, 0, 0);\n"
+"background-color: rgb(255, 255, 255);\n"
+"selection-background-color: rgb(199, 219, 237);\n"
+"selection-color: rgb(0, 0, 0);")
 
-        self.formLayout.setWidget(5, QFormLayout.FieldRole, self.sb_tandem_collet_inner_od)
+        self.formLayout.setWidget(5, QFormLayout.ItemRole.FieldRole, self.sb_tandem_collet_inner_od)
 
         self.sb_tandem_collet_outer_od = QDoubleSpinBox(Export_View)
         self.sb_tandem_collet_outer_od.setObjectName(u"sb_tandem_collet_outer_od")
+        self.sb_tandem_collet_outer_od.setStyleSheet(u"color: rgb(0, 0, 0);\n"
+"background-color: rgb(255, 255, 255);\n"
+"selection-background-color: rgb(199, 219, 237);\n"
+"selection-color: rgb(0, 0, 0);")
 
-        self.formLayout.setWidget(4, QFormLayout.FieldRole, self.sb_tandem_collet_outer_od)
+        self.formLayout.setWidget(4, QFormLayout.ItemRole.FieldRole, self.sb_tandem_collet_outer_od)
 
         self.sb_needle_collet_od = QDoubleSpinBox(Export_View)
         self.sb_needle_collet_od.setObjectName(u"sb_needle_collet_od")
+        self.sb_needle_collet_od.setStyleSheet(u"color: rgb(0, 0, 0);\n"
+"background-color: rgb(255, 255, 255);\n"
+"selection-background-color: rgb(199, 219, 237);\n"
+"selection-color: rgb(0, 0, 0);")
 
-        self.formLayout.setWidget(3, QFormLayout.FieldRole, self.sb_needle_collet_od)
+        self.formLayout.setWidget(3, QFormLayout.ItemRole.FieldRole, self.sb_needle_collet_od)
 
         self.cb_collet_preview_reference_sheet = QCheckBox(Export_View)
         self.cb_collet_preview_reference_sheet.setObjectName(u"cb_collet_preview_reference_sheet")
         self.cb_collet_preview_reference_sheet.setLayoutDirection(Qt.RightToLeft)
         self.cb_collet_preview_reference_sheet.setAutoFillBackground(False)
-        self.cb_collet_preview_reference_sheet.setStyleSheet(u"background-color: rgb(240, 245, 250);")
+        self.cb_collet_preview_reference_sheet.setStyleSheet(u"QCheckBox {\n"
+"    color: rgb(0, 0, 0);\n"
+"    background-color: rgb(240, 245, 250);\n"
+"}")
         self.cb_collet_preview_reference_sheet.setChecked(True)
 
-        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.cb_collet_preview_reference_sheet)
+        self.formLayout.setWidget(1, QFormLayout.ItemRole.FieldRole, self.cb_collet_preview_reference_sheet)
 
 
         self.verticalLayout.addLayout(self.formLayout)
 
-        self.verticalSpacer_2 = QSpacerItem(20, 10, QSizePolicy.Minimum, QSizePolicy.Fixed)
+        self.verticalSpacer_2 = QSpacerItem(20, 10, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
 
         self.verticalLayout.addItem(self.verticalSpacer_2)
 
@@ -165,7 +188,7 @@ class Ui_Export_View(object):
 
         self.verticalLayout.addWidget(self.btn_export_shapes)
 
-        self.verticalSpacer = QSpacerItem(267, 4338, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer = QSpacerItem(267, 4338, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout.addItem(self.verticalSpacer)
 

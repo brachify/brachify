@@ -40,7 +40,7 @@
      <item row="0" column="0">
       <widget class="QLabel" name="label">
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(240, 245, 250);</string>
+        <string notr="true">color: rgb(0, 0, 0);background-color: rgb(240, 245, 250);</string>
        </property>
        <property name="text">
         <string>Cylinder Diameter</string>
@@ -65,7 +65,12 @@
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 255, 255);</string>
+        <string notr="true">QDoubleSpinBox {
+    color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+    selection-background-color: rgb(180, 210, 240);
+    selection-color: rgb(0, 0, 0);
+}</string>
        </property>
        <property name="suffix">
         <string> mm</string>
@@ -75,7 +80,7 @@
      <item row="1" column="0">
       <widget class="QLabel" name="label_2">
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(240, 245, 250);</string>
+        <string notr="true">color: rgb(0, 0, 0);background-color: rgb(240, 245, 250)</string>
        </property>
        <property name="text">
         <string>Cylinder Length</string>
@@ -100,7 +105,12 @@
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 255, 255);</string>
+        <string notr="true">QSpinBox {
+    color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+    selection-background-color: rgb(180, 210, 240);
+    selection-color: rgb(0, 0, 0);
+}</string>
        </property>
        <property name="suffix">
         <string> mm</string>
@@ -116,7 +126,7 @@
      <item row="4" column="0">
       <widget class="QLabel" name="label_3">
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(240, 245, 250);</string>
+        <string notr="true">color: rgb(0, 0, 0);background-color: rgb(240, 245, 250)</string>
        </property>
        <property name="text">
         <string>Add Base</string>
@@ -138,7 +148,26 @@
         <enum>Qt::RightToLeft</enum>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(240, 245, 250);</string>
+        <string notr="true">QCheckBox {
+    color: rgb(0, 0, 0);
+    background-color: rgb(240, 245, 250);
+}
+
+QCheckBox::indicator {
+    width: 14px;
+    height: 14px;
+    border: 1px solid rgb(120, 120, 120);
+    background-color: rgb(255, 255, 255);
+}
+
+QCheckBox::indicator:unchecked {
+    background-color: rgb(255, 255, 255);
+}
+
+QCheckBox::indicator:checked {
+    background-color: rgb(28, 44, 81);
+    border: 1px solid rgb(28, 44, 81);
+}</string>
        </property>
        <property name="text">
         <string/>
@@ -152,15 +181,33 @@
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QSpinBox" name="spinbox_base_thickness"/>
+      <widget class="QSpinBox" name="spinbox_base_thickness">
+       <property name="styleSheet">
+        <string notr="true">QSpinBox {
+    color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+    selection-background-color: rgb(180, 210, 240);
+    selection-color: rgb(0, 0, 0);
+}</string>
+       </property>
+      </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QSpinBox" name="spinbox_base_height"/>
+      <widget class="QSpinBox" name="spinbox_base_height">
+       <property name="styleSheet">
+        <string notr="true">QSpinBox {
+    color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+    selection-background-color: rgb(180, 210, 240);
+    selection-color: rgb(0, 0, 0);
+}</string>
+       </property>
+      </widget>
      </item>
      <item row="2" column="0">
       <widget class="QLabel" name="label_4">
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(240, 245, 250);</string>
+        <string notr="true">color: rgb(0, 0, 0);background-color: rgb(240, 245, 250)</string>
        </property>
        <property name="text">
         <string>Base Thickness</string>
@@ -170,7 +217,7 @@
      <item row="3" column="0">
       <widget class="QLabel" name="label_5">
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(240, 245, 250);</string>
+        <string notr="true">color: rgb(0, 0, 0);background-color: rgb(240, 245, 250)</string>
        </property>
        <property name="text">
         <string>Base Height</string>

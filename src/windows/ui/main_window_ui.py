@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'main_window.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.7.0
+## Created by: Qt User Interface Compiler version 6.9.3
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -25,7 +25,7 @@ class Ui_MainWindow(object):
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(912, 607)
         icon = QIcon()
-        icon.addFile(u":/Icon/Icon/brachify_splash-ico.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u":/Icon/Icon/brachify_splash-ico.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         MainWindow.setWindowIcon(icon)
         MainWindow.setStyleSheet(u"background-color: rgb(155,189,220);")
         self.centralwidget = QWidget(MainWindow)
@@ -179,13 +179,13 @@ class Ui_MainWindow(object):
         self.viewswidget.setObjectName(u"viewswidget")
         self.viewswidget.setMinimumSize(QSize(290, 100))
         self.viewswidget.setMaximumSize(QSize(290, 16777215))
-        self.viewswidget.setStyleSheet(u"color: rgba(240, 245, 250);\n"
+        self.viewswidget.setStyleSheet(u"color: rgba(0, 0, 0);\n"
 "\n"
 "selection-background-color: rgb(0, 0, 255);\n"
 "background-color: rgb(240, 245, 250);")
         self.page_import = QWidget()
         self.page_import.setObjectName(u"page_import")
-        self.page_import.setStyleSheet(u"color: rgba(240, 245, 250);")
+        self.page_import.setStyleSheet(u"color: rgba(0, 0, 0);")
         self.verticalLayout_32 = QVBoxLayout(self.page_import)
         self.verticalLayout_32.setSpacing(0)
         self.verticalLayout_32.setObjectName(u"verticalLayout_32")
@@ -193,28 +193,28 @@ class Ui_MainWindow(object):
         self.viewswidget.addWidget(self.page_import)
         self.page_cylinder = QWidget()
         self.page_cylinder.setObjectName(u"page_cylinder")
-        self.page_cylinder.setStyleSheet(u"color: rgba(240, 245, 250);")
+        self.page_cylinder.setStyleSheet(u"color: rgba(0, 0, 0);")
         self.verticalLayout_33 = QVBoxLayout(self.page_cylinder)
         self.verticalLayout_33.setObjectName(u"verticalLayout_33")
         self.verticalLayout_33.setContentsMargins(0, 0, 0, 0)
         self.viewswidget.addWidget(self.page_cylinder)
         self.page_channels = QWidget()
         self.page_channels.setObjectName(u"page_channels")
-        self.page_channels.setStyleSheet(u"color: rgba(240, 245, 250);")
+        self.page_channels.setStyleSheet(u"color: rgba(0, 0, 0);")
         self.verticalLayout_35 = QVBoxLayout(self.page_channels)
         self.verticalLayout_35.setObjectName(u"verticalLayout_35")
         self.verticalLayout_35.setContentsMargins(0, 0, 0, 0)
         self.viewswidget.addWidget(self.page_channels)
         self.page_tandem = QWidget()
         self.page_tandem.setObjectName(u"page_tandem")
-        self.page_tandem.setStyleSheet(u"color: rgba(240, 245, 250);")
+        self.page_tandem.setStyleSheet(u"color: rgba(0, 0, 0);")
         self.verticalLayout_36 = QVBoxLayout(self.page_tandem)
         self.verticalLayout_36.setObjectName(u"verticalLayout_36")
         self.verticalLayout_36.setContentsMargins(0, 0, 0, 0)
         self.viewswidget.addWidget(self.page_tandem)
         self.page_export = QWidget()
         self.page_export.setObjectName(u"page_export")
-        self.page_export.setStyleSheet(u"color: rgba(240, 245, 250);")
+        self.page_export.setStyleSheet(u"color: rgba(0, 0, 0);")
         self.verticalLayout_37 = QVBoxLayout(self.page_export)
         self.verticalLayout_37.setObjectName(u"verticalLayout_37")
         self.verticalLayout_37.setContentsMargins(0, 0, 0, 0)

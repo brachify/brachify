@@ -330,7 +330,7 @@ QPushButton:pressed {
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">color: rgba(240, 245, 250);
+         <string notr="true">color: rgba(0, 0, 0);
 
 selection-background-color: rgb(0, 0, 255);
 background-color: rgb(240, 245, 250);</string>
@@ -340,7 +340,7 @@ background-color: rgb(240, 245, 250);</string>
         </property>
         <widget class="QWidget" name="page_import">
          <property name="styleSheet">
-          <string notr="true">color: rgba(240, 245, 250);</string>
+          <string notr="true">color: rgba(0, 0, 0);</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_32">
           <property name="spacing">
@@ -362,7 +362,7 @@ background-color: rgb(240, 245, 250);</string>
         </widget>
         <widget class="QWidget" name="page_cylinder">
          <property name="styleSheet">
-          <string notr="true">color: rgba(240, 245, 250);</string>
+          <string notr="true">color: rgba(0, 0, 0);</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_33">
           <property name="leftMargin">
@@ -381,7 +381,7 @@ background-color: rgb(240, 245, 250);</string>
         </widget>
         <widget class="QWidget" name="page_channels">
          <property name="styleSheet">
-          <string notr="true">color: rgba(240, 245, 250);</string>
+          <string notr="true">color: rgba(0, 0, 0);</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_35">
           <property name="leftMargin">
@@ -400,7 +400,7 @@ background-color: rgb(240, 245, 250);</string>
         </widget>
         <widget class="QWidget" name="page_tandem">
          <property name="styleSheet">
-          <string notr="true">color: rgba(240, 245, 250);</string>
+          <string notr="true">color: rgba(0, 0, 0);</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_36">
           <property name="leftMargin">
@@ -419,7 +419,7 @@ background-color: rgb(240, 245, 250);</string>
         </widget>
         <widget class="QWidget" name="page_export">
          <property name="styleSheet">
-          <string notr="true">color: rgba(240, 245, 250);</string>
+          <string notr="true">color: rgba(0, 0, 0);</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_37">
           <property name="leftMargin">

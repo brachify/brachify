@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'import_view.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.7.0
+## Created by: Qt User Interface Compiler version 6.9.3
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -89,7 +89,7 @@ class Ui_Import_View(object):
         self.info_area.setMaximumSize(QSize(16777215, 16777215))
         self.info_area.setContextMenuPolicy(Qt.DefaultContextMenu)
         self.info_area.setAcceptDrops(False)
-        self.info_area.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+        self.info_area.setStyleSheet(u"color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);")
         self.info_area.setInputMethodHints(Qt.ImhNone)
         self.info_area.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.info_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
