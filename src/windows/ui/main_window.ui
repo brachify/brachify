@@ -113,7 +113,7 @@
        <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>2</number>
+       <number>0</number>
       </property>
       <item>
        <widget class="QWidget" name="top_menu_bar" native="true">
@@ -332,7 +332,7 @@ QPushButton:pressed {
         <property name="minimumSize">
          <size>
           <width>290</width>
-          <height>100</height>
+          <height>305</height>
          </size>
         </property>
         <property name="maximumSize">

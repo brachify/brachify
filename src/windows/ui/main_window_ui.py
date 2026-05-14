@@ -63,7 +63,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setSizeConstraint(QLayout.SetMaximumSize)
-        self.verticalLayout.setContentsMargins(0, 0, 0, 2)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.top_menu_bar = QWidget(self.centralwidget)
         self.top_menu_bar.setObjectName(u"top_menu_bar")
         sizePolicy1 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Preferred)
@@ -187,7 +187,7 @@ class Ui_MainWindow(object):
         sizePolicy2.setVerticalStretch(0)
         sizePolicy2.setHeightForWidth(self.viewswidget.sizePolicy().hasHeightForWidth())
         self.viewswidget.setSizePolicy(sizePolicy2)
-        self.viewswidget.setMinimumSize(QSize(290, 100))
+        self.viewswidget.setMinimumSize(QSize(290, 305))
         self.viewswidget.setMaximumSize(QSize(290, 16777215))
         self.viewswidget.setStyleSheet(u"color: rgba(240, 245, 250);\n"
 "\n"
