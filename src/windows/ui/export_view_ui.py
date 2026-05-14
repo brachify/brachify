@@ -23,8 +23,8 @@ class Ui_Export_View(object):
     def setupUi(self, Export_View):
         if not Export_View.objectName():
             Export_View.setObjectName(u"Export_View")
-        Export_View.resize(437, 423)
-        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
+        Export_View.resize(433, 415)
+        sizePolicy = QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(Export_View.sizePolicy().hasHeightForWidth())
@@ -40,12 +40,22 @@ class Ui_Export_View(object):
         self.gridLayout.setContentsMargins(2, 2, 2, 2)
         self.label_2 = QLabel(Export_View)
         self.label_2.setObjectName(u"label_2")
+        sizePolicy1 = QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Preferred)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.label_2.sizePolicy().hasHeightForWidth())
+        self.label_2.setSizePolicy(sizePolicy1)
         self.label_2.setStyleSheet(u"background-color: rgb(240, 245, 250);")
 
         self.gridLayout.addWidget(self.label_2, 0, 0, 1, 1)
 
         self.cb_tandem_shown = QCheckBox(Export_View)
         self.cb_tandem_shown.setObjectName(u"cb_tandem_shown")
+        sizePolicy2 = QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Fixed)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.cb_tandem_shown.sizePolicy().hasHeightForWidth())
+        self.cb_tandem_shown.setSizePolicy(sizePolicy2)
         self.cb_tandem_shown.setLayoutDirection(Qt.RightToLeft)
         self.cb_tandem_shown.setStyleSheet(u"background-color: rgb(240, 245, 250);")
         self.cb_tandem_shown.setChecked(False)
@@ -55,20 +65,14 @@ class Ui_Export_View(object):
         self.label = QLabel(Export_View)
         self.label.setObjectName(u"label")
         self.label.setEnabled(True)
-        sizePolicy1 = QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
-        self.label.setSizePolicy(sizePolicy1)
+        sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
+        self.label.setSizePolicy(sizePolicy)
         self.label.setStyleSheet(u"background-color: rgb(240, 245, 250);")
 
         self.gridLayout.addWidget(self.label, 1, 0, 1, 1)
 
         self.cb_collet_preview_reference_sheet = QCheckBox(Export_View)
         self.cb_collet_preview_reference_sheet.setObjectName(u"cb_collet_preview_reference_sheet")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
-        sizePolicy2.setHorizontalStretch(0)
-        sizePolicy2.setVerticalStretch(0)
         sizePolicy2.setHeightForWidth(self.cb_collet_preview_reference_sheet.sizePolicy().hasHeightForWidth())
         self.cb_collet_preview_reference_sheet.setSizePolicy(sizePolicy2)
         self.cb_collet_preview_reference_sheet.setLayoutDirection(Qt.RightToLeft)
@@ -80,36 +84,48 @@ class Ui_Export_View(object):
 
         self.label_3 = QLabel(Export_View)
         self.label_3.setObjectName(u"label_3")
+        sizePolicy1.setHeightForWidth(self.label_3.sizePolicy().hasHeightForWidth())
+        self.label_3.setSizePolicy(sizePolicy1)
         self.label_3.setStyleSheet(u"background-color: rgb(240, 245, 250);")
 
         self.gridLayout.addWidget(self.label_3, 2, 0, 1, 1)
 
         self.sb_needle_collet_od = QDoubleSpinBox(Export_View)
         self.sb_needle_collet_od.setObjectName(u"sb_needle_collet_od")
+        sizePolicy2.setHeightForWidth(self.sb_needle_collet_od.sizePolicy().hasHeightForWidth())
+        self.sb_needle_collet_od.setSizePolicy(sizePolicy2)
         self.sb_needle_collet_od.setDecimals(3)
 
         self.gridLayout.addWidget(self.sb_needle_collet_od, 2, 1, 1, 1)
 
         self.label_4 = QLabel(Export_View)
         self.label_4.setObjectName(u"label_4")
+        sizePolicy1.setHeightForWidth(self.label_4.sizePolicy().hasHeightForWidth())
+        self.label_4.setSizePolicy(sizePolicy1)
         self.label_4.setStyleSheet(u"background-color: rgb(240, 245, 250);")
 
         self.gridLayout.addWidget(self.label_4, 3, 0, 1, 1)
 
         self.sb_tandem_collet_outer_od = QDoubleSpinBox(Export_View)
         self.sb_tandem_collet_outer_od.setObjectName(u"sb_tandem_collet_outer_od")
+        sizePolicy2.setHeightForWidth(self.sb_tandem_collet_outer_od.sizePolicy().hasHeightForWidth())
+        self.sb_tandem_collet_outer_od.setSizePolicy(sizePolicy2)
         self.sb_tandem_collet_outer_od.setDecimals(3)
 
         self.gridLayout.addWidget(self.sb_tandem_collet_outer_od, 3, 1, 1, 1)
 
         self.label_5 = QLabel(Export_View)
         self.label_5.setObjectName(u"label_5")
+        sizePolicy1.setHeightForWidth(self.label_5.sizePolicy().hasHeightForWidth())
+        self.label_5.setSizePolicy(sizePolicy1)
         self.label_5.setStyleSheet(u"background-color: rgb(240, 245, 250);")
 
         self.gridLayout.addWidget(self.label_5, 4, 0, 1, 1)
 
         self.sb_tandem_collet_inner_od = QDoubleSpinBox(Export_View)
         self.sb_tandem_collet_inner_od.setObjectName(u"sb_tandem_collet_inner_od")
+        sizePolicy2.setHeightForWidth(self.sb_tandem_collet_inner_od.sizePolicy().hasHeightForWidth())
+        self.sb_tandem_collet_inner_od.setSizePolicy(sizePolicy2)
         self.sb_tandem_collet_inner_od.setDecimals(3)
 
         self.gridLayout.addWidget(self.sb_tandem_collet_inner_od, 4, 1, 1, 1)
@@ -123,6 +139,8 @@ class Ui_Export_View(object):
 
         self.btn_export_mesh = QPushButton(Export_View)
         self.btn_export_mesh.setObjectName(u"btn_export_mesh")
+        sizePolicy2.setHeightForWidth(self.btn_export_mesh.sizePolicy().hasHeightForWidth())
+        self.btn_export_mesh.setSizePolicy(sizePolicy2)
         self.btn_export_mesh.setMinimumSize(QSize(240, 33))
         self.btn_export_mesh.setMaximumSize(QSize(16777215, 33))
         self.btn_export_mesh.setStyleSheet(u"QPushButton {\n"
@@ -143,6 +161,8 @@ class Ui_Export_View(object):
 
         self.btn_export_template_reference = QPushButton(Export_View)
         self.btn_export_template_reference.setObjectName(u"btn_export_template_reference")
+        sizePolicy2.setHeightForWidth(self.btn_export_template_reference.sizePolicy().hasHeightForWidth())
+        self.btn_export_template_reference.setSizePolicy(sizePolicy2)
         self.btn_export_template_reference.setMinimumSize(QSize(240, 33))
         self.btn_export_template_reference.setMaximumSize(QSize(16777215, 33))
         self.btn_export_template_reference.setStyleSheet(u"QPushButton {\n"
@@ -163,6 +183,8 @@ class Ui_Export_View(object):
 
         self.btn_export_shapes = QPushButton(Export_View)
         self.btn_export_shapes.setObjectName(u"btn_export_shapes")
+        sizePolicy2.setHeightForWidth(self.btn_export_shapes.sizePolicy().hasHeightForWidth())
+        self.btn_export_shapes.setSizePolicy(sizePolicy2)
         self.btn_export_shapes.setMinimumSize(QSize(240, 33))
         self.btn_export_shapes.setMaximumSize(QSize(16777215, 33))
         self.btn_export_shapes.setStyleSheet(u"QPushButton {\n"
@@ -187,6 +209,8 @@ class Ui_Export_View(object):
 
         self.btn_export_current_config = QPushButton(Export_View)
         self.btn_export_current_config.setObjectName(u"btn_export_current_config")
+        sizePolicy2.setHeightForWidth(self.btn_export_current_config.sizePolicy().hasHeightForWidth())
+        self.btn_export_current_config.setSizePolicy(sizePolicy2)
         self.btn_export_current_config.setMinimumSize(QSize(240, 33))
         self.btn_export_current_config.setMaximumSize(QSize(16777215, 33))
         self.btn_export_current_config.setStyleSheet(u"QPushButton {\n"

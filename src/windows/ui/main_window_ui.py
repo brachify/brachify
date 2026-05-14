@@ -23,7 +23,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(770, 590)
+        MainWindow.resize(770, 472)
         icon = QIcon()
         icon.addFile(u":/Icon/Icon/brachify_splash-ico.png", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
@@ -63,15 +63,20 @@ class Ui_MainWindow(object):
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setSizeConstraint(QLayout.SetMaximumSize)
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 2)
         self.top_menu_bar = QWidget(self.centralwidget)
         self.top_menu_bar.setObjectName(u"top_menu_bar")
-        self.top_menu_bar.setMinimumSize(QSize(290, 180))
+        sizePolicy1 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Preferred)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.top_menu_bar.sizePolicy().hasHeightForWidth())
+        self.top_menu_bar.setSizePolicy(sizePolicy1)
+        self.top_menu_bar.setMinimumSize(QSize(290, 165))
         self.verticalLayout_31 = QVBoxLayout(self.top_menu_bar)
         self.verticalLayout_31.setSpacing(0)
         self.verticalLayout_31.setObjectName(u"verticalLayout_31")
         self.verticalLayout_31.setSizeConstraint(QLayout.SetNoConstraint)
-        self.verticalLayout_31.setContentsMargins(0, 0, 0, 20)
+        self.verticalLayout_31.setContentsMargins(0, 0, 0, 0)
         self.btn_import_view = QPushButton(self.top_menu_bar)
         self.btn_import_view.setObjectName(u"btn_import_view")
         self.btn_import_view.setMinimumSize(QSize(290, 33))
@@ -169,7 +174,6 @@ class Ui_MainWindow(object):
 "	color: rgb(250,250,250);\n"
 "	background-color: rgb(28, 44, 81);\n"
 "}")
-        self.btn_export_view.setCheckable(False)
 
         self.verticalLayout_31.addWidget(self.btn_export_view)
 
@@ -178,11 +182,11 @@ class Ui_MainWindow(object):
 
         self.viewswidget = QStackedWidget(self.centralwidget)
         self.viewswidget.setObjectName(u"viewswidget")
-        sizePolicy1 = QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.viewswidget.sizePolicy().hasHeightForWidth())
-        self.viewswidget.setSizePolicy(sizePolicy1)
+        sizePolicy2 = QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.viewswidget.sizePolicy().hasHeightForWidth())
+        self.viewswidget.setSizePolicy(sizePolicy2)
         self.viewswidget.setMinimumSize(QSize(290, 100))
         self.viewswidget.setMaximumSize(QSize(290, 16777215))
         self.viewswidget.setStyleSheet(u"color: rgba(240, 245, 250);\n"

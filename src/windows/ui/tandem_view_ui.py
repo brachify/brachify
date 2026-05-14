@@ -23,7 +23,7 @@ class Ui_Tandem_View(object):
     def setupUi(self, Tandem_View):
         if not Tandem_View.objectName():
             Tandem_View.setObjectName(u"Tandem_View")
-        Tandem_View.resize(290, 290)
+        Tandem_View.resize(290, 502)
         Tandem_View.setMinimumSize(QSize(290, 290))
         Tandem_View.setMaximumSize(QSize(290, 16777215))
         Tandem_View.setStyleSheet(u"")
@@ -325,7 +325,7 @@ class Ui_Tandem_View(object):
 
         self.retranslateUi(Tandem_View)
 
-        self.ab.setCurrentIndex(0)
+        self.ab.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(Tandem_View)
