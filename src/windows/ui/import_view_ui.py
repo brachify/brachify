@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'import_view.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.7.0
+## Created by: Qt User Interface Compiler version 6.5.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -23,7 +23,7 @@ class Ui_Import_View(object):
         if not Import_View.objectName():
             Import_View.setObjectName(u"Import_View")
         Import_View.resize(294, 290)
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum)
+        sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(Import_View.sizePolicy().hasHeightForWidth())
@@ -55,7 +55,7 @@ class Ui_Import_View(object):
 
         self.btn_config_file = QPushButton(Import_View)
         self.btn_config_file.setObjectName(u"btn_config_file")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.btn_config_file.sizePolicy().hasHeightForWidth())
@@ -80,7 +80,7 @@ class Ui_Import_View(object):
 
         self.info_area = QTextEdit(Import_View)
         self.info_area.setObjectName(u"info_area")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Minimum)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
         sizePolicy2.setHorizontalStretch(0)
         sizePolicy2.setVerticalStretch(0)
         sizePolicy2.setHeightForWidth(self.info_area.sizePolicy().hasHeightForWidth())

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>336</width>
-    <height>338</height>
+    <width>437</width>
+    <height>423</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -36,7 +36,7 @@
     <number>0</number>
    </property>
    <item>
-    <layout class="QFormLayout" name="formLayout">
+    <layout class="QGridLayout" name="gridLayout">
      <property name="sizeConstraint">
       <enum>QLayout::SetNoConstraint</enum>
      </property>
@@ -65,7 +65,7 @@
      <item row="0" column="1">
       <widget class="QCheckBox" name="cb_tandem_shown">
        <property name="layoutDirection">
-        <enum>Qt::LeftToRight</enum>
+        <enum>Qt::RightToLeft</enum>
        </property>
        <property name="styleSheet">
         <string notr="true">background-color: rgb(240, 245, 250);</string>
@@ -80,6 +80,15 @@
      </item>
      <item row="1" column="0">
       <widget class="QLabel" name="label">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="styleSheet">
         <string notr="true">background-color: rgb(240, 245, 250);</string>
        </property>
@@ -87,45 +96,6 @@
         <string>Show Collet Spacings</string>
        </property>
       </widget>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(240, 245, 250);</string>
-       </property>
-       <property name="text">
-        <string>Needle Collet Spacing Tol.</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="label_4">
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(240, 245, 250);</string>
-       </property>
-       <property name="text">
-        <string>Tandem Outer Spacing Tol.</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="label_5">
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(240, 245, 250);</string>
-       </property>
-       <property name="text">
-        <string>Tandem Inner Spacing Tol.</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="1">
-      <widget class="QDoubleSpinBox" name="sb_tandem_collet_inner_od"/>
-     </item>
-     <item row="4" column="1">
-      <widget class="QDoubleSpinBox" name="sb_tandem_collet_outer_od"/>
-     </item>
-     <item row="3" column="1">
-      <widget class="QDoubleSpinBox" name="sb_needle_collet_od"/>
      </item>
      <item row="1" column="1">
       <widget class="QCheckBox" name="cb_collet_preview_reference_sheet">
@@ -136,7 +106,7 @@
         </sizepolicy>
        </property>
        <property name="layoutDirection">
-        <enum>Qt::LeftToRight</enum>
+        <enum>Qt::RightToLeft</enum>
        </property>
        <property name="autoFillBackground">
         <bool>false</bool>
@@ -149,6 +119,57 @@
        </property>
        <property name="checked">
         <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(240, 245, 250);</string>
+       </property>
+       <property name="text">
+        <string>Needle Collet Spacing Tol.</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QDoubleSpinBox" name="sb_needle_collet_od">
+       <property name="decimals">
+        <number>3</number>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(240, 245, 250);</string>
+       </property>
+       <property name="text">
+        <string>Tandem Outer Spacing Tol.</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QDoubleSpinBox" name="sb_tandem_collet_outer_od">
+       <property name="decimals">
+        <number>3</number>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_5">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(240, 245, 250);</string>
+       </property>
+       <property name="text">
+        <string>Tandem Inner Spacing Tol.</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QDoubleSpinBox" name="sb_tandem_collet_inner_od">
+       <property name="decimals">
+        <number>3</number>
        </property>
       </widget>
      </item>

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>912</width>
-    <height>607</height>
+    <width>770</width>
+    <height>590</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -104,16 +104,16 @@
        <enum>QLayout::SetMaximumSize</enum>
       </property>
       <property name="leftMargin">
-       <number>2</number>
+       <number>0</number>
       </property>
       <property name="topMargin">
-       <number>2</number>
+       <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>2</number>
+       <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>2</number>
+       <number>0</number>
       </property>
       <item>
        <widget class="QWidget" name="top_menu_bar" native="true">
@@ -309,6 +309,9 @@ QPushButton:pressed {
            </property>
            <property name="text">
             <string>Export</string>
+           </property>
+           <property name="checkable">
+            <bool>false</bool>
            </property>
           </widget>
          </item>

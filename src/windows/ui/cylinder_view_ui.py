@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'cylinder_view.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.3
+## Created by: Qt User Interface Compiler version 6.5.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -23,8 +23,8 @@ class Ui_Cylinder_View(object):
     def setupUi(self, Cylinder_View):
         if not Cylinder_View.objectName():
             Cylinder_View.setObjectName(u"Cylinder_View")
-        Cylinder_View.resize(350, 426)
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Minimum)
+        Cylinder_View.resize(300, 427)
+        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(Cylinder_View.sizePolicy().hasHeightForWidth())
@@ -37,16 +37,16 @@ class Ui_Cylinder_View(object):
         self.formLayout = QFormLayout()
         self.formLayout.setObjectName(u"formLayout")
         self.formLayout.setSizeConstraint(QLayout.SetMinimumSize)
-        self.formLayout.setContentsMargins(2, 2, 2, 2)
+        self.formLayout.setContentsMargins(0, 0, 0, 0)
         self.label = QLabel(Cylinder_View)
         self.label.setObjectName(u"label")
         self.label.setStyleSheet(u"background-color: rgb(240, 245, 250);")
 
-        self.formLayout.setWidget(0, QFormLayout.ItemRole.LabelRole, self.label)
+        self.formLayout.setWidget(0, QFormLayout.LabelRole, self.label)
 
         self.spinbox_diameter = QDoubleSpinBox(Cylinder_View)
         self.spinbox_diameter.setObjectName(u"spinbox_diameter")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.spinbox_diameter.sizePolicy().hasHeightForWidth())
@@ -55,13 +55,13 @@ class Ui_Cylinder_View(object):
         self.spinbox_diameter.setMaximumSize(QSize(16777215, 16777215))
         self.spinbox_diameter.setStyleSheet(u"background-color: rgb(255, 255, 255);")
 
-        self.formLayout.setWidget(0, QFormLayout.ItemRole.FieldRole, self.spinbox_diameter)
+        self.formLayout.setWidget(0, QFormLayout.FieldRole, self.spinbox_diameter)
 
         self.label_2 = QLabel(Cylinder_View)
         self.label_2.setObjectName(u"label_2")
         self.label_2.setStyleSheet(u"background-color: rgb(240, 245, 250);")
 
-        self.formLayout.setWidget(1, QFormLayout.ItemRole.LabelRole, self.label_2)
+        self.formLayout.setWidget(1, QFormLayout.LabelRole, self.label_2)
 
         self.spinbox_length = QSpinBox(Cylinder_View)
         self.spinbox_length.setObjectName(u"spinbox_length")
@@ -73,13 +73,13 @@ class Ui_Cylinder_View(object):
         self.spinbox_length.setMinimum(60)
         self.spinbox_length.setMaximum(300)
 
-        self.formLayout.setWidget(1, QFormLayout.ItemRole.FieldRole, self.spinbox_length)
+        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.spinbox_length)
 
         self.label_3 = QLabel(Cylinder_View)
         self.label_3.setObjectName(u"label_3")
         self.label_3.setStyleSheet(u"background-color: rgb(240, 245, 250);")
 
-        self.formLayout.setWidget(4, QFormLayout.ItemRole.LabelRole, self.label_3)
+        self.formLayout.setWidget(4, QFormLayout.LabelRole, self.label_3)
 
         self.cb_add_base = QCheckBox(Cylinder_View)
         self.cb_add_base.setObjectName(u"cb_add_base")
@@ -87,38 +87,38 @@ class Ui_Cylinder_View(object):
         self.cb_add_base.setSizePolicy(sizePolicy1)
         self.cb_add_base.setMinimumSize(QSize(100, 0))
         self.cb_add_base.setMaximumSize(QSize(1000, 16777215))
-        self.cb_add_base.setLayoutDirection(Qt.LeftToRight)
+        self.cb_add_base.setLayoutDirection(Qt.RightToLeft)
         self.cb_add_base.setAutoFillBackground(False)
         self.cb_add_base.setStyleSheet(u"background-color: rgb(240, 245, 250);")
         self.cb_add_base.setIconSize(QSize(16, 16))
 
-        self.formLayout.setWidget(4, QFormLayout.ItemRole.FieldRole, self.cb_add_base)
+        self.formLayout.setWidget(4, QFormLayout.FieldRole, self.cb_add_base)
 
         self.spinbox_base_thickness = QSpinBox(Cylinder_View)
         self.spinbox_base_thickness.setObjectName(u"spinbox_base_thickness")
         sizePolicy1.setHeightForWidth(self.spinbox_base_thickness.sizePolicy().hasHeightForWidth())
         self.spinbox_base_thickness.setSizePolicy(sizePolicy1)
 
-        self.formLayout.setWidget(2, QFormLayout.ItemRole.FieldRole, self.spinbox_base_thickness)
+        self.formLayout.setWidget(2, QFormLayout.FieldRole, self.spinbox_base_thickness)
 
         self.spinbox_base_height = QSpinBox(Cylinder_View)
         self.spinbox_base_height.setObjectName(u"spinbox_base_height")
         sizePolicy1.setHeightForWidth(self.spinbox_base_height.sizePolicy().hasHeightForWidth())
         self.spinbox_base_height.setSizePolicy(sizePolicy1)
 
-        self.formLayout.setWidget(3, QFormLayout.ItemRole.FieldRole, self.spinbox_base_height)
+        self.formLayout.setWidget(3, QFormLayout.FieldRole, self.spinbox_base_height)
 
         self.label_4 = QLabel(Cylinder_View)
         self.label_4.setObjectName(u"label_4")
         self.label_4.setStyleSheet(u"background-color: rgb(240, 245, 250);")
 
-        self.formLayout.setWidget(2, QFormLayout.ItemRole.LabelRole, self.label_4)
+        self.formLayout.setWidget(2, QFormLayout.LabelRole, self.label_4)
 
         self.label_5 = QLabel(Cylinder_View)
         self.label_5.setObjectName(u"label_5")
         self.label_5.setStyleSheet(u"background-color: rgb(240, 245, 250);")
 
-        self.formLayout.setWidget(3, QFormLayout.ItemRole.LabelRole, self.label_5)
+        self.formLayout.setWidget(3, QFormLayout.LabelRole, self.label_5)
 
 
         self.verticalLayout.addLayout(self.formLayout)
@@ -145,7 +145,7 @@ class Ui_Cylinder_View(object):
 
         self.verticalLayout.addWidget(self.btn_apply_settings)
 
-        self.verticalSpacer = QSpacerItem(280, 270, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        self.verticalSpacer = QSpacerItem(280, 270, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
         self.verticalLayout.addItem(self.verticalSpacer)
 
@@ -166,10 +166,10 @@ class Ui_Cylinder_View(object):
         self.spinbox_diameter.setSuffix(QCoreApplication.translate("Cylinder_View", u" mm", None))
         self.label_2.setText(QCoreApplication.translate("Cylinder_View", u"Cylinder Length", None))
         self.spinbox_length.setSuffix(QCoreApplication.translate("Cylinder_View", u" mm", None))
-        self.label_3.setText(QCoreApplication.translate("Cylinder_View", u"Add Base", None))
+        self.label_3.setText(QCoreApplication.translate("Cylinder_View", u"Add Collar", None))
         self.cb_add_base.setText("")
-        self.label_4.setText(QCoreApplication.translate("Cylinder_View", u"Base Thickness", None))
-        self.label_5.setText(QCoreApplication.translate("Cylinder_View", u"Base Height", None))
+        self.label_4.setText(QCoreApplication.translate("Cylinder_View", u"Collar Thickness", None))
+        self.label_5.setText(QCoreApplication.translate("Cylinder_View", u"Collar Height", None))
         self.btn_apply_settings.setText(QCoreApplication.translate("Cylinder_View", u"Apply Settings", None))
     # retranslateUi
 

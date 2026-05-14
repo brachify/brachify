@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>290</width>
-    <height>290</height>
+    <height>318</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -48,7 +48,7 @@
     <number>10</number>
    </property>
    <item>
-    <layout class="QFormLayout" name="formLayout">
+    <layout class="QGridLayout" name="gridLayout">
      <property name="sizeConstraint">
       <enum>QLayout::SetNoConstraint</enum>
      </property>
@@ -112,6 +112,9 @@
        <property name="suffix">
         <string> mm</string>
        </property>
+       <property name="decimals">
+        <number>3</number>
+       </property>
        <property name="minimum">
         <double>0.300000000000000</double>
        </property>
@@ -164,6 +167,9 @@
        </property>
        <property name="suffix">
         <string> mm</string>
+       </property>
+       <property name="decimals">
+        <number>3</number>
        </property>
        <property name="maximum">
         <double>350.000000000000000</double>
@@ -218,6 +224,9 @@
        <property name="suffix">
         <string> mm</string>
        </property>
+       <property name="decimals">
+        <number>3</number>
+       </property>
        <property name="maximum">
         <double>350.000000000000000</double>
        </property>
@@ -270,6 +279,9 @@
        </property>
        <property name="suffix">
         <string> mm</string>
+       </property>
+       <property name="decimals">
+        <number>3</number>
        </property>
        <property name="maximum">
         <double>350.000000000000000</double>

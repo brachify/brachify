@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'main_window.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.3
+## Created by: Qt User Interface Compiler version 6.5.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -23,9 +23,9 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(912, 607)
+        MainWindow.resize(770, 590)
         icon = QIcon()
-        icon.addFile(u":/Icon/Icon/brachify_splash-ico.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon.addFile(u":/Icon/Icon/brachify_splash-ico.png", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
         MainWindow.setStyleSheet(u"background-color: rgb(155,189,220);")
         self.centralwidget = QWidget(MainWindow)
@@ -41,7 +41,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.setContentsMargins(0, -1, -1, 0)
         self.display_view_widget = QWidget(self.centralwidget)
         self.display_view_widget.setObjectName(u"display_view_widget")
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum)
+        sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.display_view_widget.sizePolicy().hasHeightForWidth())
@@ -63,7 +63,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setSizeConstraint(QLayout.SetMaximumSize)
-        self.verticalLayout.setContentsMargins(2, 2, 2, 2)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.top_menu_bar = QWidget(self.centralwidget)
         self.top_menu_bar.setObjectName(u"top_menu_bar")
         self.top_menu_bar.setMinimumSize(QSize(290, 180))
@@ -169,6 +169,7 @@ class Ui_MainWindow(object):
 "	color: rgb(250,250,250);\n"
 "	background-color: rgb(28, 44, 81);\n"
 "}")
+        self.btn_export_view.setCheckable(False)
 
         self.verticalLayout_31.addWidget(self.btn_export_view)
 
@@ -177,7 +178,7 @@ class Ui_MainWindow(object):
 
         self.viewswidget = QStackedWidget(self.centralwidget)
         self.viewswidget.setObjectName(u"viewswidget")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy1 = QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.viewswidget.sizePolicy().hasHeightForWidth())
