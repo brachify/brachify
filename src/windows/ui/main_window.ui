@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>912</width>
-    <height>607</height>
+    <width>770</width>
+    <height>472</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -73,7 +73,7 @@
         </property>
         <layout class="QGridLayout" name="gridLayout_3">
          <property name="sizeConstraint">
-          <enum>QLayout::SetMaximumSize</enum>
+          <enum>QLayout::SetMinimumSize</enum>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -101,7 +101,7 @@
        <number>0</number>
       </property>
       <property name="sizeConstraint">
-       <enum>QLayout::SetDefaultConstraint</enum>
+       <enum>QLayout::SetMaximumSize</enum>
       </property>
       <property name="leftMargin">
        <number>0</number>
@@ -109,26 +109,32 @@
       <property name="topMargin">
        <number>0</number>
       </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
       <property name="bottomMargin">
        <number>0</number>
       </property>
       <item>
        <widget class="QWidget" name="top_menu_bar" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
           <width>290</width>
-          <height>180</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>290</width>
-          <height>180</height>
+          <height>165</height>
          </size>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_31">
          <property name="spacing">
           <number>0</number>
+         </property>
+         <property name="sizeConstraint">
+          <enum>QLayout::SetNoConstraint</enum>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -140,7 +146,7 @@
           <number>0</number>
          </property>
          <property name="bottomMargin">
-          <number>20</number>
+          <number>0</number>
          </property>
          <item>
           <widget class="QPushButton" name="btn_import_view">
@@ -317,10 +323,16 @@ QPushButton:pressed {
       </item>
       <item>
        <widget class="QStackedWidget" name="viewswidget">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
           <width>290</width>
-          <height>100</height>
+          <height>305</height>
          </size>
         </property>
         <property name="maximumSize">
