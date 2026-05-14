@@ -32,7 +32,7 @@ class Ui_Import_View(object):
         Import_View.setStyleSheet(u"")
         self.verticalLayout_3 = QVBoxLayout(Import_View)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.verticalLayout_3.setContentsMargins(0, 10, 0, 0)
+        self.verticalLayout_3.setContentsMargins(5, 10, 5, 5)
         self.btn_import_folder = QPushButton(Import_View)
         self.btn_import_folder.setObjectName(u"btn_import_folder")
         self.btn_import_folder.setMinimumSize(QSize(240, 33))

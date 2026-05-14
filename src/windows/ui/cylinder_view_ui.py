@@ -34,6 +34,7 @@ class Ui_Cylinder_View(object):
         Cylinder_View.setStyleSheet(u"background-color: rgb(250,250,250);")
         self.verticalLayout = QVBoxLayout(Cylinder_View)
         self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout.setContentsMargins(5, 10, 5, 5)
         self.gridLayout = QGridLayout()
         self.gridLayout.setObjectName(u"gridLayout")
         self.gridLayout.setSizeConstraint(QLayout.SetMinimumSize)
