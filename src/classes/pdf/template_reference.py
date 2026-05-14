@@ -619,7 +619,7 @@ def add_deadspace(needles: list, deadspace_mm: float) -> list:
         # If the needle has zero length or if no deadspace is requested, keep it as is.
         if n == 0:
             log.warning("Deadspace not applied: zero-length first segment for a needle") ## Temporary Log warning, will add an error message in Ui 
-            get_app().window.channel_display_warning()
+            get_app().window.deadspace_display_warning()
             extended_interstitial_length.append(pts)
             continue
 
