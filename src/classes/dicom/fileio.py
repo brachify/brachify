@@ -173,9 +173,14 @@ def load_channels_nucletron(data: DicomData, rp_dataset, center_index):
 
     #loads all channels information in the order they are in the dicom, just as the ROI_Channels are loaded
     try:
-        channel_contours = [
-            channel.ContourSequence[0].ContourData for channel in  rp_channels
-            ]
+        #if ContourData actually exists for the channel, then add it to the list of channel_contours, if not then add an empty list (since some channels are just anchor points with no contour data)   
+        for channel in rp_channels:
+            try:
+                channel_contours.append(channel.ContourSequence[0].ContourData)
+            except:
+                # channel_contours.append([])
+                continue     
+
         #removes central channel
         del channel_contours[center_index]
 
