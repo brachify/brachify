@@ -746,7 +746,7 @@ def generate_pdf(
             # Manual tandem added without an associated channel in the import
             # Use a generic label and a 'T' marker for the channel number
             tandem_label = app.window.dicommodel.data.tandem_channel or "Tandem"
-            tandem_channel_number = "T"
+            tandem_channel_number = " "
         data.append([tandem_label, tandem_channel_number, "N/A"])
 
     table = Table(data)
