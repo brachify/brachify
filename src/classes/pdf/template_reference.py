@@ -441,13 +441,22 @@ def save_points_diagram(points: list,
                     ax.text(x+(channel_diam/2), -y, str(number_list[i]), color='black', ha='left', va='center')
 
     if has_tandem:
-        tandem_channel_number = get_app().window.channelsmodel.get_tandem_channel().channel_number
-        if(tandem_diam >= circle_radius/12 and maxx<circle_radius and maxy<circle_radius):
-            ax.add_artist(plt.Circle((0.0, 0.0), tandem_diam/2, color='black', fill=False))
-            ax.text(0.0, 0.0, f'{tandem_channel_number}T', color='black', ha='center', va='center')
+        tandem_channel = get_app().window.channelsmodel.get_tandem_channel()
+        if tandem_channel is not None:
+            tandem_channel_number = tandem_channel.channel_number
+            tandem_label_text = f"{tandem_channel_number}T"
         else:
-            ax.add_artist(plt.Circle((0.0, 0.0), tandem_diam/2, color='black', fill=False))
-            ax.text((channel_diam/2), 0.0, f'{tandem_channel_number}T', color='black', ha='left', va='center')
+            # No tandem channel explicitly set -> show generic 'T' label
+            tandem_label_text = "T"
+
+        # draw the tandem circle
+        ax.add_artist(plt.Circle((0.0, 0.0), tandem_diam/2, color='black', fill=False))
+
+        # draw label (center if space, otherwise to right of tandem)
+        if(tandem_diam >= circle_radius/12 and maxx<circle_radius and maxy<circle_radius):
+            ax.text(0.0, 0.0, tandem_label_text, color='black', ha='center', va='center')
+        else:
+            ax.text((channel_diam/2), 0.0, tandem_label_text, color='black', ha='left', va='center')
 
         # if the tandem was generated, then display a dotted line on the pdf.
         if not is_tandem_imported:
@@ -728,8 +737,16 @@ def generate_pdf(
         data.append([label, channel_number, interstitial_length])
 
     if has_tandem:
-        tandem_label = app.window.dicommodel.data.tandem_channel #there isn't anything here if tandem is manually added without a tandem channel imported?
-        tandem_channel_number = app.window.channelsmodel.get_tandem_channel().channel_number #there isn't anything here if tandem is manually added without a tandem channel imported?
+        tandem_channel = app.window.channelsmodel.get_tandem_channel()
+        if tandem_channel is not None:
+            # Tandem channel has been explicitly set in the channels model
+            tandem_label = tandem_channel.label
+            tandem_channel_number = tandem_channel.channel_number
+        else:
+            # Manual tandem added without an associated channel in the import
+            # Use a generic label and a 'T' marker for the channel number
+            tandem_label = app.window.dicommodel.data.tandem_channel or "Tandem"
+            tandem_channel_number = "T"
         data.append([tandem_label, tandem_channel_number, "N/A"])
 
     table = Table(data)
