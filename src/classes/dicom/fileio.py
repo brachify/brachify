@@ -77,7 +77,8 @@ def load_central_axis_nucletron(data: DicomData, rp_dataset):
             central_channel = contoursequence.ContourSequence[0].ContourData
             break
     if central_channel is None:
-        log.info(f"No central channel contour sequence found corresponding to central channel label: {filepath} \n{error_message}")
+        log.info(f"No central channel contour sequence found corresponding to central channel: {data.central_channel_roi}")
+        return
 
     
     central_channel_points = [central_channel[i:i+3] for i in range(0, len(central_channel), 3)] 
@@ -471,7 +472,7 @@ def load_nucletron_dicom_data(rp_file: str, rs_file: str) -> DicomData:
         # center_index = None
         for i, label in enumerate(data.channels_labels):
             try:
-                if rp_dataset[0x300f,0x1000][0].StructureSetROISequence[i].ROIName in ["Central Axis"]:
+                if rp_dataset[0x300f,0x1000][0].StructureSetROISequence[i].ROIName.lower() in ["central axis", "centralaxis"]:
                     data.central_channel_roi = int(rp_dataset[0x300f,0x1000][0].StructureSetROISequence[i].ROINumber)
                     center_index = i
             except:

@@ -412,7 +412,7 @@ class Tandem():
 
 
 
-def fuse_shapes(shapes: []):
+def fuse_shapes(shapes: list):
     result = None
     for shape in shapes:
         if result is None:
@@ -464,14 +464,14 @@ def make_point(point):
     return BRepPrimAPI_MakeSphere(p, 1.0).Shape()
 
 
-def make_wire(edges: []):
+def make_wire(edges: list):
     wire = BRepBuilderAPI_MakeWire()
     for edge in edges:
         wire.Add(edge)
     return wire.Wire()
 
 
-def make_thru_shape(wires: []):
+def make_thru_shape(wires: list):
     shape = BRepOffsetAPI_ThruSections(True)
     for wire in wires:
         shape.AddWire(wire)
