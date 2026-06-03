@@ -245,7 +245,7 @@ def get_all_interstitial_lengths(cylinder: BrachyCylinder, needles: list, spacin
 
         # Project the vectors onto the line direction
 
-        projection_onto_line = np.dot(vector_to_points, line_direction)
+        projection_onto_line = np.einsum('ij,j->i', vector_to_points, line_direction) # np.dot(vector_to_points, line_direction)
 
 
         # Calculate the closest points on the line to each point in the cloud
