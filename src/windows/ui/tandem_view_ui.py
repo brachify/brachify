@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'tandem_view.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.5.2
+## Created by: Qt User Interface Compiler version 6.8.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -34,7 +34,8 @@ class Ui_Tandem_View(object):
         self.ab = QTabWidget(Tandem_View)
         self.ab.setObjectName(u"ab")
         self.ab.setMinimumSize(QSize(0, 290))
-        self.ab.setStyleSheet(u"background-color: rgb(240, 245, 250);")
+        self.ab.setStyleSheet(u"background-color: rgb(240, 245,250);\n"
+"color: rgb(0, 0, 0);")
         self.Import = QWidget()
         self.Import.setObjectName(u"Import")
         self.verticalLayout_3 = QVBoxLayout(self.Import)
@@ -85,13 +86,16 @@ class Ui_Tandem_View(object):
         self.label_2 = QLabel(self.Import)
         self.label_2.setObjectName(u"label_2")
         self.label_2.setMaximumSize(QSize(70, 25))
+        self.label_2.setStyleSheet(u"background-color: rgb(240, 245, 250);\n"
+"color: rgb(0, 0, 0);")
 
         self.gridLayout_2.addWidget(self.label_2, 0, 0, 1, 1)
 
         self.sb_height_offset = QDoubleSpinBox(self.Import)
         self.sb_height_offset.setObjectName(u"sb_height_offset")
         self.sb_height_offset.setMinimumSize(QSize(20, 0))
-        self.sb_height_offset.setStyleSheet(u"background-color: rgb(255, 255, 255)")
+        self.sb_height_offset.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
+"color: rgb(0, 0, 0);")
         self.sb_height_offset.setMinimum(-100.000000000000000)
         self.sb_height_offset.setMaximum(100.000000000000000)
 
@@ -99,12 +103,15 @@ class Ui_Tandem_View(object):
 
         self.label = QLabel(self.Import)
         self.label.setObjectName(u"label")
+        self.label.setStyleSheet(u"background-color: rgb(240, 245, 250);\n"
+"color: rgb(0, 0, 0);")
 
         self.gridLayout_2.addWidget(self.label, 1, 0, 1, 1)
 
         self.tandem_rotation = QDoubleSpinBox(self.Import)
         self.tandem_rotation.setObjectName(u"tandem_rotation")
-        self.tandem_rotation.setStyleSheet(u"background-color: rgb(255, 255, 255)")
+        self.tandem_rotation.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
+"color: rgb(0, 0, 0);")
         self.tandem_rotation.setMinimum(-360.000000000000000)
         self.tandem_rotation.setMaximum(360.000000000000000)
 
@@ -136,11 +143,13 @@ class Ui_Tandem_View(object):
 
         self.label_5 = QLabel(self.Import)
         self.label_5.setObjectName(u"label_5")
+        self.label_5.setStyleSheet(u"background-color: rgb(240, 245, 250);\n"
+"color: rgb(0, 0, 0);")
         self.label_5.setWordWrap(True)
 
         self.verticalLayout_3.addWidget(self.label_5)
 
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_3.addItem(self.verticalSpacer)
 
@@ -157,12 +166,15 @@ class Ui_Tandem_View(object):
         self.gridLayout.setContentsMargins(2, 2, 2, 2)
         self.label_7 = QLabel(self.Generate)
         self.label_7.setObjectName(u"label_7")
+        self.label_7.setStyleSheet(u"background-color: rgb(240, 245, 250);\n"
+"color: rgb(0, 0, 0);")
 
         self.gridLayout.addWidget(self.label_7, 0, 0, 1, 1)
 
         self.sb_tandem_height = QDoubleSpinBox(self.Generate)
         self.sb_tandem_height.setObjectName(u"sb_tandem_height")
-        self.sb_tandem_height.setStyleSheet(u"background-color: rgb(255, 255, 250)")
+        self.sb_tandem_height.setStyleSheet(u"background-color: rgb(255, 255, 250);\n"
+"color: rgb(0, 0, 0);")
         self.sb_tandem_height.setDecimals(3)
         self.sb_tandem_height.setMinimum(10.000000000000000)
         self.sb_tandem_height.setMaximum(500.000000000000000)
@@ -172,13 +184,16 @@ class Ui_Tandem_View(object):
 
         self.label_8 = QLabel(self.Generate)
         self.label_8.setObjectName(u"label_8")
+        self.label_8.setStyleSheet(u"background-color: rgb(240, 245, 250);\n"
+"color: rgb(0, 0, 0);")
 
         self.gridLayout.addWidget(self.label_8, 1, 0, 1, 1)
 
         self.sp_channel_diameter = QDoubleSpinBox(self.Generate)
         self.sp_channel_diameter.setObjectName(u"sp_channel_diameter")
         self.sp_channel_diameter.setMaximumSize(QSize(16777215, 16777215))
-        self.sp_channel_diameter.setStyleSheet(u"background-color: rgb(255, 255, 250)")
+        self.sp_channel_diameter.setStyleSheet(u"background-color: rgb(255, 255, 250);\n"
+"color: rgb(0, 0, 0);")
         self.sp_channel_diameter.setDecimals(3)
         self.sp_channel_diameter.setMinimum(0.500000000000000)
 
@@ -186,12 +201,15 @@ class Ui_Tandem_View(object):
 
         self.label_4 = QLabel(self.Generate)
         self.label_4.setObjectName(u"label_4")
+        self.label_4.setStyleSheet(u"background-color: rgb(240, 245, 250);\n"
+"color: rgb(0, 0, 0);")
 
         self.gridLayout.addWidget(self.label_4, 2, 0, 1, 1)
 
         self.sp_stopper_diameter = QDoubleSpinBox(self.Generate)
         self.sp_stopper_diameter.setObjectName(u"sp_stopper_diameter")
-        self.sp_stopper_diameter.setStyleSheet(u"background-color: rgb(255, 255, 250)")
+        self.sp_stopper_diameter.setStyleSheet(u"background-color: rgb(255, 255, 250);\n"
+"color: rgb(0, 0, 0);")
         self.sp_stopper_diameter.setDecimals(3)
         self.sp_stopper_diameter.setMinimum(0.500000000000000)
 
@@ -199,24 +217,30 @@ class Ui_Tandem_View(object):
 
         self.label_12 = QLabel(self.Generate)
         self.label_12.setObjectName(u"label_12")
+        self.label_12.setStyleSheet(u"background-color: rgb(240, 245, 250);\n"
+"color: rgb(0, 0, 0);")
 
         self.gridLayout.addWidget(self.label_12, 3, 0, 1, 1)
 
         self.sp_bend_angle = QDoubleSpinBox(self.Generate)
         self.sp_bend_angle.setObjectName(u"sp_bend_angle")
-        self.sp_bend_angle.setStyleSheet(u"background-color: rgb(255, 255, 250)")
+        self.sp_bend_angle.setStyleSheet(u"background-color: rgb(255, 255, 250);\n"
+"color: rgb(0, 0, 0);")
         self.sp_bend_angle.setDecimals(3)
 
         self.gridLayout.addWidget(self.sp_bend_angle, 3, 1, 1, 1)
 
         self.label_6 = QLabel(self.Generate)
         self.label_6.setObjectName(u"label_6")
+        self.label_6.setStyleSheet(u"background-color: rgb(240, 245, 250);\n"
+"color: rgb(0, 0, 0);")
 
         self.gridLayout.addWidget(self.label_6, 4, 0, 1, 1)
 
         self.sb_bend_radius = QDoubleSpinBox(self.Generate)
         self.sb_bend_radius.setObjectName(u"sb_bend_radius")
-        self.sb_bend_radius.setStyleSheet(u"background-color: rgb(255, 255, 250)")
+        self.sb_bend_radius.setStyleSheet(u"background-color: rgb(255, 255, 250);\n"
+"color: rgb(0, 0, 0);")
         self.sb_bend_radius.setDecimals(3)
         self.sb_bend_radius.setMinimum(10.000000000000000)
         self.sb_bend_radius.setMaximum(1000.000000000000000)
@@ -227,14 +251,16 @@ class Ui_Tandem_View(object):
         self.label_9.setObjectName(u"label_9")
         self.label_9.setMinimumSize(QSize(0, 18))
         self.label_9.setMaximumSize(QSize(16777215, 18))
-        self.label_9.setStyleSheet(u"background-color: rgb(240, 245, 250);")
+        self.label_9.setStyleSheet(u"background-color: rgb(240, 245, 250);\n"
+"color: rgb(0, 0, 0);")
 
         self.gridLayout.addWidget(self.label_9, 5, 0, 1, 1)
 
         self.sb_threading_depth = QDoubleSpinBox(self.Generate)
         self.sb_threading_depth.setObjectName(u"sb_threading_depth")
         self.sb_threading_depth.setMinimumSize(QSize(20, 0))
-        self.sb_threading_depth.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+        self.sb_threading_depth.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
+"color: rgb(0, 0, 0);")
         self.sb_threading_depth.setDecimals(3)
         self.sb_threading_depth.setMaximum(350.000000000000000)
 
@@ -244,14 +270,16 @@ class Ui_Tandem_View(object):
         self.label_10.setObjectName(u"label_10")
         self.label_10.setMinimumSize(QSize(0, 18))
         self.label_10.setMaximumSize(QSize(16777215, 18))
-        self.label_10.setStyleSheet(u"background-color: rgb(240, 245, 250);")
+        self.label_10.setStyleSheet(u"background-color: rgb(240, 245, 250);\n"
+"color: rgb(0, 0, 0);")
 
         self.gridLayout.addWidget(self.label_10, 6, 0, 1, 1)
 
         self.sb_threading_diameter = QDoubleSpinBox(self.Generate)
         self.sb_threading_diameter.setObjectName(u"sb_threading_diameter")
         self.sb_threading_diameter.setMinimumSize(QSize(20, 0))
-        self.sb_threading_diameter.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+        self.sb_threading_diameter.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
+"color: rgb(0, 0, 0);")
         self.sb_threading_diameter.setDecimals(3)
         self.sb_threading_diameter.setMaximum(350.000000000000000)
 
@@ -259,12 +287,15 @@ class Ui_Tandem_View(object):
 
         self.label_3 = QLabel(self.Generate)
         self.label_3.setObjectName(u"label_3")
+        self.label_3.setStyleSheet(u"background-color: rgb(240, 245, 250);\n"
+"color: rgb(0, 0, 0);")
 
         self.gridLayout.addWidget(self.label_3, 7, 0, 1, 1)
 
         self.tandem_rotation_2 = QDoubleSpinBox(self.Generate)
         self.tandem_rotation_2.setObjectName(u"tandem_rotation_2")
-        self.tandem_rotation_2.setStyleSheet(u"background-color: rgb(255, 255, 255)")
+        self.tandem_rotation_2.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
+"color: rgb(0, 0, 0);")
         self.tandem_rotation_2.setDecimals(3)
         self.tandem_rotation_2.setMinimum(-360.000000000000000)
         self.tandem_rotation_2.setMaximum(360.000000000000000)
@@ -314,7 +345,7 @@ class Ui_Tandem_View(object):
 
         self.verticalLayout_6.addWidget(self.btn_clear_generate)
 
-        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_6.addItem(self.verticalSpacer_2)
 

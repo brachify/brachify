@@ -73,7 +73,8 @@
         </sizepolicy>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(240, 245, 250);</string>
+        <string notr="true">background-color: rgb(240, 245, 250);
+color: rgb(0, 0, 0);</string>
        </property>
        <property name="text">
         <string>Cylinder Diameter</string>
@@ -104,7 +105,8 @@
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 255, 255);</string>
+        <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
        </property>
        <property name="suffix">
         <string> mm</string>
@@ -120,7 +122,8 @@
         </sizepolicy>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(240, 245, 250);</string>
+        <string notr="true">background-color: rgb(240, 245, 250);
+color: rgb(0, 0, 0);</string>
        </property>
        <property name="text">
         <string>Cylinder Length</string>
@@ -151,7 +154,8 @@
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 255, 255);</string>
+        <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
        </property>
        <property name="suffix">
         <string> mm</string>
@@ -173,7 +177,8 @@
         </sizepolicy>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(240, 245, 250);</string>
+        <string notr="true">background-color: rgb(240, 245, 250);
+color: rgb(0, 0, 0);</string>
        </property>
        <property name="text">
         <string>Collar Thickness</string>
@@ -187,6 +192,10 @@
          <horstretch>2</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
        </property>
        <property name="suffix">
         <string> mm</string>
@@ -202,7 +211,8 @@
         </sizepolicy>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(240, 245, 250);</string>
+        <string notr="true">background-color: rgb(240, 245, 250);
+color: rgb(0, 0, 0);</string>
        </property>
        <property name="text">
         <string>Collar Height</string>
@@ -216,6 +226,10 @@
          <horstretch>2</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
        </property>
        <property name="suffix">
         <string> mm</string>
@@ -240,7 +254,8 @@
         </sizepolicy>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(240, 245, 250);</string>
+        <string notr="true">background-color: rgb(240, 245, 250);
+color: rgb(0, 0, 0);</string>
        </property>
        <property name="text">
         <string>Add Collar</string>
@@ -273,11 +288,11 @@
        <property name="layoutDirection">
         <enum>Qt::RightToLeft</enum>
        </property>
-       <property name="autoFillBackground">
-        <bool>false</bool>
-       </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(240, 245, 250);</string>
+        <string notr="true">QCheckBox {
+    background-color: rgb(240, 245, 250);
+}
+</string>
        </property>
        <property name="text">
         <string/>
@@ -287,6 +302,9 @@
          <width>16</width>
          <height>16</height>
         </size>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
        </property>
       </widget>
      </item>

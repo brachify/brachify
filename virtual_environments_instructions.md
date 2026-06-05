@@ -46,13 +46,13 @@ References:
 ```
 dependencies:
   - python=3.12
-  - pyside6
+  - matplotlib
 ```
 **After**:
 ```
 dependencies:
   - python=3.12
-  - pyside6
+  - matplotlib
   - pandas
 ```
 
