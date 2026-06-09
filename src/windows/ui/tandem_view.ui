@@ -53,8 +53,24 @@
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(240, 245,250);
-color: rgb(0, 0, 0);</string>
+      <string notr="true">QTabWidget::pane {
+	border: 1px solid rgb(199, 219, 237); /* visible border */
+}
+
+QTabBar::tab {
+    background: rgb(235, 235, 235);
+    padding: 5px;
+	color: rgb(0, 0, 0); /* black text */
+}
+
+QTabBar::tab:selected {
+    background: white;
+}
+
+QTabBar::tab:!selected {
+    margin-top: 2px; /* makes selected tab look connected */
+}
+</string>
      </property>
      <property name="currentIndex">
       <number>1</number>

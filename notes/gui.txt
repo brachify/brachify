@@ -24,9 +24,10 @@ Qt Designer is accessed by opening `designer.exe` in the following location:
 # workflow
 -> edit in Qt Designer
 -> save as src/windows/ui/######_view.ui
--> cd .../src/windows/ui
--> convert ######.ui to ######_view_ui.py (pyside6-uic ######.ui -o ######_ui.py)
--> create a ######_view.py file and import Ui_######_View to use the gui
+-> Run in command prompt: cd .../src/windows/ui
+        (in command prompt, change directories to the ui directory.)
+-> convert ######.ui to ######_view_ui.py (Run in command prompt: pyside6-uic ######.ui -o ######_ui.py)
+-> create a ######_view.py file and import Ui_######_View to use the gui (this has already been done for existing views. Must only be done when creating a new view.)
 -> add ######_view.py to src/windows/main_window.py to have to show
 
 # using buttons or controls

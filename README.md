@@ -7,8 +7,8 @@
 ### Download exe zip at:
 https://github.com/brachify/brachify-release/releases
 
-### Tutorial info can be found:
-https://github.com/brachify/brachify-release/blob/main/user_guide/Brachify%20User%20Manual.docx
+### Tutorial info can be found at:
+[`user_guide/Brachify User Manual.docx`](user_guide/Brachify%20User%20Manual.docx)
 
 ## Developer Info
 ### Getting Started programatically
@@ -17,7 +17,8 @@ https://github.com/brachify/brachify-release/blob/main/user_guide/Brachify%20Use
 - download git
 - create a conda environment using the instructions in [`virtual_environments_instructions.md`](virtual_environments_instructions.md)
 - download code (clone git repository to your local machiene)
-- run launch.py to use the application
+- run `launch.py` to use the application
+- developer notes can be found in the folder [`notes/`](notes/)
 
 ### To build .exe
 #### Option 1

@@ -34,8 +34,24 @@ class Ui_Tandem_View(object):
         self.ab = QTabWidget(Tandem_View)
         self.ab.setObjectName(u"ab")
         self.ab.setMinimumSize(QSize(0, 290))
-        self.ab.setStyleSheet(u"background-color: rgb(240, 245,250);\n"
-"color: rgb(0, 0, 0);")
+        self.ab.setStyleSheet(u"QTabWidget::pane {\n"
+"	border: 1px solid rgb(199, 219, 237); /* visible border */\n"
+"}\n"
+"\n"
+"QTabBar::tab {\n"
+"    background: rgb(235, 235, 235);\n"
+"    padding: 5px;\n"
+"	color: rgb(0, 0, 0); /* black text */\n"
+"}\n"
+"\n"
+"QTabBar::tab:selected {\n"
+"    background: white;\n"
+"}\n"
+"\n"
+"QTabBar::tab:!selected {\n"
+"    margin-top: 2px; /* makes selected tab look connected */\n"
+"}\n"
+"")
         self.Import = QWidget()
         self.Import.setObjectName(u"Import")
         self.verticalLayout_3 = QVBoxLayout(self.Import)
