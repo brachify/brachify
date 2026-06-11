@@ -381,7 +381,7 @@ class Ui_Tandem_View(object):
     def retranslateUi(self, Tandem_View):
         Tandem_View.setWindowTitle(QCoreApplication.translate("Tandem_View", u"Form", None))
         self.btn_import.setText(QCoreApplication.translate("Tandem_View", u"Import", None))
-        self.btn_clear_import.setText(QCoreApplication.translate("Tandem_View", u"Clear Imported Tandem", None))
+        self.btn_clear_import.setText(QCoreApplication.translate("Tandem_View", u"Clear Tandem", None))
         self.label_2.setText(QCoreApplication.translate("Tandem_View", u"Height Offset", None))
         self.sb_height_offset.setSuffix(QCoreApplication.translate("Tandem_View", u" mm", None))
         self.label.setText(QCoreApplication.translate("Tandem_View", u"Rotation", None))
@@ -406,7 +406,7 @@ class Ui_Tandem_View(object):
         self.label_3.setText(QCoreApplication.translate("Tandem_View", u"Rotation", None))
         self.tandem_rotation_2.setSuffix(QCoreApplication.translate("Tandem_View", u"\u00b0", None))
         self.btn_apply.setText(QCoreApplication.translate("Tandem_View", u"Generate Tandem", None))
-        self.btn_clear_generate.setText(QCoreApplication.translate("Tandem_View", u"Clear Generated Tandem", None))
+        self.btn_clear_generate.setText(QCoreApplication.translate("Tandem_View", u"Clear Tandem", None))
         self.ab.setTabText(self.ab.indexOf(self.Generate), QCoreApplication.translate("Tandem_View", u"Generate", None))
     # retranslateUi
 

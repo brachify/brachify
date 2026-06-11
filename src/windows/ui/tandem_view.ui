@@ -156,7 +156,7 @@ QPushButton:pressed {
 }</string>
          </property>
          <property name="text">
-          <string>Clear Imported Tandem</string>
+          <string>Clear Tandem</string>
          </property>
         </widget>
        </item>
@@ -676,7 +676,7 @@ QPushButton:pressed {
 }</string>
          </property>
          <property name="text">
-          <string>Clear Generated Tandem</string>
+          <string>Clear Tandem</string>
          </property>
         </widget>
        </item>
