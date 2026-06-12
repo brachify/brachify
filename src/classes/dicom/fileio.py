@@ -452,8 +452,8 @@ def load_nucletron_dicom_data(rp_file: str, rs_file: str) -> DicomData:
             fp = DicomBytesIO(raw)
             fp.is_little_endian = True
             fp.is_implicit_VR = True  # most private data uses implicit VR
-            # seq = read_sequence(fp, is_implicit_VR=True, is_little_endian=True, bytelength=len(raw), encoding="iso8859")
-            seq = read_sequence(fp, is_implicit_VR=True, is_little_endian=True, bytelength=len(raw), encoding="latin_1") # TODO: maybe make a way to find which encoding to use?
+            encoding = rp_dataset.read_encoding  # ['latin_1']
+            seq = read_sequence(fp, is_implicit_VR=True, is_little_endian=True, bytelength=len(raw), encoding=encoding)
             
             channels_data = seq
 
