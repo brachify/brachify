@@ -77,7 +77,8 @@ def load_central_axis_nucletron(data: DicomData, channels_data):
             central_channel = contoursequence.ContourSequence[0].ContourData
             break
     if central_channel is None:
-        log.info(f"No central channel contour sequence found corresponding to central channel label: {filepath} \n{error_message}")
+        log.info(f"No central channel contour sequence found corresponding to central channel: {data.central_channel_roi}")
+        return
 
     
     central_channel_points = [central_channel[i:i+3] for i in range(0, len(central_channel), 3)] 

@@ -73,7 +73,8 @@
         </sizepolicy>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(240, 245, 250);</string>
+        <string notr="true">background-color: rgb(240, 245, 250);
+color: rgb(0, 0, 0);</string>
        </property>
        <property name="text">
         <string>Show Tandem</string>
@@ -114,7 +115,8 @@
         </sizepolicy>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(240, 245, 250);</string>
+        <string notr="true">background-color: rgb(240, 245, 250);
+color: rgb(0, 0, 0);</string>
        </property>
        <property name="text">
         <string>Show Collet Spacings</string>
@@ -155,7 +157,8 @@
         </sizepolicy>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(240, 245, 250);</string>
+        <string notr="true">background-color: rgb(240, 245, 250);
+color: rgb(0, 0, 0);</string>
        </property>
        <property name="text">
         <string>Needle Collet Spacing Tol.</string>
@@ -169,6 +172,11 @@
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
+</string>
        </property>
        <property name="decimals">
         <number>3</number>
@@ -184,7 +192,8 @@
         </sizepolicy>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(240, 245, 250);</string>
+        <string notr="true">background-color: rgb(240, 245, 250);
+color: rgb(0, 0, 0);</string>
        </property>
        <property name="text">
         <string>Tandem Outer Spacing Tol.</string>
@@ -198,6 +207,11 @@
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
+</string>
        </property>
        <property name="decimals">
         <number>3</number>
@@ -213,7 +227,8 @@
         </sizepolicy>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(240, 245, 250);</string>
+        <string notr="true">background-color: rgb(240, 245, 250);
+color: rgb(0, 0, 0);</string>
        </property>
        <property name="text">
         <string>Tandem Inner Spacing Tol.</string>
@@ -228,6 +243,11 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
+</string>
+       </property>
        <property name="decimals">
         <number>3</number>
        </property>
@@ -238,7 +258,7 @@
    <item>
     <spacer name="verticalSpacer_2">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>

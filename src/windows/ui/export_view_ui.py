@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'export_view.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.5.2
+## Created by: Qt User Interface Compiler version 6.8.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -24,7 +24,7 @@ class Ui_Export_View(object):
         if not Export_View.objectName():
             Export_View.setObjectName(u"Export_View")
         Export_View.resize(433, 415)
-        sizePolicy = QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(Export_View.sizePolicy().hasHeightForWidth())
@@ -34,24 +34,26 @@ class Ui_Export_View(object):
         self.verticalLayout = QVBoxLayout(Export_View)
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout.setContentsMargins(5, 10, 5, 5)
         self.gridLayout = QGridLayout()
         self.gridLayout.setObjectName(u"gridLayout")
         self.gridLayout.setSizeConstraint(QLayout.SetNoConstraint)
         self.gridLayout.setContentsMargins(2, 2, 2, 2)
         self.label_2 = QLabel(Export_View)
         self.label_2.setObjectName(u"label_2")
-        sizePolicy1 = QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Preferred)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.Preferred)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.label_2.sizePolicy().hasHeightForWidth())
         self.label_2.setSizePolicy(sizePolicy1)
-        self.label_2.setStyleSheet(u"background-color: rgb(240, 245, 250);")
+        self.label_2.setStyleSheet(u"background-color: rgb(240, 245, 250);\n"
+"color: rgb(0, 0, 0);")
 
         self.gridLayout.addWidget(self.label_2, 0, 0, 1, 1)
 
         self.cb_tandem_shown = QCheckBox(Export_View)
         self.cb_tandem_shown.setObjectName(u"cb_tandem_shown")
-        sizePolicy2 = QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Fixed)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.Fixed)
         sizePolicy2.setHorizontalStretch(0)
         sizePolicy2.setVerticalStretch(0)
         sizePolicy2.setHeightForWidth(self.cb_tandem_shown.sizePolicy().hasHeightForWidth())
@@ -67,7 +69,8 @@ class Ui_Export_View(object):
         self.label.setEnabled(True)
         sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
         self.label.setSizePolicy(sizePolicy)
-        self.label.setStyleSheet(u"background-color: rgb(240, 245, 250);")
+        self.label.setStyleSheet(u"background-color: rgb(240, 245, 250);\n"
+"color: rgb(0, 0, 0);")
 
         self.gridLayout.addWidget(self.label, 1, 0, 1, 1)
 
@@ -86,7 +89,8 @@ class Ui_Export_View(object):
         self.label_3.setObjectName(u"label_3")
         sizePolicy1.setHeightForWidth(self.label_3.sizePolicy().hasHeightForWidth())
         self.label_3.setSizePolicy(sizePolicy1)
-        self.label_3.setStyleSheet(u"background-color: rgb(240, 245, 250);")
+        self.label_3.setStyleSheet(u"background-color: rgb(240, 245, 250);\n"
+"color: rgb(0, 0, 0);")
 
         self.gridLayout.addWidget(self.label_3, 2, 0, 1, 1)
 
@@ -94,6 +98,9 @@ class Ui_Export_View(object):
         self.sb_needle_collet_od.setObjectName(u"sb_needle_collet_od")
         sizePolicy2.setHeightForWidth(self.sb_needle_collet_od.sizePolicy().hasHeightForWidth())
         self.sb_needle_collet_od.setSizePolicy(sizePolicy2)
+        self.sb_needle_collet_od.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
+"color: rgb(0, 0, 0);\n"
+"")
         self.sb_needle_collet_od.setDecimals(3)
 
         self.gridLayout.addWidget(self.sb_needle_collet_od, 2, 1, 1, 1)
@@ -102,7 +109,8 @@ class Ui_Export_View(object):
         self.label_4.setObjectName(u"label_4")
         sizePolicy1.setHeightForWidth(self.label_4.sizePolicy().hasHeightForWidth())
         self.label_4.setSizePolicy(sizePolicy1)
-        self.label_4.setStyleSheet(u"background-color: rgb(240, 245, 250);")
+        self.label_4.setStyleSheet(u"background-color: rgb(240, 245, 250);\n"
+"color: rgb(0, 0, 0);")
 
         self.gridLayout.addWidget(self.label_4, 3, 0, 1, 1)
 
@@ -110,6 +118,9 @@ class Ui_Export_View(object):
         self.sb_tandem_collet_outer_od.setObjectName(u"sb_tandem_collet_outer_od")
         sizePolicy2.setHeightForWidth(self.sb_tandem_collet_outer_od.sizePolicy().hasHeightForWidth())
         self.sb_tandem_collet_outer_od.setSizePolicy(sizePolicy2)
+        self.sb_tandem_collet_outer_od.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
+"color: rgb(0, 0, 0);\n"
+"")
         self.sb_tandem_collet_outer_od.setDecimals(3)
 
         self.gridLayout.addWidget(self.sb_tandem_collet_outer_od, 3, 1, 1, 1)
@@ -118,7 +129,8 @@ class Ui_Export_View(object):
         self.label_5.setObjectName(u"label_5")
         sizePolicy1.setHeightForWidth(self.label_5.sizePolicy().hasHeightForWidth())
         self.label_5.setSizePolicy(sizePolicy1)
-        self.label_5.setStyleSheet(u"background-color: rgb(240, 245, 250);")
+        self.label_5.setStyleSheet(u"background-color: rgb(240, 245, 250);\n"
+"color: rgb(0, 0, 0);")
 
         self.gridLayout.addWidget(self.label_5, 4, 0, 1, 1)
 
@@ -126,6 +138,9 @@ class Ui_Export_View(object):
         self.sb_tandem_collet_inner_od.setObjectName(u"sb_tandem_collet_inner_od")
         sizePolicy2.setHeightForWidth(self.sb_tandem_collet_inner_od.sizePolicy().hasHeightForWidth())
         self.sb_tandem_collet_inner_od.setSizePolicy(sizePolicy2)
+        self.sb_tandem_collet_inner_od.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
+"color: rgb(0, 0, 0);\n"
+"")
         self.sb_tandem_collet_inner_od.setDecimals(3)
 
         self.gridLayout.addWidget(self.sb_tandem_collet_inner_od, 4, 1, 1, 1)
@@ -133,7 +148,7 @@ class Ui_Export_View(object):
 
         self.verticalLayout.addLayout(self.gridLayout)
 
-        self.verticalSpacer_2 = QSpacerItem(20, 10, QSizePolicy.Minimum, QSizePolicy.Fixed)
+        self.verticalSpacer_2 = QSpacerItem(20, 10, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
 
         self.verticalLayout.addItem(self.verticalSpacer_2)
 
@@ -203,7 +218,7 @@ class Ui_Export_View(object):
 
         self.verticalLayout.addWidget(self.btn_export_shapes)
 
-        self.verticalSpacer = QSpacerItem(267, 4338, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer = QSpacerItem(267, 4338, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout.addItem(self.verticalSpacer)
 
