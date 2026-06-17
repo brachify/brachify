@@ -234,6 +234,13 @@ class MainWindow(QMainWindow):
         dialog.setIcon(QMessageBox.Icon.Warning)
         dialog.exec()
 
+    def deadspace_display_warning(self):
+        dialog = QMessageBox()
+        dialog.setText("Deadspace was not applied to one or more needles because the first two points of the needle are identical. This means the app could not determine the direction to extend the needle tip.")
+        dialog.setWindowTitle("Deadspace Warning")
+        dialog.setIcon(QMessageBox.Icon.Warning)
+        dialog.exec()
+
     def channel_display_error(self):
         dialog = QMessageBox()
         dialog.setText("Error thrown while constructing channels. This indicates that there is likely a mistake in the 3D construction of your plan so please inspect the export view to ensure the needle channels look the way they should. Check to ensure there is no mistake in the plan, or replace the points on the needle that are not displaying properly.")
