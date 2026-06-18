@@ -234,10 +234,19 @@ def get_all_interstitial_lengths(cylinder: BrachyCylinder, needles: list, spacin
         line_direction = line_displacement/np.linalg.norm(line_displacement)
 
         # Calculate the vector from one point on the line to each point in the point cloud
+        # Filter the surface cloud to only points that are not above or below the line segment (ie: only points that are within the z values of the line segment) to speed up calculations and avoid issues with points that are above or below the line.
+        z_values = surface_cloud[:, 2]
+        z_min = np.min(line_points[:, 2])
+        z_max = np.max(line_points[:, 2])
+        mask = np.logical_and(z_values >= z_min, z_values <= z_max)
+        surface_cloud = surface_cloud[mask]
+
         vector_to_points = surface_cloud - line_points[0]
 
         # Project the vectors onto the line direction
-        projection_onto_line = np.dot(vector_to_points, line_direction)
+
+        projection_onto_line = np.einsum('ij,j->i', vector_to_points, line_direction) # np.dot(vector_to_points, line_direction)
+
 
         # Calculate the closest points on the line to each point in the cloud
         closest_points_on_line = line_points[0] + \
@@ -432,7 +441,10 @@ def save_points_diagram(points: list,
                     ax.text(x+(channel_diam/2), -y, str(number_list[i]), color='black', ha='left', va='center')
 
     if has_tandem:
-        tandem_channel_number = get_app().window.channelsmodel.get_tandem_channel().channel_number
+        try:
+            tandem_channel_number = get_app().window.channelsmodel.get_tandem_channel().channel_number
+        except AttributeError: # no channel is set as tandem, so don't write a channel number on the basemap.
+            tandem_channel_number = ""
         if(tandem_diam >= circle_radius/12 and maxx<circle_radius and maxy<circle_radius):
             ax.add_artist(plt.Circle((0.0, 0.0), tandem_diam/2, color='black', fill=False))
             ax.text(0.0, 0.0, f'{tandem_channel_number}T', color='black', ha='center', va='center')
@@ -720,8 +732,13 @@ def generate_pdf(
 
     if has_tandem:
         tandem_label = app.window.dicommodel.data.tandem_channel #there isn't anything here if tandem is manually added without a tandem channel imported?
-        tandem_channel_number = app.window.channelsmodel.get_tandem_channel().channel_number #there isn't anything here if tandem is manually added without a tandem channel imported?
-        data.append([tandem_label, tandem_channel_number, "N/A"])
+        if tandem_label is None:
+            tandem_label = "Tandem (no channel selected)"
+        try:
+            tandem_channel_number = app.window.channelsmodel.get_tandem_channel().channel_number #there isn't anything here if tandem is manually added without a tandem channel imported?
+        except AttributeError: # no channel is set as tandem, so write "N/A" for tandem channel number
+            tandem_channel_number = ""
+        data.append([tandem_label, tandem_channel_number, ""])
 
     table = Table(data)
     table_style = TableStyle([

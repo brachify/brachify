@@ -4,13 +4,8 @@ https://www.youtube.com/watch?v=p3tSLatmGvU
 # course
 https://www.classcentral.com/classroom/youtube-pyqt5-pyqt6-tutorial-create-gui-with-python-92283/6299980b13eb4
 
-# building
->auto-app-to-exe
-# use ./output/pyinstaller_config.json
+# build exe
+Updated: (May 22, 2026)
+pyinstaller --noconsole --noconfirm --icon "./resources/brachify_splash-ico.ico" --name "brachify" --splash ".\src\windows\splashscreen\brachify_splash.png" --hidden-import "pydicom.encoders.gdcm" --hidden-import "OCC" --hidden-import "pydicom.encoders.pylibjpeg" --paths=src "./src/launch.py" --exclude-module PyQt5
 
->cd C:\Users\nsmel\Documents\Programming\python\brachify
->conda activate BrachyApp
->pyinstaller --noconfirm --console --icon "./resources/sewing-needle.ico" --name "brachify" --splash ".\src\windows\splashscreen\brachify_splash.png" --hidden-import "pydicom.encoders.gdcm" --hidden-import "OCC" --hidden-import "pydicom.encoders.pylibjpeg" --paths=src "./src/launch.py"
-
-Updated: (Oct 04, 2024)
-pyinstaller --noconsole --noconfirm --icon "./resources/brachify_splash-ico.ico" --name "brachify" --splash ".\src\windows\splashscreen\brachify_splash.png" --hidden-import "pydicom.encoders.gdcm" --hidden-import "OCC" --hidden-import "pydicom.encoders.pylibjpeg" --paths=src "./src/launch.py"
+Note: the flag `--exclude-module PyQt5` is necessary to avoid a clash between pyside6 and PyQt5

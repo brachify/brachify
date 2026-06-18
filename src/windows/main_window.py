@@ -219,9 +219,7 @@ class MainWindow(QMainWindow):
         
     def pdf_save_error(self):
         dialog = QMessageBox()
-        dialog.setText("Your PDF was not saved, this may be because: \n "
-                       "- a pdf with the same name is open in another application. If this is the case please close the pdf and try exporting again. \n"
-                       "- you manually added a tandem when no channel is Set As Tandem. This is a known bug. If you have a straight central needle, you can Set at Tandem, or reimport with an extra straight central needle.")
+        dialog.setText("Your PDF was not saved, this may be because a pdf with the same name is open in another application. If this is the case please close the pdf and try exporting again.")
         dialog.setWindowTitle("PDF save error")
         dialog.setIcon(QMessageBox.Icon.Warning)
         dialog.exec()

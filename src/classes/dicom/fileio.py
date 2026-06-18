@@ -69,15 +69,16 @@ def load_central_axis_varian(data: DicomData, rs_dataset):
     data.cylinder_diameter = config_values.get("CONFIG_CYLINDER_DIAMETER")
     data.cylinder_direction = data.cylinder_tip - data.cylinder_base   
 
-def load_central_axis_nucletron(data: DicomData, rp_dataset):
+def load_central_axis_nucletron(data: DicomData, channels_data):
     central_channel = None
     # central_channel = rp_dataset.ApplicationSetupSequence[0].ChannelSequence[data.central_channel_roi].BrachyControlPointSequence
-    for contoursequence in rp_dataset[0x300f, 0x1000][0].ROIContourSequence:
+    for contoursequence in channels_data[0].ROIContourSequence:
         if data.central_channel_roi == int(contoursequence.ReferencedROINumber):
             central_channel = contoursequence.ContourSequence[0].ContourData
             break
     if central_channel is None:
-        log.info(f"No central channel contour sequence found corresponding to central channel label: {filepath} \n{error_message}")
+        log.info(f"No central channel contour sequence found corresponding to central channel: {data.central_channel_roi}")
+        return
 
     
     central_channel_points = [central_channel[i:i+3] for i in range(0, len(central_channel), 3)] 
@@ -163,19 +164,24 @@ def load_channels_varian(data: DicomData, rs_dataset):
     data.channel_paths = channel_paths
 
 
-def load_channels_nucletron(data: DicomData, rp_dataset, center_index):
+def load_channels_nucletron(data: DicomData, channels_data, center_index):
 
     # Get the xyz values for each needle that isn't the central needle.
-    rp_channels = rp_dataset[0x300f, 0x1000][0].ROIContourSequence
+    rp_channels = channels_data[0].ROIContourSequence
     
     # Initialize a list to store the extracted ContourData
     channel_contours = []
 
     #loads all channels information in the order they are in the dicom, just as the ROI_Channels are loaded
     try:
-        channel_contours = [
-            channel.ContourSequence[0].ContourData for channel in  rp_channels
-            ]
+        #if ContourData actually exists for the channel, then add it to the list of channel_contours, if not then add an empty list (since some channels are just anchor points with no contour data)   
+        for channel in rp_channels:
+            try:
+                channel_contours.append(channel.ContourSequence[0].ContourData)
+            except:
+                # channel_contours.append([])
+                continue     
+
         #removes central channel
         del channel_contours[center_index]
 
@@ -433,7 +439,27 @@ def load_nucletron_dicom_data(rp_file: str, rs_file: str) -> DicomData:
     try:
         # we use the Planning file to get the channel ROI numbers
         rp_dataset = pydicom.dcmread(rp_file)
-        data.channels_rois = [int(channel_label.ROINumber) for channel_label in rp_dataset[0x300f,0x1000][0].StructureSetROISequence] 
+        try:
+            # Try to access an attribute of rp_dataset[0x300f,0x1000][0] to test if it is stored as raw binary or not.
+            rp_dataset[0x300f,0x1000][0].StructureSetROISequence
+            # If no attribute error was raised above, then we don't have to convert from binary.
+            channels_data = rp_dataset[0x300f,0x1000]
+        except AttributeError:
+            # the tag [0x300f,0x1000] is not in the Dicom standard, and is a private tag created by Oncentra. 
+            # Sometimes the contents are stored in a raw binary format, so we have to read it in using explicit instructions.
+            from pydicom.filebase import DicomBytesIO
+            from pydicom.filereader import read_sequence
+            raw = rp_dataset[0x300f,0x1000].value
+            fp = DicomBytesIO(raw)
+            fp.is_little_endian = True
+            fp.is_implicit_VR = True  # most private data uses implicit VR
+            encoding = rp_dataset.read_encoding  # ['latin_1']
+            seq = read_sequence(fp, is_implicit_VR=True, is_little_endian=True, bytelength=len(raw), encoding=encoding)
+            
+            channels_data = seq
+
+        data.channels_rois = [int(channel_label.ROINumber) for channel_label in channels_data[0].StructureSetROISequence] 
+
         data.channels_labels = [
             roi.SourceApplicatorID for roi in rp_dataset.ApplicationSetupSequence[0].ChannelSequence] #not needed?
         try:
@@ -465,12 +491,10 @@ def load_nucletron_dicom_data(rp_file: str, rs_file: str) -> DicomData:
         # centralaxisrefROINumber = None
         # center_index = None
         for i, label in enumerate(data.channels_labels):
-            try:
-                if rp_dataset[0x300f,0x1000][0].StructureSetROISequence[i].ROIName in ["Central Axis"]:
-                    data.central_channel_roi = int(rp_dataset[0x300f,0x1000][0].StructureSetROISequence[i].ROINumber)
-                    center_index = i
-            except:
-                pass
+            if channels_data[0].StructureSetROISequence[i].ROIName.lower() in ["central axis", "centralaxis"]:
+                data.central_channel_roi = int(channels_data[0].StructureSetROISequence[i].ROINumber)
+                center_index = i
+
             if data.central_channel_roi is not None: 
                 log.debug(f"Found central axis at channel {data.central_channel_roi}")
                 method_found=True
@@ -497,7 +521,7 @@ def load_nucletron_dicom_data(rp_file: str, rs_file: str) -> DicomData:
         # cylinder from contour
         try:
             if data.central_channel_roi is not None:  # if a central axis channel was found
-                load_central_axis_nucletron(data, rp_dataset)
+                load_central_axis_nucletron(data, channels_data)
             else:  # use a surface contour for the cylinder
                 load_cylinder_contour(data, rs_dataset)
                 method_found=True
@@ -507,7 +531,7 @@ def load_nucletron_dicom_data(rp_file: str, rs_file: str) -> DicomData:
         # channels info
         if(method_found):
             if data.channels_rois:
-                load_channels_nucletron(data, rp_dataset, center_index)
+                load_channels_nucletron(data, channels_data, center_index)
         else:
             get_app().window.no_central_axis_or_cylinder_outline()
     except Exception as error_message:

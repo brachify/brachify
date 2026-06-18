@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'import_view.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.7.0
+## Created by: Qt User Interface Compiler version 6.8.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -32,7 +32,7 @@ class Ui_Import_View(object):
         Import_View.setStyleSheet(u"")
         self.verticalLayout_3 = QVBoxLayout(Import_View)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.verticalLayout_3.setContentsMargins(10, 10, 10, 10)
+        self.verticalLayout_3.setContentsMargins(5, 10, 5, 5)
         self.btn_import_folder = QPushButton(Import_View)
         self.btn_import_folder.setObjectName(u"btn_import_folder")
         self.btn_import_folder.setMinimumSize(QSize(240, 33))
@@ -89,7 +89,8 @@ class Ui_Import_View(object):
         self.info_area.setMaximumSize(QSize(16777215, 16777215))
         self.info_area.setContextMenuPolicy(Qt.DefaultContextMenu)
         self.info_area.setAcceptDrops(False)
-        self.info_area.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+        self.info_area.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
+"color: rgb(0, 0, 0);")
         self.info_area.setInputMethodHints(Qt.ImhNone)
         self.info_area.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.info_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)

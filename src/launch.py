@@ -40,7 +40,7 @@ def main():
 
         # close the splash screen if any
         try:
-            import pyi_splash
+            import pyi_splash # type: ignore # this package is part of PyInstaller and cannot be installed by a package manager. "type: ignore" suppresses type checking warnings on this line.
             pyi_splash.close()
             app.window.activateWindow()
         except:
