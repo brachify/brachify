@@ -5,7 +5,7 @@ brachify is licensed under the terms of the GNU 3.0 license, as noted in the LIC
 
 ## User Info
 ### Download exe zip at:
-https://github.com/brachify/brachify-release/releases
+https://github.com/brachify/brachify/releases
 
 ### Tutorial info can be found:
 https://github.com/brachify/brachify-release/blob/main/user_guide/Brachify%20User%20Manual.docx
