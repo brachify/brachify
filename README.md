@@ -3,7 +3,7 @@
 Thank you for checking out *brachify* - a software designed by Michael Kudla, Ph.D. ( Contact: michael.kudla AT bccancer.bc.ca ) for generating 3D printable cyliders for interstitial GYN brachytherapy!
 
 ## License
-*brachify* is licensed under the terms of the GNU 3.0 license, as noted in the LICENSE file. 
+*brachify* is licensed under the terms of the BSL 1.1 license with a limited commercial use grant, as noted in the LICENSE file. 
 
 ## User Info
 ### Download exe zip at:
