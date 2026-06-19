@@ -23,7 +23,7 @@ Generating your first cylinders:
         1 DICOM RTPlan file you would like to use (exported from your TPS) AND <br>
         1 DICOM RTSTRUCT file associated with your RTPLAN file.
 
-   Note: Ensure your DICOM plan/structure set files have the associated structure set in the same folder and a straight channel labeled 'Central Axis' with the tip of the needle just touching the top of the cylinder and the bottom in line with the center of your cylinder -- this channel will be used to determine the cylinder central axis and tip direction. It must be named "Central Axis".
+   Note: Ensure your DICOM plan/structure set files have the associated structure set in the same folder and a straight channel labeled 'Central Axis' with the tip of the needle just touching the top of the cylinder (or where the cylinder would be) and the bottom in line with the center of your cylinder -- this channel will be used to determine the cylinder central axis and tip direction. It must be named "Central Axis".
 
 5) Press 'Export Mesh' in order to get your .stl file and 'Export Refrence Sheet' in order to get a reference sheet for your cylinder.
 
