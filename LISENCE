@@ -1,1 +1,101 @@
+Business Source License 1.1
 
+Licensor: The authors
+
+Licensed Work: Brachify
+The Licensed Work is © 2026 the author of Brachify - Michael Kudla
+Source code is made available at: (insert GitHub repository URL here)
+
+Additional Use Grant: You may use the Licensed Work for any internal business purpose, including use within a commercial organization, provided that you do not:
+
+
+Sell, sublicense, or otherwise commercially distribute the Licensed Work or any Derivative Work (including forks) as a standalone product or service;
+Incorporate the Licensed Work or any substantial portion thereof into a separate commercial software product or service that is sold, licensed, or otherwise monetized to third parties.
+
+
+For the avoidance of doubt:
+
+
+Using Brachify internally within your organization to support your own operations is permitted, even if your organization is a for-profit entity.
+Forking the repository for personal, academic, research, or non-commercial purposes is permitted.
+Distributing a modified version of Brachify for free, under these same license terms, is permitted.
+Selling Brachify or a fork of Brachify, or bundling it into a commercial product or SaaS offering, is not permitted without a separate commercial license from the authors.
+
+
+Change Date: None. This license does not convert to an open source license at a future date.
+
+Change License: N/A
+
+
+Terms and Conditions
+
+1. Grant of Rights
+
+Subject to the terms and conditions of this License, the Licensor hereby grants you a non-exclusive, worldwide, royalty-free right to:
+
+(a) copy, modify, and prepare Derivative Works of the Licensed Work;
+(b) distribute and sublicense copies of the Licensed Work and Derivative Works to third parties;
+
+in each case, solely for non-commercial purposes and internal business use as defined by the Additional Use Grant above, and subject to the limitations set forth herein.
+
+2. Limitations
+
+The rights granted above are expressly conditioned on the following:
+
+(a) You may not exercise any of the rights granted to you in Section 1 for Commercial Purposes unless you have obtained a separate commercial license from the Licensor.
+
+(b) "Commercial Purposes" means:
+
+
+Selling, licensing, or distributing the Licensed Work or any Derivative Work as a product or service in exchange for payment;
+Incorporating the Licensed Work or any substantial portion thereof into a software product or service that is sold or monetized to external customers or users.
+
+
+(c) If you distribute the Licensed Work or any Derivative Work, you must:
+
+
+Include a copy of this License with every copy of the Licensed Work or Derivative Work you distribute;
+Clearly state any modifications you have made to the Licensed Work;
+Retain all copyright, patent, trademark, and attribution notices from the original Licensed Work.
+
+
+3. Copyleft for Distributed Derivative Works
+
+If you distribute any Derivative Work of the Licensed Work to third parties, you must do so under the terms of this License, ensuring that recipients are bound by the same restrictions contained herein.
+
+4. No Sublicensing for Commercial Use
+
+You may not grant sublicenses that exceed the scope of the rights granted to you under this License. In particular, you may not grant any third party the right to use the Licensed Work or any Derivative Work for Commercial Purposes.
+
+5. Intellectual Property
+
+The authors retain all intellectual property rights in and to the Licensed Work. Nothing in this License shall be construed as transferring any ownership or intellectual property rights to you.
+
+6. Trademarks
+
+This License does not grant permission to use the trade names, trademarks, service marks, or product names of the authors, except as required for reasonable and customary use in describing the origin of the Licensed Work.
+
+7. Disclaimer of Warranties
+
+THE LICENSED WORK IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR THEIR CONTRIBUTORS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE LICENSED WORK OR THE USE OR OTHER DEALINGS IN THE LICENSED WORK.
+
+8. Limitation of Liability
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT WILL THE AUTHORS BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES ARISING OUT OF OR RELATED TO THIS LICENSE OR THE USE OF THE LICENSED WORK, EVEN IF THE AUTHORS HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+9. Termination
+
+Your rights under this License will terminate automatically if you fail to comply with any of its terms. Upon termination, you must destroy all copies of the Licensed Work and Derivative Works in your possession.
+
+The authors reserve the right to release the Licensed Work under different license terms or to stop distributing the Licensed Work at any time.
+
+10. Commercial Licensing
+
+If you wish to use the Licensed Work for Commercial Purposes, please contact the author to discuss a separate commercial license.
+
+11. Governing Law
+
+This License shall be governed by and construed in accordance with the laws of the Province of British Columbia, Canada, without regard to its conflict of law provisions.
+
+
+This license is based on the Business Source License 1.1 template, modified for use with Brachify. For more information on the BSL, see https://mariadb.com/bsl11/.
