@@ -29,6 +29,10 @@ Generating your first cylinders:
 
 6) Navigate through the Cylinder, Channels, or Tandem tabs to modify your model as needed.
 
+AAPM 2025 Poster:
+<img width="907" height="679" alt="image" src="https://github.com/user-attachments/assets/0d004baa-4c8b-4a07-b296-fc405db9b036" />
+
+
 Import Tab<br>
 <img src="Images/import_tab.png" width="500"/><br>
 Cylinder Tab<br>
